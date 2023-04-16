@@ -1,0 +1,4 @@
+# add files here that can be ignored, like compilation files
+
+# ignore compiled Python files
+*.pyc
