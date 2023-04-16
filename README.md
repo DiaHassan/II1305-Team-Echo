@@ -23,4 +23,5 @@ Todo
 
 ## Team Echo
  - [Edwin Ahlstrand](https://github.com/EdwinAhl)
+ - [Roy Liu](https://github.com/ruisnake)
 <!--[Ditt namn här](länk till din Github-profil)-->
