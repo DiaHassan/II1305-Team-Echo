@@ -24,6 +24,6 @@ Todo
 ## Team Echo
  - [Edwin Ahlstrand](https://github.com/EdwinAhl)
  - [Roy Liu](https://github.com/ruisnake)
- - [Albin Durfors](https://github/DrakenDurfors)
+ - [Albin Durfors](https://github.com/DrakenDurfors)
  - [Axel Lindqvist](https://github.com/ProgrammingCookies)
 <!--[Ditt namn här](länk till din Github-profil)-->
