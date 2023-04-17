@@ -26,4 +26,5 @@ Todo
  - [Roy Liu](https://github.com/ruisnake)
  - [Albin Durfors](https://github.com/DrakenDurfors)
  - [Axel Lindqvist](https://github.com/ProgrammingCookies)
+ - [Klara Fält](https://github.com/kflt)
 <!--[Ditt namn här](länk till din Github-profil)-->
