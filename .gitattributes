@@ -1,4 +1,11 @@
+# add file types to be detectable by Github
+
+# make Markdown files detectable
 *.md linguist-detectable=true
 *.md linguist-documentation=false
 *.md linguist-generated=false
 *.md linguist-vendored=false
+
+# make SQL files detectable
+*.sql linguist-detectable=true
+*.sql linguist-language=sql
