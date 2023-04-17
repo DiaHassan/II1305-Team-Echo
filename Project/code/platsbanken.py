@@ -1,0 +1,1 @@
+# All code explicit for webscraping arbetsförmedlingen.se/platsbanken
