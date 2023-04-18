@@ -11,7 +11,7 @@ from settings import LOG_LEVEL, LOG_DATE_FORMAT, LOG_FORMAT, MAX_UPDATES, SLEEP_
 log = logging.getLogger(__name__)
 logging.basicConfig(stream=sys.stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 
-
+# Automatically updates the database every SLEEP_TIME_MINUTES 
 def keep_updated():
     last_timestamp = read_timestamp()
     counter = 0
@@ -34,7 +34,7 @@ def keep_updated():
 
     log.info('Finished')
 
-
+# Runs the keep_updated method as a script
 if __name__ == '__main__':
     """
     
