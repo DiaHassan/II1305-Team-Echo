@@ -1,6 +1,10 @@
 import sqlite3
 import pandas as pd
 
+
+#Source: https://towardsdatascience.com/starting-with-sql-in-python-948e529586f2
+
+
 sql_connect = sqlite3.connect('databasename?')
 
 cursor = sql_connect.cursor()
@@ -29,7 +33,10 @@ work_hours = "placeholder"
 
 #SQL commands to insert the job_listing, multiple ones because the information is spread among multiple tables.
 # Also some values derived after insert functions 
-Insert_job_listing = "INSERT INTO job_listing(parameters) VALUES (" + job_param_list + ");"
+Insert_job_listing = "INSERT INTO job_listing(source, employment_type, duration, min_salary, max_salary, salary_type, publication_date, job_id, location_id, date_gathered) VALUES (" + job_param_list + ");"
+
+#440 bits = 55 bytes per row.
+
 
 #Get id has to be executed right after the row has been inserted.
 get_job_listing_id = "SELECT SCOPE_IDENTITY();"
@@ -60,3 +67,42 @@ Insert_requirement_relation = "INSERT INTO requirement_relation(job_listing_id, 
 work_hours_id = "placeholder"
 
 Inser_work_hours_relation = "INSERT INTO work_hours_relation(job_listing_id, work_hours_id) INSERT VALUES (" + job_listing_id + "," + work_hours_id +");"
+
+
+#Execute SQL commands and store results
+
+results_job_listing = cursor.execute(Insert_job_listing).fetchall()
+
+results_insert_job = cursor.execute(Insert_job).fetchall()
+
+results_location = cursor.execute(Insert_location).fetchall()
+
+results_requirement = cursor.execute(Insert_requirement).fetchall()
+
+results_work_hours = cursor.execute(Insert_work_hours).fetchall()
+
+
+
+#Running Queries TODO
+
+pd.read_sql_query(Insert_job_listing,sql_connect)
+
+
+
+
+#Close connection 
+
+sql_connect.close()
+
+
+#Extract Data from DB
+
+# SELECT COUNT(id) FROM job_listing WHERE location_id IN (SELECT location_id FROM location WHERE county IN ("lan") );
+
+# Displays the number of jobs in each county
+# SELECT COUNT(id), location.county FROM job_listing INNER JOIN location ON location.id = job_listing.location_id GROUP BY county;
+
+
+
+
+
