@@ -64,7 +64,7 @@ ALTER TABLE work_hours_relation ADD CONSTRAINT PK_work_hours_relation PRIMARY KE
 
 
 ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_0 FOREIGN KEY (job_id) REFERENCES job (id) ON DELETE CASCADE;
-ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_1 FOREIGN KEY (location_id) REFERENCES job (id) ON DELETE CASCADE;
+ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_1 FOREIGN KEY (location_id) REFERENCES location (id) ON DELETE CASCADE;
 
 
 ALTER TABLE requirement_relation ADD CONSTRAINT FK_requirement_relation_0 FOREIGN KEY (job_listing_id) REFERENCES job_listing (id) ON DELETE CASCADE;
