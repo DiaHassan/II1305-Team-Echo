@@ -40,7 +40,7 @@ ALTER TABLE requirement ADD CONSTRAINT PK_requirement PRIMARY KEY (id);
 
 CREATE TABLE work_hours (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
-    work_hours INT NOT NULL
+    work_hours VARCHAR(20) NOT NULL
 );
 
 ALTER TABLE work_hours ADD CONSTRAINT PK_work_hours PRIMARY KEY (id);
