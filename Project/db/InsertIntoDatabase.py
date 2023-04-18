@@ -113,7 +113,7 @@ def insert_data(argument_list):
 
     job_exist_result = cursor.execute(job_exists_query).fetchall()
 
-    if bool(job_exist_result):
+    if not job_exist_result:
         insert_job = "INSERT INTO job(job) VALUES (" + argument_list[7] + ");"
         pd.read_sql_query(insert_job,sql_connect)
 
@@ -140,7 +140,7 @@ def insert_data(argument_list):
     for i in argument_list[10]:
         requirement_exist_query = "SELECT id FROM requirement WHERE requirement = " + i[0] + " AND years_of_experience = " + i[1] + ";"
         requirement_exist_result = cursor.execute(requirement_exist_query).fetchall()
-        if bool(requirement_exist_result):
+        if not requirement_exist_result:
             Insert_requirement = "INSERT INTO requirement(requirement, years_of_experience) VALUES ( + " + i[0] + "," + i[1] + ");"
             pd.read_sql_query(Insert_requirement, sql_connect)
         
@@ -152,7 +152,7 @@ def insert_data(argument_list):
         cursor.execute(insert_requirement_relation, sql_connect)
 
 
-    
+
 
 
 
