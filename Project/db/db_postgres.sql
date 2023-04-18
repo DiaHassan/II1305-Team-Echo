@@ -3,12 +3,10 @@ CREATE TABLE job_listing (
     source INT NOT NULL,
     employment_type VARCHAR(20),
     duration INT,
-    min_salary INT,
-    max_salary INT,
-    salary_type SMALLINT, -- 1 = hourly, 2 = commision, 3 = fixed
     publication_date DATE NOT NULL, 
     job_id INT NOT NULL,
-    location_id INT NOT NULL,
+    county VARCHAR(50) NOT NULL,
+    seniority VARCHAR(15),
     date_gathered DATE NOT NULL
 );
 
@@ -20,15 +18,6 @@ CREATE TABLE job (
 );
 
 ALTER TABLE job ADD CONSTRAINT PK_job PRIMARY KEY (id);
-
-
-CREATE TABLE location (
-    id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
-    county VARCHAR(50),
-    municipality VARCHAR(50) -- TODO: Change max varchar
-);
-
-ALTER TABLE location ADD CONSTRAINT PK_location PRIMARY KEY (id);
 
 CREATE TABLE requirement (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
@@ -64,7 +53,6 @@ ALTER TABLE work_hours_relation ADD CONSTRAINT PK_work_hours_relation PRIMARY KE
 
 
 ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_0 FOREIGN KEY (job_id) REFERENCES job (id) ON DELETE CASCADE;
-ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_1 FOREIGN KEY (location_id) REFERENCES location (id) ON DELETE CASCADE;
 
 
 ALTER TABLE requirement_relation ADD CONSTRAINT FK_requirement_relation_0 FOREIGN KEY (job_listing_id) REFERENCES job_listing (id) ON DELETE CASCADE;
