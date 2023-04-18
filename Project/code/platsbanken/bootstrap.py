@@ -1,7 +1,7 @@
 import sys
 import logging
 import time_handling
-from get_ads import get_all_ads
+from get_ads import get_ads
 from database import load_all, DBConnectionHandler
 
 from settings import LOG_LEVEL, LOG_DATE_FORMAT, LOG_FORMAT, DB_TABLE_NAME, PLACES, OCCUPATIONS, DB_FILE_NAME
@@ -26,6 +26,6 @@ if __name__ == '__main__':
         timestamp = time_handling.write_timestamp('2023-03-01T00:00:00')
     else:
         timestamp = time_handling.write_timestamp()
-        all_ads = get_all_ads()
+        all_ads = get_ads()
         load_all(all_ads)
         log.info(f'Loaded {len(all_ads)} into the database table "{DB_TABLE_NAME}". Timestamp: {timestamp}')
