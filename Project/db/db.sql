@@ -63,7 +63,13 @@ ALTER TABLE work_hours_relation ADD CONSTRAINT PK_work_hours_relation PRIMARY KE
 
 
 
+ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_0 FOREIGN KEY (job_id) REFERENCES job (id) ON DELETE CASCADE;
+ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_1 FOREIGN KEY (location) REFERENCES job (id) ON DELETE CASCADE;
 
 
--- TODO: Alter table foreign keys
--- TODO: Add Cascading delete
+ALTER TABLE requirement_relation ADD CONSTRAINT FK_requirement_relation_0 FOREIGN KEY (job_listing_id) REFERENCES job_listing (id) ON DELETE CASCADE;
+ALTER TABLE requirement_relation ADD CONSTRAINT FK_requirement_relation_1 FOREIGN KEY (requirement_id) REFERENCES requirement (id) ON DELETE CASCADE;
+
+
+ALTER TABLE work_hours_relation ADD CONSTRAINT FK_requirement_relation_0 FOREIGN KEY (job_listing_id) REFERENCES job_listing (id) ON DELETE CASCADE;
+ALTER TABLE work_hours_relation ADD CONSTRAINT FK_requirement_relation_1 FOREIGN KEY (work_hours_id) REFERENCES work_hours (id) ON DELETE CASCADE;
