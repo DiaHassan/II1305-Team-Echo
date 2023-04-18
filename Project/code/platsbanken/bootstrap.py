@@ -4,7 +4,7 @@ import datetime
 from get_ads import get_ads, date
 from database import load_all, DBConnectionHandler
 
-from settings import LOG_LEVEL, LOG_DATE_FORMAT, LOG_FORMAT, DB_TABLE_NAME, PLACES, OCCUPATIONS, DB_FILE_NAME
+from settings import LOG_LEVEL, LOG_DATE_FORMAT, LOG_FORMAT, DB_TABLE_NAME, DB_FILE_NAME
 
 log = logging.getLogger(__name__)
 logging.basicConfig(stream=sys.stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)

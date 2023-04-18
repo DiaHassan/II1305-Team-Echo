@@ -1,16 +1,14 @@
 import logging
 
-DB_TABLE_NAME = 'jobads'
-DB_FILE_NAME = 'jobads_database_20220127.db'
-TIMESTAMP_FILE = 'timestamp2.txt'
+# Database, redundant in future
+DB_TABLE_NAME = 'database'
+DB_FILE_NAME = 'platsbanken.db'
 
-BASE_URL = 'https://jobstream.api.jobtechdev.se'
-STREAM_URL = f"{BASE_URL}/stream"
-SNAPSHOT_URL = f"{BASE_URL}/snapshot"
+# URL
+URL = 'https://jobstream.api.jobtechdev.se'
+STREAM_URL = f"{URL}/stream"
 
-SLEEP_TIME_MINUTES = 10
-MAX_UPDATES = 4
-
+# Date format for API
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 # Logging
