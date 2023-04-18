@@ -5,7 +5,7 @@ CREATE TABLE job_listing (
     duration INT,
     min_salary INT,
     max_salary INT,
-    salary_type TINYINT, -- 1 = hourly, 2 = commision, 3 = fixed
+    salary_type SMALLINT, -- 1 = hourly, 2 = commision, 3 = fixed
     publication_date DATE NOT NULL, 
     job_id INT NOT NULL,
     location_id INT NOT NULL,
@@ -64,12 +64,12 @@ ALTER TABLE work_hours_relation ADD CONSTRAINT PK_work_hours_relation PRIMARY KE
 
 
 ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_0 FOREIGN KEY (job_id) REFERENCES job (id) ON DELETE CASCADE;
-ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_1 FOREIGN KEY (location) REFERENCES job (id) ON DELETE CASCADE;
+ALTER TABLE job_listing ADD CONSTRAINT FK_job_listing_1 FOREIGN KEY (location_id) REFERENCES job (id) ON DELETE CASCADE;
 
 
 ALTER TABLE requirement_relation ADD CONSTRAINT FK_requirement_relation_0 FOREIGN KEY (job_listing_id) REFERENCES job_listing (id) ON DELETE CASCADE;
 ALTER TABLE requirement_relation ADD CONSTRAINT FK_requirement_relation_1 FOREIGN KEY (requirement_id) REFERENCES requirement (id) ON DELETE CASCADE;
 
 
-ALTER TABLE work_hours_relation ADD CONSTRAINT FK_requirement_relation_0 FOREIGN KEY (job_listing_id) REFERENCES job_listing (id) ON DELETE CASCADE;
-ALTER TABLE work_hours_relation ADD CONSTRAINT FK_requirement_relation_1 FOREIGN KEY (work_hours_id) REFERENCES work_hours (id) ON DELETE CASCADE;
+ALTER TABLE work_hours_relation ADD CONSTRAINT FK_work_hours_relation_0 FOREIGN KEY (job_listing_id) REFERENCES job_listing (id) ON DELETE CASCADE;
+ALTER TABLE work_hours_relation ADD CONSTRAINT FK_work_hours_relation_1 FOREIGN KEY (work_hours_id) REFERENCES work_hours (id) ON DELETE CASCADE;
