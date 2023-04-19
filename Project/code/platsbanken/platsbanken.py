@@ -3,7 +3,7 @@ import datetime
 import logging
 import json
 import sys
-from settings import LOG_LEVEL, LOG_DATE_FORMAT, LOG_FORMAT, DATE_FORMAT, STREAM_URL, PLACES, OCCUPATIONS
+from settings import LOG_LEVEL, LOG_DATE_FORMAT, LOG_FORMAT, DATE_FORMAT, STREAM_URL
 
 
 # Logging
@@ -16,14 +16,8 @@ def get_ads():
 
     # Declare variables
     url = STREAM_URL
-    date = datetime.datetime.now() - datetime.timedelta(8)  # test, timedelta parameter is days and should be 30
+    date = datetime.datetime.now() - datetime.timedelta(1)  # test, timedelta parameter is days and should be 30
     params = {'date': date.strftime(DATE_FORMAT)}
-
-    # If the search query requires PLACE or OCCUPATION ()
-    if PLACES:
-        params['location-concept-id'] = PLACES
-    if OCCUPATIONS:
-        params['occupation-concept-id'] = OCCUPATIONS
 
     # Writing log info to the terminal
     log.info(f'Collecting ads from: {url} with params {params}')
