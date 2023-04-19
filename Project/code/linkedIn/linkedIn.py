@@ -1,5 +1,6 @@
 # All code explicit for webscraping LinkedIn.com
 import csv
+import codecs
 import time
 import requests
 from bs4 import BeautifulSoup
@@ -50,5 +51,9 @@ def linkedin_scraper(webpage, page_number):
         page_number = page_number + 25
         time.sleep(3)
         linkedin_scraper(webpage, page_number)
-    
+
+# geo_id_file = codecs.open("geo_ids.txt", "r")
+# geo_ids = geo_id_file.read
+# print(geo_ids)
 linkedin_scraper('https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&location=Sandviken%2C%2BG%C3%A4vleborg%2C%2BSverige&geoId=101153912&trk=public_jobs_jobs-search-bar_search-submit&start=0', 0)
+# https://www.linkedin.com/jobs/search?keywords=&geoId=

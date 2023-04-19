@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from RequirmentFinder import find_req
 
-print("\n Program is on \n")
 
 # Define the URL to scrape
 base_url = 'https://ledigajobb.se'
@@ -49,6 +48,7 @@ def replace_after(my_string, to_replace, replacement):
     # print(new_string) 
 
 
+# Joins url to build link to job ad
 def join_url(base_url, section):
     return base_url + section
 
@@ -64,11 +64,15 @@ def get_prerequiered(response):
 
 
 # Returns employment type, duration, and seniority
-def get_details(response):
+def get_work_details(response):
+    # Result and path
     info=[]
     outer_div = response.find('div', class_='col bg-light rounded-bottom pb-2 border-top').find('div').find('div').find('ul').find_all('li')
+
+    # Initial fill
     for i in outer_div:
         info.append(i.text.strip().split())
+
     # Array Clean
     info[0] = info[0][0]
     info[1] = info[1][0]
@@ -76,34 +80,47 @@ def get_details(response):
 
     return info
 
+
+# Run from 
+def run():
+    print("")
+
+
+def scrape_ad(job_link):
+    # Init
+    job_code = get_code(job_link)
+    work_details = get_work_details(job_code)
+    result = []
+
+    # Data
+    source = "ledigajobb"
+    employment_type = work_details[0]
+    duration = work_details[1]
+    publication_date = get_date(job_code)
+    profession = ""  # need list of jobs
+    county = ""  # need function for converting id to län
+    prerequierment = get_prerequiered(job_code)
+    seniority = work_details[2]
+
+    return [source, 
+            employment_type, 
+            duration, 
+            publication_date, 
+            profession, 
+            county, 
+            prerequierment, 
+            seniority]
+
+
+    
+
     
 ##################################################
 # Main function for testing the code
 def main():
     response = get_code("https://ledigajobb.se/jobb/a4c766/trainee-backend-utvecklare")
     
-    print(get_details(response))
-    print(get_prerequiered(response))
-    print(get_date(response))
-    # job_listings = response.find_all('div', class_='col bg-light rounded-bottom pb-2 border-top')
-    # temp = job_listings.find('div')
-    # print(temp)
-
-    #outer_div = response.find('div', class_='col bg-light rounded-bottom pb-2 border-top').find('div').find('div').find('ul').find_all('li')
-    #for i in outer_div:
-    #    print(i.text)
-    
-    # print(outer_div)
-    # response = get_code(search_url)
-    # temp = create_search_link(9,"utvecklare",3)
-    # print(temp)
-    # response = get_code(temp)
-    # print("\n")
-    # print(get_job_links(get_jobs(response)))
-    # print("\n")
-    # job_listings = get_jobs(response)
-    # print("\n")
-    # print(get_next_page(response))
+    print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
 
 
 if __name__ == '__main__':
