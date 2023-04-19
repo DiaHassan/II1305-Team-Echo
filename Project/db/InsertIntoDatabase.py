@@ -105,9 +105,9 @@ def for2dlist(list, path):
 if __name__ == '__main__':
 
 
-    test = [ ["Platsbanken", "Heltid", "Tillsvidare", "19/04/2023",  "Lärare", "Stockholms län", [ ["Lärarutbildning", None], ["Lärar erfarenhet", 4], ["B Körkort", None]] , ["19/04/2023", "Mid-level"] ] 
+    test = [ ["Platsbanken", "Heltid", "Tillsvidare", "19/04/2023",  "Lärare", "Stockholms län", [ ["Lärarutbildning", None], ["Lärar erfarenhet", 4], ["B Körkort", None]] , "19/04/2023", "Mid-level" ] 
     ,   
-    ["Platsbanken", "Heltid", "Tillsvidare", "19/04/2023",  "Ingenjör", "Stockholms län", [ ["Civilingenjörsutbildning", None], ["Civilingenjörs erfarenhet", 4], ["B Körkort", None]], ["19/04/2023", "Mid-level"] ]] 
+    ["Platsbanken", "Heltid", "Tillsvidare", "19/04/2023",  "Ingenjör", "Stockholms län", [ ["Civilingenjörsutbildning", None], ["Civilingenjörs erfarenhet", 4], ["B Körkort", None]], "19/04/2023", "Mid-level"] ]
     for2dlist(test, "echo.db")
 
 
