@@ -2,3 +2,4 @@
 
 # ignore compiled Python files
 *.pyc
+Testing/
