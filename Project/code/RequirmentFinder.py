@@ -21,6 +21,8 @@ def find_req(job_ad):
     masters_regexa = r"master[\’]?s degree"
     phd_regex = r"phd|doctorate"
     degree_regex = r"degree"
+    civ_regex = r"civilingenjör"
+    eng_regex = r"högskoleingenjör"
     ut_regex = r"utbildning"
     rut_regex = r"relevant utbildning"
     aut_regex = r"akademisk utbildning"
@@ -37,6 +39,8 @@ def find_req(job_ad):
                 (masters_regex,"Master's degree"),
                 (masters_regexa,"Master's degree"),
                 (phd_regex,"PhD"),
+                (civ_regex,"Engineer"),
+                (eng_regex,"Engineer"),
                 (aut_regex,"Academic relevant degree"),
                 (uni_regex,"University degree"),
                 (uut_regex,"University degree"),
@@ -56,7 +60,3 @@ def find_req(job_ad):
             tbr= "Not specified"
 
     return tbr
-
-print("vvvvvvv\n")
-print(find_req(job_ad))
-print("\n^^^^^^^")

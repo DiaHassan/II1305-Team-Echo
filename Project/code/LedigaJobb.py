@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from RequirmentFinder import find_req
 
 print("\n Program is on \n")
 
@@ -51,18 +52,31 @@ def replace_after(my_string, to_replace, replacement):
 def join_url(base_url, section):
     return base_url + section
 
+
+# Returns date
+def get_date(response):
+    return response.find_all('span', class_='ml-2 text-muted small')[1].text
+
+
+# Returns prerequiered
+def get_prerequiered(response):
+    return find_req(response.find('div', class_='mb-1').text)
+
+
+
     
 ##################################################
 # Main function for testing the code
 def main():
     response = get_code("https://ledigajobb.se/jobb/a752c9/automationstekniker-till-nytt-omr%C3%A5de-hos-combitech-i-stockholm")
+    
     # job_listings = response.find_all('div', class_='col bg-light rounded-bottom pb-2 border-top')
     # temp = job_listings.find('div')
     # print(temp)
 
-    outer_div = response.find('div', class_='col bg-light rounded-bottom pb-2 border-top').find('div').find('div').find('ul').find_all('li')
-    for i in outer_div:
-        print(i.text)
+    #outer_div = response.find('div', class_='col bg-light rounded-bottom pb-2 border-top').find('div').find('div').find('ul').find_all('li')
+    #for i in outer_div:
+    #    print(i.text)
     
     # print(outer_div)
     # response = get_code(search_url)
