@@ -3,3 +3,4 @@
 # ignore compiled Python files
 *.pyc
 Testing/
+*.log

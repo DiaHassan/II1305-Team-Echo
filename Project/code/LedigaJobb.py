@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from RequirmentFinder import find_req
+from requirementfinder import find_req
 
 
 # Define the URL to scrape

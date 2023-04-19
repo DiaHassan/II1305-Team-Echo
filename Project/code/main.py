@@ -1,10 +1,10 @@
 from platsbanken import platsbanken
-from db import InsertIntoDatabase
+from db import insert
 
 
 # Platsbanken
 platsbanken_list = platsbanken.run()
-InsertIntoDatabase.insert_data(platsbanken_list)
+insert.insert_data(platsbanken_list)
 
 # LedigaJobb
 # ledigajobb_list = ...
