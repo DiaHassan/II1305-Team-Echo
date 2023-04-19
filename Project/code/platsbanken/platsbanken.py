@@ -16,7 +16,7 @@ def get_ads():
 
     # Declare variables
     url = STREAM_URL
-    date = datetime.datetime.now() - datetime.timedelta(8)
+    date = datetime.datetime.now() - datetime.timedelta(8)  # test, timedelta parameter is days and should be 30
     params = {'date': date.strftime(DATE_FORMAT)}
 
     # If the search query requires PLACE or OCCUPATION ()
@@ -45,9 +45,9 @@ def extract_data_all_ads(all_ads):
     for ad in all_ads:
       list.append(extract_data_ad(ad)) 
     log.debug(f'Insert multiple ads: ({len(all_ads)} ads)')
-    print(list[0])
-    print(list[500])
-    print(list[1000])
+    print(list[0]) # test
+    print(list[500]) # test
+    print(list[1000]) # test
     return list
 
 
