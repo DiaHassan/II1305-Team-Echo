@@ -27,7 +27,7 @@ def insert_data(argument_list, sql_connect, cursor):
 
 
 
-    job_param_list = argument_list[0:6] # Get a sub-list from index 0 to 7
+    job_param_list = argument_list[0:4] + argument_list[5] + argument_list[7] # Get a sub-list from index 0 to 7
     #job_param_list is the list of arguments for the job_listing table.
     delimiter = ","
     liststr = delimiter.join(job_param_list)
@@ -50,23 +50,24 @@ def insert_data(argument_list, sql_connect, cursor):
     get_job_id = "SELECT id FROM job WHERE job = " + argument_list[4] + ";"
     job_id = cursor.execute(get_job_id).fetchall()[0]
 
-    #TODO getting location id for job_listing insert and creating location if it doesn't exist
     
 
     #Getting work_hours_id 
-
+    
 
 
 
     #Create Job listing here and get job_listing_id
-    #TODO Make sure publication date is in a uniform format
-    insert_job_listing = "INSERT INTO job_listing(source, employment_type, duration, publication_date, job_id, county, date_gathered, seniority) VALUES (" + job_param_list + ");"
+    #TODO Make sure publication date is in a uniform format and check attributes.
+    # Index 0-3 is source, employment type, duration and publication date. These are already strings, job id is a foreing key so the id from job_id is entered there instead of proffession.
+
+    insert_job_listing = "INSERT INTO job_listing(source, employment_type, duration, publication_date, job_id, county, date_gathered, seniority) VALUES (" + delimiter.join(job_param_list[0:4]) + "," + job_id + "," + delimiter.join(job_param_list[4:-1]) + ");"
     job_listing_id = cursor.execute(insert_job_listing).fetchall()[0]
 
 
 
-
-    for i in argument_list[8]:
+    #
+    for i in argument_list[6]:
         requirement_exist_query = "SELECT id FROM requirement WHERE requirement = " + i[0] + " AND years_of_experience = " + i[1] + ";"
         requirement_exist_result = cursor.execute(requirement_exist_query).fetchall()
         if not requirement_exist_result:
@@ -84,8 +85,10 @@ def insert_data(argument_list, sql_connect, cursor):
 
 
 
-def for2dlist(list):
-    sql_connect = sqlite3.connect('databasename?')
+
+
+def for2dlist(list, path):
+    sql_connect = sqlite3.connect(path)
 
     cursor = sql_connect.cursor()
 
@@ -99,8 +102,9 @@ def for2dlist(list):
     
     
 
+if __name__ == '__main__':
 
-
+    for2dlist(test, path)
 
 
 
