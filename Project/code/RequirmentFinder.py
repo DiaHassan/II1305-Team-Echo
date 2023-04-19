@@ -1,11 +1,13 @@
 import re
 
-# Read in job ad text 
+# Job ad test variable
 job_ad = """
+
 
 """
 
-
+#högskoleutbildning
+#civilingenjörsexamen
 
 # Define regular expressions for bachelor's, master's, and PhD degrees
 def find_req(job_ad):
