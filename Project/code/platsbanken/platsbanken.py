@@ -11,6 +11,16 @@ log = logging.getLogger(__name__)
 logging.basicConfig(stream=sys.stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 
 
+# Main function that retrieves all ads and outputs their data in a 2d list
+def run():
+   # Creates a list with all ads from a specific time to now
+   all_ads = get_ads()
+
+   # Creates a 2d list of ads containting sought parameters
+   list = extract_data_all_ads(all_ads)
+   return list
+
+
 # Retrieves all ads in full
 def get_ads():
 
@@ -39,9 +49,6 @@ def extract_data_all_ads(all_ads):
     for ad in all_ads:
       list.append(extract_data_ad(ad)) 
     log.debug(f'Insert multiple ads: ({len(all_ads)} ads)')
-    print(list[0]) # test
-    print(list[500]) # test
-    print(list[1000]) # test
     return list
 
 
@@ -52,13 +59,8 @@ def extract_data_ad(ad):
     city = ad.get('workplace_address', {}).get('municipality', ' ')
     occupation = ad.get('occupation', {}).get('label', ' ')
     return [ad_id, email, city, occupation]
-
+  
 
 # Main script
 if __name__ == '__main__':
-
-    # Creates a list with all ads from a specific time to now
-    all_ads = get_ads()
-
-    # Creates a 2d list of ads containting sought parameters
-    list = extract_data_all_ads(all_ads)
+    run()
