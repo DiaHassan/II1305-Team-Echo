@@ -123,6 +123,7 @@ def main():
     # print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
     for i in range(2, 21):
         print(create_search_link(i,"utvecklare",2))
+        
 
 if __name__ == '__main__':
     main()
