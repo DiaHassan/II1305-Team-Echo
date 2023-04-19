@@ -1,8 +1,20 @@
 import logging
 
+<<<<<<< HEAD
 
 BASE_URL = 'https://jobstream.api.jobtechdev.se'
 STREAM_URL = f"{BASE_URL}/stream"
+=======
+# Database, redundant in future
+DB_TABLE_NAME = 'database'
+DB_FILE_NAME = 'platsbanken.db'
+
+# URL
+URL = 'https://jobstream.api.jobtechdev.se'
+STREAM_URL = f"{URL}/stream"
+
+# Date format for API
+>>>>>>> b28fcec7b5c3fd83843fc5ccbf6a5104aeb76786
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 

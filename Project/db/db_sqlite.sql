@@ -3,28 +3,17 @@ CREATE TABLE job_listing (
     source INT NOT NULL,
     employment_type VARCHAR(20),
     duration INT,
-    min_salary INT,
-    max_salary INT,
-    salary_type SMALLINT, -- 1 = hourly, 2 = commision, 3 = fixed
     publication_date DATE NOT NULL, 
     job_id INT NOT NULL,
-    location_id INT NOT NULL,
+    county VARCHAR(50),
     date_gathered DATE NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (job_id) REFERENCES job (id) ON DELETE CASCADE,
-    FOREIGN KEY (location_id) REFERENCES location (id) ON DELETE CASCADE
 );
 
 CREATE TABLE job (
     id INT NOT NULL,
     job VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE location (
-    id INT NOT NULL,
-    county VARCHAR(50),
-    municipality VARCHAR(50),
     PRIMARY KEY (id)
 );
 
