@@ -61,7 +61,6 @@ def main():
     # print(temp)
 
     outer_div = response.find('div', class_='col bg-light rounded-bottom pb-2 border-top').find('div').find('div').find('ul').find_all('li')
-
     for i in outer_div:
         print(i.text)
     
