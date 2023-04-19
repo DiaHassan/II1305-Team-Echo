@@ -6,7 +6,7 @@ CREATE TABLE job_listing (
     publication_date DATE NOT NULL, 
     job_id INTEGER NOT NULL,
     county VARCHAR(50),
-    sceniority VARCHAR(15),
+    seniority VARCHAR(15),
     date_gathered DATE NOT NULL,
 
     PRIMARY KEY (id),
