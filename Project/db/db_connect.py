@@ -10,6 +10,7 @@ def build():
 
     sql_file = open("Project\db\db_sqlite.sql", "r")
     sql_script = sql_file.read()
+    sql_file.close()
 
     cursor.executescript(sql_script)
     cursor.close()
