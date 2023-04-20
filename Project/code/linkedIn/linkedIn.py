@@ -1,5 +1,4 @@
 # All code explicit for webscraping LinkedIn.com
-import csv
 import time
 import requests
 import re
@@ -12,7 +11,7 @@ db = []
 # Jobs
 jobs = ["Lärare",
 "Läkare",
-"Utvecklare",
+"Utvecklare"
 ]
 
 # Geo ids
@@ -42,12 +41,13 @@ def linkedin_scraper(webpage, page_number):
         # If the titel of the job posting contains the link, then the tag won't be a div
         ads = soup.find_all(['div', 'a'], class_='base-card relative w-full hover:no-underline focus:no-underline base-card--link base-search-card base-search-card--link job-search-card')
         for ad in ads:
-            # If the posting is newly published, it's tag is different
-            job_title = ad.find('h3', class_='base-search-card__title')
-            if job_title == None:
-                job_title = ad.find('h3', class_='base-search-card__title--new').text.strip()
+            # If the posting is newly published, it's tag is different  
+            # DATA NOT NEEDED DELETE LATER
+            ad_title = ad.find('h3', class_='base-search-card__title')
+            if ad_title == None:
+                ad_title = ad.find('h3', class_='base-search-card__title--new').text.strip()
             else:
-                job_title = job_title.text.strip()
+                ad_title = ad_title.text.strip()
 
             # If the posting is newly published, it's tag is different
             ad_date = ad.find('time', class_='job-search-card__listdate')
@@ -56,37 +56,52 @@ def linkedin_scraper(webpage, page_number):
             else:
                 ad_date = ad_date.text.strip()
 
-            company = ad.find('h4', class_='base-search-card__subtitle').text.strip()
+            # DATA NOT NEEDED DELETE LATER
+            # company = ad.find('h4', class_='base-search-card__subtitle').text.strip()
+            
 
             location = ad.find('span', class_='job-search-card__location').text.strip()
 
-            # Depending on if the title contains the link        
+            # Gets link for ad page, if the title contains the link else in the ad      
             link = ad.find('a', class_='base-card__full-link')
             if link == None:
                 link = ad['href']
             else:
                 link = link['href']
 
+
+            # Loads ad page and finds their criterias
+            ad_response = requests.get(link)
+            ad_soup = BeautifulSoup(ad_response.content,'html.parser')
             
-            db.append(["Linkedin", "", "", ad_date, "Job", location.split(",")[1].strip().split()[0], [], date.today().strftime("%d/%m/%Y"), ""])
+            criteria = ad_soup.find_all('span', 'description__job-criteria-text')
+
+            seniority = criteria[0].text.strip()
+            employment_type = criteria[1].text.strip()
+            
+
+            
+            db.append(["Linkedin", employment_type, "", ad_date, "Job", location.split(',')[1].strip().split()[0], [], date.today().strftime('%Y/%m/%d'), seniority])
             # print()
-            # print(job_title + " | " + company + " | " + location + " | " + ad_date)
-            # print(link)
-            print(job_title + " | " + location)
-            print()
+            # print(ad_title + " | " + company + " | " + location + " | " + ad_date)
+            # print(link)   
+            time.sleep(1) #Delay to prevent status code 429
 
     # if page_number < 1000 and len(ads) == 25:
     #     page_number = page_number + 25
-    #     time.sleep(3)
+    #     time.sleep(3) #Delay to prevent status code 429 (Might be able to lower it)
     #     linkedin_scraper(webpage, page_number)
 
 #DEBUG PRINT, DELETE LATER
-# linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&geoId=106710379&start=0", 0)
+linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&geoId=106710379&start=0", 0)
+for data in db:
+    print(data)
 
-for job in jobs:
-    for muni in geo_ids:
-        linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+str(job)+"&geoId="+str(muni)+"&start=", 0)
-        print()
-        print()
-        print()
-    print(str(db))
+# for job in jobs:
+#     for muni in geo_ids:
+#         linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+str(job)+"&geoId="+str(muni)+"&start=", 0)
+#         print()
+#         print()
+#         print()
+#     for data in db:
+#         print(data)
