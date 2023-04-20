@@ -1,11 +1,12 @@
 CREATE TABLE job_listing (
     id INTEGER NOT NULL,
-    source INT NOT NULL,
+    source VARCHAR(20) NOT NULL,
     employment_type VARCHAR(20),
     duration VARCHAR(20),
     publication_date DATE NOT NULL, 
     job_id INTEGER NOT NULL,
     county VARCHAR(50),
+    years_of_experience INT,
     seniority VARCHAR(15),
     date_gathered DATE NOT NULL,
 
@@ -22,7 +23,6 @@ CREATE TABLE job (
 CREATE TABLE requirement (
     id INTEGER NOT NULL,
     requirement VARCHAR(50) NOT NULL,
-    years_of_experience INT,
     PRIMARY KEY (id)
 );
 

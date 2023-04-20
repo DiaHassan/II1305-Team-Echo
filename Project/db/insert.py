@@ -27,10 +27,10 @@ def insert_data(argument_list, sql_connect, cursor):
 
 
 
-    job_param_list = argument_list[0:4] + [argument_list[5], argument_list[7], argument_list[8]] # Get a sub-list from index 0 to 7
+    job_param_list = argument_list[0:4] + [argument_list[5], argument_list[7], argument_list[8], argument_list[9]] # Get a sub-list from index 0 to 7
     #job_param_list is the list of arguments for the job_listing table.
     delimiter = "','"
-    liststr = delimiter.join(job_param_list)
+    # liststr = delimiter.join(job_param_list)
 
     #SQL commands to insert the job_listing, multiple ones because the information is spread among multiple tables.
     # Also some values derived after insert functions 
@@ -60,7 +60,16 @@ def insert_data(argument_list, sql_connect, cursor):
     #TODO Make sure publication date is in a uniform format and check attributes.
     # Index 0-3 is source, employment type, duration and publication date. These are already strings, job id is a foreing key so the id from job_id is entered there instead of proffession.
 
-    insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, date_gathered, seniority) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"
+
+    if not job_param_list[1]:
+            job_param_list[1] = "null"
+    if not job_param_list[5]:
+            job_param_list[5] = "0"
+    if not job_param_list[7]:
+            job_param_list[7] = "null"
+
+
+    insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, date_gathered, seniority) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"
 
     cursor.execute(insert_job_listing)
     sql_connect.commit()
@@ -70,21 +79,17 @@ def insert_data(argument_list, sql_connect, cursor):
 
     #
     for i in argument_list[6]:
-        if not i[1]:
-            i[1] = "null"
-        else:
-            i[1] = str(i[1])
-        requirement_exist_query = "SELECT id FROM requirement WHERE requirement = '" + i[0] + "' AND years_of_experience IS " + i[1] + ";"
+        requirement_exist_query = "SELECT id FROM requirement WHERE requirement = '" + i + "';"
         requirement_exist_result = cursor.execute(requirement_exist_query).fetchall()
         if not requirement_exist_result:
-            Insert_requirement = "INSERT INTO requirement(requirement, years_of_experience) VALUES ('" + i[0] + "'," + i[1] + ");"
+            Insert_requirement = "INSERT INTO requirement(requirement) VALUES ('" + i + "');"
             cursor.execute(Insert_requirement)
             sql_connect.commit()
         
-        get_requirement_id = "SELECT id FROM requirement WHERE requirement = '" + i[0] + "' AND years_of_experience IS " + i[1] + ";"
+        get_requirement_id = "SELECT id FROM requirement WHERE requirement = '" + i + "';"
         requirement_id = str(cursor.execute(get_requirement_id).fetchall()[0][0])
 
-
+        print(requirement_id + " | " + job_listing_id + " | " + i)
         #Creates row for many to many relation table requirement_relation
         insert_requirement_relation = "INSERT INTO requirement_relation(job_listing_id, requirement_id) VALUES (" + job_listing_id + "," + requirement_id + ");"
         cursor.execute(insert_requirement_relation)
@@ -131,10 +136,11 @@ if __name__ == '__main__':
          "Lärare", 
          "Stockholms län", 
          [ 
-            ["Lärarutbildning", None], 
-            ["Lärar erfarenhet", 4], 
-            ["B Körkort", None]
+            "Lärarutbildning", 
+            "Lärar erfarenhet", 
+            "B Körkort"
          ], 
+         "4",
          "19/04/2023", 
          "Mid-level" 
         ] 
@@ -146,10 +152,11 @@ if __name__ == '__main__':
         "Ingenjör", 
         "Stockholms län", 
         [ 
-            ["Civilingenjörsutbildning", None], 
-            ["Civilingenjörs erfarenhet", 4], 
-            ["B Körkort", None]
+            "Civilingenjörsutbildning",
+            "Civilingenjörs erfarenhet",
+            "B Körkort"
         ], 
+        None,
         "19/04/2023", "Mid-level"] 
         ]
     send_2d_list(test, "echo.db")

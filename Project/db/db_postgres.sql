@@ -1,11 +1,12 @@
 CREATE TABLE job_listing (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
-    source INT NOT NULL,
+    source VARCHAR(20) NOT NULL,
     employment_type VARCHAR(20),
     duration VARCHAR(20),
     publication_date DATE NOT NULL, 
     job_id INT NOT NULL,
     county VARCHAR(50) NOT NULL,
+    years_of_experience INT,
     seniority VARCHAR(15),
     date_gathered DATE NOT NULL
 );
@@ -22,7 +23,6 @@ ALTER TABLE job ADD CONSTRAINT PK_job PRIMARY KEY (id);
 CREATE TABLE requirement (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
     requirement VARCHAR(50) NOT NULL,
-    years_of_experience INT
 );
 
 ALTER TABLE requirement ADD CONSTRAINT PK_requirement PRIMARY KEY (id);
