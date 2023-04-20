@@ -18,7 +18,7 @@ insert.send_2d_list(platsbanken_list, database_name)
 # InsertIntoDatabase.send_2d_list(ledigajobb_list, database_name)
 
 # LinkedIn
-# linkedIn_list = linkedIn.run()
+linkedIn_list = linkedIn.run()
 # insert.send_2d_list(linkedIn_list, database_name)
 
 
