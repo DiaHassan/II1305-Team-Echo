@@ -2,8 +2,22 @@ import requests
 import datetime
 import logging
 import json
+import os
 import sys
-from settings import LOG_LEVEL, LOG_DATE_FORMAT, LOG_FORMAT, DATE_FORMAT, STREAM_URL
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from reqfinder import find_req, find_seniority
+import logging
+
+# URL and format
+BASE_URL = 'https://jobstream.api.jobtechdev.se'
+STREAM_URL = f"{BASE_URL}/stream"
+DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
+
+
+# Logging
+LOG_LEVEL = logging.INFO  # Change INFO to DEBUG for verbose logging
+LOG_FORMAT = '%(asctime)s  %(levelname)-8s %(message)s'
+LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 # Logging
@@ -55,33 +69,49 @@ def extract_data_all_ads(all_ads):
     return list
 
 
+# Takes first 
+def extract_duration(duration):
+    duration = str(duration)
+    for char in duration:
+        if char.isnumeric():
+          return char
+    return 0
+    
+
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad):
-    experience = []
+    prereq = []
     employment_type = ad.get('working_hours_type', {}).get('label', ' ')
-    duration = ad.get('duration', {}).get('label', ' ')
+    duration = extract_duration(ad.get('duration', {}).get('label', ' '))
     publication_date = ad.get('publication_date', ' ')
     occupation_group = ad.get('occupation_group', {}).get('label', ' ')
     county = ad.get('workplace_address', {}).get('region', ' ') 
     date_extracted = datetime.datetime.today().strftime('%Y-%m-%d')
-    experience.append(["experience_required", ad.get('experience_required', ' ')])
-    ############        FIX: MULTIPLE FIELDS IS GATHERED AS DIFFERENT LISTS.        ############
-    #   experience.append(["work_experience", ad.get('must_have', {}).get('work_experiences', ' ').get('label', ' ')])
-    #   experience.append(["education", ad.get('education', ' ')])
-    #   experience.append(["education_level", ad.get('education_level', ' ')])
-    #   experience.append(["skills", ad.get('must_have', {}).get('skills', ' ')]) 
-    #   experience.append(["language", ad.get('must_have', {}).get('languages', {})])
-    #   experience.append(["access_to_own_car", ad.get('access_to_own_car', ' ')])
-    #   experience.append(["driving_license_required", ad.get('driving_license_required', ' ')])
-    #   experience.append(["driving_license", ad.get('driving_license', ' ')])
-    ############################################################################################
+    # experience.append(["experience_required", ad.get('experience_required', ' ')])
+    description = ad.get('description', {}).get('text', ' ')
+    education = find_req(description)
+    # print(years)
+    # print(education)
+    # print(description)
 
+    experience = ad.get('experience_required', ' ')
+    years = ""
+
+    if experience:
+        years = find_seniority(description)
+        if years == "Not specified":
+            years = None
+
+    if education == "Not specified":
+        prereq.append(None)
+    else:
+        prereq.append(education)
+    
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
 
-
     # seniority
-    return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, date_extracted, experience, None]
+    return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, prereq, years, None, date_extracted]
   
 
 # Main script

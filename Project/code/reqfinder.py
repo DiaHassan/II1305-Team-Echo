@@ -3,7 +3,6 @@ import re
 # Job ad test variable
 job_ad = """
 
-
 """
 
 #högskoleutbildning
