@@ -82,6 +82,7 @@ def insert_data(argument_list, sql_connect, cursor):
 
     #
     for i in argument_list[6]:
+        i = i.replace("'","")
         requirement_exist_query = "SELECT id FROM requirement WHERE requirement = '" + i + "';"
         requirement_exist_result = cursor.execute(requirement_exist_query).fetchall()
         if not requirement_exist_result:
