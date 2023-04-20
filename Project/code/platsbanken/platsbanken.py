@@ -77,7 +77,7 @@ def extract_duration(duration):
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad):
-    prereq = []
+    # prereq = None
     employment_type = ad.get('working_hours_type', {}).get('label', ' ')
     duration = extract_duration(ad.get('duration', {}).get('label', ' '))
     publication_date = ad.get('publication_date', ' ')
@@ -85,7 +85,7 @@ def extract_data_ad(ad):
     county = ad.get('workplace_address', {}).get('region', ' ') 
     date_extracted = datetime.datetime.today().strftime('%Y-%m-%d')
     description = ad.get('description', {}).get('text', ' ')
-    education = find_req(description)
+    prereq = find_req(description)
     years = find_seniority(description)
     # experience = ad.get('experience_required', ' ')
 
@@ -94,8 +94,8 @@ def extract_data_ad(ad):
         county = 'Stockholms län'
     
     # Education is specified
-    if education != None:
-        prereq.append(education)
+    # if education != None:
+    #     prereq.append(education)
     
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
