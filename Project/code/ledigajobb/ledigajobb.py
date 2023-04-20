@@ -57,7 +57,7 @@ def create_search_link(lan, work, page):
 def replace_after(my_string, to_replace, replacement):
     index = my_string.find(to_replace) + len(to_replace)
     new_string = my_string[:index] + replacement + my_string[index+1:]
-    # print(new_string) 
+
 
 
 # Joins url to build link to job ad
@@ -89,10 +89,9 @@ def get_work_details(response):
     for i in outer_div:
         info.append(i.text)
     
-    
     if(len(info) == 3):
+        #Sorting the scrapped information
         info[0] = info[0].lower()
-
         if(info[1] == "Tillsvidare"):
             info[1] = 0
         elif(info[1] == "3 - 6 Månader"):
@@ -128,7 +127,7 @@ def find_lan(lan_nb):
 
 # Run from 
 def run():
-    get_all()
+    return get_all()
 
 
 # Scrape all required details from the ad
@@ -137,9 +136,6 @@ def scrape_ad(job_link,lan,work):
     job_code = get_code(job_link)
     
     work_details = get_work_details(job_code)
-    work_details.append("saver 1")
-    work_details.append("saver 2")
-    work_details.append("saver 3")
     result = []
 
     # Data
@@ -171,10 +167,12 @@ def get_all():
     i = 0
     n = 0
     all_jobs = []
+    # Going through all jobs and locations
     for work in yrke_list:
         for lan in range(2,21):
             next_page = True
             response = get_code(create_search_link(lan,work,1))
+            # Looping through and printing out each page
             while next_page:
                 if(next_page == "Twees"): break
                 try:
@@ -189,6 +187,7 @@ def get_all():
                         response = get_code(next_page)
                         continue
                     except: continue
+                # Gets all the sub links then to joing them with the base url and 
                 for half_link in job_links:
                     i += 1
                     print("\n I is vvvvvv")
@@ -200,37 +199,9 @@ def get_all():
     return all_jobs
             
 
-
-    
-
-    
-##################################################
 # Main function for testing the code
 def main():
-    get_all()
-
-
-    # response = get_code("https://ledigajobb.se/jobb/a4c766/trainee-backend-utvecklare")
-    
-    #print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
-    # print(yrke_list)
-    # get_all("link")
-
-    # job_links = get_job_links(get_jobs(get_code(create_search_link(15,"lärare",1))))
-    # print(job_links)
-    # print(get_next_page(get_code("https://ledigajobb.se/sok?cc=15&s=l%C3%A4rare&p=2")))
-    # with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     next_page = True
-    #     response = get_code(create_search_link(15,"lärare",1))
-    #     while next_page:
-    #         if(next_page == "Twees"): break
-    #         job_links = get_job_links(get_jobs(response))
-    #         for half_link in job_links:
-    #             writer.writerow(scrape_ad(base_url+half_link,15,"lärare"))
-    #         next_page = get_next_page(response)
-    #         if (next_page == False): next_page = "Twees"
-    #         response = get_code(base_url+next_page)
+    run()
 
 if __name__ == '__main__':
     main()
