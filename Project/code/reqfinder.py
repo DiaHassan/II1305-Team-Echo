@@ -56,7 +56,7 @@ def find_req(job_ad):
             tbr = reg[1]
             break
         else:
-            tbr= "Not specified"
+            tbr = None
 
     return tbr
 
@@ -103,6 +103,6 @@ def find_seniority(job_ad):
             tbr = reg[1]
             break
         else:
-            tbr= "Not specified"
+            tbr = None
 
     return tbr

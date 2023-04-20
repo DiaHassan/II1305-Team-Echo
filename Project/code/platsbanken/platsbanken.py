@@ -6,7 +6,18 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from reqfinder import find_req, find_seniority
-from settings import LOG_LEVEL, LOG_DATE_FORMAT, LOG_FORMAT, DATE_FORMAT, STREAM_URL
+import logging
+
+# URL and format
+BASE_URL = 'https://jobstream.api.jobtechdev.se'
+STREAM_URL = f"{BASE_URL}/stream"
+DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
+
+
+# Logging
+LOG_LEVEL = logging.INFO  # Change INFO to DEBUG for verbose logging
+LOG_FORMAT = '%(asctime)s  %(levelname)-8s %(message)s'
+LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 # Logging
@@ -58,11 +69,20 @@ def extract_data_all_ads(all_ads):
     return list
 
 
+# Takes first 
+def extract_duration(duration):
+    duration = str(duration)
+    for char in duration:
+        if char.isnumeric():
+          return char
+    return 0
+    
+
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad):
     prereq = []
     employment_type = ad.get('working_hours_type', {}).get('label', ' ')
-    duration = ad.get('duration', {}).get('label', ' ')
+    duration = extract_duration(ad.get('duration', {}).get('label', ' '))
     publication_date = ad.get('publication_date', ' ')
     occupation_group = ad.get('occupation_group', {}).get('label', ' ')
     county = ad.get('workplace_address', {}).get('region', ' ') 
