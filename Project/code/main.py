@@ -18,7 +18,7 @@ database_name = "echo.db"
 # InsertIntoDatabase.send_data(ledigajobb_list)
 
 # LinkedIn
-# linkedIn_list = linkedIn.run()
+linkedIn_list = linkedIn.run()
 # insert.send_2d_list(linkedIn_list, database_name)
 
 
