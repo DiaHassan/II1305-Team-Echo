@@ -15,7 +15,7 @@ cities = ["Upplands Väsby, Stockholm", "Vallentuna, Stockholm", "Österåker, S
 #Identifies the searchbar
 searchbar = driver.find_element(By.XPATH, ("//input[@id='job-search-bar-location']"))
 
-file = codecs.open('\Project\code\linkedIn\geo_ids.txt','w', 'utf-8')
+file = codecs.open('linkedIn\geo_ids.txt','w', 'utf-8')
 for city in cities:
     # Writes a municipality
     searchbar.clear()
