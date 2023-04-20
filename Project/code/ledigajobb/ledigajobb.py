@@ -1,8 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-from requirementfinder import find_req
-from job_lan import lan_list, yrke_list
 import csv
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from reqfinder import find_req
+from job_info import lan_list, yrke_list
+
 
 # Define the URL to scrape
 base_url = 'https://ledigajobb.se'
