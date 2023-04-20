@@ -31,22 +31,24 @@ def linkedin_scraper(webpage, page_number):
     response = requests.get(str(next_page))
     soup = BeautifulSoup(response.content,'html.parser')
 
+    # Check that ads actually exist on page
     found_jobs = soup.find('li')
-
     if found_jobs is None:
         print("no ads found")
         return
     else:
         # List of all adds per page.
-        # If the titel of the job posting contains the link, then the tag won't be a div
+        # If the titel of the job posting contains a link, then the tag won't be a div
         ads = soup.find_all(['div', 'a'], class_='base-card relative w-full hover:no-underline focus:no-underline base-card--link base-search-card base-search-card--link job-search-card')
         for ad in ads:
             # If the posting is newly published, it's tag is different
+            # DATA NOT NEEDED, DELETE LATER
             job_title = ad.find('h3', class_='base-search-card__title')
             if job_title == None:
                 job_title = ad.find('h3', class_='base-search-card__title--new').text.strip()
             else:
                 job_title = job_title.text.strip()
+
 
             # If the posting is newly published, it's tag is different
             ad_date = ad.find('time', class_='job-search-card__listdate')
@@ -54,10 +56,9 @@ def linkedin_scraper(webpage, page_number):
                 ad_date = ad.find('time', class_='job-search-card__listdate--new').text.strip()
             else:
                 ad_date = ad_date.text.strip()
-            
+        
             # Calculating the estimated publication date (unable to be exact)
             ad_date_list = ad_date.split(" ")
-
             match ad_date_list[1]:
                 case 'days' | 'day':
                     ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0]))
@@ -67,18 +68,21 @@ def linkedin_scraper(webpage, page_number):
                     ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0])*31)
                 case _:
                     ad_publication_date = date.today()
-
             ad_publication_date = str(ad_publication_date)
 
-            #DATA NOT NEEDED, DELETE LATER
+
+            # DATA NOT NEEDED, DELETE LATER
             #company = ad.find('h4', class_='base-search-card__subtitle').text.strip()
+
 
             location = ad.find('span', class_='job-search-card__location').text.strip()
             
+            # Removes non swedish ads
             location_country = location.split(", ")[-1]
-
             if location_country not in ["Sweden", "sweden", "Svergie", "sverige"]:
                 continue
+
+
             # Depending on if the title contains the link        
             link = ad.find('a', class_='base-card__full-link')
             if link == None:
@@ -98,7 +102,7 @@ def linkedin_scraper(webpage, page_number):
             
 
             
-            db.append(["Linkedin", employment_type, "", ad_date, "Job", location.split(',')[1].strip().split()[0], [], date.today().strftime('%Y/%m/%d'), seniority])
+            db.append(["Linkedin", employment_type, "", ad_publication_date, "Job", location.split(',')[1].strip().split()[0], [], date.today().strftime('%Y-%m-%d'), seniority])
             # print()
             # print(ad_title + " | " + company + " | " + location + " | " + ad_date)
             # print(link)   
