@@ -87,10 +87,14 @@ def extract_data_ad(ad):
     description = ad.get('description', {}).get('text', ' ')
     education = find_req(description)
 
-    #experience = ad.get('experience_required', ' ')
+    # county fix
+    if county == None:
+        county = 'Stockholms län'
+
+    # experience = ad.get('experience_required', ' ')
     years = find_seniority(description)
 
-
+    # Education
     if education == "Not specified":
         prereq.append(None)
     
