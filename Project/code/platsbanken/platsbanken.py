@@ -89,10 +89,9 @@ def extract_data_ad(ad):
 
     #experience = ad.get('experience_required', ' ')
     years = find_seniority(description)
-
-
-    if education == "Not specified":
-        prereq.append(None)
+    
+    if education != None:
+        prereq.append(education)
     
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
