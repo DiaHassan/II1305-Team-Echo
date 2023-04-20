@@ -37,7 +37,7 @@ def run():
 def get_ads():
     # Declare variables
     url = STREAM_URL
-    date = datetime.datetime.now() - datetime.timedelta(30)  
+    date = datetime.datetime.now() - datetime.timedelta(1)  
     params = {'date': date.strftime(DATE_FORMAT)}
 
     # Writing log info to the terminal
