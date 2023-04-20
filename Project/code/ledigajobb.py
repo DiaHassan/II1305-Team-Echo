@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from requirementfinder import find_req
-import csv
+from job_lan import lan_list, yrke_list
 
 # Define the URL to scrape
 base_url = 'https://ledigajobb.se'
@@ -112,6 +112,10 @@ def scrape_ad(job_link):
             seniority]
 
 
+def get_all(link):
+
+    return [1][2]
+
     
 
     
@@ -120,17 +124,8 @@ def scrape_ad(job_link):
 def main():
     # response = get_code("https://ledigajobb.se/jobb/a4c766/trainee-backend-utvecklare")
     
-    # print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
-    county_data = []
-
-    with open('lan.csv', 'r') as csvfile:
-        reader = csv.reader(csvfile)
-        for row in reader:
-            county_code = row[0].split()[0]
-            county_name = ' '.join(row[0].split()[1:])
-            county_data.append((county_code, county_name))
-
-    print(county_data)
+    print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
+    # print(yrke_list)
 
 if __name__ == '__main__':
     main()
