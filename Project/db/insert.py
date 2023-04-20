@@ -62,6 +62,8 @@ def insert_data(argument_list, sql_connect, cursor):
     # Index 0-3 is source, employment type, duration and publication date. These are already strings, job id is a foreing key so the id from job_id is entered there instead of proffession.
 
 
+
+    # Handling 'None' inputs
     if not job_param_list[1]:
             job_param_list[1] = "null"
     if not job_param_list[5]:
