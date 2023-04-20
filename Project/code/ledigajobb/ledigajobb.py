@@ -72,11 +72,8 @@ def get_date(response):
 
 # Returns prerequiered
 def get_prerequiered(response):
-    req = find_req(response.find('div', class_='mb-1').text)
-    if(req == None):
-        return []
-    else:
-        return [req]
+    return find_req(response.find('div', class_='mb-1').text)
+  
 
 
 # Returns employment type, duration, and seniority
@@ -192,7 +189,7 @@ def get_all():
                     i += 1
                     print("\n I is vvvvvv")
                     print(i) 
-                    all_jobs.append(scrape_ad(base_url+half_link,lan, work))
+                    print(scrape_ad(base_url+half_link,lan, work))
                 next_page = get_next_page(response)
                 if (next_page == False): next_page = "Twees"
                 response = get_code(next_page)
