@@ -86,21 +86,20 @@ def extract_data_ad(ad):
     date_extracted = datetime.datetime.today().strftime('%Y-%m-%d')
     description = ad.get('description', {}).get('text', ' ')
     education = find_req(description)
+    years = find_seniority(description)
+    # experience = ad.get('experience_required', ' ')
 
-    # county fix
+    # County fix
     if county == None:
         county = 'Stockholms län'
-
-    # experience = ad.get('experience_required', ' ')
-    years = find_seniority(description)
     
+    # Education is specified
     if education != None:
         prereq.append(education)
     
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
 
-    # seniority
     return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, prereq, years, None, date_extracted]
   
 
