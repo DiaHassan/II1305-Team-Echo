@@ -1,4 +1,3 @@
-[
 {100564495, Upplands Väsby, Stockholm}
 {104683830, Vallentuna, Stockholm}
 {103261173, Österåker, Stockholm}
@@ -216,4 +215,74 @@
 {106549675, Hallsberg, Örebro}
 {100112478, Degerfors, Örebro}
 {101679245, Hällefors, Örebro}
-]
+{105314029, Örebro, Örebro}
+{106135447, Kumla, Örebro}
+{105408659, Askersund, Örebro}
+{101810949, Karlskoga, Örebro}
+{101317645, Nora, Örebro}
+{106336069, Lindesberg, Örebro}
+{104448936, Kil, Värmland}
+{100328139, Eda, Värmland}
+{100937224, Torsby, Värmland}
+{105335884, Storfors, Värmland}
+{100180379, Hammarö, Värmland}
+{105385333, Munkfors, Värmland}
+{104779600, Forshaga, Värmland}
+{103474666, Grums, Värmland}
+{104656329, Årjäng, Värmland}
+{103078487, Sunne, Värmland}
+{107127441, Karlstad, Värmland}
+{105871373, Kristinehamn, Värmland}
+{105980896, Filipstad, Värmland}
+{104975113, Hagfors, Värmland}
+{100499792, Arvika, Värmland}
+{100523169, Säffle, Värmland}
+{100221309, Härryda, Västra Götaland}
+{104668318, Partille, Västra Götaland}
+{102364863, Öckerö, Västra Götaland}
+{105477815, Stenungsund, Västra Götaland}
+{104480043, Tjörn, Västra Götaland}
+{101890025, Orust, Västra Götaland}
+{105070754, Sotenäs, Västra Götaland}
+{101636767, Munkedal, Västra Götaland}
+{104968324, Tanum, Västra Götaland}
+{100478425, Dals-Ed, Västra Götaland}
+{103767615, Färgelanda, Västra Götaland}
+{106835824, Ale, Västra Götaland}
+{103593923, Lerum, Västra Götaland}
+{100134621, Vårgårda, Västra Götaland}
+{100358876, Bollebygd, Västra Götaland}
+{101798531, Grästorp, Västra Götaland}
+{103210226, Essunga, Västra Götaland}
+{106808472, Karlsborg, Västra Götaland}
+{100010089, Gullspång, Västra Götaland}
+{106768853, Tranemo, Västra Götaland}
+{100456918, Bengtsfors, Västra Götaland}
+{105061351, Mellerud, Västra Götaland}
+{106109349, Lilla Edet, Västra Götaland}
+{105595037, Mark, Västra Götaland}
+{102797039, Svenljunga, Västra Götaland}
+{100036516, Herrljunga, Västra Götaland}
+{102395479, Vara, Västra Götaland}
+{104602803, Götene, Västra Götaland}
+{104808214, Tibro, Västra Götaland}
+{102950811, Töreboda, Västra Götaland}
+{104114836, Göteborg, Västra Götaland}
+{104220311, Mölndal, Västra Götaland}
+{100005113, Kungälv, Västra Götaland}
+{102817435, Lysekil, Västra Götaland}
+{101143683, Uddevalla, Västra Götaland}
+{105394504, Strömstad, Västra Götaland}
+{103278239, Vänersborg, Västra Götaland}
+{100143515, Trollhättan, Västra Götaland}
+{106764754, Alingsås, Västra Götaland}
+{104964648, Borås, Västra Götaland}
+{100336438, Ulricehamn, Västra Götaland}
+{101525275, Åmål, Västra Götaland}
+{106977262, Mariestad, Västra Götaland}
+{106221956, Lidköping, Västra Götaland}
+{102640575, Skara, Västra Götaland}
+{102773520, Skövde, Västra Götaland}
+{103082221, Hjo, Västra Götaland}
+{103011545, Tidaholm, Västra Götaland}
+{105505966, Falköping, Västra Götaland}
