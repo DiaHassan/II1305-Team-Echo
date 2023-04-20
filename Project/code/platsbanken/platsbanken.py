@@ -18,6 +18,9 @@ def run():
 
    # Creates a 2d list of ads containting sought parameters
    list = extract_data_all_ads(all_ads)
+   print(list[0])
+   print(list[500])
+   print(list[1000])  
    return list
 
 
@@ -54,11 +57,26 @@ def extract_data_all_ads(all_ads):
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad):
-    ad_id = ad['id']
-    email = ad.get('application_details', {}).get('email', ' ')
-    city = ad.get('workplace_address', {}).get('municipality', ' ')
-    occupation = ad.get('occupation', {}).get('label', ' ')
-    return [ad_id, email, city, occupation]
+    experience = []
+    employment_type = ad.get('working_hours_type', {}).get('label', ' ')
+    duration = ad.get('duration', {}).get('label', ' ')
+    publication_date = ad.get('publication_date', ' ')
+    occupation_group = ad.get('occupation_group', {}).get('label', ' ')
+    county = ad.get('workplace_address', {}).get('region', ' ') 
+    experience.append(["experience_required", ad.get('experience_required', ' ')])
+    ############        FIX: MULTIPLE FIELDS IS GATHERED AS DIFFERENT LISTS.        ############
+    #   experience.append(["work_experience", ad.get('must_have', {}).get('work_experiences', ' ').get('label', ' ')])
+    #   experience.append(["education", ad.get('education', ' ')])
+    #   experience.append(["education_level", ad.get('education_level', ' ')])
+    #   experience.append(["skills", ad.get('must_have', {}).get('skills', ' ')]) 
+    #   experience.append(["language", ad.get('must_have', {}).get('languages', {})])
+    #   experience.append(["access_to_own_car", ad.get('access_to_own_car', ' ')])
+    #   experience.append(["driving_license_required", ad.get('driving_license_required', ' ')])
+    #   experience.append(["driving_license", ad.get('driving_license', ' ')])
+    ############################################################################################
+
+    # seniority
+    return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, experience]
   
 
 # Main script
