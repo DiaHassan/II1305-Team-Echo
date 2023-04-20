@@ -27,4 +27,5 @@ Todo
  - [Albin Durfors](https://github.com/DrakenDurfors)
  - [Axel Lindqvist](https://github.com/ProgrammingCookies)
  - [Klara Fält](https://github.com/kflt)
+ - [Zak Ora](https://github.com/ZakOra1)
 <!--[Ditt namn här](länk till din Github-profil)-->

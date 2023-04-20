@@ -25,7 +25,8 @@ import pandas as pd
 
 def insert_data(argument_list, sql_connect, cursor):
 
-
+    argument_list[2] = str(argument_list[2])
+    argument_list[7] = str(argument_list[7])
 
     job_param_list = argument_list[0:4] + [argument_list[5], argument_list[7], argument_list[8], argument_list[9]] # Get a sub-list from index 0 to 7
     #job_param_list is the list of arguments for the job_listing table.
@@ -65,6 +66,8 @@ def insert_data(argument_list, sql_connect, cursor):
             job_param_list[1] = "null"
     if not job_param_list[5]:
             job_param_list[5] = "0"
+    if not job_param_list[6]:
+            job_param_list[6] = "null"
     if not job_param_list[7]:
             job_param_list[7] = "null"
 
@@ -89,7 +92,6 @@ def insert_data(argument_list, sql_connect, cursor):
         get_requirement_id = "SELECT id FROM requirement WHERE requirement = '" + i + "';"
         requirement_id = str(cursor.execute(get_requirement_id).fetchall()[0][0])
 
-        print(requirement_id + " | " + job_listing_id + " | " + i)
         #Creates row for many to many relation table requirement_relation
         insert_requirement_relation = "INSERT INTO requirement_relation(job_listing_id, requirement_id) VALUES (" + job_listing_id + "," + requirement_id + ");"
         cursor.execute(insert_requirement_relation)
@@ -127,36 +129,41 @@ def send_2d_list(list, path):
 if __name__ == '__main__':
 
 
-    test = [ 
-        [
-         "Platsbanken", 
-         "Heltid", 
-         "Tillsvidare", 
-         "19/04/2023",  
-         "Lärare", 
-         "Stockholms län", 
-         [ 
-            "Lärarutbildning", 
-            "Lärar erfarenhet", 
-            "B Körkort"
-         ], 
-         "4",
-         "Mid-level",
-         "19/04/2023"
-        ] 
-        ,   
-        ["Platsbanken", 
-        "Heltid", 
-        "Tillsvidare", 
-        "19/04/2023",  
-        "Ingenjör", 
-        "Stockholms län", 
-        [], 
-        None,
-        "Mid-level",
-        "19/04/2023"
-        ] 
-        ]
+    # test = [ 
+    #     [
+    #      "Platsbanken", 
+    #      "Heltid", 
+    #      "Tillsvidare", 
+    #      "19/04/2023",  
+    #      "Lärare", 
+    #      "Stockholms län", 
+    #      [ 
+    #         "Lärarutbildning", 
+    #         "Lärar erfarenhet", 
+    #         "B Körkort"
+    #      ], 
+    #      "4",
+    #      "Mid-level",
+    #      "19/04/2023"
+    #     ] 
+    #     ,   
+    #     ["Platsbanken", 
+    #     "Heltid", 
+    #     "Tillsvidare", 
+    #     "19/04/2023",  
+    #     "Ingenjör", 
+    #     "Stockholms län", 
+    #     [], 
+    #     None,
+    #     "Mid-level",
+    #     "19/04/2023"
+    #     ] 
+    #     ]
+    
+    test = [
+            ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', ['Requires a relevant degree'], 0, None, '2023-04-20'],
+            ['ledigajobb', 'heltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', [], 0, None, '2023-04-20']
+    ]
     send_2d_list(test, "echo.db")
 
 
