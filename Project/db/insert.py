@@ -28,8 +28,8 @@ def insert_data(argument_list, sql_connect, cursor):
     argument_list[2] = str(argument_list[2])
     argument_list[7] = str(argument_list[7])
 
-    job_param_list = argument_list[0:4] + [argument_list[5], argument_list[7], argument_list[8], argument_list[9]] # Get a sub-list from index 0 to 7
     #job_param_list is the list of arguments for the job_listing table.
+    job_param_list = argument_list[0:4] + [argument_list[5], argument_list[7], argument_list[8], argument_list[9]]
     delimiter = "','"
     # liststr = delimiter.join(job_param_list)
 
@@ -43,6 +43,7 @@ def insert_data(argument_list, sql_connect, cursor):
 
     job_exist_result = cursor.execute(job_exists_query).fetchall()
 
+    #If job_exist_result is empty(empty lists are interpreted as false), insert profession. 
     if not job_exist_result:
         insert_job = "INSERT INTO job(profession) VALUES ('" + argument_list[4] + "');"
         cursor.execute(insert_job)
@@ -52,13 +53,9 @@ def insert_data(argument_list, sql_connect, cursor):
     get_job_id = "SELECT id FROM job WHERE profession = '" + argument_list[4] + "';"
     job_id = str(cursor.execute(get_job_id).fetchall()[0][0])
 
-    
-
-    #Getting work_hours_id 
 
 
     #Create Job listing here and get job_listing_id
-    #TODO Make sure publication date is in a uniform format and check attributes.
     # Index 0-3 is source, employment type, duration and publication date. These are already strings, job id is a foreing key so the id from job_id is entered there instead of proffession.
 
 
@@ -80,7 +77,7 @@ def insert_data(argument_list, sql_connect, cursor):
 
 
 
-    #
+    #For each requirement in the job listing, create/find that requirement and create a many-many relation between the job_listing and requirement.
     for i in argument_list[6]:
         requirement_exist_query = "SELECT id FROM requirement WHERE requirement = '" + i + "';"
         requirement_exist_result = cursor.execute(requirement_exist_query).fetchall()
