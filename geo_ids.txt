@@ -213,12 +213,3 @@
 {106549675, Hallsberg, Örebro}
 {100112478, Degerfors, Örebro}
 {101679245, Hällefors, Örebro}
-]
-
-
-    found_jobs = soup.find('main', class_='two-pane-serp-page__results')
-
-    if found_jobs is None:
-        print("no ads found")
-        return
-    else:
