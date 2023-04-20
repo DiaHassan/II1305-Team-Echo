@@ -28,6 +28,9 @@ def insert_data(argument_list, sql_connect, cursor):
     argument_list[2] = str(argument_list[2])
     argument_list[7] = str(argument_list[7])
 
+    # Demo
+    print(argument_list)
+
     job_param_list = argument_list[0:4] + [argument_list[5], argument_list[7], argument_list[8], argument_list[9]] # Get a sub-list from index 0 to 7
     #job_param_list is the list of arguments for the job_listing table.
     delimiter = "','"

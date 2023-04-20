@@ -100,7 +100,16 @@ def extract_data_ad(ad):
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
 
-    return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, prereq, years, None, date_extracted]
+    return ["platsbanken", 
+            employment_type, 
+            duration, 
+            publication_date, 
+            occupation_group, 
+            county, 
+            prereq, 
+            years, 
+            None, 
+            date_extracted]
   
 
 # Main script
