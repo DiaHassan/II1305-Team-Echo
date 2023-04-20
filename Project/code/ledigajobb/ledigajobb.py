@@ -131,7 +131,6 @@ def run():
 def scrape_ad(job_link,lan,work):
     # Init
     job_code = get_code(job_link)
-    
     work_details = get_work_details(job_code)
     result = []
 
