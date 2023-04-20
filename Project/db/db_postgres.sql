@@ -2,7 +2,7 @@ CREATE TABLE job_listing (
     id INT GENERATED ALWAYS AS IDENTITY NOT NULL,
     source INT NOT NULL,
     employment_type VARCHAR(20),
-    duration INT,
+    duration VARCHAR(20),
     publication_date DATE NOT NULL, 
     job_id INT NOT NULL,
     county VARCHAR(50) NOT NULL,
