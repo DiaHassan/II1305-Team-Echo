@@ -2,25 +2,23 @@ import requests
 import datetime
 import logging
 import json
-import os
 import sys
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+import os
 from reqfinder import find_req, find_seniority
-import logging
-
-# URL and format
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+  
+# URL and format for settings
 BASE_URL = 'https://jobstream.api.jobtechdev.se'
 STREAM_URL = f"{BASE_URL}/stream"
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
-# Logging
+# Logging for settings
 LOG_LEVEL = logging.INFO  # Change INFO to DEBUG for verbose logging
 LOG_FORMAT = '%(asctime)s  %(levelname)-8s %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-
-# Logging
+# Logging for termnial
 log = logging.getLogger(__name__)
 logging.basicConfig(stream=sys.stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 
@@ -40,7 +38,6 @@ def run():
 
 # Retrieves all ads in full
 def get_ads():
-
     # Declare variables
     url = STREAM_URL
     date = datetime.datetime.now() - datetime.timedelta(1)  # test, timedelta parameter is days and should be 30
@@ -87,12 +84,8 @@ def extract_data_ad(ad):
     occupation_group = ad.get('occupation_group', {}).get('label', ' ')
     county = ad.get('workplace_address', {}).get('region', ' ') 
     date_extracted = datetime.datetime.today().strftime('%Y-%m-%d')
-    # experience.append(["experience_required", ad.get('experience_required', ' ')])
     description = ad.get('description', {}).get('text', ' ')
     education = find_req(description)
-    # print(years)
-    # print(education)
-    # print(description)
 
     experience = ad.get('experience_required', ' ')
     years = ""
