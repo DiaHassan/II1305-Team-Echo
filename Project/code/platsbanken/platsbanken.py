@@ -63,6 +63,7 @@ def extract_data_ad(ad):
     publication_date = ad.get('publication_date', ' ')
     occupation_group = ad.get('occupation_group', {}).get('label', ' ')
     county = ad.get('workplace_address', {}).get('region', ' ') 
+    date_extracted = datetime.datetime.today().strftime('%Y-%m-%d')
     experience.append(["experience_required", ad.get('experience_required', ' ')])
     ############        FIX: MULTIPLE FIELDS IS GATHERED AS DIFFERENT LISTS.        ############
     #   experience.append(["work_experience", ad.get('must_have', {}).get('work_experiences', ' ').get('label', ' ')])
@@ -75,8 +76,12 @@ def extract_data_ad(ad):
     #   experience.append(["driving_license", ad.get('driving_license', ' ')])
     ############################################################################################
 
+    # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
+    publication_date = publication_date[:10]
+
+
     # seniority
-    return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, experience]
+    return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, date_extracted, experience, None]
   
 
 # Main script
