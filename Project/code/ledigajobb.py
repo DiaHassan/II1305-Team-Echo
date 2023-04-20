@@ -112,8 +112,11 @@ def scrape_ad(job_link):
             seniority]
 
 
-def get_all(link):
-
+def get_all():
+    for work in yrke_list:
+        for lan in lan_list:
+            job_links = get_job_links(get_jobs(get_code(create_search_link(lan,work,0))))
+            
     return [1][2]
 
     
@@ -124,8 +127,14 @@ def get_all(link):
 def main():
     # response = get_code("https://ledigajobb.se/jobb/a4c766/trainee-backend-utvecklare")
     
-    print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
+    #print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
     # print(yrke_list)
+    # get_all("link")
+    temp = get_jobs(get_code(create_search_link(15,"lärare",1)))
+    print(temp)
+    print(get_job_links(temp))
+    # job_links = get_job_links(get_jobs(get_code(create_search_link(15,"lärare",1))))
+    # print(job_links)
 
 if __name__ == '__main__':
     main()
