@@ -72,7 +72,11 @@ def get_date(response):
 
 # Returns prerequiered
 def get_prerequiered(response):
-    return find_req(response.find('div', class_='mb-1').text)
+    req = find_req(response.find('div', class_='mb-1').text)
+    if(req == None):
+        return []
+    else:
+        return [req]
 
 
 # Returns employment type, duration, and seniority
@@ -84,16 +88,31 @@ def get_work_details(response):
     # Initial fill
     for i in outer_div:
         info.append(i.text)
-
+    
     
     if(len(info) == 3):
+        info[0] = info[0].lower()
+
+        if(info[1] == "Tillsvidare"):
+            info[1] = 0
+        elif(info[1] == "3 - 6 Månader"):
+            info[1] = 3
+        elif(info[1] == "6 Månader eller längre"):
+            info[1] = 6
+        elif(info[1] == "11 Dagar - 3 Månader"):
+            info[1] = 2
+        elif(info[1] == "Max 10 dagar"):
+            info[1] = 1
+        else:
+            info[1] = 0 
         info[2] = info[2].strip().split()
+
         try:
             info[2] = info[2][0] + ' ' +info[2][1]
         except:
             info[2] = info[2][0]
     else:
-        info[0] = info[0].strip().split()[0]
+        info[0] = "övrigt"
         info.append("None")
         info.append("None")
 
