@@ -75,6 +75,11 @@ def linkedin_scraper(webpage, page_number):
 
         location = ad.find('span', class_='job-search-card__location').text.strip()
 
+        location_country = location.split(", ")[-1]
+
+        if location_country not in ["Sweden", "sweden", "Svergie", "sverige"]:
+            continue
+
         # Depending on if the title contains the link        
         link = ad.find('a', class_='base-card__full-link')
         if link == None:
@@ -96,12 +101,12 @@ def linkedin_scraper(webpage, page_number):
     #     linkedin_scraper(webpage, page_number)
 
 #DEBUG PRINT, DELETE LATER
-# linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&geoId=106710379&start=0", 0)
+linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&geoId=101759788&start=0", 0)
 
-for job in jobs:
-    for muni in geo_ids:
-        linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+str(job)+"&geoId="+str(muni)+"&start=", 0)
-        print()
-        print()
-        print()
-    print(str(db))
+# for job in jobs:
+#     for muni in geo_ids:
+#         linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+str(job)+"&geoId="+str(muni)+"&start=", 0)
+#         print()
+#         print()
+#         print()
+#     print(str(db))
