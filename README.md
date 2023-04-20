@@ -4,16 +4,20 @@
 ## About The Project
 <!-- Bakgrund -->
 TODO
-#### Spring 2023
 
 ### Built With
-Todo
-<!-- Lista av språk och verktyg vi använt -->
+- python
+- sql
+
+### Dependencies
+Python libraries used:
+- requests
+- beautifulsoup4
+- requests
 
 
 ## Usage
-Todo
-<!-- Hur man använder produkten -->
+- Project/code/main.py to webscrape and store the data in echo.db 
 
 
 ## Website
