@@ -18,18 +18,9 @@ def run():
 
    # Creates a 2d list of ads containting sought parameters
    list = extract_data_all_ads(all_ads)
-   #print(list[0])
-   #print(list[500])
-   #print(list[1000])
-   flag = True
-   i = 0
-   while flag:
-    if list[i][6] != []:
-        break
-    i += 1
-    
-   print(list[i])    
-
+   print(list[0])
+   print(list[500])
+   print(list[1000])  
    return list
 
 
