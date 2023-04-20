@@ -103,6 +103,6 @@ def find_seniority(job_ad):
             tbr = reg[1]
             break
         else:
-            tbr = None
+            tbr = 0
 
     return tbr

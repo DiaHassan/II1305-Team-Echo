@@ -87,13 +87,9 @@ def extract_data_ad(ad):
     description = ad.get('description', {}).get('text', ' ')
     education = find_req(description)
 
-    experience = ad.get('experience_required', ' ')
-    years = ""
+    #experience = ad.get('experience_required', ' ')
+    years = find_seniority(description)
 
-    if experience:
-        years = find_seniority(description)
-        if years == "Not specified":
-            years = None
 
     if education == "Not specified":
         prereq.append(None)
