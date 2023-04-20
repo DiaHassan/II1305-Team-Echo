@@ -4,8 +4,8 @@ import logging
 import json
 import sys
 import os
-from reqfinder import find_req, find_seniority
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from reqfinder import find_req, find_seniority
   
 # URL and format for settings
 BASE_URL = 'https://jobstream.api.jobtechdev.se'
@@ -77,7 +77,7 @@ def extract_duration(duration):
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad):
-    prereq = []
+    # prereq = None
     employment_type = ad.get('working_hours_type', {}).get('label', ' ')
     duration = extract_duration(ad.get('duration', {}).get('label', ' '))
     publication_date = ad.get('publication_date', ' ')
@@ -85,18 +85,21 @@ def extract_data_ad(ad):
     county = ad.get('workplace_address', {}).get('region', ' ') 
     date_extracted = datetime.datetime.today().strftime('%Y-%m-%d')
     description = ad.get('description', {}).get('text', ' ')
-    education = find_req(description)
-
-    #experience = ad.get('experience_required', ' ')
+    prereq = find_req(description)
     years = find_seniority(description)
+    # experience = ad.get('experience_required', ' ')
+
+    # County fix
+    if county == None:
+        county = 'Stockholms län'
     
-    if education != None:
-        prereq.append(education)
+    # Education is specified
+    # if education != None:
+    #     prereq.append(education)
     
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
 
-    # seniority
     return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, prereq, years, None, date_extracted]
   
 

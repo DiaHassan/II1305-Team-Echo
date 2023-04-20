@@ -3,7 +3,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from db import insert
 from platsbanken import platsbanken
-#from linkedIn import ...
+from linkedIn import linkedIn
 
 
 # Database
@@ -19,7 +19,7 @@ insert.send_2d_list(platsbanken_list, database_name)
 
 # LinkedIn
 # linkedIn_list = linkedIn.run()
-# insert.send_data(linkedIn_list, database_name)
+# insert.send_2d_list(linkedIn_list, database_name)
 
 
 

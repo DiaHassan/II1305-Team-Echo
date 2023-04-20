@@ -36,11 +36,11 @@ def linkedin_scraper(job, municipality, page_number):
         for ad in ads:
             # If the posting is newly published, it's tag is different
             # DATA NOT NEEDED, DELETE LATER
-            # job_title = ad.find('h3', class_='base-search-card__title')
-            # if job_title == None:
-            #     job_title = ad.find('h3', class_='base-search-card__title--new').text.strip()
-            # else:
-            #     job_title = job_title.text.strip()
+            job_title = ad.find('h3', class_='base-search-card__title')
+            if job_title == None:
+                job_title = ad.find('h3', class_='base-search-card__title--new').text.strip()
+            else:
+                job_title = job_title.text.strip()
 
 
             # If the posting is newly published, it's tag is different
@@ -88,22 +88,31 @@ def linkedin_scraper(job, municipality, page_number):
             ad_response = requests.get(link)
             ad_soup = BeautifulSoup(ad_response.content,'html.parser')
             
-            criteria = ad_soup.find_all('span', 'description__job-criteria-text')
+            criteria = ad_soup.find_all('li', class_='description__job-criteria-item')
             ad_description = ad_soup.find('div', 'show-more-less-html__markup').text
 
-            seniority = criteria[0].text.strip()
-            employment_type = criteria[1].text.strip()
+            # Check if ad has these criterias
+            for item in criteria:
+                header = item.find('h3', class_='description__job-criteria-subheader').text.strip()
+                
+                if(header == 'Yrkesnivå'):
+                    seniority = item.find('span', class_='description__job-criteria-text--criteria').text.strip()
+                if(header == 'Anställningstyp'):
+                    employment_type = item.find('span', class_='description__job-criteria-text--criteria').text.strip()
+
             education = find_req(ad_description)
 
-
+            print(job_title + " | " + employment_type)
             list.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], [education], None, date.today().strftime('%Y-%m-%d'), seniority])  
+            
             time.sleep(1) #Delay to prevent status code 429
 
     if page_number < 1000 and len(ads) == 25:
         page_number = page_number + 25
         time.sleep(1) #Delay to prevent status code 429 (Might be able to lower it)
         linkedin_scraper(job, municipality, page_number)
-
+    for l in list:
+        print(l)
     return(list)
 
 
@@ -112,10 +121,10 @@ def run():
     db = []
 
     # Jobs
-    jobs = ["Lärare"]
+    jobs = ["Ingenjör"]
 
     # Geo ids
-    geo_ids = [105085359]
+    geo_ids = [100907646]
     # with open('geo_ids.txt', 'r') as f:
     #     for line in f:
     #         # Patternmatches for a number with a curly bracket before it and a comma sign after it.
@@ -126,11 +135,10 @@ def run():
     for job in jobs:
         for muni in geo_ids:
             data = linkedin_scraper(job, muni, 0)
-            db.append(data)
+            db = data + db
 
-    print(db)
-    # for entries in db:
-    #     print(entries)
+    for entries in db:
+        print(entries)
     # return db
 
 #DEBUG PRINT, DELETE LATER
