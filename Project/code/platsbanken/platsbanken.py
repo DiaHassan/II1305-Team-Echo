@@ -97,8 +97,6 @@ def extract_data_ad(ad):
 
     if education == "Not specified":
         prereq.append(None)
-    else:
-        prereq.append(education)
     
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
