@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from requirementfinder import find_req
 from job_lan import lan_list, yrke_list
+import csv
 
 # Define the URL to scrape
 base_url = 'https://ledigajobb.se'
@@ -32,7 +33,6 @@ def get_job_links(job_listings):
         job_links.append(job.find('a').get("href"))
     return job_links
         
-
 
 # Get the link to the next page
 def get_next_page(response):
@@ -81,10 +81,17 @@ def get_work_details(response):
     for i in outer_div:
         info.append(i.text)
 
-    # Array Clean
-
-    info[2] = info[2].strip().split()
-    info[2] = info[2][0] + ' ' +info[2][1]
+    
+    if(len(info) == 3):
+        info[2] = info[2].strip().split()
+        try:
+            info[2] = info[2][0] + ' ' +info[2][1]
+        except:
+            info[2] = info[2][0]
+    else:
+        info[0] = info[0].strip().split()[0]
+        info.append("None")
+        info.append("None")
 
     return info
 
@@ -101,10 +108,15 @@ def run():
     print("")
 
 
+# Scrape all required details from the ad
 def scrape_ad(job_link,lan,work):
     # Init
     job_code = get_code(job_link)
+    
     work_details = get_work_details(job_code)
+    work_details.append("saver 1")
+    work_details.append("saver 2")
+    work_details.append("saver 3")
     result = []
 
     # Data
@@ -127,21 +139,41 @@ def scrape_ad(job_link,lan,work):
             seniority]
 
 
+
+# Get all info using all parameters
 def get_all():
-    for work in yrke_list:
-        for lan in lan_list:
-            next_page = True
-            response = get_code(create_search_link(lan,work,1))
-            while next_page:
-                if(next_page == "Twees"): break
-                job_links = get_job_links(get_jobs(response))
-                for half_link in job_links:
-                    print(scrape_ad(base_url+half_link,lan, work))
-                next_page = get_next_page(response)
-                if (next_page == False): next_page = "Twees"
-                response = get_code(next_page)
+    i = 0
+    n = 0
+    with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        for work in yrke_list:
+            for lan in range(2,21):
+                next_page = True
+                response = get_code(create_search_link(lan,work,1))
+                while next_page:
+                    if(next_page == "Twees"): break
+                    try:
+                        job_links = get_job_links(get_jobs(response))
+                    except:
+                        try:
+                            n += 1 
+                            print("\n N is vvvvvv")
+                            print(n) 
+                            next_page = get_next_page(response)
+                            if (next_page == False): next_page = "Twees"
+                            response = get_code(next_page)
+                            continue
+                        except: continue
+                    for half_link in job_links:
+                        i += 1
+                        print("\n I is vvvvvv")
+                        print(i) 
+                        writer.writerow(scrape_ad(base_url+half_link,lan, work))
+                    next_page = get_next_page(response)
+                    if (next_page == False): next_page = "Twees"
+                    response = get_code(next_page)
             
-    return [1][2]
+
 
     
 
@@ -149,6 +181,9 @@ def get_all():
 ##################################################
 # Main function for testing the code
 def main():
+    get_all()
+
+
     # response = get_code("https://ledigajobb.se/jobb/a4c766/trainee-backend-utvecklare")
     
     #print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
@@ -158,17 +193,18 @@ def main():
     # job_links = get_job_links(get_jobs(get_code(create_search_link(15,"lärare",1))))
     # print(job_links)
     # print(get_next_page(get_code("https://ledigajobb.se/sok?cc=15&s=l%C3%A4rare&p=2")))
-
-    next_page = True
-    response = get_code(create_search_link(15,"lärare",1))
-    while next_page:
-        if(next_page == "Twees"): break
-        job_links = get_job_links(get_jobs(response))
-        for half_link in job_links:
-            print(scrape_ad(base_url+half_link,15,"lärare"))
-        next_page = get_next_page(response)
-        if (next_page == False): next_page = "Twees"
-        response = get_code(base_url+next_page)
+    # with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     next_page = True
+    #     response = get_code(create_search_link(15,"lärare",1))
+    #     while next_page:
+    #         if(next_page == "Twees"): break
+    #         job_links = get_job_links(get_jobs(response))
+    #         for half_link in job_links:
+    #             writer.writerow(scrape_ad(base_url+half_link,15,"lärare"))
+    #         next_page = get_next_page(response)
+    #         if (next_page == False): next_page = "Twees"
+    #         response = get_code(base_url+next_page)
 
 if __name__ == '__main__':
     main()

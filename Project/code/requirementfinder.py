@@ -60,3 +60,50 @@ def find_req(job_ad):
             tbr= "Not specified"
 
     return tbr
+
+
+# Define regular expressions for seniority
+def find_seniority(job_ad):
+    #Keywords to be looked for in the text
+    year_one = r"ett års erfarenhet | 1 års erfarenhet"
+    year_two = r"två års erfarenhet | 2 års erfarenhet"
+    year_three = r"tre års erfarenhet | 3 års erfarenhet"
+    year_four = r"fyra års erfarenhet | 4 års erfarenhet"
+    year_five = r"fem års erfarenhet | 5 års erfarenhet"
+    year_six = r"sex års erfarenhet | 6 års erfarenhet"
+    year_seven = r"sju års erfarenhet | 7 års erfarenhet"
+    year_eight = r"åtta års erfarenhet | 8 års erfarenhet"
+    year_nine = r"nio års erfarenhet | 9 års erfarenhet"
+    year_ten = r"tio års erfarenhet | 10 års erfarenhet"
+    year_fifteen = r"femton års erfarenhet | 15 års erfarenhet"
+    year_twenty = r"tjugo års erfarenhet | 20 års erfarenhet"
+    year = r"några års erfarenhet"
+
+    # TODO: year_interval 4-5 years of experience?
+    #       english text
+    #       etc.
+    
+    regex_year = [(year_one, 1),
+                (year_two, 2),
+                (year_three, 3),
+                (year_four, 4),
+                (year_five, 5),
+                (year_six, 6),
+                (year_seven,7),
+                (year_eight, 8),
+                (year_nine, 9),
+                (year_ten, 10),
+                (year_fifteen, 15),
+                (year_twenty, 20),
+                (year, 2)
+                ]
+
+    # Search for seniority using regex keywords by first lowercasing the text
+    for reg in regex_year:
+        if re.search(reg[0], job_ad.lower()):
+            tbr = reg[1]
+            break
+        else:
+            tbr= "Not specified"
+
+    return tbr
