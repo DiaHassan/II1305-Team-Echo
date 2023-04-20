@@ -96,6 +96,8 @@ def linkedin_scraper(job, municipality, page_number):
                 print("RETRYING")
                 
             ad_description = ad_description.text
+            seniority = None
+            employment_type = None
 
             # Check if ad has these criterias
             for item in criteria:
