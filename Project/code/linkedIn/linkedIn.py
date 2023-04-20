@@ -9,36 +9,25 @@ from reqfinder import find_req
 from datetime import date, timedelta
 from bs4 import BeautifulSoup
 
-# Database
-db = []
 
-# Jobs
-jobs = ["Lärare",
-"Läkare",
-"Utvecklare"
-]
-
-# Geo ids
-geo_ids = []
-with open('geo_ids.txt', 'r') as f:
-    for line in f:
-        # Patternmatches for a number with a curly bracket before it and a comma sign after it.
-        match = re.search(r'\{(\d+)\,', line)
-        if match:
-            geo_ids.append(int(match.group(1)))
+# list for ads per job per municipality
+list = []
 
 
 # Function to scrape websites
-def linkedin_scraper(webpage, page_number):
-    next_page = webpage + str(page_number)
+def linkedin_scraper(job, municipality, page_number):     
+    url1 = "https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="     
+    url2 = "&geoId="     
+    url3 = "&start="     
+    next_page = url1 + str(job) + url2 + str(municipality) + url3 + str(page_number)
     print(str(next_page))
     response = requests.get(str(next_page))
     soup = BeautifulSoup(response.content,'html.parser')
 
+
     # Check that ads actually exist on page
     found_jobs = soup.find('li')
     if found_jobs is None:
-        print("no ads found")
         return
     else:
         # List of all adds per page.
@@ -106,22 +95,48 @@ def linkedin_scraper(webpage, page_number):
             employment_type = criteria[1].text.strip()
             education = find_req(ad_description)
 
-            
-            db.append(["Linkedin", employment_type, None, ad_publication_date, "Job", location.split(',')[1].strip().split()[0], [education], None, date.today().strftime('%Y-%m-%d'), seniority])
-            # print()
-            # print(ad_title + " | " + company + " | " + location + " | " + ad_date)
-            # print(link)   
+
+            list.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], [education], None, date.today().strftime('%Y-%m-%d'), seniority])  
             time.sleep(1) #Delay to prevent status code 429
 
-    # if page_number < 1000 and len(ads) == 25:
-    #     page_number = page_number + 25
-    #     time.sleep(3) #Delay to prevent status code 429 (Might be able to lower it)
-    #     linkedin_scraper(webpage, page_number)
+    if page_number < 1000 and len(ads) == 25:
+        page_number = page_number + 25
+        time.sleep(1) #Delay to prevent status code 429 (Might be able to lower it)
+        linkedin_scraper(job, municipality, page_number)
+
+    return(list)
+
+
+def run():
+    # Database
+    db = []
+
+    # Jobs
+    jobs = ["Lärare"]
+
+    # Geo ids
+    geo_ids = [105085359]
+    # with open('geo_ids.txt', 'r') as f:
+    #     for line in f:
+    #         # Patternmatches for a number with a curly bracket before it and a comma sign after it.
+    #         match = re.search(r'\{(\d+)\,', line)
+    #         if match:
+    #             geo_ids.append(int(match.group(1)))
+
+    for job in jobs:
+        for muni in geo_ids:
+            data = linkedin_scraper(job, muni, 0)
+            db.append(data)
+
+    print(db)
+    # for entries in db:
+    #     print(entries)
+    # return db
 
 #DEBUG PRINT, DELETE LATER
-linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&geoId=106710379&start=0", 0)
-for data in db:
-    print(data)
+# linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&geoId=106710379&start=0", 0)
+# for data in db:
+#     print(data)
 
 # for job in jobs:
 #     for muni in geo_ids:
