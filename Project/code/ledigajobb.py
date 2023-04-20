@@ -10,9 +10,12 @@ search_url = 'https://ledigajobb.se/sok?'
 
 # Send a GET request to get the HTML response and parse it
 def get_code(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    return soup
+    try:
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        return soup
+    except:
+        return "No data"
 
 
 # Find all the job listings on the page
@@ -24,15 +27,20 @@ def get_jobs(response):
 # Get all jobs
 def get_job_links(job_listings):
     # Loop through each job listing and print the job title and company name
+    job_links = []
     for job in job_listings:
-        job_link = job.find('a').get("href")
-        # print(job_link)
+        job_links.append(job.find('a').get("href"))
+    return job_links
+        
 
 
 # Get the link to the next page
 def get_next_page(response):
-    next_btn_link = response.find('a', {'class': 'page-link', 'aria-label': 'Next'}).get("href")
-    return next_btn_link
+    try:
+        next_btn_link = response.find('a', {'class': 'page-link', 'aria-label': 'Next'}).get("href")
+        return next_btn_link 
+    except:
+        return False
 
 
 # Creates link to initiate search 
@@ -71,14 +79,21 @@ def get_work_details(response):
 
     # Initial fill
     for i in outer_div:
-        info.append(i.text.strip().split())
+        info.append(i.text)
 
     # Array Clean
-    info[0] = info[0][0]
-    info[1] = info[1][0]
+
+    info[2] = info[2].strip().split()
     info[2] = info[2][0] + ' ' +info[2][1]
 
     return info
+
+
+# Find lan
+def find_lan(lan_nb):
+    for lan in lan_list:
+        if (lan_nb == lan[0]):
+            return lan[1]
 
 
 # Run from 
@@ -86,7 +101,7 @@ def run():
     print("")
 
 
-def scrape_ad(job_link):
+def scrape_ad(job_link,lan,work):
     # Init
     job_code = get_code(job_link)
     work_details = get_work_details(job_code)
@@ -97,8 +112,8 @@ def scrape_ad(job_link):
     employment_type = work_details[0]
     duration = work_details[1]
     publication_date = get_date(job_code)
-    profession = ""  # need list of jobs
-    county = ""  # need function for converting id to län
+    profession = work
+    county = find_lan(lan)
     prerequierment = get_prerequiered(job_code)
     seniority = work_details[2]
 
@@ -115,7 +130,16 @@ def scrape_ad(job_link):
 def get_all():
     for work in yrke_list:
         for lan in lan_list:
-            job_links = get_job_links(get_jobs(get_code(create_search_link(lan,work,0))))
+            next_page = True
+            response = get_code(create_search_link(lan,work,1))
+            while next_page:
+                if(next_page == "Twees"): break
+                job_links = get_job_links(get_jobs(response))
+                for half_link in job_links:
+                    print(scrape_ad(base_url+half_link,lan, work))
+                next_page = get_next_page(response)
+                if (next_page == False): next_page = "Twees"
+                response = get_code(next_page)
             
     return [1][2]
 
@@ -130,11 +154,21 @@ def main():
     #print(scrape_ad("https://ledigajobb.se/jobb/a7ed79/nynas-s%C3%B6ker-tv%C3%A5-processingenj%C3%B6rer-omg%C3%A5ende"))
     # print(yrke_list)
     # get_all("link")
-    temp = get_jobs(get_code(create_search_link(15,"lärare",1)))
-    print(temp)
-    print(get_job_links(temp))
+
     # job_links = get_job_links(get_jobs(get_code(create_search_link(15,"lärare",1))))
     # print(job_links)
+    # print(get_next_page(get_code("https://ledigajobb.se/sok?cc=15&s=l%C3%A4rare&p=2")))
+
+    next_page = True
+    response = get_code(create_search_link(15,"lärare",1))
+    while next_page:
+        if(next_page == "Twees"): break
+        job_links = get_job_links(get_jobs(response))
+        for half_link in job_links:
+            print(scrape_ad(base_url+half_link,15,"lärare"))
+        next_page = get_next_page(response)
+        if (next_page == False): next_page = "Twees"
+        response = get_code(base_url+next_page)
 
 if __name__ == '__main__':
     main()
