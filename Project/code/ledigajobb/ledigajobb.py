@@ -128,7 +128,7 @@ def find_lan(lan_nb):
 
 # Run from 
 def run():
-    print("")
+    get_all()
 
 
 # Scrape all required details from the ad
@@ -159,7 +159,10 @@ def scrape_ad(job_link,lan,work):
             profession, 
             county, 
             prerequierment, 
-            seniority]
+            0,
+            None,
+            "2023-04-20"
+            ]
 
 
 
@@ -167,34 +170,34 @@ def scrape_ad(job_link,lan,work):
 def get_all():
     i = 0
     n = 0
-    with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
-        for work in yrke_list:
-            for lan in range(2,21):
-                next_page = True
-                response = get_code(create_search_link(lan,work,1))
-                while next_page:
-                    if(next_page == "Twees"): break
+    all_jobs = []
+    for work in yrke_list:
+        for lan in range(2,21):
+            next_page = True
+            response = get_code(create_search_link(lan,work,1))
+            while next_page:
+                if(next_page == "Twees"): break
+                try:
+                    job_links = get_job_links(get_jobs(response))
+                except:
                     try:
-                        job_links = get_job_links(get_jobs(response))
-                    except:
-                        try:
-                            n += 1 
-                            print("\n N is vvvvvv")
-                            print(n) 
-                            next_page = get_next_page(response)
-                            if (next_page == False): next_page = "Twees"
-                            response = get_code(next_page)
-                            continue
-                        except: continue
-                    for half_link in job_links:
-                        i += 1
-                        print("\n I is vvvvvv")
-                        print(i) 
-                        writer.writerow(scrape_ad(base_url+half_link,lan, work))
-                    next_page = get_next_page(response)
-                    if (next_page == False): next_page = "Twees"
-                    response = get_code(next_page)
+                        n += 1 
+                        print("\n N is vvvvvv")
+                        print(n) 
+                        next_page = get_next_page(response)
+                        if (next_page == False): next_page = "Twees"
+                        response = get_code(next_page)
+                        continue
+                    except: continue
+                for half_link in job_links:
+                    i += 1
+                    print("\n I is vvvvvv")
+                    print(i) 
+                    all_jobs.append(scrape_ad(base_url+half_link,lan, work))
+                next_page = get_next_page(response)
+                if (next_page == False): next_page = "Twees"
+                response = get_code(next_page)
+    return all_jobs
             
 
 
