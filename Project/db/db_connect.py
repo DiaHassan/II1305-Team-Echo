@@ -17,5 +17,7 @@ def build():
     connection.close()
 
 
-if __name__ == '__main__':
-    build()
+
+# Un-comment and run to construct database
+# if __name__ == '__main__':
+#     build()
