@@ -29,10 +29,7 @@ def run():
    all_ads = get_ads()
 
    # Creates a 2d list of ads containting sought parameters
-   list = extract_data_all_ads(all_ads)
-   print(list[0])
-   print(list[500])
-   print(list[1000])  
+   list = extract_data_all_ads(all_ads) 
    return list
 
 
@@ -40,7 +37,7 @@ def run():
 def get_ads():
     # Declare variables
     url = STREAM_URL
-    date = datetime.datetime.now() - datetime.timedelta(1)  # test, timedelta parameter is days and should be 30
+    date = datetime.datetime.now() - datetime.timedelta(30)  
     params = {'date': date.strftime(DATE_FORMAT)}
 
     # Writing log info to the terminal
@@ -93,13 +90,10 @@ def extract_data_ad(ad):
     if county == None:
         county = 'Stockholms län'
     
-    # Education is specified
-    # if education != None:
-    #     prereq.append(education)
-    
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
 
+    # Return
     return ["platsbanken", 
             employment_type, 
             duration, 
