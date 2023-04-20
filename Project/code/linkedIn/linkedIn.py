@@ -32,7 +32,7 @@ def linkedin_scraper(webpage, page_number):
     response = requests.get(str(next_page))
     soup = BeautifulSoup(response.content,'html.parser')
 
-    found_jobs = soup.find('main', class_='two-pane-serp-page__results')
+    found_jobs = soup.find('li')
 
     if found_jobs is None:
         print("no ads found")
@@ -83,10 +83,10 @@ def linkedin_scraper(webpage, page_number):
 #DEBUG PRINT, DELETE LATER
 # linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&geoId=106710379&start=0", 0)
 
-# for job in jobs:
-#     for muni in geo_ids:
-#         linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+str(job)+"&geoId="+str(muni)+"&start=", 0)
-#         print()
-#         print()
-#         print()
-#     print(str(db))
+for job in jobs:
+    for muni in geo_ids:
+        linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+str(job)+"&geoId="+str(muni)+"&start=", 0)
+        print()
+        print()
+        print()
+    print(str(db))
