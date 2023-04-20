@@ -69,7 +69,7 @@ def insert_data(argument_list, sql_connect, cursor):
             job_param_list[7] = "null"
 
 
-    insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, date_gathered, seniority) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"
+    insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, seniority, date_gathered) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"
 
     cursor.execute(insert_job_listing)
     sql_connect.commit()
@@ -141,8 +141,8 @@ if __name__ == '__main__':
             "B Körkort"
          ], 
          "4",
-         "19/04/2023", 
-         "Mid-level" 
+         "Mid-level",
+         "19/04/2023"
         ] 
         ,   
         ["Platsbanken", 
@@ -151,13 +151,11 @@ if __name__ == '__main__':
         "19/04/2023",  
         "Ingenjör", 
         "Stockholms län", 
-        [ 
-            "Civilingenjörsutbildning",
-            "Civilingenjörs erfarenhet",
-            "B Körkort"
-        ], 
+        [], 
         None,
-        "19/04/2023", "Mid-level"] 
+        "Mid-level",
+        "19/04/2023"
+        ] 
         ]
     send_2d_list(test, "echo.db")
 

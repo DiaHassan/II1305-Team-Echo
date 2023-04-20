@@ -2,6 +2,10 @@
 import time
 import requests
 import re
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__))) # Get the directory above
+from reqfinder import find_req
 from datetime import date, timedelta
 from bs4 import BeautifulSoup
 
@@ -43,11 +47,11 @@ def linkedin_scraper(webpage, page_number):
         for ad in ads:
             # If the posting is newly published, it's tag is different
             # DATA NOT NEEDED, DELETE LATER
-            job_title = ad.find('h3', class_='base-search-card__title')
-            if job_title == None:
-                job_title = ad.find('h3', class_='base-search-card__title--new').text.strip()
-            else:
-                job_title = job_title.text.strip()
+            # job_title = ad.find('h3', class_='base-search-card__title')
+            # if job_title == None:
+            #     job_title = ad.find('h3', class_='base-search-card__title--new').text.strip()
+            # else:
+            #     job_title = job_title.text.strip()
 
 
             # If the posting is newly published, it's tag is different
@@ -96,13 +100,14 @@ def linkedin_scraper(webpage, page_number):
             ad_soup = BeautifulSoup(ad_response.content,'html.parser')
             
             criteria = ad_soup.find_all('span', 'description__job-criteria-text')
+            ad_description = ad_soup.find('div', 'show-more-less-html__markup').text
 
             seniority = criteria[0].text.strip()
             employment_type = criteria[1].text.strip()
-            
+            education = find_req(ad_description)
 
             
-            db.append(["Linkedin", employment_type, "", ad_publication_date, "Job", location.split(',')[1].strip().split()[0], [], date.today().strftime('%Y-%m-%d'), seniority])
+            db.append(["Linkedin", employment_type, None, ad_publication_date, "Job", location.split(',')[1].strip().split()[0], [education], None, date.today().strftime('%Y-%m-%d'), seniority])
             # print()
             # print(ad_title + " | " + company + " | " + location + " | " + ad_date)
             # print(link)   
