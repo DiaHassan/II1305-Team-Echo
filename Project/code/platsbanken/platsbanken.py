@@ -4,8 +4,8 @@ import logging
 import json
 import sys
 import os
-from reqfinder import find_req, find_seniority
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from reqfinder import find_req, find_seniority
   
 # URL and format for settings
 BASE_URL = 'https://jobstream.api.jobtechdev.se'
@@ -93,10 +93,9 @@ def extract_data_ad(ad):
 
     # experience = ad.get('experience_required', ' ')
     years = find_seniority(description)
-
-    # Education
-    if education == "Not specified":
-        prereq.append(None)
+    
+    if education != None:
+        prereq.append(education)
     
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
