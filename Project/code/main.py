@@ -10,12 +10,12 @@ from linkedIn import linkedIn
 database_name = "echo.db"
 
 # Platsbanken
-# platsbanken_list = platsbanken.run()
-# insert.send_2d_list(platsbanken_list, database_name)
+platsbanken_list = platsbanken.run()
+insert.send_2d_list(platsbanken_list, database_name)
 
 # LedigaJobb
 # ledigajobb_list = ...
-# InsertIntoDatabase.send_data(ledigajobb_list)
+# InsertIntoDatabase.send_2d_list(ledigajobb_list, database_name)
 
 # LinkedIn
 # linkedIn_list = linkedIn.run()

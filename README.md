@@ -4,16 +4,37 @@
 ## About The Project
 <!-- Bakgrund -->
 TODO
-#### Spring 2023
 
 ### Built With
+- python
+- sql
+
+### Dependencies
+Python libraries used:
+- requests
+- beautifulsoup4
+- requests
+
+### Documentation
+#### [Project/code/main.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/main.py)
+The program retrieves a list of all the webscraped data from the websites selected and forwards the data to the database to be inserted.
+
+#### [Project/code/platsbanken/platsbanken.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/platsbanken/platsbanken.py)
+The program within the file connects to platsbanken API and retrieves all the information in ads from the last 30 days, it then extracts the relevant data and converts it into a format suitable for the database before sending it.
+
+#### [Project/code/ledigajobb/ledigajobb.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/ledigajobb/ledigajobb.py)
 Todo
-<!-- Lista av språk och verktyg vi använt -->
+<!-- Info here -->
+
+#### [Project/code/linkedIn/linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
+In the folder there's a file, GetGeoids.py, that uses selenium to search Linkedid for all their municipalities and extracts their geo id and puts them in a text file.
+This text file is then used in LinkedIn.py to be able to search for jobs in every municipality in Sweden. The program then extract the html file for each job ad and extracts the data that is needed and converts it into a format suitable for the database before sending it.
+
+
 
 
 ## Usage
-Todo
-<!-- Hur man använder produkten -->
+- Project/code/main.py to webscrape and store the data in echo.db 
 
 
 ## Website

@@ -85,11 +85,19 @@ def linkedin_scraper(job, municipality, page_number):
 
 
             # Loads ad page and finds their criterias
-            ad_response = requests.get(link)
-            ad_soup = BeautifulSoup(ad_response.content,'html.parser')
+            while(True):
+                ad_response = requests.get(link)
+                ad_soup = BeautifulSoup(ad_response.content,'html.parser')
             
-            criteria = ad_soup.find_all('li', class_='description__job-criteria-item')
-            ad_description = ad_soup.find('div', 'show-more-less-html__markup').text
+                criteria = ad_soup.find_all('li', class_='description__job-criteria-item')
+                ad_description = ad_soup.find('div', 'show-more-less-html__markup')
+                if(ad_description is not None):
+                    break
+                print("RETRYING")
+                
+            ad_description = ad_description.text
+            seniority = None
+            employment_type = None
 
             # Check if ad has these criterias
             for item in criteria:

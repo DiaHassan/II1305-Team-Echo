@@ -29,10 +29,7 @@ def run():
    all_ads = get_ads()
 
    # Creates a 2d list of ads containting sought parameters
-   list = extract_data_all_ads(all_ads)
-   print(list[0])
-   print(list[500])
-   print(list[1000])  
+   list = extract_data_all_ads(all_ads) 
    return list
 
 
@@ -40,7 +37,7 @@ def run():
 def get_ads():
     # Declare variables
     url = STREAM_URL
-    date = datetime.datetime.now() - datetime.timedelta(1)  # test, timedelta parameter is days and should be 30
+    date = datetime.datetime.now() - datetime.timedelta(1)  
     params = {'date': date.strftime(DATE_FORMAT)}
 
     # Writing log info to the terminal
@@ -77,7 +74,7 @@ def extract_duration(duration):
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad):
-    prereq = []
+    # prereq = None
     employment_type = ad.get('working_hours_type', {}).get('label', ' ')
     duration = extract_duration(ad.get('duration', {}).get('label', ' '))
     publication_date = ad.get('publication_date', ' ')
@@ -85,7 +82,7 @@ def extract_data_ad(ad):
     county = ad.get('workplace_address', {}).get('region', ' ') 
     date_extracted = datetime.datetime.today().strftime('%Y-%m-%d')
     description = ad.get('description', {}).get('text', ' ')
-    education = find_req(description)
+    prereq = find_req(description)
     years = find_seniority(description)
     # experience = ad.get('experience_required', ' ')
 
@@ -93,14 +90,20 @@ def extract_data_ad(ad):
     if county == None:
         county = 'Stockholms län'
     
-    # Education is specified
-    if education != None:
-        prereq.append(education)
-    
     # Formatting the publication_date from YYYY-MM-DDTHH:MM:SS to YYYY-MM-DD
     publication_date = publication_date[:10]
 
-    return ["platsbanken", employment_type, duration, publication_date, occupation_group, county, prereq, years, None, date_extracted]
+    # Return
+    return ["platsbanken", 
+            employment_type, 
+            duration, 
+            publication_date, 
+            occupation_group, 
+            county, 
+            prereq, 
+            years, 
+            None, 
+            date_extracted]
   
 
 # Main script
