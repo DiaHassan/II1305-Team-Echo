@@ -28,7 +28,8 @@ Todo
 
 #### [Project/code/linkedIn/linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
 Todo
-<!-- Info here -->
+In the folder there's a file, GetGeoids.py, that uses selenium to search Linkedid for all their municipalities and extracts their geo id and puts them in a text file.
+This text file is then used in LinkedIn.py to be able to search for jobs in every municipality in Sweden. The program then extract the html file for each job ad and extracts the data that is needed and converts it into a format suitable for the database before sending it.
 
 
 
