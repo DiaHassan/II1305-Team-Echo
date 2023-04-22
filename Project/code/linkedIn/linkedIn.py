@@ -72,7 +72,7 @@ def linkedin_scraper(job, municipality, page_number):
             
             # Removes non swedish ads
             location_country = location.split(", ")[-1]
-            if location_country not in ["Sweden", "sweden", "Svergie", "sverige"]:
+            if location_country not in ["Sweden", "sweden", "Sverige", "sverige"]:
                 continue
 
 
