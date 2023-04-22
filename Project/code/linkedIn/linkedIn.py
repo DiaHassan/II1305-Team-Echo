@@ -30,11 +30,11 @@ def linkedin_scraper(job, municipality, page_number):
     if found_jobs is None:
         return
     else:
-        # List of all adds per page.
-        # If the titel of the job posting contains a link, then the tag won't be a div
+        # List of all adds per page
+        # If the title of the job posting contains a link, then the tag won't be a div
         ads = soup.find_all(['div', 'a'], class_='base-card relative w-full hover:no-underline focus:no-underline base-card--link base-search-card base-search-card--link job-search-card')
         for ad in ads:
-            # If the posting is newly published, it's tag is different
+            # If the posting is newly published, its tag is different
             # DATA NOT NEEDED, DELETE LATER
             job_title = ad.find('h3', class_='base-search-card__title')
             if job_title == None:
@@ -43,7 +43,7 @@ def linkedin_scraper(job, municipality, page_number):
                 job_title = job_title.text.strip()
 
 
-            # If the posting is newly published, it's tag is different
+            # If the posting is newly published, its tag is different
             ad_date = ad.find('time', class_='job-search-card__listdate')
             if ad_date == None:
                 ad_date = ad.find('time', class_='job-search-card__listdate--new').text.strip()
@@ -70,7 +70,7 @@ def linkedin_scraper(job, municipality, page_number):
 
             location = ad.find('span', class_='job-search-card__location').text.strip()
             
-            # Removes non swedish ads
+            # Removes non-Swedish ads
             location_country = location.split(", ")[-1]
             if location_country not in ["Sweden", "sweden", "Sverige", "sverige"]:
                 continue
@@ -113,11 +113,12 @@ def linkedin_scraper(job, municipality, page_number):
             print(job_title + " | " + employment_type)
             list.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], [education], None, date.today().strftime('%Y-%m-%d'), seniority])  
             
-            time.sleep(1) #Delay to prevent status code 429
+            time.sleep(1) # Delay to prevent status code 429
 
+    # Keeps searching if there are more ads
     if page_number < 1000 and len(ads) == 25:
         page_number = page_number + 25
-        time.sleep(1) #Delay to prevent status code 429 (Might be able to lower it)
+        time.sleep(1) # Delay to prevent status code 429
         linkedin_scraper(job, municipality, page_number)
     for l in list:
         print(l)
