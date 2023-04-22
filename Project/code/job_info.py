@@ -6,8 +6,8 @@ yrke_list =["Lärare",
 "Operatör",
 "Personlig assistent",
 "Mekaniker",
-"Butiksäljare",
-"Civilinjengör",
+"Butikssäljare",
+"Civilingenjör",
 "Projektledare",
 "Städare"]
 
@@ -30,3 +30,6 @@ lan_list = [(2, "Västra Götalands län"),
 (18, "Gotlands län"),
 (19, "Dalarnas län"),
 (20, "Blekinge län")]
+
+# Östergötlands län
+# Kronobergs län
