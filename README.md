@@ -27,8 +27,11 @@ Todo
 <!-- Info here -->
 
 #### [Project/code/linkedIn/linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
-In the folder there's a file, GetGeoids.py, that uses selenium to search Linkedid for all their municipalities and extracts their geo id and puts them in a text file.
-This text file is then used in LinkedIn.py to be able to search for jobs in every municipality in Sweden. The program then extract the html file for each job ad and extracts the data that is needed and converts it into a format suitable for the database before sending it.
+In the folder there's a file, ```GetGeoids.py```, that uses selenium to search Linkedid for all their municipalities and extracts their geo id and puts them in a text file.
+This text file is then used in ```linkedIn.py``` to be able to search for jobs in every municipality in Sweden. The program then extract the html file for each job ad and extracts the data that is needed and converts it into a format suitable for the database before sending it.  
+  
+```GetGeoids.py```: uses Selenium to search and extract all GeoID's of the specified locations in the ```cities``` list into a ```geo_ids.txt```.  
+```linkedIn.py```: makes use of ```geo_ids.txt``` and a list of different occupations to search through all of the relevant [todo]
 
 
 

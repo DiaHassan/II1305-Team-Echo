@@ -13,9 +13,6 @@ from bs4 import BeautifulSoup
 # list for ads per job per municipality
 list = []
 
-# Counter to try and speed up the requests
-counter = 0
-
 # Function to scrape websites
 def linkedin_scraper(job, municipality, page_number):     
     url1 = "https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="     
@@ -32,11 +29,11 @@ def linkedin_scraper(job, municipality, page_number):
     if found_jobs is None:
         return
     else:
-        # List of all adds per page.
-        # If the titel of the job posting contains a link, then the tag won't be a div
+        # List of all adds per page
+        # If the title of the job posting contains a link, then the tag won't be a div
         ads = soup.find_all(['div', 'a'], class_='base-card relative w-full hover:no-underline focus:no-underline base-card--link base-search-card base-search-card--link job-search-card')
         for ad in ads:
-            # If the posting is newly published, it's tag is different
+            # If the posting is newly published, its tag is different
             # DATA NOT NEEDED, DELETE LATER
             job_title = ad.find('h3', class_='base-search-card__title')
             if job_title == None:
@@ -45,7 +42,7 @@ def linkedin_scraper(job, municipality, page_number):
                 job_title = job_title.text.strip()
 
 
-            # If the posting is newly published, it's tag is different
+            # If the posting is newly published, its tag is different
             ad_date = ad.find('time', class_='job-search-card__listdate')
             if ad_date == None:
                 ad_date = ad.find('time', class_='job-search-card__listdate--new').text.strip()
@@ -72,7 +69,7 @@ def linkedin_scraper(job, municipality, page_number):
 
             location = ad.find('span', class_='job-search-card__location').text.strip()
             
-            # Removes non swedish ads
+            # Removes non-Swedish ads
             location_country = location.split(", ")[-1]
             if location_country not in ["Sweden", "sweden", "Sverige", "sverige"]:
                 continue
@@ -101,9 +98,6 @@ def linkedin_scraper(job, municipality, page_number):
             # criteria = ad_soup.find_all('li', class_='description__job-criteria-item')
             
             while(True):
-                global counter
-                counter = counter + 1
-
                 ad_response = requests.get(link)
                 ad_soup = BeautifulSoup(ad_response.content,'html.parser')
             
@@ -128,15 +122,15 @@ def linkedin_scraper(job, municipality, page_number):
 
             education = find_req(ad_description)
 
-            list.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], education, None, date.today().strftime('%Y-%m-%d'), seniority])  
-            if counter >= 10:
-                time.sleep(2) #Delay to prevent status code 429
-                counter = 0
+            print(job_title + " | " + employment_type)
+            list.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], [education], None, date.today().strftime('%Y-%m-%d'), seniority])  
+            
+            time.sleep(1) #Delay to prevent status code 429
 
-    # if page_number < 1000 and len(ads) == 25:
-    #     page_number = page_number + 25
-    #     time.sleep(1) #Delay to prevent status code 429 (Might be able to lower it)
-    #     linkedin_scraper(job, municipality, page_number)
+    if page_number < 1000 and len(ads) == 25:
+        page_number = page_number + 25
+        time.sleep(1) #Delay to prevent status code 429 (Might be able to lower it)
+        linkedin_scraper(job, municipality, page_number)
     for l in list:
         print(l)
     return(list)
