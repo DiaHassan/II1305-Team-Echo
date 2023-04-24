@@ -47,7 +47,11 @@ The "main" file that has all the data extracting functions. This file is depende
 **run()**:  
 *Automates the* ```linkedin_scraper``` *function to scrape a list of jobs and municipalities.*  
 ##### [getGeoId.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/getGeoId.py)
-This script collects the GeoID's of a list of locations.
+This script collects the GeoID's of a list of locations. This script is not run by ```main.py```, but if a new list of Geo ID's for different locations is desired, you can change the locations in the ```municipalities``` list:  
+```python
+municipalities = ["Upplands Väsby, Stockholm", "Österåker, Stockholm"]
+```
+The above code will let ```getGeoId.py``` search for the Geo ID's of Upplands Väsby and Österåker, provided if both have Geo ID's on LinkedIn. The Geo ID's and the name of the locations will be returned in ```geo_ids.txt```.
 
 
 
