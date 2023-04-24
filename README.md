@@ -67,4 +67,7 @@ Todo
  - [Axel Lindqvist](https://github.com/ProgrammingCookies)
  - [Klara Fält](https://github.com/kflt)
  - [Zak Ora](https://github.com/ZakOra1)
+ - [Samuel Sendek](https://github.com/CooperUSA)
+ - [Hassan](https://github.com/DiaHassan)
+ - [Tina Basta]()
 <!--[Ditt namn här](länk till din Github-profil)-->
