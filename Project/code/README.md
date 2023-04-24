@@ -38,7 +38,7 @@ municipalities = ["Upplands Väsby, Stockholm", "Österåker, Stockholm"]
 The above code will let ```getGeoId.py``` search for the Geo ID's of Upplands Väsby and Österåker, provided if both have Geo ID's on LinkedIn. The Geo ID's and the name of the locations will be returned in ```geo_ids.txt```. This text file will then be used in ```linkedIn.py```'s run() function.
 
 ## [/platsbanken](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/platsbanken)
-The file in the ```platsbanken``` folder is used to extract job listing data from Platsbanken's API. This folder consists of ```platsbanken.py```.  
+The program within the file connects to platsbanken API and retrieves all the information in ads from the last 30 days. It then extracts the relevant data and converts it into a format suitable for the database before sending it. This folder consists of ```platsbanken.py```.  
 
 ### platsbanken.py
 Extracts data from Platsbanken's API. There are several functions in this file.
