@@ -6,6 +6,9 @@ In order to run the code, the following libraries and programs will be needed:
  - pandas (Python library)
  - DB Browser (SQLite)
 
+## main.py(https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/main.py)
+This program retrieves a list of all the webscraped data from the websites selected and forwards the data to the database to be inserted.
+
 ## [/ledigajobb](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/ledigajobb)
 The file in the ```ledigajobb``` folder is used to web scrape job listing data from Ledigajobb. This folder consists of ```ledigajobb.py```.  
 
