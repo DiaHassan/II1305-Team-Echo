@@ -1,5 +1,4 @@
 {100564495, Upplands Väsby, Stockholm}
-{104683830, Vallentuna, Stockholm}
 {103261173, Österåker, Stockholm}
 {104506787, Värmdö, Stockholm}
 {106676883, Järfälla, Stockholm}
@@ -8,19 +7,12 @@
 {102815955, Botkyrka, Stockholm}
 {104092751, Salem, Stockholm}
 {105085359, Haninge, Stockholm}
-{103069946, Tyresö, Stockholm}
 {101912048, Upplands-Bro, Stockholm}
 {105759600, Nykvarn, Stockholm}
 {104312072, Täby, Stockholm}
-{105168247, Danderyd, Stockholm}
-{106570704, Sollentuna, Stockholm}
 {100907646, Stockholm, Stockholm}
 {101866763, Södertälje, Stockholm}
-{106747400, Nacka, Stockholm}
-{106417888, Sundbyberg, Stockholm}
-{103496818, Solna, Stockholm}
 {101633175, Lidingö, Stockholm}
-{102741693, Vaxholm, Stockholm}
 {105962876, Norrtälje, Stockholm}
 {104801377, Sigtuna, Stockholm}
 {104725393, Nynäshamn, Stockholm}
@@ -95,11 +87,9 @@
 {102302125, Svalöv, Skåne}
 {105052971, Staffanstorp, Skåne}
 {102377984, Burlöv, Skåne}
-{100580083, Vellinge, Skåne}
 {102123324, Östra Göinge, Skåne}
 {104445301, Örkelljunga, Skåne}
 {103387080, Bjuv, Skåne}
-{100710357, Kävlinge, Skåne}
 {104306294, Lomma, Skåne}
 {104566588, Svedala, Skåne}
 {100493294, Skurup, Skåne}
@@ -109,12 +99,9 @@
 {100478026, Tomelilla, Skåne}
 {104991954, Bromölla, Skåne}
 {106128836, Osby, Skåne}
-{106180277, Perstorp, Skåne}
 {106898220, Klippan, Skåne}
-{104593663, Åstorp, Skåne}
 {103016020, Båstad, Skåne}
 {101759788, Malmö, Skåne}
-{105734258, Lund, Skåne}
 {106431726, Landskrona, Skåne}
 {102739875, Helsingborg, Skåne}
 {106985858, Höganäs, Skåne}
@@ -211,24 +198,18 @@
 {105074416, Köping, Västmanland}
 {104793297, Arboga, Västmanland}
 {105579140, Laxå, Örebro}
-{112614768, Lekeberg, Örebro}
-{106549675, Hallsberg, Örebro}
 {100112478, Degerfors, Örebro}
 {101679245, Hällefors, Örebro}
 {105314029, Örebro, Örebro}
 {106135447, Kumla, Örebro}
 {105408659, Askersund, Örebro}
 {101810949, Karlskoga, Örebro}
-{101317645, Nora, Örebro}
 {106336069, Lindesberg, Örebro}
 {104448936, Kil, Värmland}
 {100328139, Eda, Värmland}
 {100937224, Torsby, Värmland}
 {105335884, Storfors, Värmland}
-{100180379, Hammarö, Värmland}
-{105385333, Munkfors, Värmland}
 {104779600, Forshaga, Värmland}
-{103474666, Grums, Värmland}
 {104656329, Årjäng, Värmland}
 {103078487, Sunne, Värmland}
 {107127441, Karlstad, Värmland}
@@ -238,10 +219,8 @@
 {100499792, Arvika, Värmland}
 {100523169, Säffle, Värmland}
 {100221309, Härryda, Västra Götaland}
-{104668318, Partille, Västra Götaland}
 {102364863, Öckerö, Västra Götaland}
 {105477815, Stenungsund, Västra Götaland}
-{104480043, Tjörn, Västra Götaland}
 {101890025, Orust, Västra Götaland}
 {105070754, Sotenäs, Västra Götaland}
 {101636767, Munkedal, Västra Götaland}
@@ -253,7 +232,6 @@
 {100134621, Vårgårda, Västra Götaland}
 {100358876, Bollebygd, Västra Götaland}
 {101798531, Grästorp, Västra Götaland}
-{103210226, Essunga, Västra Götaland}
 {106808472, Karlsborg, Västra Götaland}
 {100010089, Gullspång, Västra Götaland}
 {106768853, Tranemo, Västra Götaland}
@@ -268,21 +246,17 @@
 {104808214, Tibro, Västra Götaland}
 {102950811, Töreboda, Västra Götaland}
 {104114836, Göteborg, Västra Götaland}
-{104220311, Mölndal, Västra Götaland}
 {100005113, Kungälv, Västra Götaland}
 {102817435, Lysekil, Västra Götaland}
 {101143683, Uddevalla, Västra Götaland}
 {105394504, Strömstad, Västra Götaland}
 {103278239, Vänersborg, Västra Götaland}
-{100143515, Trollhättan, Västra Götaland}
-{106764754, Alingsås, Västra Götaland}
 {104964648, Borås, Västra Götaland}
 {100336438, Ulricehamn, Västra Götaland}
 {101525275, Åmål, Västra Götaland}
 {106977262, Mariestad, Västra Götaland}
 {106221956, Lidköping, Västra Götaland}
 {102640575, Skara, Västra Götaland}
-{102773520, Skövde, Västra Götaland}
 {103082221, Hjo, Västra Götaland}
 {103011545, Tidaholm, Västra Götaland}
 {105505966, Falköping, Västra Götaland}
