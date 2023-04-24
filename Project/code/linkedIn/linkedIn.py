@@ -123,7 +123,7 @@ def linkedin_scraper(job, municipality, page_number):
             education = find_req(ad_description)
 
             print(job_title + " | " + employment_type)
-            list.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], [education], None, date.today().strftime('%Y-%m-%d'), seniority])  
+            list.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], education, None, date.today().strftime('%Y-%m-%d'), seniority])  
             
             time.sleep(1) #Delay to prevent status code 429
 
