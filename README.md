@@ -26,12 +26,25 @@ The program within the file connects to platsbanken API and retrieves all the in
 Todo
 <!-- Info here -->
 
-#### [Project/code/linkedIn/linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
+#### [Project/code/linkedIn/](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn)
 In the folder there's a file, ```GetGeoids.py```, that uses selenium to search Linkedid for all their municipalities and extracts their geo id and puts them in a text file.
 This text file is then used in ```linkedIn.py``` to be able to search for jobs in every municipality in Sweden. The program then extract the html file for each job ad and extracts the data that is needed and converts it into a format suitable for the database before sending it.  
-  
-```GetGeoids.py```: uses Selenium to search and extract all GeoID's of the specified locations in the ```cities``` list into a ```geo_ids.txt```.  
-```linkedIn.py```: makes use of ```geo_ids.txt``` and a list of different occupations to search through all of the relevant [todo]
+---
+All files in the ```linkedIn``` folder are used to web scrape job listing data from LinkedIn. This folder consists of ```linkedIn.py``` and ```getGeoId.py```.  
+To just extract data from LinkedIn, the following code will return all data in a list:
+```python
+linkedInData = linkedIn.run()
+```  
+Similar code is already included in ```main.py```.
+##### [linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
+The "main" file that has all the data extracting functions. This file is dependent on the output produced by ```getGeoId.py```.
+###### Functions
+**linkedin_scraper(job, municipality, page_number)**  
+*Scrapes all ads on the page, with* ```job``` *and* ```municipality``` *specified.*  
+**run()**  
+*Automates the* ```linkedin_scraper``` *function to scrape a list of jobs and municipalities.*  
+##### [getGeoId.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/getGeoId.py)
+This script collects the GeoID's of a list of locations.
 
 
 
