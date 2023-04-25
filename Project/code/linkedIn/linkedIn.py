@@ -5,13 +5,15 @@ import re
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__))) # Get the directory above
-from reqfinder import find_req
-from urllib.parse import urlparse, parse_qs #parses url
+from reqfinder import find_req # Program to look through bodytext
 from datetime import date, timedelta
 from bs4 import BeautifulSoup
 
 # Duplicates counter (REMOVE LATER)
 duplicates = 0
+
+# Keep track of unique adds
+seen = {}
 
 # Timer (REMOVE LATER)
 start_time = time.time()
@@ -24,12 +26,15 @@ def linkedin_scraper(job, municipality, page_number):
         url3 = "&start="     
         next_page = url1 + str(job) + url2 + str(municipality) + url3 + str(page_number)
         print(str(next_page))
-        response = requests.get(str(next_page))
+        # Establish connection
+        while(True):
+            response = requests.get(str(next_page))
+            if(response.status_code == 200):
+                break
         soup = BeautifulSoup(response.content,'html.parser')
 
-        # temp list for every ad per proffesion per municipality
+        # Temp list for every ad per proffesion per municipality
         temp = []
-
 
         # Check that ads actually exist on page
         found_jobs = soup.find('li')
@@ -40,22 +45,43 @@ def linkedin_scraper(job, municipality, page_number):
             # If the title of the job posting contains a link, then the tag won't be a div
             ads = soup.find_all(['div', 'a'], class_='base-card relative w-full hover:no-underline focus:no-underline base-card--link base-search-card base-search-card--link job-search-card')
             for ad in ads:
-                # If the posting is newly published, its tag is different
+#----------------------------Get HTML elements------------------------------------------------
+                # Job title
                 # DATA NOT NEEDED, DELETE LATER
                 job_title = ad.find('h3', class_='base-search-card__title')
                 if job_title == None:
+                    # Ad published today
                     job_title = ad.find('h3', class_='base-search-card__title--new').text.strip()
                 else:
                     job_title = job_title.text.strip()
 
-
-                # If the posting is newly published, its tag is different
+                # Ad date
                 ad_date = ad.find('time', class_='job-search-card__listdate')
                 if ad_date == None:
+                    # Ad published today
                     ad_date = ad.find('time', class_='job-search-card__listdate--new').text.strip()
                 else:
                     ad_date = ad_date.text.strip()
-            
+
+                # Ad url        
+                link = ad.find('a', class_='base-card__full-link')
+                if link == None:
+                    link = ad['href']
+                else:  
+                    link = link['href']
+                
+                # Location (Only allows sweden)
+                location = ad.find('span', class_='job-search-card__location').text.strip()
+                location_country = location.split(", ")[-1]
+                if location_country not in ["Sweden", "sweden", "Sverige", "sverige"]:
+                    continue
+
+                # Get unique identifier for each ad
+                key_tag = ad['data-entity-urn']
+                key = key_tag.split(':')[-1]
+
+#----------------------------Extracts proper format-------------------------------------------
+
                 # Calculating the estimated publication date (unable to be exact)
                 ad_date_list = ad_date.split(" ")
                 match ad_date_list[1]:
@@ -69,88 +95,43 @@ def linkedin_scraper(job, municipality, page_number):
                         ad_publication_date = date.today()
                 ad_publication_date = str(ad_publication_date)
 
+#----------------------------Extracts HTML from each ad-page----------------------------------
 
-                # DATA NOT NEEDED, DELETE LATER
-                #company = ad.find('h4', class_='base-search-card__subtitle').text.strip()
-
-
-                location = ad.find('span', class_='job-search-card__location').text.strip()
-                
-                # Removes non-Swedish ads
-                location_country = location.split(", ")[-1]
-                if location_country not in ["Sweden", "sweden", "Sverige", "sverige"]:
-                    continue
-
-
-                # Depending on if the title contains the link        
-                link = ad.find('a', class_='base-card__full-link')
-                if link == None:
-                    link = ad['href']
-                else:
-                    link = link['href']
-
-                # Get unique key for each ad
-                parsed_url = urlparse(link)
-                query_params = parse_qs(parsed_url.query)
-                key = query_params.get('trackingId', [None])[0]
-
-                # Loads ad page and finds their criterias
-                ad_response = requests.get(link)
-                ad_soup = BeautifulSoup(ad_response.content,'html.parser')
-                
-                # DELETE LATER, TEST
-                # ad_description = ad_soup.find('div', 'show-more-less-html__markup')
-                # if ad_description == None:
-                #     if ad_soup.find('p', 'authwall-join-form__swap-cta') != None:
-                #         print("FUUUUUUUCK")
-                #         break
-                #     else:
-                #         print("Try again")
-                # criteria = ad_soup.find_all('li', class_='description__job-criteria-item')
-                
-                while(True):
-                    ad_response = requests.get(link)
-                    ad_soup = BeautifulSoup(ad_response.content,'html.parser')
-                
-                    criteria = ad_soup.find_all('li', class_='description__job-criteria-item')
-                    ad_description = ad_soup.find('div', 'show-more-less-html__markup')
-                    if(ad_description is not None):
-                        break
-                    print("RETRYING")
-                    time.sleep(1)
-                    print(ad_response)
-                    print(str(ad_response.headers))
-                    
-                ad_description = ad_description.text
                 seniority = None
                 employment_type = None
 
-                # Check if ad has these criterias
-                for item in criteria:
+                # Establish connection to ad-page
+                while(True):
+                    ad_response = requests.get(link)
+                    if(ad_response.status_code == 200):
+                        break
+                    print("RETRYING") 
+                    time.sleep(0.1) #Delay because of status code 429
+                ad_soup = BeautifulSoup(ad_response.content,'html.parser')
+                
+                #Get HTML element for ad-page
+                ad_criterias = ad_soup.find_all('li', class_='description__job-criteria-item')
+                ad_description = ad_soup.find('div', 'show-more-less-html__markup').text
+
+                # Look for seniority and employment type
+                for item in ad_criterias:
                     header = item.find('h3', class_='description__job-criteria-subheader').text.strip()
                     
                     if(header == 'Yrkesnivå'):
                         seniority = item.find('span', class_='description__job-criteria-text--criteria').text.strip()
                     if(header == 'Anställningstyp'):
                         employment_type = item.find('span', class_='description__job-criteria-text--criteria').text.strip()
-
+                
+                # Look through body text for education
                 education = find_req(ad_description)
+
+#----------------------------Saves parameters-------------------------------------------------
 
                 print(job_title + " | " + location )
                 temp.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], education, None, date.today().strftime('%Y-%m-%d'), seniority, key])  
-                
-                #time.sleep(0.5) #Delay to prevent status code 429
-
-        if page_number < 1000 and len(ads) == 25:
-            page_number = page_number + 25
-            linkedin_scraper(job, municipality, page_number)
-
-        # for l in temp:
-        #     print(l)
 
 
         #Remove duplicates and the key element 
-        seen = {}
         list = []
         for item in temp:
             identifier = item[-1]
@@ -160,9 +141,15 @@ def linkedin_scraper(job, municipality, page_number):
             else:
                 global duplicates
                 duplicates = duplicates + 1
-
         print(duplicates)
+
+
+        if page_number < 1000 and len(ads) == 25:
+            page_number = page_number + 25
+            linkedin_scraper(job, municipality, page_number)
         return(list)
+    
+    
     except:
         print()
         print("Time it took: " + str(time.time()-start_time))
@@ -179,7 +166,7 @@ def run():
     jobs = ["Lärare", "Läkare", "Utvecklare", "Sjuksköterska", "Kock", "Operatör", "Personlig assistent", "Mekaniker", "Butikssäljare", "Civilingenjör", "Projektledare", "Städare"]
 
     # Geo ids
-    # geo_ids = [100937224] 
+    # geo_ids = [116546076] 
     geo_ids = []
     with open('geo_ids.txt', 'r') as f:
         for line in f:
@@ -191,12 +178,10 @@ def run():
     for job in jobs:
         for muni in geo_ids:
             data = linkedin_scraper(job, muni, 0)
-            # print("DATA")
-            # print(data)
-            # print()
-            # print("DB")
-            # print(db)
             db = data + db
+        # Reset seen unique adds when changing career
+        global seen
+        seen = {}
 
     for entries in db:
         print(entries)
@@ -204,17 +189,3 @@ def run():
     print("Success")
     print("Duplicates: " + str(duplicates))
     # return db
-
-#DEBUG PRINT, DELETE LATER
-# linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords=&geoId=106710379&start=0", 0)
-# for data in db:
-#     print(data)
-
-# for job in jobs:
-#     for muni in geo_ids:
-#         linkedin_scraper("https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords="+str(job)+"&geoId="+str(muni)+"&start=", 0)
-#         print()
-#         print()
-#         print()
-#     for data in db:
-#         print(data)

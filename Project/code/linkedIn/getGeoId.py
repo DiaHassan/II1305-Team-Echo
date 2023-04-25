@@ -29,7 +29,7 @@ file.close()
 
 # Existerar ej: "Uppvidinge, Kronoberg", och "Ljusnarsberg, Örebro"
 # Geo id gives radius: 
-#[Ta only "Täby, Stockholm" istället för dessa] "Vallentuna, Stockholm", "Tyresö, Stockholm", "Täby, Stockholm", "Danderyd, Stockholm", "Sollentuna, Stockholm", "Nacka, Stockholm", "Sundbyberg, Stockholm", "Solna, Stockholm", "Vaxholm, Stockholm", "Nynäshamn, Stockholm", 
+#[Ta only "Täby, Stockholm" istället för dessa] "Vallentuna, Stockholm", "Ekerö, Stockholm", "Tyresö, Stockholm", "Täby, Stockholm", "Danderyd, Stockholm", "Sollentuna, Stockholm", "Nacka, Stockholm", "Sundbyberg, Stockholm", "Solna, Stockholm", "Vaxholm, Stockholm", "Nynäshamn, Stockholm", 
 # "Gnesta, Södermanland", 
 # "Mullsjö, Jönköping", 
 #[Use only "Malmö, Skåne" instead of theese] "Vellinge, Skåne", "Kävlinge, Skåne", "Perstorp, Skåne", "Åstorp, Skåne", "Malmö, Skåne", "Lund, Skåne", 
