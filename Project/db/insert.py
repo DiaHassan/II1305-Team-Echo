@@ -1,22 +1,25 @@
 import sqlite3
 import pandas as pd
-
+from os.path import exists
 
 #Source: https://towardsdatascience.com/starting-with-sql-in-python-948e529586f2
 
 
+# Builds database
+def build_db():
+    connection = sqlite3.connect("Project\db\echo.db")
+    cursor = connection.cursor()
+
+    sql_file = open("Project\db\db_sqlite.sql", "r")
+    sql_script = sql_file.read()
+    sql_file.close()
+
+    cursor.executescript(sql_script)
+    cursor.close()
+    connection.close()
 
 
-
-
-
-
-
-
-
-
-
-#Extract Data from DB
+# Extract Data from DB
 
 # SELECT COUNT(id) FROM job_listing WHERE location_id IN (SELECT location_id FROM location WHERE county IN ("lan") );
 
@@ -52,16 +55,11 @@ def insert_data(argument_list, sql_connect, cursor):
         cursor.execute(insert_job)
         sql_connect.commit()
 
-
     get_job_id = "SELECT id FROM job WHERE profession = '" + argument_list[4] + "';"
     job_id = str(cursor.execute(get_job_id).fetchall()[0][0])
 
-
-
     #Create Job listing here and get job_listing_id
     # Index 0-3 is source, employment type, duration and publication date. These are already strings, job id is a foreing key so the id from job_id is entered there instead of proffession.
-
-
 
     # Handling 'None' inputs
     if not job_param_list[1]:
@@ -73,14 +71,11 @@ def insert_data(argument_list, sql_connect, cursor):
     if not job_param_list[7]:
             job_param_list[7] = "null"
 
-
     insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, seniority, date_gathered) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"
 
     cursor.execute(insert_job_listing)
     sql_connect.commit()
     job_listing_id = str(cursor.lastrowid)
-
-
 
     #For each requirement in the job listing, create/find that requirement and create a many-many relation between the job_listing and requirement.
     for i in argument_list[6]:
@@ -101,7 +96,7 @@ def insert_data(argument_list, sql_connect, cursor):
         sql_connect.commit()
 
 
-
+# Recieves 1d list of ad and inserts into db
 def send_data(list, path):
     with sqlite3.connect(path) as sql_connect:
         # with sql_connect.cursor() as cursor:
@@ -112,9 +107,13 @@ def send_data(list, path):
     sql_connect.close()
 
 
-
+# Recieves 2d list of ads and inserts them into db
 def send_2d_list(list, path):
 
+    # Builds db with tables if it does not already exists
+    if not exists('echo.db'):
+        build_db()
+        
     with sqlite3.connect(path) as sql_connect:
         # with sql_connect.cursor() as cursor:
         cursor = sql_connect.cursor()
@@ -125,51 +124,11 @@ def send_2d_list(list, path):
     sql_connect.close()
     
 
-
-    
-    
-
+# Test if run
 if __name__ == '__main__':
-
-
-    # test = [ 
-    #     [
-    #      "Platsbanken", 
-    #      "Heltid", 
-    #      "Tillsvidare", 
-    #      "19/04/2023",  
-    #      "Lärare", 
-    #      "Stockholms län", 
-    #      [ 
-    #         "Lärarutbildning", 
-    #         "Lärar erfarenhet", 
-    #         "B Körkort"
-    #      ], 
-    #      "4",
-    #      "Mid-level",
-    #      "19/04/2023"
-    #     ] 
-    #     ,   
-    #     ["Platsbanken", 
-    #     "Heltid", 
-    #     "Tillsvidare", 
-    #     "19/04/2023",  
-    #     "Ingenjör", 
-    #     "Stockholms län", 
-    #     [], 
-    #     None,
-    #     "Mid-level",
-    #     "19/04/2023"
-    #     ] 
-    #     ]
     
     test = [
             ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', ['Requires a relevant degree'], 0, None, '2023-04-20'],
             ['ledigajobb', 'heltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', [], 0, None, '2023-04-20']
     ]
     send_2d_list(test, "echo.db")
-
-
-
-
-

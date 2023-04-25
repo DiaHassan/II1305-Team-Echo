@@ -13,6 +13,7 @@ export default function Footer() {
           <button type="submit">Search</button>
         </div>
         <div className="div-row">
+          <div class="vertical-line"></div>
           <div className="div-col">
             <h3>Navigation</h3>
             <ul>

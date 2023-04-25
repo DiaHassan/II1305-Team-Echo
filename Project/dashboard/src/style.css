@@ -22,41 +22,60 @@ nav{
   align-items: center;
   padding-left: 4rem;
   padding-right: 4rem;
-  color: var(--color-green);
+  color: var(--color-white);
   font-weight: bold;
   font-size: 25px;
+  height: 100px;
   transition: height 0.3s ease-in-out;
+  background-image: linear-gradient(rgba(0,0,0,0.50), transparent);
+
 }
 
 .small{
-  background-color: white;
+  background-color: var(--color-white);
+  transition: background-color 0.3s ease-in-out;
   transition: height 0.3s ease-in-out;
-  height: 50px;
+  color: var(--color-green);
+  background-image: linear-gradient(rgba(0,0,0,0), transparent);
+  height: 60px;
 }
 
-nav.active{
-  background-color: #039c88;
-  position:fixed;
-  top:0;
-  right:0;
-}
 
 nav > ul {
   list-style:none;
+  margin:0;
 }
 
 nav > ul > li {
   display: inline-block;
   margin-left: 1rem;
-  padding: 1rem;
+  padding: 2rem;
+  transition: padding 0.3s ease-in-out;
 }
 
 nav > ul > li:hover {
-  border: 2px solid var(--color-black);
+  border-bottom: 5px solid var(--color-white);
+  border-top: 5px solid transparent;
+  border-radius: 2px;
+}
+
+.small > ul > li:hover {
+  border-bottom: 5px solid var(--color-black);
+  border-top: 5px solid transparent;
+  border-radius: 2px;
 }
 
 nav > ul > li > a{
+  font-size: large;
   text-decoration: none;
+  color: var(--color-white)
+}
+
+.small > ul > li {
+  /* padding:1rem; */
+}
+
+.small > ul > li > a{
   color: var(--color-black)
 }
 
@@ -77,12 +96,15 @@ nav > ul > li > a{
 }
 
 .home-body{
+  
   display: flex;
   flex-direction: row;
   /* justify-content: ; */
+  align-items: center;
   padding-left: 4rem;
   padding-right: 4rem;
   margin-top: 5rem;
+  color: var(--color-white)
 }
 
 .home-body > img {
@@ -95,7 +117,16 @@ nav > ul > li > a{
   left: 200px;
   padding: 0 4rem;
   width: 50rem;
-  /* background-color: var(--color-off-white); */
+}
+
+.home-body > div > p {
+  font-size: x-large;
+  padding-right: 9rem;
+}
+
+.home-body > div > h1 {
+  padding-right: 20rem;
+  font-size: xx-large;
 }
 
 /* ------------------ */
@@ -108,7 +139,8 @@ footer {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  background-color: rgb(205, 205, 205);
+  background-color:var(--color-green);
+  color: var(--color-white);
 }
 
 .div-row {
@@ -140,7 +172,11 @@ footer div > div > ul > li > a{
   color: var(--color-black)
 }
 
-Link {
-  text-decoration: none;
-  color: var(--color-black)
+.vertical-line {
+  border-left: 2px solid #000000;
+  border-left: 2px solid #000000;
+  border-radius: 25px;
+  height: 9rem;
 }
+
+
