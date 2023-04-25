@@ -39,7 +39,7 @@ Extracts data from Ledigajobb. This file contains several functions.
 **get_date(response)**:  
 *Extracts the date from the HTML response.*  
 
-**get_prerequiered(respone)**:  
+**get_prerequiered(response)**:  
 *Returns the pre-requirements from the HTML response.*  
 
 **get_work_details(response)**:  
