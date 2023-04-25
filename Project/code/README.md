@@ -21,24 +21,34 @@ Extracts data from Ledigajobb. This file contains several functions.
 #### Functions
 **get_code(url)**:  
 *Sends an HTTP GET request to the specified* ```url``` *and returns the HTML (*```response```*) if possible.*  
+
 **get_jobs(response)**:  
 *Finds all job listings on the page.*  
+
 **get_job_links(job_listings)**:  
 *Uses* ```job_listings``` *received from* **get_jobs** *and returns those listings' job links.*  
+
 **get_next_page(response)**:  
 *Finds the link to the next page. Returns False if no link is found.*  
+
 **create_search_link(lan, work, page)**:  
 *Creates a URL based on* ```lan``` *(county)*, ```work``` *(occupation) and a specific* ```page```*.*  
+
 **replace_after(my_string, to_replace, replacement)**:  
 *Replaces the index of the link to get to the next page.*  
+
 **join_url(base_url, section)**:  
 *Appends the base URL with the path to the job ad and returns a link directly to the job ad.*  
+
 **get_date(response)**:  
 *Extracts the date from the HTML response.*  
+
 **get_prerequiered(respone)**:  
 *Returns the pre-requirements from the HTML response.*  
+
 **get_work_details(response)**:  
 *Returns employment type, duration and seniority from the HTML response.*  
+
 **find_lan(lan_nb)**:  
 todo
 
