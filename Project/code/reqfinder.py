@@ -64,19 +64,25 @@ def find_req(job_ad):
 # Define regular expressions for seniority
 def find_seniority(job_ad):
     #Keywords to be looked for in the text
-    year_one = r"ett års erfarenhet | 1 års erfarenhet"
-    year_two = r"två års erfarenhet | 2 års erfarenhet"
-    year_three = r"tre års erfarenhet | 3 års erfarenhet"
-    year_four = r"fyra års erfarenhet | 4 års erfarenhet"
-    year_five = r"fem års erfarenhet | 5 års erfarenhet"
-    year_six = r"sex års erfarenhet | 6 års erfarenhet"
-    year_seven = r"sju års erfarenhet | 7 års erfarenhet"
-    year_eight = r"åtta års erfarenhet | 8 års erfarenhet"
-    year_nine = r"nio års erfarenhet | 9 års erfarenhet"
-    year_ten = r"tio års erfarenhet | 10 års erfarenhet"
-    year_fifteen = r"femton års erfarenhet | 15 års erfarenhet"
-    year_twenty = r"tjugo års erfarenhet | 20 års erfarenhet"
-    year = r"några års erfarenhet"
+    year_one = r"ett års erfarenhet|1 års erfarenhet|one year of experience|1 year of experience"
+    year_two = r"två års erfarenhet|2 års erfarenhet|two years of experience|2 years of experience"
+    year_three = r"tre års erfarenhet|3 års erfarenhet|three years of experience|3 years of experience"
+    year_four = r"fyra års erfarenhet|4 års erfarenhet|four years of experience|4 years of experience"
+    year_five = r"fem års erfarenhet|5 års erfarenhet|five years of experience|5 years of experience"
+    year_six = r"sex års erfarenhet|6 års erfarenhet|soci years of experience|6 years of experience"
+    year_seven = r"sju års erfarenhet|7 års erfarenhet|seven years of experience|7 years of experience"
+    year_eight = r"åtta års erfarenhet|8 års erfarenhet|eight years of experience|8 years of experience"
+    year_nine = r"nio års erfarenhet|9 års erfarenhete|nine years of experience|9 years of experience"
+    year_ten = r"tio års erfarenhet|10 års erfarenhet|ten years of experience|10 years of experience"
+    #year_fifteen = r"femton års erfarenhet|15 års erfarenhet"
+    #year_twenty = r"tjugo års erfarenhet|20 års erfarenhet"
+    year = r"några års erfarenhet|a few yers of experience"
+
+#  
+#   for x in range (0,10):
+#   ...
+#   possible automatisering av years of experience
+    
 
     # TODO: year_interval 4-5 years of experience?
     #       english text
