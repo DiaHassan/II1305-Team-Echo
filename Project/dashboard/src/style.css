@@ -25,6 +25,12 @@ nav{
   color: var(--color-green);
   font-weight: bold;
   font-size: 25px;
+  transition: height 0.3s ease-in-out;
+}
+
+.small{
+  background-color: white;
+  height: 50px;
 }
 
 nav > ul {

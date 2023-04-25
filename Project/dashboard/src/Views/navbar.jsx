@@ -4,51 +4,28 @@ import { useState, useEffect } from 'react';
 import "../style.css";
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
 
+  useEffect(() => {
+    function handleScroll() {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 0 && !isScrolled) {
+        setIsScrolled(true);
+      } else if (scrollPosition === 0 && isScrolled) {
+        setIsScrolled(false);
+      }
+    }
 
-  // const [isScrolled, setIsScrolled] = useState(false);
+    window.addEventListener('scroll', handleScroll);
 
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, [isScrolled]);
-
-  // // return (
-  // //   <nav className={`navbar ${isScrolled ? 'small' : ''}`}>
-  // //     {/* Navbar content */}
-  // //   </nav>
-  // // );
-
-  // const handleScroll = (e) => {
-
-  // }
-
-  
-  // const stickyNav = () => {
-  //   const [navbar, navbarSet] = useState(false)
-
-  //   const changeBackground = () => {
-  //     console.log(window.scrollY)
-  //     if(window.scrollY > 20) {
-  //       navbarSet(true)
-  //     } else {
-  //       navbarSet(false)
-  //     }
-  //   }
-  //   useEffect(() => {
-  //     changeBackground()
-  //     // adding the event when scroll change background
-  //     window.addEventListener("scroll", changeBackground)
-  //   })
-
-  //   {navbar ? "navbar active" : "navbar"}
-  // }
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isScrolled]);
 
   return (
     <>
-      <nav /*</>className={`navbar ${isScrolled ? 'small' : ''}`}*/>
+      <nav className={`navbar ${isScrolled ? 'small' : ''}`}>
         <div>Swedish Talent Observatory</div>
         <ul>
           <li>
