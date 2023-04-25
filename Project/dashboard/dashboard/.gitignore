@@ -24,7 +24,7 @@ yarn-error.log*
 
 
 *setupTests.js
-*reportWebVitals.js
+# *reportWebVitals.js
 *logo.svg
 *App.test.js
 *logo192.png
