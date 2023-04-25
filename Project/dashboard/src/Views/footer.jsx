@@ -10,7 +10,7 @@ export default function Footer() {
         <ul>
           <li><Link to="/" className="">Home</Link></li>
           <li><Link to="/" className="">APP_NEEDS_NAME</Link></li>
-          <li><Link to="/" className="">About</Link></li>
+          <li><Link to="/about" className="">About</Link></li>
         </ul>
       </div>
       <div>
