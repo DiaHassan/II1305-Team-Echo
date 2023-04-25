@@ -2,14 +2,12 @@
 {103261173, Österåker, Stockholm}
 {104506787, Värmdö, Stockholm}
 {106676883, Järfälla, Stockholm}
-{102478555, Ekerö, Stockholm}
 {106042403, Huddinge, Stockholm}
 {102815955, Botkyrka, Stockholm}
 {104092751, Salem, Stockholm}
 {105085359, Haninge, Stockholm}
 {101912048, Upplands-Bro, Stockholm}
 {105759600, Nykvarn, Stockholm}
-{104312072, Täby, Stockholm}
 {100907646, Stockholm, Stockholm}
 {101866763, Södertälje, Stockholm}
 {101633175, Lidingö, Stockholm}
@@ -25,7 +23,6 @@
 {105951261, Enköping, Uppsala}
 {105896039, Östhammar, Uppsala}
 {104940235, Vingåker, Södermanland}
-{104792890, Gnesta, Södermanland}
 {105202537, Nyköping, Södermanland}
 {101492119, Oxelösund, Södermanland}
 {101069959, Flen, Södermanland}
@@ -48,7 +45,6 @@
 {105326032, Mjölby, Östergötland}
 {105820649, Aneby, Jönköping}
 {102615490, Gnosjö, Jönköping}
-{104640929, Mullsjö, Jönköping}
 {100089196, Habo, Jönköping}
 {103826622, Gislaved, Jönköping}
 {106349899, Vaggeryd, Jönköping}
@@ -101,7 +97,6 @@
 {106128836, Osby, Skåne}
 {106898220, Klippan, Skåne}
 {103016020, Båstad, Skåne}
-{101759788, Malmö, Skåne}
 {106431726, Landskrona, Skåne}
 {102739875, Helsingborg, Skåne}
 {106985858, Höganäs, Skåne}
@@ -129,7 +124,6 @@
 {104642348, Älvsbyn, Norrbotten}
 {101526335, Luleå, Norrbotten}
 {101965644, Piteå, Norrbotten}
-{116546076, Boden, Norrbotten}
 {101660068, Haparanda, Norrbotten}
 {100192243, Kiruna, Norrbotten}
 {104463844, Nordmaling, Västerbotten}
@@ -148,7 +142,6 @@
 {104688646, Lycksele, Västerbotten}
 {103615214, Skellefteå, Västerbotten}
 {103480952, Ragunda, Jämtland}
-{101029972, Bräcke, Jämtland}
 {103895010, Krokom, Jämtland}
 {101832816, Strömsund, Jämtland}
 {102753981, Åre, Jämtland}
@@ -156,7 +149,6 @@
 {102580693, Härjedalen, Jämtland}
 {105391169, Östersund, Jämtland}
 {101621347, Ånge, Västernorrland}
-{105348363, Timrå, Västernorrland}
 {102596594, Härnösand, Västernorrland}
 {102579377, Sundsvall, Västernorrland}
 {101912403, Kramfors, Västernorrland}
@@ -181,7 +173,6 @@
 {104693823, Älvdalen, Dalarna}
 {102358637, Smedjebacken, Dalarna}
 {101311925, Mora, Dalarna}
-{116351998, Falun, Dalarna}
 {102446740, Borlänge, Dalarna}
 {106582898, Säter, Dalarna}
 {102640000, Hedemora, Dalarna}
@@ -205,7 +196,6 @@
 {105408659, Askersund, Örebro}
 {101810949, Karlskoga, Örebro}
 {106336069, Lindesberg, Örebro}
-{104448936, Kil, Värmland}
 {100328139, Eda, Värmland}
 {100937224, Torsby, Värmland}
 {105335884, Storfors, Värmland}
@@ -245,7 +235,6 @@
 {104602803, Götene, Västra Götaland}
 {104808214, Tibro, Västra Götaland}
 {102950811, Töreboda, Västra Götaland}
-{104114836, Göteborg, Västra Götaland}
 {100005113, Kungälv, Västra Götaland}
 {102817435, Lysekil, Västra Götaland}
 {101143683, Uddevalla, Västra Götaland}
