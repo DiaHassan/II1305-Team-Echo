@@ -21,7 +21,3 @@ from linkedIn import linkedIn
 # LinkedIn
 linkedIn_list = linkedIn.run()
 # insert.send_2d_list(linkedIn_list, database_name)
-
-
-
-
