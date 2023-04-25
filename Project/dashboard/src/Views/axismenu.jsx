@@ -1,5 +1,5 @@
 import React from 'react';
-import './xaxis_menu_css.css';
+import './axismenu.css';
 
 const ButtonList = ({ buttons }) => {
   return (
