@@ -26,25 +26,25 @@ export default function Navbar() {
   // }
 
   
-  const stickyNav = () => {
-    const [navbar, navbarSet] = useState(false)
+  // const stickyNav = () => {
+  //   const [navbar, navbarSet] = useState(false)
 
-    const changeBackground = () => {
-      console.log(window.scrollY)
-      if(window.scrollY > 20) {
-        navbarSet(true)
-      } else {
-        navbarSet(false)
-      }
-    }
-    useEffect(() => {
-      changeBackground()
-      // adding the event when scroll change background
-      window.addEventListener("scroll", changeBackground)
-    })
+  //   const changeBackground = () => {
+  //     console.log(window.scrollY)
+  //     if(window.scrollY > 20) {
+  //       navbarSet(true)
+  //     } else {
+  //       navbarSet(false)
+  //     }
+  //   }
+  //   useEffect(() => {
+  //     changeBackground()
+  //     // adding the event when scroll change background
+  //     window.addEventListener("scroll", changeBackground)
+  //   })
 
-    {navbar ? "navbar active" : "navbar"}
-  }
+  //   {navbar ? "navbar active" : "navbar"}
+  // }
 
   return (
     <>
