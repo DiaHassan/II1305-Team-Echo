@@ -1,7 +1,7 @@
 import sqlite3
 
 def connect():
-    connection = sqlite3.connect("echo.db")
+    connection = sqlite3.connect("project\db\echo.db")
     return connection
 
 def build():
@@ -19,5 +19,5 @@ def build():
 
 
 # Un-comment and run to construct database
-# if __name__ == '__main__':
-#     build()
+if __name__ == '__main__':
+    build()

@@ -128,8 +128,7 @@ def linkedin_scraper(job, municipality, page_number):
 #----------------------------Saves parameters-------------------------------------------------
 
                 print(job_title + " | " + location )
-                temp.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], education, None, date.today().strftime('%Y-%m-%d'), seniority, key])  
-
+                temp.append(["Linkedin", employment_type, None, ad_publication_date, job, location[location.index(', ')+2:location.index(' County')], education, None, date.today().strftime('%Y-%m-%d'), seniority, key])
 
         #Remove duplicates and the key element 
         list = []
@@ -138,6 +137,7 @@ def linkedin_scraper(job, municipality, page_number):
             if identifier not in seen:
                 seen[identifier] = True
                 list.append(item[:-1])
+                print(item[:-1])
             else:
                 global duplicates
                 duplicates = duplicates + 1
@@ -166,19 +166,20 @@ def run():
     jobs = ["Lärare", "Läkare", "Utvecklare", "Sjuksköterska", "Kock", "Operatör", "Personlig assistent", "Mekaniker", "Butikssäljare", "Civilingenjör", "Projektledare", "Städare"]
 
     # Geo ids
-    # geo_ids = [116546076] 
-    geo_ids = []
-    with open('geo_ids.txt', 'r') as f:
-        for line in f:
-            # Patternmatches for a number with a curly bracket before it and a comma sign after it.
-            match = re.search(r'\{(\d+)\,', line)
-            if match:
-                geo_ids.append(int(match.group(1)))
+    geo_ids = [105477815, 100112478, 106791608] 
+    # geo_ids = []
+    # with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
+    #     for line in f:
+    #         # Patternmatches for a number with a curly bracket before it and a comma sign after it.
+    #         match = re.search(r'\{(\d+)\,', line)
+    #         if match:
+    #             geo_ids.append(int(match.group(1)))
 
     for job in jobs:
         for muni in geo_ids:
             data = linkedin_scraper(job, muni, 0)
             db = data + db
+        len(db)
         # Reset seen unique adds when changing career
         global seen
         seen = {}
@@ -188,4 +189,4 @@ def run():
     print("Time it took: " + str(time.time()-start_time))
     print("Success")
     print("Duplicates: " + str(duplicates))
-    # return db
+    return db
