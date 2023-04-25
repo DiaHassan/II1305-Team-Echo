@@ -70,14 +70,17 @@ def find_seniority(job_ad):
     year_three = r"tre års erfarenhet|3 års erfarenhet|three years of experience|3 years of experience"
     year_four = r"fyra års erfarenhet|4 års erfarenhet|four years of experience|4 years of experience"
     year_five = r"fem års erfarenhet|5 års erfarenhet|five years of experience|5 years of experience"
-    year_six = r"sex års erfarenhet|6 års erfarenhet|soci years of experience|6 years of experience"
+    year_six = r"sex års erfarenhet|6 års erfarenhet|six years of experience|6 years of experience"
     year_seven = r"sju års erfarenhet|7 års erfarenhet|seven years of experience|7 years of experience"
     year_eight = r"åtta års erfarenhet|8 års erfarenhet|eight years of experience|8 years of experience"
     year_nine = r"nio års erfarenhet|9 års erfarenhete|nine years of experience|9 years of experience"
     year_ten = r"tio års erfarenhet|10 års erfarenhet|ten years of experience|10 years of experience"
     #year_fifteen = r"femton års erfarenhet|15 års erfarenhet"
     #year_twenty = r"tjugo års erfarenhet|20 års erfarenhet"
-    year = r"några års erfarenhet|a few yers of experience"
+    year = r"några års erfarenhet|a few years of experience"
+    year_several = r"flera års erfarenhet|a few years of experience"
+    year_par = r"ett par års erfarenhet|a couple of years of experience"
+    year_work = r"Arbetslivserfarenhet|arbetslivserfarenhet|Arbetserfarenhet|arbetserfarenhet"
 
     # Words to replace the found key words
     regex_year = [(year_one, 1),
