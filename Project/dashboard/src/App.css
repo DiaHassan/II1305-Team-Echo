@@ -1,3 +1,11 @@
+:root {
+  --font: Font,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+  --color-white: #fff;
+  --color-off-white: #f4f4f4;
+  --color-green: #039c88;
+  --color-black: #000;
+}
+
 .App {
   text-align: center;
 }
