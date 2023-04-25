@@ -6,6 +6,7 @@ export default function Navbar() {
       <>
         <nav>
             <div>
+              <div>LOGO</div>
               <ul>
                 <li>
                   <Link to="/">Home</Link>
