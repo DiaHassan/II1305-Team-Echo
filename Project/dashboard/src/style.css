@@ -12,6 +12,62 @@ body{
     font-family: var(--font);
 } 
 
-nav {
-  
+/* --------------- */
+
+nav{
+  position:fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  color: var(--color-green);
+  font-weight: bold;
+  font-size: 25px;
 }
+
+nav > ul {
+  list-style:none;
+}
+
+nav > ul > li {
+  display: inline-block;
+  margin-left: 1rem;
+  padding: 1rem;
+}
+
+nav > ul > li:hover {
+  border: 2px solid var(--color-black);
+}
+
+nav > ul > li > a{
+  text-decoration: none;
+  color: var(--color-black)
+}
+
+
+/* ------------------ */
+
+.wrapper{
+  position:fixed;
+  height:100%;
+  width:100%;
+  top:0;
+  left:0;
+  background-image:url("sthlm.jpg");
+  overflow-y: scroll;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.home-body > img {
+  height:auto;
+  /* position:absolute; */
+}
+.home-body > div {
+  top:200px;
+  left: 200px;
+  padding: 1rem;
+  /* background-color: var(--color-off-white); */
+}
+
