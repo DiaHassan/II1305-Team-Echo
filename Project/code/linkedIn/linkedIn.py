@@ -117,6 +117,9 @@ def linkedin_scraper(job, municipality, page_number):
                     if(ad_description is not None):
                         break
                     print("RETRYING")
+                    time.sleep(1)
+                    print(ad_response)
+                    print(str(ad_response.headers))
                     
                 ad_description = ad_description.text
                 seniority = None
@@ -136,7 +139,7 @@ def linkedin_scraper(job, municipality, page_number):
                 print(job_title + " | " + location )
                 temp.append(["Linkedin", employment_type, None, ad_publication_date, job, location.split(',')[1].strip().split()[0], education, None, date.today().strftime('%Y-%m-%d'), seniority, key])  
                 
-                time.sleep(1) #Delay to prevent status code 429
+                #time.sleep(0.5) #Delay to prevent status code 429
 
         if page_number < 1000 and len(ads) == 25:
             page_number = page_number + 25

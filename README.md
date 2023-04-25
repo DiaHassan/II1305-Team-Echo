@@ -10,8 +10,8 @@ Our project was made externaly for Future Place Leadership as a dashboard collec
 ### Built With
 - python
 - sql
-- javascript/react
-- html and csss
+- javascript and react
+- html and css
 
 ### Dependencies
  - Selenium (Python library)
