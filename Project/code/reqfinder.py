@@ -78,7 +78,7 @@ def find_seniority(job_ad):
     #year_fifteen = r"femton års erfarenhet|15 års erfarenhet"
     #year_twenty = r"tjugo års erfarenhet|20 års erfarenhet"
     year = r"några års erfarenhet|a few years of experience"
-    year_several = r"flera års erfarenhet|a few years of experience"
+    year_several = r"flera års erfarenhet|several years of experience"
     year_par = r"ett par års erfarenhet|a couple of years of experience"
     year_work = r"Arbetslivserfarenhet|arbetslivserfarenhet|Arbetserfarenhet|arbetserfarenhet"
 
@@ -96,7 +96,7 @@ def find_seniority(job_ad):
                 #(year_fifteen, 15),
                 #(year_twenty, 20),
                 (year, 2),
-                (year_several, 2),
+                (year_several, 5),
                 (year_par, 2),
                 (year_work, 2)
                 ]
