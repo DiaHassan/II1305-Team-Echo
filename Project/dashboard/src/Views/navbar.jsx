@@ -1,54 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from 'react';
 import "../style.css";
 
 export default function Navbar() {
+  const [navbar, setNavbar] = useState(false);
 
+  // const changeBackground = () => {
+  //   console.log(window.scrollY);
+  //   console.log("Change")
 
-  // const [isScrolled, setIsScrolled] = useState(false);
-
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
+  //   navbarSet(true)
+  //   if (window.scrollY > 1) {
+  //     console.log(window.scrollY);
+  //     navbarSet(true);
+  //   } else {
+  //     navbarSet(false);
   //   };
-  // }, [isScrolled]);
-
-  // // return (
-  // //   <nav className={`navbar ${isScrolled ? 'small' : ''}`}>
-  // //     {/* Navbar content */}
-  // //   </nav>
-  // // );
-
-  // const handleScroll = (e) => {
-
-  // }
-
+  // };
+  // useEffect(() => {
+  //   changeBackground()
+  //   console.log("Effect")
+  // });
   
-  const stickyNav = () => {
-    const [navbar, navbarSet] = useState(false)
-
-    const changeBackground = () => {
-      console.log(window.scrollY)
-      if(window.scrollY > 20) {
-        navbarSet(true)
-      } else {
-        navbarSet(false)
-      }
-    }
-    useEffect(() => {
-      changeBackground()
-      // adding the event when scroll change background
-      window.addEventListener("scroll", changeBackground)
-    })
-
-    {navbar ? "navbar active" : "navbar"}
+  const test = () => {
+    console.log(window.scrollY);
   }
+
+  window.addEventListener('scroll', test);
+
 
   return (
     <>
-      <nav /*</>className={`navbar ${isScrolled ? 'small' : ''}`}*/>
+      <nav className={navbar ? "active" : ""}>
+      {/* <nav className="active"> */}
         <div>Swedish Talent Observatory</div>
         <ul>
           <li>
