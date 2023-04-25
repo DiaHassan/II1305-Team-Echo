@@ -3,36 +3,28 @@ import { Link } from "react-router-dom";
 import "../style.css";
 
 export default function Navbar() {
-  const [navbar, setNavbar] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // const changeBackground = () => {
-  //   console.log(window.scrollY);
-  //   console.log("Change")
+  useEffect(() => {
+    function handleScroll() {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 0 && !isScrolled) {
+        setIsScrolled(true);
+      } else if (scrollPosition === 0 && isScrolled) {
+        setIsScrolled(false);
+      }
+    }
 
-  //   navbarSet(true)
-  //   if (window.scrollY > 1) {
-  //     console.log(window.scrollY);
-  //     navbarSet(true);
-  //   } else {
-  //     navbarSet(false);
-  //   };
-  // };
-  // useEffect(() => {
-  //   changeBackground()
-  //   console.log("Effect")
-  // });
-  
-  const test = () => {
-    console.log(window.scrollY);
-  }
+    window.addEventListener('scroll', handleScroll);
 
-  window.addEventListener('scroll', test);
-
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isScrolled]);
 
   return (
     <>
-      <nav className={navbar ? "active" : ""}>
-      {/* <nav className="active"> */}
+      <nav className={`navbar ${isScrolled ? 'small' : ''}`}>
         <div>Swedish Talent Observatory</div>
         <ul>
           <li>
