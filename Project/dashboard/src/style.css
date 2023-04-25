@@ -1,0 +1,146 @@
+:root {
+    --font: Font,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+    --color-white: #fff;
+    --color-off-white: #f4f4f4;
+    --color-green: #039c88;
+    --color-black: #000;
+  }
+  
+body{
+    padding:0;
+    margin:0;
+    font-family: var(--font);
+} 
+
+/* --------------- */
+
+nav{
+  position:sticky;
+  top:0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  color: var(--color-green);
+  font-weight: bold;
+  font-size: 25px;
+  transition: height 0.3s ease-in-out;
+}
+
+.small{
+  background-color: white;
+  transition: height 0.3s ease-in-out;
+  height: 50px;
+}
+
+nav.active{
+  background-color: #039c88;
+  position:fixed;
+  top:0;
+  right:0;
+}
+
+nav > ul {
+  list-style:none;
+}
+
+nav > ul > li {
+  display: inline-block;
+  margin-left: 1rem;
+  padding: 1rem;
+}
+
+nav > ul > li:hover {
+  border: 2px solid var(--color-black);
+}
+
+nav > ul > li > a{
+  text-decoration: none;
+  color: var(--color-black)
+}
+
+/* ------------------ */
+.wrapper-wrapper{
+  width:100%;
+}
+.wrapper{
+  position:relative;
+  height:100vh;
+  width:100%;
+  top:0;
+  left:0;
+  background-image:url("sthlm.jpg");
+  /* overflow-y: scroll; */
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.home-body{
+  display: flex;
+  flex-direction: row;
+  /* justify-content: ; */
+  padding-left: 4rem;
+  padding-right: 4rem;
+  margin-top: 5rem;
+}
+
+.home-body > img {
+  height:auto;
+  /* margin: 0 4rem; */
+  /* position:absolute; */
+}
+.home-body > div {
+  top:200px;
+  left: 200px;
+  padding: 0 4rem;
+  width: 50rem;
+  /* background-color: var(--color-off-white); */
+}
+
+/* ------------------ */
+
+footer {
+  bottom: 0;
+  left: 0;
+  position:relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(205, 205, 205);
+}
+
+.div-row {
+  padding-right: 8rem;  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.div-col {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+
+footer div > div > ul{
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+footer div > div > ul > li  {
+  padding-bottom: 1rem;
+  align-self: left;
+  margin: 0;
+}
+
+footer div > div > ul > li > a{
+  text-decoration: none;
+  color: var(--color-black)
+}
+
+Link {
+  text-decoration: none;
+  color: var(--color-black)
+}
