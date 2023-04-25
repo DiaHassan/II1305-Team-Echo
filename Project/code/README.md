@@ -8,12 +8,8 @@ In order to run the code, the following libraries and programs will be needed:
  - DB Browser (SQLite)
 
 
-## [main.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/main.py)
-This program retrieves a list of all the webscraped data from the websites selected and forwards the data to the database to be inserted.
-
-
 ## [/ledigajobb](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/ledigajobb)
-The file in the ```ledigajobb``` folder is used to web scrape job listing data from Ledigajobb. This folder consists of ```ledigajobb.py```.  
+The file in the ```ledigajobb``` folder is used to web scrape job listing data from Ledigajobb.  
 
 ### ledigajobb.py
 Extracts data from Ledigajobb. This file contains several functions.
@@ -50,16 +46,20 @@ Extracts data from Ledigajobb. This file contains several functions.
 *Returns employment type, duration and seniority from the HTML response.*  
 
 **find_lan(lan_nb)**:  
-todo
+*Finds the next municipality in* ```lan_list```*.*  
+
+**run()**:  
+*Returns* ```get_all```*.*  
+
+**scrape_ad(job_link, lan, work)**:  
+*Returns all relevant information of a job listing in a list using the above functions.*  
+
+**get_all()**:  
+*Gets all information specified in* ```yrke_list``` *(occupation list) and* ```lan_list``` *(county list) using the above functions.*
 
 
 ## [/linkedIn](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/linkedIn)
-All files in the ```linkedIn``` folder are used to web scrape job listing data from LinkedIn. This folder consists of ```linkedIn.py``` and ```getGeoId.py```.  
-To extract data from LinkedIn, the following code will return all data in a list:
-```python
-linkedInData = linkedIn.run()
-```  
-Similar code is already included in ```main.py```.
+All files in the ```linkedIn``` folder are used to web scrape job listing data from LinkedIn.  
 
 ### linkedIn.py
 The "main" file that has all the data extracting functions. This file is dependent on the output produced by ```getGeoId.py```.
@@ -80,20 +80,37 @@ The above code will let ```getGeoId.py``` search for the Geo ID's of Upplands VÃ
 
 
 ## [/platsbanken](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/platsbanken)
-The program within the file connects to platsbanken API and retrieves all the information in ads from the last 30 days. It then extracts the relevant data and converts it into a format suitable for the database before sending it. This folder consists of ```platsbanken.py```.  
+The program within the file connects to platsbanken API and retrieves all the information in ads from the last 30 days. It then extracts the relevant data and converts it into a format suitable for the database before sending it.  
+
 
 ### platsbanken.py
-Extracts data from Platsbanken's API. There are several functions in this file.
+Extracts data from Platsbanken's API.
 
 #### Functions
+**run()**:  
+*Retrieves all ads and outputs their data in a 2D list.*  
 
 **get_ads()**:  
 *Retrieves all ads from the API in full.*  
-[todo]
+
+**extract_data_all_ads(all_ads)**:  
+*Extracts the relevant data from all ads into a list.*  
+
+**extract_duration(duration)**:  
+*Extracts the job's duration from the listing.*  
 
 **extract_data_ad()**:
-*Extracts neccesary data from an ad using json and returns it in a array*
+*Extracts neccesary data from an ad using json and returns it in an array*  
+
+
+## [job_info.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/job_info.py)  
+All of the occupations and counties we are web scraping for.
+
+
+## [main.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/main.py)
+This program retrieves a list of all the webscraped data from the websites selected and forwards the data to the database to be inserted.  
 
 
 ## [reqfinder.py](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/reqfinder.py)
-Reads a string and finds the first recognizable pre-condition for a job application and returns it.
+Reads a string and finds the first recognizable pre-condition for a job application and returns it.  
+
