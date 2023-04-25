@@ -6,20 +6,18 @@ export default function Navbar() {
     return(
       <>
         <nav>
-            <div>
-              <div>LOGO</div>
-              <ul>
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li >
-                  <Link to="/">APP_NEEDS_NAME</Link>
-                </li>
-                <li  >
-                  <Link to="/about">About</Link>
-                </li>
-              </ul>
-          </div>
+            <div>Swedish Talent Observatory</div>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li >
+                <Link to="/">APP_NEEDS_NAME</Link>
+              </li>
+              <li  >
+                <Link to="/about">About</Link>
+              </li>
+            </ul>
         </nav>
       </>
     )
