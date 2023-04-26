@@ -15,7 +15,11 @@ county_list = [
     'Uppsala län',
     'Värmlands län',
     'Västerbottens län',
-    'Västernorrlands län'
+    'Västernorrlands län',
+    'Västmanlands län',
+    'Västra Götalands län',
+    'Örebro',
+    'Östergötalands län'
 ]
 
 profession_list =[
