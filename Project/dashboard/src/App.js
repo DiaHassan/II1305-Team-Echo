@@ -1,6 +1,7 @@
 import './App.css';
 import About from './Views/about';
 import Home from './Views/home';
+import Statistics from './Views/statistics';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Home />} />
           {/* <Route path="/finder" element={<AboutView />} /> */}
           <Route path="/about" element={<About />} />
+          <Route path="/statistics" element={<Statistics/>} />
         </Routes>
       </BrowserRouter>
     </div>

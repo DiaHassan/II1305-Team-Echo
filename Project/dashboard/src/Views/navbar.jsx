@@ -37,7 +37,7 @@ export default function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li >
-            <Link to="/">APP_NEEDS_NAME</Link>
+            <Link to="/statistics">Statistics</Link>
           </li>
           <li  >
             <Link to="/about">About</Link>
