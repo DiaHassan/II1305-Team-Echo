@@ -188,7 +188,7 @@ def get_all():
                     i += 1
                     print("\n I is vvvvvv")
                     print(i) 
-                    print(scrape_ad(base_url+half_link,lan, work))
+                    all_jobs.append(scrape_ad(base_url+half_link,lan, work))
                 next_page = get_next_page(response)
                 if (next_page == False): next_page = "Twees"
                 response = get_code(next_page)
