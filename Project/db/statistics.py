@@ -1,5 +1,5 @@
 import sqlite3
-from countyprof import county_list, profession_list
+from countyprof import profession_list
 
 # Database path
 db_path = 'Project\db\echo.db'
@@ -29,7 +29,7 @@ def get_professions_in_county(county):
         result = []
         cursor = conn.cursor()
         for profession in profession_list:
-            query = 'SELECT profession, count(job_listing.id) as "sum" FROM job_listing INNER JOIN job ON job.id = job_listing.job_id WHERE county = "' + county + '" AND profession LIKE "%' + profession + '%"'
+            query = 'SELECT "' + profession +  '" AS profession, count(job_listing.id) as "sum" FROM job_listing INNER JOIN job ON job.id = job_listing.job_id WHERE county = "' + county + '" AND profession LIKE "%' + profession + '%"'
             result.append(cursor.execute(query).fetchall())
         cursor.close()
     conn.close()
@@ -39,5 +39,5 @@ def get_professions_in_county(county):
 
 # Test
 if __name__ == '__main__':
-    #get_profession_in_counties('Städare')
+    get_profession_in_counties('Städare')
     get_professions_in_county('Stockholms län')

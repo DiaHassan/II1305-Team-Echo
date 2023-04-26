@@ -1,6 +1,6 @@
 county_list = [
     'Blekinge län',
-    'Dalarnas län'
+    'Dalarnas län',
     'Gotlands län',
     'Gävleborgs län',
     'Hallands län',
@@ -20,7 +20,7 @@ county_list = [
 
 profession_list =[
     "Butikssäljare",
-    "Civilingenjör"
+    "Civilingenjör",
     "Kock",
     "Läkare",
     "Lärare",
