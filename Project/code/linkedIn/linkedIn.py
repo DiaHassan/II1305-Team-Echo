@@ -9,6 +9,7 @@ from reqfinder import find_req # Program to look through bodytext
 from datetime import date, timedelta
 from bs4 import BeautifulSoup
 
+
 # Duplicates counter (REMOVE LATER)
 duplicates = 0
 
@@ -102,26 +103,22 @@ def linkedin_scraper(job, municipality, page_number):
                 county = location[location.index(', ')+2:location.index(', Sweden')]
 
 #----------------------------Extracts HTML from each ad-page----------------------------------
-
+            print(job_title + " | " + location)
             seniority = None
             employment_type = None
 
             # Establish connection to ad-page
-            wait = 0
             while(True):
                 ad_response = requests.get(link)
-                if(ad_response.status_code == 200):
+                # print(ad_response)
+                if(ad_response.status_code == 200 or ad_response.status_code == 500):
                     break
                 print("RETRYING")
-                wait = wait + 1
-                print(ad_response)
-                print(ad_response.headers) 
                 time.sleep(0.1) # Delay because of status code 429
-                if wait == 15:  # Bigger delay incase it gets stuck
-                    print("WAIT")
-                    time.sleep(9.9) 
-                    wait = 0
-            wait = 0
+            if(ad_response.status_code == 500):
+                print("SKIP")
+                continue
+
             ad_soup = BeautifulSoup(ad_response.content,'html.parser')
             
             #Get HTML element for ad-page
@@ -142,8 +139,8 @@ def linkedin_scraper(job, municipality, page_number):
 
 #----------------------------Saves parameters-------------------------------------------------
 
-            print(job_title + " | " + location )
-            temp.append(["Linkedin", employment_type, None, ad_publication_date, job, county, education, None, date.today().strftime('%Y-%m-%d'), seniority, key])
+            # print(job_title + " | " + location )
+            temp.append(["Linkedin", employment_type, None, ad_publication_date, job, county, education, None, seniority, date.today().strftime('%Y-%m-%d'), key])
 
     #Remove duplicates and the key element 
     list = []
@@ -179,7 +176,7 @@ def run():
     jobs = ["Lärare"]#, "Läkare", "Utvecklare", "Sjuksköterska", "Kock", "Operatör", "Personlig assistent", "Mekaniker", "Butikssäljare", "Civilingenjör", "Projektledare", "Städare"]
 
     # Geo ids
-    # geo_ids = [106366684] 
+    # geo_ids = [103019568] 
     geo_ids = []
     with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
         for line in f:
