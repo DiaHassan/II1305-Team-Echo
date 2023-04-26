@@ -17,7 +17,7 @@ body {
   font-family: var(--font);
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
@@ -83,6 +83,11 @@ nav>ul>li>a {
   color: var(--color-black)
 }
 
+.small>ul>li{
+  padding-top:1rem;
+  padding-bottom: 0.75rem;
+}
+
 .burger {
   display: none;
   width: 2rem;
@@ -107,11 +112,11 @@ nav>ul>li>a {
       height: auto;
     }
 
-    .navHidden{
+    .navHidden {
       display: none;
     }
 
-    nav>ul{
+    nav>ul {
       transition: display 0.5s ease-in-out;
     }
 
@@ -122,8 +127,9 @@ nav>ul>li>a {
     .burger {
       display: block;
     }
-    .small>.burger{
-      content:url("menuHamburger.png") !important;
+
+    .small>.burger {
+      content: url("menuHamburger.png") !important;
     }
   }
 }
@@ -187,17 +193,19 @@ nav>ul>li>a {
 
 @media screen {
   @media(max-width:1100px) {
-    .home-front{
+    .home-front {
       display: block;
       text-align: center;
     }
+
     .home-front>div>p {
       padding-right: 0;
     }
-    
+
     .home-front>div>h1 {
       padding-right: 0;
     }
+
     .home-front>div {
       padding: 0;
       width: auto;
@@ -286,4 +294,29 @@ footer a:hover {
 .footer-contact {
   display: flex;
   flex-direction: column;
+}
+
+@media screen {
+  @media(max-width:800px) {
+    footer {
+      display: block;
+      align-self: center;
+      text-align: center;
+      padding-left: 15vw;
+      padding-right: 15vw;
+      padding-top: 2rem;
+    }
+
+    footer > div{
+      padding-bottom: 1rem;
+    }
+
+    footer > div > ul{
+      margin-bottom:0;
+    }
+
+    footer>.vertical-line {
+      display:none;
+    }
+  }
 }
