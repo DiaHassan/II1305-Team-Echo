@@ -320,3 +320,27 @@ footer a:hover {
     }
   }
 }
+
+
+
+/* ------------------- */
+
+.about-wrapper{
+  min-height:90vh;
+  background-color: var(--color-off-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding:2rem;
+}
+
+.about-wrapper div{
+  max-width:60vw;
+  text-align: center;
+}
+
+.about-wrapper hr{
+  width: 20rem;
+  border-width: 3px;
+}
