@@ -11,7 +11,7 @@ def get_profession_in_counties(profession):
     with sqlite3.connect(db_path) as conn:
         result = []
         cursor = conn.cursor()
-        query = 'SELECT county, count(id) as "sum" FROM job_listing WHERE job_id = (SELECT id FROM job WHERE profession LIKE "%' + profession + '%") GROUP BY county'
+        query = 'SELECT county, count(id) as "sum" FROM job_listing WHERE job_id = (SELECT id FROM job WHERE profession LIKE "%' + profession + '%") AND county IS NOT "null" GROUP BY county'
         fetch = cursor.execute(query).fetchall()
         fetch.insert(0, profession)  
         result.append(fetch)
@@ -40,4 +40,4 @@ def get_professions_in_county(county):
 # Test
 if __name__ == '__main__':
     get_profession_in_counties('Städare')
-    get_professions_in_county('Stockholms län')
+    #get_professions_in_county('Stockholms län')
