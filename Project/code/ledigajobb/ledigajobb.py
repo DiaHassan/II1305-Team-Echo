@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import csv
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
