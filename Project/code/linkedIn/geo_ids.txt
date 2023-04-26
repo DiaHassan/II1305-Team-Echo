@@ -13,7 +13,6 @@
 {101633175, Lidingö, Stockholm}
 {105962876, Norrtälje, Stockholm}
 {104801377, Sigtuna, Stockholm}
-{104725393, Nynäshamn, Stockholm}
 {102085124, Håbo, Uppsala}
 {102576061, Älvkarleby, Uppsala}
 {106004638, Knivsta, Uppsala}
