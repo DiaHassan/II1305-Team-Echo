@@ -20,7 +20,7 @@ def extract_data(x_axis, x_category, y_axis, y_category, sql_connect, cursor):
     #Get id has to be executed right after the row has been inserted.
     query_string = "SELECT"
 
-    if 
+    # if 
 
 
     #getting job id for job_listing insert

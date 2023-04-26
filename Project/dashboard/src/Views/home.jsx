@@ -18,12 +18,14 @@ export default function Home() {
             </div>
             <img src="https://i.imgur.com/Q55Nhtn.png" alt="home_img" width="300" height="300" />
           </div>
-          <div  className="home-body">
-            <input type="text" placeholder="Search..." />
-            <button type="submit">Search</button>
+          <div className="home-body">
+            <div className="search">
+              <input type="text" placeholder="Search..." />
+              <button type="submit">Search</button>
+            </div>
           </div>
         </div>
-          <Footer />
+        <Footer />
       </div>
     </>
   )

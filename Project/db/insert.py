@@ -70,6 +70,8 @@ def insert_data(argument_list, sql_connect, cursor):
             job_param_list[6] = "null"
     if not job_param_list[7]:
             job_param_list[7] = "null"
+    if not job_param_list[4]:
+         job_param_list[4] = "null"
 
     insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, seniority, date_gathered) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"
 
@@ -128,7 +130,7 @@ def send_2d_list(list, path):
 if __name__ == '__main__':
     
     test = [
-            ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', ['Requires a relevant degree'], 0, None, '2023-04-20'],
+            ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', None, ['Requires a relevant degree'], 0, None, '2023-04-20'],
             ['ledigajobb', 'heltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', [], 0, None, '2023-04-20']
     ]
-    send_2d_list(test, "echo.db")
+    send_2d_list(test, "Project\db\echo.db")
