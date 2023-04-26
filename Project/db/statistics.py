@@ -1,8 +1,5 @@
 import sqlite3
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from job_info import yrke_list, lan_list
+from countyprof import county_list, profession_list
 
 # Database path
 db_path = 'Project\db\echo.db'
@@ -10,13 +7,14 @@ db_path = 'Project\db\echo.db'
 
 # X-axis: all counties
 # Y-axis: number of ads in variable profession 
-def get_profession_in_counties():
+def get_profession_in_counties(profession):
     with sqlite3.connect(db_path) as conn:
         result = []
         cursor = conn.cursor()
-        for profession in yrke_list:
-            query = 'SELECT county, count(id) as "sum" FROM job_listing WHERE job_id = (SELECT id FROM job WHERE profession = "' + profession + '") GROUP BY county'
-            result.append(cursor.execute(query).fetchall())
+        query = 'SELECT county, count(id) as "sum" FROM job_listing WHERE job_id = (SELECT id FROM job WHERE profession LIKE "%' + profession + '%") GROUP BY county'
+        fetch = cursor.execute(query).fetchall()
+        fetch.insert(0, profession)  
+        result.append(fetch)
         cursor.close()
     conn.close()
     print(result)
@@ -26,13 +24,12 @@ def get_profession_in_counties():
 
 # X-axis: all professions
 # Y-axis: number of professions in variable county
-def get_professions_in_county(): 
+def get_professions_in_county(county): 
     with sqlite3.connect(db_path) as conn:
         result = []
         cursor = conn.cursor()
-        for county in lan_list:
-            query = 'SELECT profession, count(job_listing.id) as "sum" FROM job_listing INNER JOIN job ON job.id = job_listing.job_id WHERE county = "' + county[1] + '" GROUP BY profession'
-            print(query)
+        for profession in profession_list:
+            query = 'SELECT profession, count(job_listing.id) as "sum" FROM job_listing INNER JOIN job ON job.id = job_listing.job_id WHERE county = "' + county + '" AND profession LIKE "%' + profession + '%"'
             result.append(cursor.execute(query).fetchall())
         cursor.close()
     conn.close()
@@ -40,7 +37,7 @@ def get_professions_in_county():
     return result
 
 
-
+# Test
 if __name__ == '__main__':
-    #get_profession_in_counties()
-    get_professions_in_county()
+    #get_profession_in_counties('Städare')
+    get_professions_in_county('Stockholms län')
