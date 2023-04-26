@@ -1,7 +1,9 @@
 import './App.css';
 import About from './Views/about';
 import Home from './Views/home';
+import Statistics from './Views/statistics';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Stats from './Views/statistics';
 
 function App() {
   return (
@@ -11,8 +13,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/finder" element={<AboutView />} /> */}
+          <Route path="/finder" element={<Stats />} />
           <Route path="/about" element={<About />} />
+          <Route path="/statistics" element={<Statistics/>} />
         </Routes>
       </BrowserRouter>
     </div>
