@@ -44,6 +44,9 @@ def insert_data(argument_list, sql_connect, cursor):
     #
     #Get id has to be executed right after the row has been inserted.
 
+    if(argument_list[4] == "" or argument_list[4] == " "):
+         return
+    
     #getting job id for job_listing insert
     job_exists_query = "SELECT * FROM job WHERE profession = '" + argument_list[4] + "';"
 
@@ -113,7 +116,7 @@ def send_data(list, path):
 def send_2d_list(list, path):
 
     # Builds db with tables if it does not already exists
-    if not exists('echo.db'):
+    if not exists(path):
         build_db()
         
     with sqlite3.connect(path) as sql_connect:
