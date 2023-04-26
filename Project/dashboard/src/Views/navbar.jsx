@@ -4,6 +4,7 @@ import "../style.css";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
@@ -22,16 +23,21 @@ export default function Navbar() {
     };
   }, [isScrolled]);
 
+  function displayList() {
+    setIsVisible(isVisible ? false : true);
+  }
+
   return (
     <>
       <nav className={`navbar ${isScrolled ? 'small' : ''}`}>
         <div>Swedish Talent Observatory</div>
-        <ul>
+        <img src={"Project\dashboard\src\menuHamburger.png"} alt="<" className="burger" onClick={displayList}/>
+        <ul className={`${isVisible ? '' : 'navHidden'}`}>
           <li>
             <Link to="/">Home</Link>
           </li>
           <li >
-            <Link to="/">APP_NEEDS_NAME</Link>
+            <Link to="/statistics">Statistics</Link>
           </li>
           <li  >
             <Link to="/about">About</Link>
