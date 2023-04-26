@@ -25,7 +25,7 @@ def run_ledigajobb():
 # LinkedIn
 def run_linkedin():
     linkedIn_list = linkedIn.run()
-    insert.send_2d_list(linkedIn_list, database_name)
+    send_2d_list(linkedIn_list, database_name)
 
 # Main
 if __name__ == '__main__':
