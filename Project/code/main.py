@@ -19,5 +19,5 @@ database_name = "Project\db\echo.db"
 # insert.send_2d_list(ledigajobb_list, database_name)
 
 # LinkedIn
-# linkedIn_list = linkedIn.run()
+linkedIn_list = linkedIn.run()
 # insert.send_2d_list(linkedIn_list, database_name)
