@@ -14,16 +14,21 @@ database_name = "Project\db\echo.db"
 def run_platsbanken():
     platsbanken_list = platsbanken.run()
     insert.send_2d_list(platsbanken_list, database_name)
+    print('Platsbanken done')
 
 # LedigaJobb
 def run_ledigajobb():
     ledigajobb_list = ledigajobb.run()
     insert.send_2d_list(ledigajobb_list, database_name)
+    print('LedigaJobb done')
+
 
 # LinkedIn
 def run_linkedin():
     linkedIn_list = linkedIn.run()
     insert.send_2d_list(linkedIn_list, database_name)
+    print('LinkedIn done')
+
 
 # Main
 if __name__ == '__main__':
