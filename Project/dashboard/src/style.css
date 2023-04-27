@@ -367,3 +367,35 @@ footer a:hover {
   width: 20rem;
   border-width: 3px;
 }
+
+
+
+/* ------------------- */
+.fortable {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: ; */
+  align-items: center;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  margin-top: 5rem;
+  margin-bottom: 10rem;
+  color: var(--color-white);
+}
+.fortableandlist{
+  display: flex;
+  align-content: space-between;
+  /* flex-direction: row; */
+  align-items: center;
+}
+.forlist{
+  float: left;
+}
+.forlistlist > ul{
+  width: 19rem;
+}
+
+.forlistbutton{
+  width: 19rem;
+}
+

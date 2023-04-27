@@ -27,13 +27,13 @@ def list_of_list_tuple_to_2d_list(list_of_list_tuple):
 def get_profession_in_counties(profession):
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
-        query = 'SELECT county, count(id) as "sum" FROM job_listing WHERE job_id = (SELECT id FROM job WHERE profession LIKE "%' + profession + '%") AND county IS NOT "null" GROUP BY county'
+        query = 'SELECT jl.county, COUNT(j.id) as job_count FROM job_listing jl LEFT JOIN job j ON jl.job_id = j.id AND j.profession LIKE "%' + profession + '%" WHERE county IS NOT "null" GROUP BY jl.county'
         result = cursor.execute(query).fetchall()  
         cursor.close()
     conn.close()
     result = list_of_tuples_to_2d_list(result)
     result.insert(0, profession)
-    print(result)
+    print(type(result))
     return result
 
 
@@ -50,7 +50,7 @@ def get_professions_in_county(county):
     conn.close()
     result = list_of_list_tuple_to_2d_list(result)
     result.insert(0, county)
-    print(result)
+    print(type(result))
     return result
 
 # X-axis: employment type per county

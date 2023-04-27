@@ -9,6 +9,7 @@ from extract import get_profession_in_counties, get_professions_in_county
 #     return result
 
 
+
 app = Flask(__name__)
 CORS(app)
 
@@ -17,7 +18,11 @@ def endpoint():
 
     data = request.get_json()
     arg1 = data['job']
-    return jsonify({'number':str(get_profession_in_counties(arg1))})
+    info = get_profession_in_counties(arg1)
+    info.pop(0)
+    print(info)
+
+    return jsonify({'number':(info)})
 
 
 
