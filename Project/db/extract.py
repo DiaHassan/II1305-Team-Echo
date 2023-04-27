@@ -78,6 +78,19 @@ def get_professions_in_county(county):
     print(result)
     return result
 
+def general_extraction(xaxis, yaxis, parameters):
+    #xaxis is the attribute that we want ot show on the xaxis
+    #yaxis is the attribute that we want ot show on the yaxis
+    #parameters is an array where each attribute is an array with the structure 
+    # ["attributename", [acceptablevalues("which counties we search or perhaps min value for attributes like years of experience")]]
+    # SELECT yaxis, count(xaxis) from table WHERE conditions GROUP BY yaxis
+    # WHERE 
+    job_listing_parameters = ["source", "employment_type", "duration", "publication_date", "county", "years_of_experience", "seniority", "date_gathered"]
+    outside_params = [""]
+    #The string for parameters which are withing the argument list. 
+    #for i in parameters:
+     #   if i in
+
 
 # Test
 if __name__ == '__main__':
