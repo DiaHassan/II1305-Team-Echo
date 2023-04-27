@@ -21,15 +21,35 @@ def list_of_list_tuple_to_2d_list(list_of_list_tuple):
     return result     
 
 
+# Merges list with key-value
+def merge_list(lst):
+    # Group the elements by their first value
+    groups = {}
+    for elem in lst:
+        key = elem[0]
+        if key not in groups:
+            groups[key] = []
+        groups[key].append(elem[1:])
+
+    # Combine the second and third values of each group into a list
+    result = []
+    for key, values in groups.items():
+        combined = [key]
+        for i in range(len(values[0])):
+            combined.append([v[i] for v in values])
+        result.append(combined)
+
+    return result
+
+
 # Queries for variable profession in all counties
-def query_profession(query, header):
+def query_profession(query):
     with sqlite3.connect(db_path) as conn:
       cursor = conn.cursor()
       result = cursor.execute(query).fetchall()
       cursor.close()
     conn.close()
     result = list_of_tuples_to_2d_list(result)
-    result.insert(0, header)
     return result
 
 
@@ -41,8 +61,9 @@ def get_profession_in_counties(profession):
             LEFT JOIN job j ON jl.job_id = j.id AND j.profession LIKE "%' + profession + '%" \
             WHERE county IS NOT "null" \
             GROUP BY jl.county'
-    return query_profession(query, (profession))
-
+    result = query_profession(query)
+    result.insert(0, profession)
+    return result
 
 
 # X-axis: all counties
@@ -53,8 +74,10 @@ def get_employment_type_per_county(profession, param):
             JOIN job p ON j.job_id = p.id \
             WHERE p.profession LIKE "%' + profession + '%" AND ' + param + ' IS NOT + "null"\
             GROUP BY j.county, j.' + param
-    return query_profession(query, (profession, param))
-
+    result = query_profession(query)
+    result = merge_list(result)
+    result.insert(0, (profession, param))
+    return result
 
 
 # X-axis: all professions
@@ -74,6 +97,8 @@ def get_professions_in_county(county):
     result.insert(0, (county))
     return result
 
+
+# One function to rule them all -E
 def general_extraction(xaxis, yaxis, parameters):
     #xaxis is the attribute that we want ot show on the xaxis
     #yaxis is the attribute that we want ot show on the yaxis
@@ -93,4 +118,3 @@ if __name__ == '__main__':
     #print(get_profession_in_counties('Städare'))
     print(get_employment_type_per_county('Läkare', 'duration'))
     #print(get_professions_in_county('Stockholms län'))
-
