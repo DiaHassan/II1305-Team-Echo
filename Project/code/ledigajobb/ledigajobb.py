@@ -66,7 +66,10 @@ def join_url(base_url, section):
 
 # Returns date
 def get_date(response):
-    return response.find_all('span', class_='ml-2 text-muted small')[1].text
+    try:
+        return response.find_all('span', class_='ml-2 text-muted small')[1].text
+    except:
+        return "None"
 
 
 # Returns prerequiered
