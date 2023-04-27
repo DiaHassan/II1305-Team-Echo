@@ -9,7 +9,6 @@ from reqfinder import find_req # Program to look through bodytext
 from datetime import date, timedelta
 from bs4 import BeautifulSoup, SoupStrainer
 
-import codecs
 
 # Duplicates counter (REMOVE LATER)
 duplicates = 0
