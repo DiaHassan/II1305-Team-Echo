@@ -25,11 +25,10 @@ def run_ledigajobb():
 # LinkedIn
 def run_linkedin():
     linkedIn_list = linkedIn.run()
-    send_2d_list(linkedIn_list, database_name)
-    print('LinkedIn done')
+    # send_2d_list(linkedIn_list, database_name)
 
 # Main
 if __name__ == '__main__':
-    run_platsbanken()
+    #run_platsbanken()
     #run_ledigajobb()
-    #run_linkedIn()
+    run_linkedin()

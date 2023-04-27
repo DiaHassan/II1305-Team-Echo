@@ -13,7 +13,6 @@
 {101633175, Lidingö, Stockholm}
 {105962876, Norrtälje, Stockholm}
 {104801377, Sigtuna, Stockholm}
-{104725393, Nynäshamn, Stockholm}
 {102085124, Håbo, Uppsala}
 {102576061, Älvkarleby, Uppsala}
 {106004638, Knivsta, Uppsala}
@@ -249,3 +248,13 @@
 {103082221, Hjo, Västra Götaland}
 {103011545, Tidaholm, Västra Götaland}
 {105505966, Falköping, Västra Götaland}
+{102618490, Göteborg, Västra Götaland}
+
+{104312072, Täby, Stockholm}
+{104792890, Gnesta, Södermanland}
+{104640929, Mullsjö, Jönköping}
+{101759788, Malmö, Skåne}
+{105391169, Östersund, Jämtland}
+{116351998, Falun, Dalarna}
+{112614768, Lekeberg, Örebro}
+{104448936, Kil, Värmland}
