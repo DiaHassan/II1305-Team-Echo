@@ -1,12 +1,18 @@
 import sqlite3
 from countyprof import profession_list
-import numpy as np
 
 # Database path
 db_path = 'Project\db\echo.db'
 
 
-        
+# [[(a,b)], [(c,d)]] --> [[a,b], [c,d]]
+def list_of_list_tuple_to_2d_list(list_of_list_tuple):
+    result = []
+    for list_tuple in list_of_list_tuple:
+       x = list_tuple.pop()
+       y = [x[0], x[1]]
+       result.append(y) 
+    return result     
 
 
 # X-axis: all counties
@@ -27,18 +33,20 @@ def get_profession_in_counties(profession):
 # Y-axis: number of professions in variable county
 def get_professions_in_county(county): 
     with sqlite3.connect(db_path) as conn:
-        result = [county]
+        result = []
         cursor = conn.cursor()
         for profession in profession_list:
             query = 'SELECT "' + profession +  '" AS profession, count(job_listing.id) as "sum" FROM job_listing INNER JOIN job ON job.id = job_listing.job_id WHERE county = "' + county + '" AND profession LIKE "%' + profession + '%"'
             result.append(cursor.execute(query).fetchall())
         cursor.close()
     conn.close()
+    result = list_of_list_tuple_to_2d_list(result)
+    result.insert(0, county)
     print(result)
     return result
 
 
 # Test
 if __name__ == '__main__':
-    #get_profession_in_counties('Städare')
-    get_professions_in_county('Stockholms län')
+    get_profession_in_counties('Städare')
+    #get_professions_in_county('Stockholms län')
