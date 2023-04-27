@@ -18,46 +18,43 @@ def list_of_list_tuple_to_2d_list(list_of_list_tuple):
     result = []
     for list_tuple in list_of_list_tuple:
        result.append(list(list_tuple.pop()))  
-    print(result)
     return result     
+
+
+# Queries for variable profession in all counties
+def query_profession(query, header):
+    with sqlite3.connect(db_path) as conn:
+      cursor = conn.cursor()
+      result = cursor.execute(query).fetchall()
+      cursor.close()
+    conn.close()
+    result = list_of_tuples_to_2d_list(result)
+    result.insert(0, header)
+    return result
 
 
 # X-axis: all counties
 # Y-axis: number of ads in variable profession 
 def get_profession_in_counties(profession):
-    with sqlite3.connect(db_path) as conn:
-        cursor = conn.cursor()
-        query = 'SELECT jl.county, COUNT(j.id) as job_count \
-                FROM job_listing jl \
-                LEFT JOIN job j ON jl.job_id = j.id AND j.profession LIKE "%' + profession + '%" \
-                WHERE county IS NOT "null" \
-                GROUP BY jl.county'
-        result = cursor.execute(query).fetchall()  
-        cursor.close()
-    conn.close()
-    result = list_of_tuples_to_2d_list(result)
-    result.insert(0, profession)
-    print(result)
-    return result
+    query = 'SELECT jl.county, COUNT(j.id) as job_count \
+            FROM job_listing jl \
+            LEFT JOIN job j ON jl.job_id = j.id AND j.profession LIKE "%' + profession + '%" \
+            WHERE county IS NOT "null" \
+            GROUP BY jl.county'
+    return query_profession(query, (profession))
 
 
-# X-axis: employment type per county
+
+# X-axis: all counties
 # Y-axis: variable param of ads in variable profession
 def get_employment_type_per_county(profession, param): 
-    with sqlite3.connect(db_path) as conn:
-        cursor = conn.cursor()
-        query = 'SELECT j.county, j.' + param + ', COUNT(*) as count \
-                FROM job_listing j \
-                JOIN job p ON j.job_id = p.id \
-                WHERE p.profession LIKE "%' + profession + '%" AND ' + param + ' IS NOT + "null"\
-                GROUP BY j.county, j.' + param
-        result = cursor.execute(query).fetchall()
-        cursor.close()
-    conn.close()
-    result = list_of_tuples_to_2d_list(result)
-    result.insert(0, profession)
-    print(result)
-    return result
+    query = 'SELECT j.county, j.' + param + ', COUNT(*) as count \
+            FROM job_listing j \
+            JOIN job p ON j.job_id = p.id \
+            WHERE p.profession LIKE "%' + profession + '%" AND ' + param + ' IS NOT + "null"\
+            GROUP BY j.county, j.' + param
+    return query_profession(query, (profession, param))
+
 
 
 # X-axis: all professions
@@ -74,14 +71,13 @@ def get_professions_in_county(county):
         cursor.close()
     conn.close()
     result = list_of_list_tuple_to_2d_list(result)
-    result.insert(0, county)
-    print(result)
+    result.insert(0, (county))
     return result
 
 
 # Test
 if __name__ == '__main__':
-    get_profession_in_counties('Städare')
-    # get_professions_in_county('Stockholms län')
-    # get_employment_type_per_county('Läkare', 'employment_type')
+    #print(get_profession_in_counties('Städare'))
+    print(get_employment_type_per_county('Läkare', 'duration'))
+    #print(get_professions_in_county('Stockholms län'))
 
