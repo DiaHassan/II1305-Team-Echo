@@ -13,6 +13,7 @@ export default function Tabletest() {
         {name: 'Jämtlands län', value: 0},
         {name: 'Jönköpings län', value: 0},
         {name: 'Kalmar län', value:0},
+        {name: 'Kronobergs län', value: 0},
         {name: 'Norrbottens län', value: 0},
         {name: 'Skåne län', value: 0},
         {name: 'Stockholms län', value: 0},
@@ -23,7 +24,8 @@ export default function Tabletest() {
         {name: 'Västernorrlands län', value: 0},
         {name: 'Västmanlands län', value: 0},
         {name: 'Västra Götalands län', value: 0},
-        {name: 'Örebro län', value: 0}
+        {name: 'Örebro län', value: 0},
+        {name: 'Östergötlands län', value: 0}
       ];
       
     const [result, setResult] = useState(data);
@@ -48,12 +50,13 @@ export default function Tabletest() {
       axios.post('http://localhost:5000/why',{job:job})
         .then(response => setResult(convertList(response.data.number)))
         .catch(error => console.log(error));
+        console.log((result));
     };
  
 
     return (
         <div className='fortableandlist'>
-            <BarChart width={1000} height={800} data={result}>
+            <BarChart width={1000} height={600} data={result}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" height={150}  interval={0} angle={-45} textAnchor="end"/>
             <YAxis />
