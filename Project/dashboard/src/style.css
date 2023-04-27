@@ -31,13 +31,11 @@ nav {
   align-items: center;
   padding-left: 4rem;
   padding-right: 4rem;
-  color: var(--color-white);
+  color: var(--color-green);
   font-weight: bold;
   font-size: 25px;
   height: 100px;
   transition: height 0.3s ease-in-out;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
-
 }
 
 .small {
@@ -64,7 +62,7 @@ nav>ul>li {
 }
 
 nav>ul>li:hover {
-  border-bottom: 5px solid var(--color-white);
+  border-bottom: 5px solid var(--color-black);
   border-radius: 2px;
 }
 
@@ -76,7 +74,7 @@ nav>ul>li:hover {
 nav>ul>li>a {
   font-size: large;
   text-decoration: none;
-  color: var(--color-white)
+  color: var(--color-black)
 }
 
 .small>ul>li>a {
@@ -96,7 +94,7 @@ nav>ul>li>a {
   top: 2rem;
   right: 2rem;
   cursor: pointer;
-  content: url("menuHamburgerWhite.png");
+  content: url("menuHamburger.png");
 }
 
 @media screen {
@@ -189,6 +187,32 @@ nav>ul>li>a {
 .home-content {
   padding: 2rem 20vw;
   background-color: var(--color-off-white);
+}
+
+
+/* nav for home */
+.front-wrap>nav{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
+}
+.front-wrap>nav>div, .front-wrap>nav>ul>li>a {
+  color: var(--color-white);
+}
+
+.front-wrap>nav>ul>li:hover{
+  border-bottom: 5px solid var(--color-white);
+  border-radius: 2px;
+}
+
+.front-wrap>.small>div{
+  color: var(--color-green);
+}
+
+.front-wrap>.small>ul>li>a{
+  color:var(--color-black)
+}
+
+.front-wrap>nav>.burger{
+  content: url("menuHamburgerWhite.png");
 }
 
 @media screen {
@@ -327,7 +351,6 @@ footer a:hover {
 
 .about-wrapper{
   min-height:90vh;
-  background-color: var(--color-off-white);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
