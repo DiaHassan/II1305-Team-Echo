@@ -59,7 +59,6 @@ def get_professions_in_county(county):
 # Y-axis: number of ads 
 
 
-
 # Test
 if __name__ == '__main__':
     get_profession_in_counties('Städare')
