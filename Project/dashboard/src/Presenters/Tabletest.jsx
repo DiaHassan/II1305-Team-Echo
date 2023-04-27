@@ -52,7 +52,7 @@ export default function Tabletest() {
  
 
     return (
-        <div className=''>
+        <div className='fortableandlist'>
             <BarChart width={1000} height={800} data={result}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" height={150}  interval={0} angle={-45} textAnchor="end"/>
@@ -62,8 +62,8 @@ export default function Tabletest() {
             <Bar dataKey="value" fill="#8884d8" />
             </BarChart>
             
-            <div>
-                <form onSubmit={handleClick}>
+            <div className='forlist'>
+                <form onSubmit={handleClick} className='forlistlist'>
                     <label>
                         Select an option:
                         <select value={job} onChange={handleChange}>
@@ -83,7 +83,7 @@ export default function Tabletest() {
                         </select>
                     </label>
                 </form>
-                <button onClick={handleClick}>Run Python function</button>
+                <button onClick={handleClick} className='forlistbutton'>Run Python function</button>
             </div>
         </div>
     );

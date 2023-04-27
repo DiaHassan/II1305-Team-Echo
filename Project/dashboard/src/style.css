@@ -382,3 +382,20 @@ footer a:hover {
   margin-bottom: 10rem;
   color: var(--color-white);
 }
+.fortableandlist{
+  display: flex;
+  align-content: space-between;
+  /* flex-direction: row; */
+  align-items: center;
+}
+.forlist{
+  float: left;
+}
+.forlistlist > ul{
+  width: 19rem;
+}
+
+.forlistbutton{
+  width: 19rem;
+}
+
