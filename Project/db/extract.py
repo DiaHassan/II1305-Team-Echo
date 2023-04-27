@@ -9,8 +9,7 @@ db_path = 'Project\db\echo.db'
 def list_of_tuples_to_2d_list(list_of_tuples):
     result = []
     for t in list_of_tuples:
-       t = [t[0], t[1]]
-       result.append(t) 
+       result.append(list(t)) 
     return result    
 
 
@@ -18,9 +17,8 @@ def list_of_tuples_to_2d_list(list_of_tuples):
 def list_of_list_tuple_to_2d_list(list_of_list_tuple):
     result = []
     for list_tuple in list_of_list_tuple:
-       t = list_tuple.pop()
-       t = [t[0], t[1]]
-       result.append(t) 
+       result.append(list(list_tuple.pop()))  
+    print(result)
     return result     
 
 
@@ -56,11 +54,31 @@ def get_professions_in_county(county):
     return result
 
 # X-axis: employment type per county
-# Y-axis: number of ads 
-
+# Y-axis: number of ads in variable profession
+def get_employment_type_per_county(profession): 
+    with sqlite3.connect(db_path) as conn:
+        result = []
+        cursor = conn.cursor()
+        query = 'SELECT j.county, j.employment_type, \
+                    CASE WHEN p.profession LIKE "%' + profession + '%" THEN "' + profession + '" ELSE p.profession END AS profession, \
+                    COUNT(*) as count \
+                FROM job_listing j \
+                JOIN job p ON j.job_id = p.id \
+                WHERE p.profession LIKE "%' + profession + '%" AND employment_type IS NOT + "null"\
+                GROUP BY j.county, j.employment_type, \
+                    CASE WHEN p.profession LIKE "%' + profession + '%" THEN "' + profession + '" ELSE p.profession END;'
+        result.append(cursor.execute(query).fetchall())
+        cursor.close()
+    conn.close()
+    result = list_of_tuples_to_2d_list(result)
+    result.insert(0, profession)
+    print(result)
+    return result
 
 
 # Test
 if __name__ == '__main__':
-    get_profession_in_counties('Städare')
+    # get_profession_in_counties('Städare')
     # get_professions_in_county('Stockholms län')
+    get_employment_type_per_county('Läkare')
+
