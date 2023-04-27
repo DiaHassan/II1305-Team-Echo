@@ -28,15 +28,16 @@ file.close()
 
 
 # Existerar ej: "Uppvidinge, Kronoberg", och "Ljusnarsberg, Örebro"
+
 # Geo id gives radius: 
-#[Ta only "Täby, Stockholm" istället för dessa] "Vallentuna, Stockholm", "Ekerö, Stockholm", "Tyresö, Stockholm", "Täby, Stockholm", "Danderyd, Stockholm", "Sollentuna, Stockholm", "Nacka, Stockholm", "Sundbyberg, Stockholm", "Solna, Stockholm", "Vaxholm, Stockholm", "Nynäshamn, Stockholm", 
+# [Ta only "Täby, Stockholm" instead of these] "Vallentuna, Stockholm", "Ekerö, Stockholm", "Tyresö, Stockholm", "Täby, Stockholm", "Danderyd, Stockholm", "Sollentuna, Stockholm", "Nacka, Stockholm", "Sundbyberg, Stockholm", "Solna, Stockholm", "Vaxholm, Stockholm", "Nynäshamn, Stockholm", 
 # "Gnesta, Södermanland", 
 # "Mullsjö, Jönköping", 
-#[Use only "Malmö, Skåne" instead of theese] "Vellinge, Skåne", "Kävlinge, Skåne", "Perstorp, Skåne", "Åstorp, Skåne", "Malmö, Skåne", "Lund, Skåne", 
-# "Boden, Norrbottens", 
-# "Bräcke, Jämtland", "Östersund, Jämtland", 
-# "Timrå, Västernorrland", 
-# "Falun, Dalarna", "Ludvika, Dalarna", 
-#[Use none of theese municipalities] "Lekeberg, Örebro", "Hallsberg, Örebro", "Nora, Örebro", 
+# [Use only "Malmö, Skåne" instead of these] "Vellinge, Skåne", "Kävlinge, Skåne", "Perstorp, Skåne", "Åstorp, Skåne", "Malmö, Skåne", "Lund, Skåne", 
+# [Don't use] "Boden, Norrbottens", 
+# [Use only "Östersund, Jämtland" instead of these] "Bräcke, Jämtland", "Östersund, Jämtland", 
+# [Don't use] "Timrå, Västernorrland", 
+# [Use only "Falun, Dalarna" instead of these] "Falun, Dalarna", "Ludvika, Dalarna", 
+#[Use only "Lekeberg, Örebro" instead of these] "Lekeberg, Örebro", "Hallsberg, Örebro", "Nora, Örebro", 
 #[Use only "Kil, Värmland" instead of theese] "Kil, Värmland", "Hammarö, Värmland", "Munkfors, Värmland", "Grums, Värmland", 
 #[Use only "Göteborg, Västra Götaland" instead of theese] "Skövde, Västra Götaland, "Alingsås, Västra Götaland", "Trollhättan, Västra Götaland", "Mölndal, Västra Götaland", "Göteborg, Västra Götaland", "Essunga, Västra Götaland", "Tjörn, Västra Götaland", "Partille, Västra Götaland"

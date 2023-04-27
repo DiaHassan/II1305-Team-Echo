@@ -24,8 +24,7 @@ seen = {}
 start_time = time.time()
 
 # Function to scrape websites
-def linkedin_scraper(job, municipality, page_number):
-    # try:    
+def linkedin_scraper(job, municipality, page_number):   
     next_page = f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords={str(job)}&geoId={str(municipality)}&start={str(page_number)}"
     print(next_page)
     # Establish connection
@@ -110,7 +109,7 @@ def linkedin_scraper(job, municipality, page_number):
 
             # Establish connection to ad-page
             while(True):
-                ad_response = requests.get(link)
+                ad_response = requests.get("https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/" + str(key))
                 # print(ad_response)
                 if(ad_response.status_code == 200 or ad_response.status_code == 500):
                     break
@@ -133,10 +132,10 @@ def linkedin_scraper(job, municipality, page_number):
             # Look for seniority and employment type
             for item in ad_criterias:
                 header = item.find('h3', class_='description__job-criteria-subheader').text.strip()
-                
-                if(header == 'Yrkesnivå'):
+                # print(header)
+                if(header == 'Seniority level'):
                     seniority = item.find('span', class_='description__job-criteria-text--criteria').text.strip()
-                if(header == 'Anställningstyp'):
+                if(header == 'Employment type'):
                     employment_type = item.find('span', class_='description__job-criteria-text--criteria').text.strip()
             
             # Look through body text for education
@@ -144,7 +143,7 @@ def linkedin_scraper(job, municipality, page_number):
 
 #----------------------------Saves parameters-------------------------------------------------
 
-            # print(job_title + " | " + location )
+            #print(job_title + " | " + location + " | " + seniority + " | " + employment_type)
             temp.append(["Linkedin", employment_type, None, ad_publication_date, job, county, education, None, seniority, date.today().strftime('%Y-%m-%d'), key])
 
     #Remove duplicates and the key element 
@@ -163,13 +162,7 @@ def linkedin_scraper(job, municipality, page_number):
         page_number = page_number + 25
         linkedin_scraper(job, municipality, page_number)
     return(list)
-    
-    
-    # except:
-    #     print()
-    #     print("Time it took: " + str(time.time()-start_time))
-    #     print("Fail")
-    #     print("Duplicates: " + str(duplicates))
+
 
 
 def run():
@@ -178,7 +171,7 @@ def run():
     db = []
 
     # Jobs
-    jobs = ["Lärare"]#, "Läkare", "Utvecklare", "Sjuksköterska", "Kock", "Operatör", "Personlig assistent", "Mekaniker", "Butikssäljare", "Civilingenjör", "Projektledare", "Städare"]
+    jobs = ["Lärare", "Läkare", "Utvecklare", "Sjuksköterska", "Kock", "Operatör", "Personlig assistent", "Mekaniker", "Butikssäljare", "Civilingenjör", "Projektledare", "Städare"]
 
     # Geo ids
     # geo_ids = [100564495] 
