@@ -40,5 +40,5 @@ def get_professions_in_county(county):
 
 # Test
 if __name__ == '__main__':
-    #get_profession_in_counties('Städare')
-    get_professions_in_county('Stockholms län')
+    get_profession_in_counties('Städare')
+    # get_professions_in_county('Stockholms län')
