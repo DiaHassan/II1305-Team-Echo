@@ -16,8 +16,8 @@ CORS(app)
 def endpoint():
 
     data = request.get_json()
-    arg1 = data['nb']
-    return jsonify({'number':str(get_profession_in_counties('Städare'))})
+    arg1 = data['job']
+    return jsonify({'number':str(get_profession_in_counties(arg1))})
 
 
 
