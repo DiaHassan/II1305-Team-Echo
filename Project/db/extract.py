@@ -55,6 +55,10 @@ def get_professions_in_county(county):
     print(type(result))
     return result
 
+# X-axis: employment type per county
+# Y-axis: number of ads 
+
+
 
 # Test
 if __name__ == '__main__':

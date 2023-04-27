@@ -158,7 +158,7 @@ def linkedin_scraper(job, municipality, page_number):
             duplicates = duplicates + 1
 
 
-    if page_number < 1000 and len(ads) == 25:
+    if page_number < 975 and len(ads) == 25:
         page_number = page_number + 25
         linkedin_scraper(job, municipality, page_number)
     return(list)
