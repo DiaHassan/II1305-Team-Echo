@@ -41,7 +41,7 @@ def get_job_links(job_listings):
 def get_next_page(response):
     try:
         next_btn_link = response.find('a', {'class': 'page-link', 'aria-label': 'Next'}).get("href")
-        return next_btn_link 
+        return base_url + next_btn_link 
     except:
         return False
 
@@ -77,41 +77,44 @@ def get_prerequiered(response):
 
 # Returns employment type, duration, and seniority
 def get_work_details(response):
-    # Result and path
-    info=[]
-    outer_div = response.find('div', class_='col bg-light rounded-bottom pb-2 border-top').find('div').find('div').find('ul').find_all('li')
+    try:
+        # Result and path
+        info=[]
+        outer_div = response.find('div', class_='col bg-light rounded-bottom pb-2 border-top').find('div').find('div').find('ul').find_all('li')
 
-    # Initial fill
-    for i in outer_div:
-        info.append(i.text)
-    
-    if(len(info) == 3):
-        #Sorting the scrapped information
-        info[0] = info[0].lower()
-        if(info[1] == "Tillsvidare"):
-            info[1] = 0
-        elif(info[1] == "3 - 6 Månader"):
-            info[1] = 3
-        elif(info[1] == "6 Månader eller längre"):
-            info[1] = 6
-        elif(info[1] == "11 Dagar - 3 Månader"):
-            info[1] = 2
-        elif(info[1] == "Max 10 dagar"):
-            info[1] = 1
+        # Initial fill
+        for i in outer_div:
+            info.append(i.text)
+        
+        if(len(info) == 3):
+            #Sorting the scrapped information
+            info[0] = info[0].lower()
+            if(info[1] == "Tillsvidare"):
+                info[1] = 0
+            elif(info[1] == "3 - 6 Månader"):
+                info[1] = 3
+            elif(info[1] == "6 Månader eller längre"):
+                info[1] = 6
+            elif(info[1] == "11 Dagar - 3 Månader"):
+                info[1] = 2
+            elif(info[1] == "Max 10 dagar"):
+                info[1] = 1
+            else:
+                info[1] = 0 
+            info[2] = info[2].strip().split()
+
+            try:
+                info[2] = info[2][0] + ' ' +info[2][1]
+            except:
+                info[2] = info[2][0]
         else:
-            info[1] = 0 
-        info[2] = info[2].strip().split()
+            info[0] = "övrigt"
+            info.append("None")
+            info.append("None")
 
-        try:
-            info[2] = info[2][0] + ' ' +info[2][1]
-        except:
-            info[2] = info[2][0]
-    else:
-        info[0] = "övrigt"
-        info.append("None")
-        info.append("None")
-
-    return info
+        return info
+    except:
+        return [None,None,None]
 
 
 # Find lan
