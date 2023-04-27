@@ -7,7 +7,9 @@ export default function Stats() {
     return(
       <>
         <Navbar/>
-        <Tabletest/>
+        <div className="fortable">
+          <Tabletest/>
+        </div>
         <Footer/>
       </>
     )
