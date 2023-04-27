@@ -32,7 +32,7 @@ def insert_data(argument_list, sql_connect, cursor):
     argument_list[7] = str(argument_list[7])
 
     # dumb demo
-    print(argument_list)
+    # print(argument_list)
 
     #job_param_list is the list of arguments for the job_listing table.
     job_param_list = argument_list[0:4] + [argument_list[5], argument_list[7], argument_list[8], argument_list[9]]

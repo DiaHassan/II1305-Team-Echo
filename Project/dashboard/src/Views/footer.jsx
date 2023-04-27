@@ -20,7 +20,7 @@ export default function Footer() {
           <h3>Navigation</h3>
           <ul>
             <li><Link to="/" className="">Home</Link></li>
-            <li><Link to="/" className="">APP_NEEDS_NAME</Link></li>
+            <li><Link to="/statistics" className="">APP_NEEDS_NAME</Link></li>
             <li><Link to="/about" className="">About</Link></li>
           </ul>
         </div>
