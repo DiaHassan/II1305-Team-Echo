@@ -6,9 +6,9 @@ export default function Tabletest() {
 
     const data = [
         {name: 'Blekinge län', value: 0},
-        {name: 'Dalarnas län', value: 5},
+        {name: 'Dalarnas län', value: 0},
         {name: 'Gotlands län', value:0},
-        {name: 'Gävleborgs län', value:1000},
+        {name: 'Gävleborgs län', value:0},
         {name: 'Hallands län', value:0},
         {name: 'Jämtlands län', value: 0},
         {name: 'Jönköpings län', value: 0},
@@ -85,7 +85,7 @@ export default function Tabletest() {
                         </select>
                     </label>
                 </form>
-                <button onClick={handleClick} className='forlistbutton'>Run Python function</button>
+                <button onClick={handleClick} className='forlistbutton'>Search</button>
             </div>
         </div>
     );
