@@ -23,7 +23,6 @@ export default function About() {
             Swedish talent observatory was an external project made by a student group at KTH for the company Future place leadership.
 
             which displays the number of applicable job ads in accordance to occupation and county in Sweden. Through a graphical display the statistic can be refined and filtered by different requirements/parameters.
-
           </p>
         </div>
       </div>

@@ -399,3 +399,28 @@ footer a:hover {
   width: 19rem;
 }
 
+
+
+
+/* This needs to be reviewed later */
+
+.forlist{
+  color:black;
+  display:flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.forlistbutton{
+  padding:0.5rem;
+  font-size: 16px;
+  
+}
+
+.select_options{
+  color:black;
+  font-size: 16px;
+  padding: 0.5rem;
+}

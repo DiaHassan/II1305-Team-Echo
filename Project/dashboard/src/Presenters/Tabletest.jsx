@@ -68,8 +68,7 @@ export default function Tabletest() {
             <div className='forlist'>
                 <form onSubmit={handleClick} className='forlistlist'>
                     <label>
-                        Select an option:
-                        <select value={job} onChange={handleChange}>
+                        <select value={job} onChange={handleChange} className='select_options'>
                         <option value="">Choose an option</option>
                         <option value="Kock">Kock</option>
                         <option value="Städare">Städare</option>
