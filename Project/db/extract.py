@@ -96,20 +96,27 @@ def get_param_per_county(profession, param):
 
 # X-axis: all professions without param
 # Y-axis: number of professions in variable county
-def get_professions_in_county(source, county, professions): 
+def get_professions_in_county(sources, county, professions): 
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
+        result = []
         for profession in professions:
-            query = 'SELECT COUNT(job_listing.id) as "sum" \
-                    FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
-                    WHERE job_listing.county = "' + county + '" \
-                      AND job_listing.source = "' + source + '" \
-                      AND profession LIKE "%' + profession + '%"'
-            result = (cursor.execute(query).fetchall())
-            print(result)
+            list = [profession]
+            for source in sources:
+                query = 'SELECT source, COUNT(job_listing.id) as "sum" \
+                        FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
+                        WHERE job_listing.county = "' + county + '" \
+                        AND job_listing.source = "' + source + '" \
+                        AND profession LIKE "%' + profession + '%"' 
+                fetch = cursor.execute(query).fetchall()
+                if not fetch: return fetch
+                fetch = list_of_tuples_to_2d_list(fetch)
+                pop = fetch.pop()
+                fetch = [pop[0], pop[1]]
+                list.append(fetch)
+                result.append(list)
         cursor.close()
     conn.close()
-    result = list_of_list_tuple_to_2d_list(result)
     return result
 
 
@@ -122,7 +129,16 @@ def get_professions_in_county_with_param(sources, county, professions, param):
         for profession in professions:
             list = [profession]
             for source in sources:
-                query = 'SELECT source,' + param + ', COUNT(job_listing.id) as "sum" \
+                if param == "requirement":
+                    query = 'SELECT source, requirement, COUNT(jl.id) FROM job_listing AS jl \
+                             INNER JOIN (requirement_relation AS rr \
+                                INNER JOIN requirement AS r ON rr.requirement_id = r.id) \
+                                  ON jl.id = rr.job_listing_id \
+                            WHERE job_id IN (SELECT id FROM job WHERE profession LIKE "%' + profession  + '%") \
+                            AND jl.county = "' + county + '" AND jl.source = "' + source + '" \
+                            GROUP BY requirement ORDER BY jl.job_id'
+                else:
+                    query = 'SELECT source,' + param + ', COUNT(job_listing.id) as "sum" \
                         FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
                         WHERE job_listing.county = "' + county + '" \
                         AND job_listing.source = "' + source + '" \
@@ -149,4 +165,5 @@ def extract(source, county, professions, param):
 if __name__ == '__main__':
     #print(get_profession_in_counties('Städare'))
     #print(get_param_per_county('Läkare', 'duration'))
-    print(extract(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
+    print(get_professions_in_county(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare']))
+    #print(get_professions_in_county_with_param(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
