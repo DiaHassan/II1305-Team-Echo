@@ -1,9 +1,10 @@
 import sqlite3
-from countyprof import profession_list
 
 # Database path
 db_path = 'Project\db\echo.db'
 
+
+# ------------------------------------------- HELPERS -------------------------------------------------------
 
 # [(a,b), (c,d)] --> [[a,b], [c,d]]
 def list_of_tuples_to_2d_list(list_of_tuples):
@@ -43,6 +44,16 @@ def merge_list(lst):
     return result
 
 
+#[[a, b, c], [a, d, e]] --> [a, [[b,c], [d,e]]]
+def merge_data(list):
+    key = list[0][0]
+    result = [key]
+    for item in list:
+        result.append([item[1], item[2]])
+    return result
+
+# ---------------------------------------------- PROFESSION QUERIES ----------------------------------------
+
 # Connects to database and sends query
 def send_query(query):
     with sqlite3.connect(db_path) as conn:
@@ -81,41 +92,61 @@ def get_param_per_county(profession, param):
     return result
 
 
-# X-axis: all professions
+# ---------------------------------------- COUNTY QUERIES -------------------------------------------------
+
+# X-axis: all professions without param
 # Y-axis: number of professions in variable county
-def get_professions_in_county(county): 
+def get_professions_in_county(source, county, professions): 
     with sqlite3.connect(db_path) as conn:
-        result = []
         cursor = conn.cursor()
-        for profession in profession_list:
-            query = 'SELECT "' + profession +  '" AS profession, COUNT(job_listing.id) as "sum" \
+        for profession in professions:
+            query = 'SELECT COUNT(job_listing.id) as "sum" \
                     FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
-                    WHERE county = "' + county + '" AND profession LIKE "%' + profession + '%"'
-            result.append(cursor.execute(query).fetchall())
+                    WHERE job_listing.county = "' + county + '" \
+                      AND job_listing.source = "' + source + '" \
+                      AND profession LIKE "%' + profession + '%"'
+            result = (cursor.execute(query).fetchall())
+            print(result)
         cursor.close()
     conn.close()
     result = list_of_list_tuple_to_2d_list(result)
-    result.insert(0, (county))
     return result
 
 
-# One function to rule them all -E
-def general_extraction(xaxis, yaxis, parameters):
-    #xaxis is the attribute that we want ot show on the xaxis
-    #yaxis is the attribute that we want ot show on the yaxis
-    #parameters is an array where each attribute is an array with the structure 
-    # ["attributename", [acceptablevalues("which counties we search or perhaps min value for attributes like years of experience")]]
-    # SELECT yaxis, count(xaxis) from table WHERE conditions GROUP BY yaxis
-    # WHERE 
-    job_listing_parameters = ["source", "employment_type", "duration", "publication_date", "county", "years_of_experience", "seniority", "date_gathered"]
-    outside_params = [""]
-    #The string for parameters which are withing the argument list. 
-    #for i in parameters:
-     #   if i in
+# X-axis: all professions and param
+# Y-axis: number of professions in variable county
+def get_professions_in_county_with_param(sources, county, professions, param): 
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        result = []
+        for profession in professions:
+            list = [profession]
+            for source in sources:
+                query = 'SELECT source,' + param + ', COUNT(job_listing.id) as "sum" \
+                        FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
+                        WHERE job_listing.county = "' + county + '" \
+                        AND job_listing.source = "' + source + '" \
+                        AND profession LIKE "%' + profession + '%"\
+                        AND ' + param + ' IS NOT "null" \
+                        GROUP BY job_listing.' + param 
+                fetch = cursor.execute(query).fetchall()
+                if not fetch: return fetch
+                fetch = list_of_tuples_to_2d_list(fetch)
+                fetch = merge_data(fetch)
+                list.append(fetch)
+                result.append(list)
+        cursor.close()
+    conn.close()
+    return result
+
+
+# Callee
+def extract(source, county, professions, param):
+    return get_professions_in_county_with_param(source, county, professions, param)
 
 
 # Test
 if __name__ == '__main__':
     #print(get_profession_in_counties('Städare'))
-    print(get_param_per_county('Läkare', 'duration'))
-    #print(get_professions_in_county('Stockholms län'))
+    #print(get_param_per_county('Läkare', 'duration'))
+    print(extract(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
