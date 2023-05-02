@@ -43,7 +43,7 @@ def merge_list(lst):
     return result
 
 
-# Queries for variable profession in all counties
+# Connects to database and sends query
 def send_query(query):
     with sqlite3.connect(db_path) as conn:
       cursor = conn.cursor()
