@@ -1,16 +1,36 @@
 import sqlite3
 import pandas as pd
 from os.path import exists
+from sys import platform
 
 #Source: https://towardsdatascience.com/starting-with-sql-in-python-948e529586f2
 
 
+def find_db_path(platform):
+        match platform:
+            case "linux":
+                return "Project/db/echo.db"
+            case "darwin":
+                return "Project/db/echo.db"
+            case default:
+                return "Project\db\echo.db"
+
+def find_db_sqlite_path(platform):
+        match platform:
+            case "linux":
+                return "Project/db/db_sqlite.sql"
+            case "darwin":
+                return "Project/db/db_sqlite.sql"
+            case default:
+                return "Project\db\db_sqlite.sql"
+
 # Builds database
 def build_db():
-    connection = sqlite3.connect("Project\db\echo.db")
+
+    connection = sqlite3.connect(find_db_path(platform))
     cursor = connection.cursor()
 
-    sql_file = open("Project\db\db_sqlite.sql", "r")
+    sql_file = open(find_db_sqlite_path(platform), "r")
     sql_script = sql_file.read()
     sql_file.close()
 
@@ -136,4 +156,4 @@ if __name__ == '__main__':
             ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', None, ['Requires a relevant degree'], 0, None, '2023-04-20'],
             ['ledigajobb', 'heltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', [], 0, None, '2023-04-20']
     ]
-    send_2d_list(test, "Project\db\echo.db")
+    #send_2d_list(test, find_db_path(platform))

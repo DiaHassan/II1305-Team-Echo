@@ -1,9 +1,18 @@
 import sqlite3
 from countyprof import profession_list
+from sys import platform
 
-# Database path
-db_path = 'Project\db\echo.db'
 
+def find_db_path(platform):
+    match platform:
+        case "linux":
+            return "Project/db/echo.db"
+        case "darwin":
+            return "Project/db/echo.db"
+        case default:
+            return "Project\db\echo.db"
+
+db_path = find_db_path(platform)
 
 # [(a,b), (c,d)] --> [[a,b], [c,d]]
 def list_of_tuples_to_2d_list(list_of_tuples):
