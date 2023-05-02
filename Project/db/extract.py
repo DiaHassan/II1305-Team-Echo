@@ -22,6 +22,7 @@ def list_of_list_tuple_to_2d_list(list_of_list_tuple):
 
 
 # Merges list with key-value
+# [[a, x], [b, y], [b,z]] --> [[a, x], [b, [y,z]]]
 def merge_list(lst):
     # Group the elements by their first value
     groups = {}
@@ -42,8 +43,8 @@ def merge_list(lst):
     return result
 
 
-# Queries for variable profession in all counties
-def query_profession(query):
+# Connects to database and sends query
+def send_query(query):
     with sqlite3.connect(db_path) as conn:
       cursor = conn.cursor()
       result = cursor.execute(query).fetchall()
@@ -61,20 +62,20 @@ def get_profession_in_counties(profession):
             LEFT JOIN job j ON jl.job_id = j.id AND j.profession LIKE "%' + profession + '%" \
             WHERE county IS NOT "null" \
             GROUP BY jl.county'
-    result = query_profession(query)
+    result = send_query(query)
     result.insert(0, profession)
     return result
 
 
 # X-axis: all counties
 # Y-axis: variable param of ads in variable profession
-def get_employment_type_per_county(profession, param): 
+def get_param_per_county(profession, param): 
     query = 'SELECT j.county, j.' + param + ', COUNT(*) as count \
             FROM job_listing j \
             JOIN job p ON j.job_id = p.id \
             WHERE p.profession LIKE "%' + profession + '%" AND ' + param + ' IS NOT + "null"\
             GROUP BY j.county, j.' + param
-    result = query_profession(query)
+    result = send_query(query)
     result = merge_list(result)
     result.insert(0, (profession, param))
     return result
@@ -116,5 +117,5 @@ def general_extraction(xaxis, yaxis, parameters):
 # Test
 if __name__ == '__main__':
     #print(get_profession_in_counties('Städare'))
-    print(get_employment_type_per_county('Läkare', 'duration'))
+    print(get_param_per_county('Läkare', 'duration'))
     #print(get_professions_in_county('Stockholms län'))
