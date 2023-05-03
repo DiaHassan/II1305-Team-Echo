@@ -49,9 +49,12 @@ def merge_list(lst):
 def merge_data(list):
     key = list[0][0]
     result = [key]
+    brisk = []
     for item in list:
-        result.append([item[1], item[2]])
+        brisk.append([item[1], item[2]])
+    result.append(brisk)
     return result
+        
 
 # ---------------------------------------------- PROFESSION QUERIES ----------------------------------------
 
@@ -233,7 +236,7 @@ def extract(source, county, profession, param):
 if __name__ == '__main__':
 
     # Extract
-    #print(extract(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
+    print(extract(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
     
     # One profession, many counties
     print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare'))

@@ -3,11 +3,25 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 // import {} from '@material-ui/core'; //test
 import { makeStyles } from '@material-ui/core/styles';
-import { FormControl,Checkbox, InputLabel, FormGroup, FormLabel, RadioGroup, Radio, FormControlLabel, Select, MenuItem } from '@material-ui/core';
+
+// import { MenuProps, useStyles, options } from "./utils";
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 
 export default function Tabletest() {
-
+    
     const data = [
         {name: 'Blekinge län', value: 0},
         {name: 'Dalarnas län', value: 0},
@@ -43,7 +57,7 @@ export default function Tabletest() {
 
     const [activeList , setActivelist] = useState([false,false,false,false,false,false,false,false,false])
     const [joblist, setJobList] = useState(initialJobList)  
-    const [country, setCounty] = useState('')  
+    const [county, setCounty] = useState('Västmanlands län')  
     const [linkedinCB, setLinkedinCB] = React.useState(false);
     const [platsbankenCB, setPlatsbankenCB] = React.useState(false);
     const [ledigaCB, SetLedigaCB] = React.useState(false);
@@ -75,7 +89,20 @@ export default function Tabletest() {
 
     const handleChangeCounty = (event) => {
         setCounty(event.target.value);
-      };
+    };
+
+    const handleChangeJob = (event) => {
+        setJobList(event.target.value);
+    };
+
+
+      const myListElements = allCounties.map((item) => {
+        return <MenuItem value={item} key={item}>{item}</MenuItem>;
+      });
+
+      const myListElementJobs = joblist.map((item) => {
+        return <MenuItem value={item} key={item}> <Checkbox checked={job.indexOf(item) > -1} /><ListItemText primary={item} /></MenuItem>
+      });
 
     function convertList(originalList) {
         const newList = [];
@@ -88,10 +115,26 @@ export default function Tabletest() {
       }
       
     const handleClick = () => {
-      axios.post('http://localhost:8888/why',{job:job})
-        .then(response => setResult(convertList(response.data.number)))
-        .catch(error => console.log(error));
-        console.log((result));
+        const srcs = []
+        if (activeList[0]){
+            srcs.push('linkedin')
+        }
+        if (activeList[1]){
+            srcs.push('platsbanken')   
+        }
+        if (activeList[2]){
+            srcs.push('ledigajobb')
+        }
+        const queryTbs = []
+        queryTbs.push(srcs)
+        queryTbs.push(county)
+        queryTbs.push(joblist)
+        queryTbs.push('null')
+        console.log(queryTbs)
+        axios.post('http://localhost:8888/why',{job:queryTbs})
+            .then(response => setResult(convertList(response.data.number)))
+            .catch(error => console.log(error));
+            console.log((result));
     };
 
     // Styling exists here
@@ -110,6 +153,35 @@ export default function Tabletest() {
     // const classes = useStyles();
      //className={classes.root}
      //className={classes.formControl}
+
+   
+     const options = [
+        "Oliver Hansen",
+        "Van Henry",
+        "April Tucker",
+        "Ralph Hubbard",
+        "Omar Alexander",
+        "Carlos Abbott",
+        "Miriam Wagner",
+        "Bradley Wilkerson",
+        "Virginia Andrews",
+        "Kelly Snyder"
+      ];
+    
+     const handleChanges= (event) => {
+        const value = event.target.value;
+        if (value[value.length - 1] === "all") {
+            setJobList(joblist.length === initialJobList.length ? [] : initialJobList);
+          return;
+        }
+        setJobList(value);
+        console.log(value)
+      };
+
+
+
+
+
     return (
         <div className='fortableandlist'>
             
@@ -152,41 +224,82 @@ export default function Tabletest() {
                 
                 {/* Div containing 2 drop-down lists */}
                 <div>
-                <div>
-                    <FormControl sx={{ m: 1, minWidth: 80 }}>
-                        <InputLabel id="demo-simple-select-autowidth-label">County</InputLabel>
+                    <div>
+                        <FormControl sx={{ m: 1, minWidth: 80 }}>
+                            <InputLabel id="demo-simple-select-autowidth-label">County</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-autowidth-label"
+                            id="demo-simple-select-autowidth"
+                            value={county}
+                            onChange={handleChangeCounty}
+                            autoWidth
+                            label="County"
+                            >
+                                {myListElements}
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <div>
+                    <FormControl className="">
+                        <InputLabel id="mutiple-select-label">Multiple Select</InputLabel>
                         <Select
-                        labelId="demo-simple-select-autowidth-label"
-                        id="demo-simple-select-autowidth"
-                        value={country}
-                        onChange={handleChangeCounty}
-                        autoWidth
-                        label="County"
+                            labelId="mutiple-select-label"
+                            multiple
+                            value={joblist}
+                            onChange={handleChanges}
+                            renderValue={(joblist) => joblist.join(", ")}
+                            // MenuProps={MenuProps}
+                            maxwidth = "100"
                         >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Twenty</MenuItem>
-                        <MenuItem value={21}>Twenty one</MenuItem>
-                        <MenuItem value={22}>Twenty one and a half</MenuItem>
+                            <MenuItem
+                            value="all"
+                            // classes={{
+                            //     root: isAllSelected ? classes.selectedAll : ""
+                            // }}
+                            ></MenuItem>
+                            {initialJobList.map((option) => (
+                            <MenuItem key={option} value={option}>
+                                <ListItemIcon>
+                                <Checkbox checked={joblist.indexOf(option) > -1} />
+                                </ListItemIcon>
+                                <ListItemText primary={option} />
+                            </MenuItem>
+                            ))}
                         </Select>
-                    </FormControl>
+                        </FormControl>
                     </div>
-                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+                    <div>
                 {/* Div containing 3 horizontal radio buttons */}
-                <FormControl component="fieldset">
+                    <FormControl component="fieldset">
                     <FormLabel component="legend">Select an option:</FormLabel>
                     <RadioGroup row aria-label="position" name="position" defaultValue="top">
                         
                         <FormControlLabel value="option1" control={<Radio />} label="Seniority" />
                         <FormControlLabel value="option2" control={<Radio />} label="Duration" />
                         <FormControlLabel value="option3" control={<Radio />} label="Years of experience" />
-                        <FormControlLabel value="option4" control={<Radio />} label="Prerequirements" />                   
-                        <FormControlLabel value="option5" control={<Radio />} label="Drivigs license" />
+                        <FormControlLabel value="option4" control={<Radio />} label="Drivings license" />
+                        <FormControlLabel value="option5" control={<Radio />} label="Prerequirements" />
                         <FormControlLabel value="option6" control={<Radio />} label="Employment type" />
+                    
 
                     </RadioGroup>
                 </FormControl>
+                </div>
+
+            
+                
                 </div>
 
             
