@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 // import {} from '@material-ui/core'; //test
 import { makeStyles } from '@material-ui/core/styles';
-import { FormControl,Checkbox, FormLabel, RadioGroup, Radio, FormControlLabel, Select, MenuItem } from '@material-ui/core';
+import { FormControl,Checkbox, InputLabel, FormGroup, FormLabel, RadioGroup, Radio, FormControlLabel, Select, MenuItem } from '@material-ui/core';
 
 
 export default function Tabletest() {
@@ -43,24 +43,39 @@ export default function Tabletest() {
 
     const [activeList , setActivelist] = useState([false,false,false,false,false,false,false,false,false])
     const [joblist, setJobList] = useState(initialJobList)  
-    const [linkedinCB, setLinkedinCB] = React.useState(true);
-    const [platsbankenCB, setPlatsbankenCB] = React.useState(true);
-    const [ledigaCB, SetLedigaCB] = React.useState(true);
+    const [country, setCounty] = useState('')  
+    const [linkedinCB, setLinkedinCB] = React.useState(false);
+    const [platsbankenCB, setPlatsbankenCB] = React.useState(false);
+    const [ledigaCB, SetLedigaCB] = React.useState(false);
     // Handlers both onClick and onChange
     const handleChange = (event) => {
         setJob(event.target.value);
     }
     const handleCheckboxliChange = (event) => {
         setLinkedinCB(event.target.checked)      
-        console.log(linkedinCB)  
+        const newList = [...activeList];
+        newList[0] = !linkedinCB;
+        setActivelist(newList);
+        console.log(activeList)
     };
     const handleCheckboxpbChange = (event) => {
         setPlatsbankenCB(event.target.checked)
-        console.log(platsbankenCB)        
+        const newList = [...activeList];
+        newList[1] = !platsbankenCB;
+        setActivelist(newList);   
+        console.log(activeList)   
     };
     const handleCheckboxljChange = (event) => {
-        SetLedigaCB(event.target.checked)        
+        SetLedigaCB(event.target.checked)  
+        const newList = [...activeList];
+        newList[2] = !ledigaCB;
+        setActivelist(newList);  
+        console.log(activeList)    
     };
+
+    const handleChangeCounty = (event) => {
+        setCounty(event.target.value);
+      };
 
     function convertList(originalList) {
         const newList = [];
@@ -73,7 +88,7 @@ export default function Tabletest() {
       }
       
     const handleClick = () => {
-      axios.post('http://localhost:5000/why',{job:job})
+      axios.post('http://localhost:8000/why',{job:job})
         .then(response => setResult(convertList(response.data.number)))
         .catch(error => console.log(error));
         console.log((result));
@@ -108,61 +123,74 @@ export default function Tabletest() {
         <Bar dataKey="value" fill="#8884d8" />
         </BarChart>
         
-        <div className='forlist'>
-                        
+        <div className='forlist'>  
             <div >
                 {/* Div containing 3 checkboxes */}
                 <FormControl component="fieldset">
-                    <FormLabel component="legend">Select an option:</FormLabel>
-                    <Checkbox
-                    label="Linked In"
+                <FormLabel component="legend">Select an option:</FormLabel>
+                    <FormGroup>
+                    <FormControlLabel control={<Checkbox
                     checked={linkedinCB}
                     onChange={handleCheckboxliChange}
                     // inputProps={{ 'aria-label': 'controlled' }}
-                    color= 'primary'
-
-                    />
-                    <Checkbox
+                    color= 'default'
+                    />} label="LinkedIn" />
+                    <FormControlLabel control={<Checkbox
                     checked={platsbankenCB}
                     onChange={handleCheckboxpbChange}
-                    color='primary'
-                    /> 
-                    <Checkbox
+                    color='default'
+                    /> } label="Platsbanken" />
+                    <FormControlLabel control={<Checkbox
                     checked={ledigaCB}
                     onChange={handleCheckboxljChange}
-                    color='primary'
-                    /> 
+                    color='default'
+                    /> } label="Lediga jobb" />
+                </FormGroup>
                 </FormControl>
 
     
                 
                 {/* Div containing 2 drop-down lists */}
                 <div>
-                    <FormControl >
-                    <Select value="value1">
-                        <MenuItem value="value1">Value 1</MenuItem>
-                        <MenuItem value="value2">Value 2</MenuItem>
-                        <MenuItem value="value3">Value 3</MenuItem>
-                    </Select>
+                <div>
+                    <FormControl sx={{ m: 1, minWidth: 80 }}>
+                        <InputLabel id="demo-simple-select-autowidth-label">County</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-autowidth-label"
+                        id="demo-simple-select-autowidth"
+                        value={country}
+                        onChange={handleChangeCounty}
+                        autoWidth
+                        label="County"
+                        >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={10}>Twenty</MenuItem>
+                        <MenuItem value={21}>Twenty one</MenuItem>
+                        <MenuItem value={22}>Twenty one and a half</MenuItem>
+                        </Select>
                     </FormControl>
-                    <FormControl >
-                    <Select value="value4">
-                        <MenuItem value="value4">Value 4</MenuItem>
-                        <MenuItem value="value5">Value 5</MenuItem>
-                    </Select>
-                    </FormControl>
-                </div>
-
+                    </div>
+                    </div>
                 {/* Div containing 3 horizontal radio buttons */}
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Select an option:</FormLabel>
                     <RadioGroup row aria-label="position" name="position" defaultValue="top">
-                    <FormControlLabel value="option1" control={<Radio />} label="Option 1" />
-                    <FormControlLabel value="option2" control={<Radio />} label="Option 2" />
-                    <FormControlLabel value="option3" control={<Radio />} label="Option 3" />
+                        
+                        <FormControlLabel value="option1" control={<Radio />} label="Seniority" />
+                        <FormControlLabel value="option2" control={<Radio />} label="Duration" />
+                        <FormControlLabel value="option3" control={<Radio />} label="Years of experience" />
+                        <FormControlLabel value="option4" control={<Radio />} label="Prerequirements" />                   
+                        <FormControlLabel value="option5" control={<Radio />} label="Drivigs license" />
+                        <FormControlLabel value="option6" control={<Radio />} label="Employment type" />
+
                     </RadioGroup>
                 </FormControl>
                 </div>
+
+            
+            
                 <form onSubmit={handleClick} className='forlistlist'>
                     <label>
                         <select value={job} onChange={handleChange} className='select_options'>

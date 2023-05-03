@@ -1,8 +1,18 @@
 import sqlite3
+from countyprof import profession_list
+from sys import platform
 
-# Database path
-db_path = 'Project\db\echo.db'
 
+def find_db_path(platform):
+    match platform:
+        case "linux":
+            return "Project/db/echo.db"
+        case "darwin":
+            return "Project/db/echo.db"
+        case _:
+            return "Project\db\echo.db"
+
+db_path = find_db_path(platform)
 
 # ------------------------------------------- HELPERS -------------------------------------------------------
 
