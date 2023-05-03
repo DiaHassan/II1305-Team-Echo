@@ -21,12 +21,18 @@ Our project was made externaly for Future Place Leadership as a dashboard collec
  - flask (Python library)
 
 ## Usage
-[Todo]
+[Early draft]  
+In order for the project to work, the files in [/Project/code](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code) and [/Project/db](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/db) should be run from the root directory. An example of running [```webscrape.py```](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/webscrape.py) from root directory, provided if the root directory is named "Root":  
+```
+C:\Users\example\Desktop\Root> python Project/code/webscrape.py
+```
+By running ```webscrape.py```, the program will scrape the data from the specified websites and create a database file called ```echo.db```. Estimated scraping times: ~1 min for Platsbanken, ~15 min for LedigaJobb and ~4.5 h for LinkedIn.
+
 
 ### Documentation
 - [Code](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/README.md)
-- [Dashboard](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/db/README.md)
-- [Database](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/dashboard/README.md)
+- [Dashboard](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/dashboard/README.md)
+- [Database](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/db/README.md)
 
 ## Team Echo
  - [Hassan Dia](https://github.com/DiaHassan)              | Product Owner/Developer
