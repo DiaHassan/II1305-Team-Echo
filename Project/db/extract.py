@@ -123,7 +123,7 @@ def get_professions_for_county(sources, county, professions, param):
     sources_str = ",".join(sources_str)
     professions_str = ",".join(professions_str)
     if param == 'null':
-        query = 'SELECT profession, source, county, COUNT(job_listing.id) \
+        query = 'SELECT profession, source, COUNT(job_listing.id) \
                 FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
                 WHERE job_listing.county = "' + county + '" \
                 AND job_listing.source IN (' + sources_str + ') \
@@ -169,10 +169,10 @@ if __name__ == '__main__':
     print()
 
     # Extract
-    #print(extract(['platsbanken', 'ledigajobb'], 'Västmanlands län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'null'))
+    print(extract(['platsbanken', 'ledigajobb'], 'Västmanlands län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'null'))
     
     # One profession, many counties
-    print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare', 'null'))
+    #print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare', 'null'))
 
     # One county many professions
     #print(get_professions_for_county(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
