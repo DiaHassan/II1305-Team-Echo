@@ -2,7 +2,7 @@ import codecs      #swedish alphabet
 import requests
 import json
 
-def return_ids():
+def get_occupational_ids():
     url = "https://data.jobtechdev.se/taxonomy/yrkesben%C3%A4mningar.json"
     connection = requests.get(url)
 
