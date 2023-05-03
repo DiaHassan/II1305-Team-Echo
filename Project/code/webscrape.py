@@ -1,5 +1,6 @@
 import os
 import sys
+from sys import platform
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from db.insert import send_2d_list
 from ledigajobb import ledigajobb
@@ -7,8 +8,16 @@ from platsbanken import platsbanken
 from linkedIn import linkedIn
 
 
-# Database
-database_name = "Project\db\echo.db"
+def find_db_path(platform):
+    match platform:
+        case "linux":
+            return "Project/db/echo.db"
+        case "darwin":
+            return "Project/db/echo.db"
+        case _:
+            return "Project\db\echo.db"
+
+database_name = find_db_path(platform)
 
 # Platsbanken
 def run_platsbanken():
@@ -25,10 +34,11 @@ def run_ledigajobb():
 # LinkedIn
 def run_linkedin():
     linkedIn_list = linkedIn.run()
-    # send_2d_list(linkedIn_list, database_name)
+    send_2d_list(linkedIn_list, database_name)
+    print(' LinkedIn done')
 
 # Main
 if __name__ == '__main__':
-    #run_platsbanken()
-    run_ledigajobb()
+    run_platsbanken()
+    # run_ledigajobb()
     # run_linkedin()
