@@ -35,6 +35,8 @@ def find_req_ai(id, title, description):
     # Make the HTTP POST request
     response = requests.post(url, headers=headers, json=payload)
 
+    # Print the response content
+    print(response.json())
     return response.json()
 
 
