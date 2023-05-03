@@ -87,14 +87,14 @@ def insert_data(argument_list, sql_connect, cursor):
     # Handling 'None' inputs
     if not job_param_list[1]:
             job_param_list[1] = "null"
-    if not job_param_list[5]:
-            job_param_list[5] = "0"
-    if not job_param_list[6]:
-            job_param_list[6] = "null"
-    if not job_param_list[7]:
-            job_param_list[7] = "null"
+    if job_param_list[2] == "None":
+            job_param_list[2] = "null"
     if not job_param_list[4]:
          job_param_list[4] = "null"
+    if job_param_list[5] == "None":
+            job_param_list[5] = "null"
+    if not job_param_list[6]:
+            job_param_list[6] = "null"
 
     insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, seniority, date_gathered) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"
 
