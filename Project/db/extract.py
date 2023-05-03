@@ -70,6 +70,7 @@ def get_counties_for_profession(sources, counties, profession, param):
     result = []
     sources_str = []
     counties_str = []
+    #Formatting arguments for the queries
     for c in sources:
         sources_str.append("'" + c + "'")
     for c in counties:
@@ -116,6 +117,7 @@ def get_professions_for_county(sources, county, professions, param):
     result = []
     sources_str = []
     professions_str = []
+    #Formatting arguments for the queries
     for c in sources:
         sources_str.append("'" + c + "'")
     for c in professions:
