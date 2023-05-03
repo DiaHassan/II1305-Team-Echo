@@ -11,7 +11,7 @@ In order to run the code, the following libraries and programs will be needed:
 ## [/ledigajobb](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/ledigajobb)
 The file in the ```ledigajobb``` folder is used to web scrape job listing data from Ledigajobb.  
 
-### ledigajobb.py
+### [ledigajobb.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/ledigajobb/ledigajobb.py)
 Extracts data from Ledigajobb. This file contains several functions.
 
 #### Functions
@@ -61,7 +61,7 @@ Extracts data from Ledigajobb. This file contains several functions.
 ## [/linkedIn](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/linkedIn)
 All files in the ```linkedIn``` folder are used to web scrape job listing data from LinkedIn.  
 
-### linkedIn.py
+### [linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
 The "main" file that has all the data extracting functions. This file is dependent on the output produced by ```getGeoId.py```.
 
 #### Functions
@@ -71,7 +71,7 @@ The "main" file that has all the data extracting functions. This file is depende
 **run()**:  
 *Automates the* ```linkedin_scraper``` *function to scrape a list of jobs and municipalities.*  
 
-### getGeoId.py
+### [getGeoId.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/getGeoId.py)
 This script collects the GeoID's of a list of locations. This script is not run by ```main.py```, but if a new list of Geo ID's for different locations is desired, you can change the locations in the ```municipalities``` list:  
 ```python
 municipalities = ["Upplands Väsby, Stockholm", "Österåker, Stockholm"]
@@ -83,7 +83,7 @@ The above code will let ```getGeoId.py``` search for the Geo ID's of Upplands V�
 The program within the file connects to platsbanken API and retrieves all the information in ads from the last 30 days. It then extracts the relevant data and converts it into a format suitable for the database before sending it.  
 
 
-### platsbanken.py
+### [platsbanken.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/platsbanken/platsbanken.py)
 Extracts data from Platsbanken's API.
 
 #### Functions
@@ -99,7 +99,7 @@ Extracts data from Platsbanken's API.
 **extract_duration(duration)**:  
 *Extracts the job's duration from the listing.*  
 
-**extract_data_ad()**:
+**extract_data_ad()**:  
 *Extracts neccesary data from an ad using json and returns it in an array*  
 
 
@@ -107,10 +107,9 @@ Extracts data from Platsbanken's API.
 All of the occupations and counties we are web scraping for.
 
 
-## [main.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/main.py)
-This program retrieves a list of all the webscraped data from the websites selected and forwards the data to the database to be inserted.  
-
-
 ## [reqfinder.py](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/reqfinder.py)
 Reads a string and finds the first recognizable pre-condition for a job application and returns it.  
 
+
+## [webscrape.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/webscrape.py)
+This program retrieves a list of all the webscraped data from the websites selected and forwards the data to the database to be inserted.  
