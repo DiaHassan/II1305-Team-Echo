@@ -28,6 +28,8 @@ Our project was made externaly for Future Place Leadership as a dashboard collec
 - [Database](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/dashboard/README.md)
 
 ## Team Echo
+ - [Hassan Dia](https://github.com/DiaHassan) (Product Owner)
+ - [Tina Basta](https://github.com/tibasta) (SCRUM Master)
  - [Edwin Ahlstrand](https://github.com/EdwinAhl)
  - [Roy Liu](https://github.com/ruisnake)
  - [Albin Durfors](https://github.com/DrakenDurfors)
@@ -35,6 +37,4 @@ Our project was made externaly for Future Place Leadership as a dashboard collec
  - [Klara Fält](https://github.com/kflt)
  - [Zak Ora](https://github.com/ZakOra1)
  - [Samuel Sendek](https://github.com/CooperUSA)
- - [Hassan](https://github.com/DiaHassan)
- - [Tina Basta]()
 <!--[Ditt namn här](länk till din Github-profil)-->
