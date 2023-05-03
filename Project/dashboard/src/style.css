@@ -113,7 +113,7 @@ nav>ul>li>a {
     .navHidden {
       display: none;
     }
-
+  
     nav>ul {
       transition: display 0.5s ease-in-out;
     }
@@ -306,7 +306,7 @@ footer a {
 }
 
 footer a:hover {
-  border-bottom: 2px solid var(--color-white);
+  color: var(--color-white);
 }
 
 .vertical-line {

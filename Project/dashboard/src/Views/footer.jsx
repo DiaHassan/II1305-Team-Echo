@@ -25,9 +25,8 @@ export default function Footer() {
           </ul>
         </div>
         <div className="footer-contact">
-          <h3>Contact us:</h3>
-          <a href="tel:+1234567890">+1 (234) 567-890</a>
-          <a href="mailto:info@example.com">info@example.com</a>
+          <h3>Contact</h3>
+          <a href="mailto:team.echo.kth@gmail.com">team.echo.kth@gmail.com</a>
         </div>
       </footer>
     </>
