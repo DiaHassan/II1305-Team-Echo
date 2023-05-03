@@ -47,6 +47,15 @@ nav {
   height: 60px;
 }
 
+a {
+  color: var(--color-green);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-black);
+  text-decoration: none;
+}
 
 nav>ul {
   list-style: none;
@@ -198,8 +207,14 @@ nav>ul>li>a {
   color: var(--color-white);
 }
 
+.front-wrap>nav>ul>li>a:hover{
+  color: var(--color-green);
+  border-bottom: 5px solid transparent;
+  border-radius: 2px;
+}
+
 .front-wrap>nav>ul>li:hover{
-  border-bottom: 5px solid var(--color-white);
+  border-bottom: 5px solid transparent;
   border-radius: 2px;
 }
 
@@ -207,8 +222,12 @@ nav>ul>li>a {
   color: var(--color-green);
 }
 
-.front-wrap>.small>ul>li>a{
-  color:var(--color-black)
+.front-wrap>.small>ul>li>a {
+  color: var(--color-green);
+}
+
+.front-wrap>.small>ul>li>a:hover {
+  color: var(--color-black);
 }
 
 .front-wrap>nav>.burger{
@@ -276,8 +295,8 @@ footer {
   left: 0;
   position: relative;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: flex-start;
   width: 100%;
   background-color: var(--color-green);
   color: var(--color-white);
@@ -312,7 +331,7 @@ footer a:hover {
 .vertical-line {
   border: 2px solid var(--color-white);
   border-radius: 25px;
-  height: 8rem;
+  height: 12rem;
 }
 
 .footer-contact {

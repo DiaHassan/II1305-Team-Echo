@@ -30,7 +30,9 @@ export default function Navbar() {
   return (
     <>
       <nav className={`navbar ${isScrolled ? 'small' : ''}`}>
-        <div>Swedish Talent Observatory</div>
+        <div className="navTitle">
+          <Link to="/">Swedish Talent Observatory</Link>
+        </div>
         <img src={"Project/dashboard/src/menuHamburger.png"} alt="<" className="burger" onClick={displayList}/>
         <ul className={`${isVisible ? '' : 'navHidden'}`}>
           <li>
