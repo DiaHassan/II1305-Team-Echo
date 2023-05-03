@@ -79,27 +79,6 @@ def linkedin_scraper(job, municipality, page_number):
             # Get unique identifier for each ad
             key_tag = ad['data-entity-urn']
             key = key_tag.split(':')[-1]
-            
-#----------------------------Extracts proper format-------------------------------------------
-
-            # Calculating the estimated publication date (unable to be exact)
-            ad_date_list = ad_date.split(" ")
-            match ad_date_list[1]:
-                case 'days' | 'day':
-                    ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0]))
-                case 'weeks' | 'week':
-                    ad_publication_date = date.today() - timedelta(weeks=int(ad_date_list[0]))
-                case 'months' | 'month':
-                    ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0])*31)
-                case _:
-                    ad_publication_date = date.today()
-            ad_publication_date = str(ad_publication_date)
-
-            # Extracting county
-            try:
-                county = location[location.index(', ')+2:location.index(' County')]
-            except:
-                county = location[location.index(', ')+2:location.index(', Sweden')]
 
 #----------------------------Extracts HTML from each ad-page----------------------------------
             print(job_title + " | " + location)
@@ -141,8 +120,8 @@ def linkedin_scraper(job, municipality, page_number):
             education = find_req(ad_description)
 
 #----------------------------Saves parameters-------------------------------------------------
-
-            #print(job_title + " | " + location + " | " + seniority + " | " + employment_type)
+            
+            employment_type, ad_publication_date, county, seniority = format(employment_type, ad_date, location, seniority)
             temp.append(["Linkedin", employment_type, None, ad_publication_date, job, county, education, None, seniority, date.today().strftime('%Y-%m-%d'), key])
 
     #Remove duplicates and the key element 
@@ -170,17 +149,17 @@ def run():
     db = []
 
     # Jobs
-    jobs = ["Lärare", "Läkare", "Utvecklare", "Sjuksköterska", "Kock", "Operatör", "Personlig assistent", "Mekaniker", "Butikssäljare", "Civilingenjör", "Projektledare", "Städare"]
+    jobs = ["Lärare", "Läkare", "Utvecklare", "Sjuksköterska", "Tekniker", "Operatör", "Elektriker", "Logistiker", "Ingenjör", "Projektledare"]
 
     # Geo ids
-    # geo_ids = [100564495] 
-    geo_ids = []
-    with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
-        for line in f:
-            # Patternmatches for a number with a curly bracket before it and a comma sign after it.
-            match = re.search(r'\{(\d+)\,', line)
-            if match:
-                geo_ids.append(int(match.group(1)))
+    geo_ids = [100564495] 
+    # geo_ids = []
+    # with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
+    #     for line in f:
+    #         # Patternmatches for a number with a curly bracket before it and a comma sign after it.
+    #         match = re.search(r'\{(\d+)\,', line)
+    #         if match:
+    #             geo_ids.append(int(match.group(1)))
 
     for job in jobs:
         for muni in geo_ids:
@@ -196,3 +175,60 @@ def run():
     print("Removed jobs: " + str(remove_counter))
     print("Length of list: " + str(len(db)))
     return db
+
+
+# Extracts proper format for db
+def format(emp_type, ad_date, location, seniority):
+
+    # Translating employment type
+    if emp_type == 'Full-time': emp_type = 'Heltid'
+    if emp_type == 'Part-time': emp_type = 'Deltid'
+    if emp_type == 'Contract': emp_type = 'Kontrakt'
+    if emp_type == 'Temporary': emp_type = 'Tillfälligt'
+    if emp_type == 'Internship': emp_type = 'Praktikplats'
+    if emp_type == 'Volunteer': emp_type = 'Volontär'
+    if emp_type == 'Other': emp_type = 'Övrigt'
+
+
+    # Calculating the estimated publication date (unable to be exact)
+    ad_date_list = ad_date.split(" ")
+    match ad_date_list[1]:
+        case 'days' | 'day':
+            ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0]))
+        case 'weeks' | 'week':
+            ad_publication_date = date.today() - timedelta(weeks=int(ad_date_list[0]))
+        case 'months' | 'month':
+            ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0])*31)
+        case _:
+            ad_publication_date = date.today()
+    ad_publication_date = str(ad_publication_date)
+
+
+    # Extracting and translating county
+    try:
+        county = location[location.index(', ')+2:location.index(' County')]
+    except:
+        county = location[location.index(', ')+2:location.index(', Sweden')]
+
+    if county == 'Gavleborg': county = 'Gävleborg'
+    if county == 'Jamtland': county = 'Jämtland'
+    if county == 'Jonkoping': county = 'Jonköping'
+    if county == 'Orebro': county = 'Örebro'
+    if county == 'Ostergotland': county = 'Östergötland'
+    if county == 'Sodermanland': county = 'Södermanland'
+    if county == 'Varmland': county = 'Värmland'
+    if county == 'Vastmanland': county = 'Västmanland'
+    if county == 'Vastra Gotland': county = 'Västra Götaland'
+
+
+    # Translating seniority
+    if seniority == 'Associate': seniority = 'Medarbetare'
+    if seniority == 'Director': seniority = 'Chef'
+    if seniority == 'Entry level': seniority = 'Basnivå'
+    if seniority == 'Executive': seniority = 'Verksamhetschef'
+    if seniority == 'Internship': seniority = 'Praktikplats'
+    if seniority == 'Mid-Senior level': seniority = 'Mellannivå'
+    if seniority == 'Not Applicable': seniority = 'Ej tillämpligt'
+
+
+    return emp_type, ad_publication_date, county, seniority

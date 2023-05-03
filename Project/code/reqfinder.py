@@ -26,27 +26,33 @@ def find_req(job_ad):
     uut_regex = r"universitetsutbildning"
     u_ut_regex = r"universitets utbildning"
     uni_regex = r"university degree"
+    hut_regex = r"högskoleutbildning"
+    h_ut_regex = r"högskole utbildning"
+    col_regex = r"college degree"
 
     # Words to replace the found key words
-    regex_list = [(bachelors_regex,"Bachelor's degree"),
-                (bachelors_regexa,"Bachelor's degree"),
-                (bachelors_regexm,"Bachelor's degree"),
-                (bachelors_regexma,"Bachelor's degree"),
-                (bachelors_regexml,"Bachelor's degree"),
-                (masters_regex,"Master's degree"),
-                (masters_regexa,"Master's degree"),
-                (phd_regex,"PhD"),
-                (civ_regex,"Engineer"),
-                (civ_regexa, "Engineer"),
-                (eng_regex,"Engineer"),
-                (eng_regexa, "Engineer"),
-                (aut_regex,"Academic relevant degree"),
-                (uni_regex,"University degree"),
-                (uut_regex,"University degree"),
-                (u_ut_regex,"University degree"),
-                (degree_regex,"Requires a relevant degree"),
-                (ut_regex,"Requires a relevant degree"),
-                (rut_regex,"Requires a relevant degree"),
+    regex_list = [(bachelors_regex,"Kandidatexamen"),
+                (bachelors_regexa,"Kandidatexamen"),
+                (bachelors_regexm,"Kandidatexamen"),
+                (bachelors_regexma,"Kandidatexamen"),
+                (bachelors_regexml,"Kandidatexamen"),
+                (masters_regex,"Masterexamen"),
+                (masters_regexa,"Masterexamen"),
+                (phd_regex,"Doktorand"),
+                (civ_regex,"Ingenjör"),
+                (civ_regexa,"Ingenjör"),
+                (eng_regex,"Ingenjör"),
+                (eng_regexa,"Ingenjör"),
+                (aut_regex,"Akademiskt relevant utbildning"),
+                (uni_regex,"Högskoleutbildning"),
+                (uut_regex,"Högskoleutbildning"),
+                (u_ut_regex,"Högskoleutbildning"),
+                (hut_regex,"Högskoleutbildning"),
+                (h_ut_regex,"Högskoleutbildning"),
+                (col_regex,"Högskoleutbildning"),
+                (degree_regex,"Kräver relevant utbildning"),
+                (ut_regex,"Kräver relevant utbildning"),
+                (rut_regex,"Kräver relevant utbildning"),
                 ]
 
 
