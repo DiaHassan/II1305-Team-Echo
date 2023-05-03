@@ -88,7 +88,7 @@ export default function Tabletest() {
       }
       
     const handleClick = () => {
-      axios.post('http://localhost:8000/why',{job:job})
+      axios.post('http://localhost:8888/why',{job:job})
         .then(response => setResult(convertList(response.data.number)))
         .catch(error => console.log(error));
         console.log((result));
