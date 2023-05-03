@@ -20,14 +20,7 @@ def list_of_tuples_to_2d_list(list_of_tuples):
     result = []
     for t in list_of_tuples:
        result.append(list(t)) 
-    return result    
-
-# [[(a,b)], [(c,d)]] --> [[a,b], [c,d]]
-def list_of_list_tuple_to_2d_list(list_of_list_tuple):
-    result = []
-    for list_tuple in list_of_list_tuple:
-       result.append(list(list_tuple.pop()))  
-    return result     
+    return result        
 
 
 # Merges list with key-value
@@ -149,7 +142,7 @@ def get_professions_for_county(sources, county, professions):
                 if not fetch: return fetch
                 fetch = list_of_tuples_to_2d_list(fetch)
                 pop = fetch.pop()
-                fetch = [pop[0], pop[1]]
+                fetch = [pop[0], [pop[1]]]
                 list.append(fetch)
                 result.append(list)
         cursor.close()
@@ -159,7 +152,7 @@ def get_professions_for_county(sources, county, professions):
 
 # X-axis: all professions and param
 # Y-axis: number of professions in variable county
-def get_professions_in_county_with_param(sources, county, professions, param): 
+def get_professions_for_county_with_param(sources, county, professions, param): 
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
         result = []
@@ -205,19 +198,19 @@ def extract(source, county, profession, param):
     elif isinstance(profession, list):
         if param == 'null':
             return get_professions_for_county(source, county, profession)
-        return get_professions_in_county_with_param(source, county, profession, param)
+        return get_professions_for_county_with_param(source, county, profession, param)
 
 
 # Test
 if __name__ == '__main__':
 
     # Extract
-    print(extract(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
+    #print(extract(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
     
     # One profession, many counties
-    #print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare'))
+    print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare'))
     #print(get_counties_for_profession_with_param(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare', 'requirement'))
 
     # One county many professions
-    #print(get_professions_in_county(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare']))
-    #print(get_professions_in_county_with_param(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
+    #print(get_professions_for_county(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare']))
+    #print(get_professions_for_county_with_param(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
