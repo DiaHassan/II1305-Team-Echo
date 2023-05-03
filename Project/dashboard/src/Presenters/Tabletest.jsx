@@ -132,7 +132,7 @@ export default function Tabletest() {
         queryTbs.push('null')
         console.log(queryTbs)
         axios.post('http://localhost:8888/why',{job:queryTbs})
-            .then(response => setResult(convertList(response.data.number)))
+            .then(response => setResult(response.data.number))
             .catch(error => console.log(error));
             console.log((result));
     };
