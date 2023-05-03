@@ -3,11 +3,21 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 // import {} from '@material-ui/core'; //test
 import { makeStyles } from '@material-ui/core/styles';
-import { FormControl,Checkbox, InputLabel, FormGroup, FormLabel, RadioGroup, Radio, FormControlLabel, Select, MenuItem } from '@material-ui/core';
+
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 
 
 export default function Tabletest() {
-
+    
     const data = [
         {name: 'Blekinge län', value: 0},
         {name: 'Dalarnas län', value: 0},
@@ -43,7 +53,7 @@ export default function Tabletest() {
 
     const [activeList , setActivelist] = useState([false,false,false,false,false,false,false,false,false])
     const [joblist, setJobList] = useState(initialJobList)  
-    const [country, setCounty] = useState('')  
+    const [county, setCounty] = useState('')  
     const [linkedinCB, setLinkedinCB] = React.useState(false);
     const [platsbankenCB, setPlatsbankenCB] = React.useState(false);
     const [ledigaCB, SetLedigaCB] = React.useState(false);
@@ -77,6 +87,11 @@ export default function Tabletest() {
         setCounty(event.target.value);
       };
 
+
+      const myListElements = allCounties.map((item) => {
+        return <MenuItem value={{item}} key={item}>{item}</MenuItem>;
+      });
+
     function convertList(originalList) {
         const newList = [];
         for (let i = 0; i < originalList.length; i++) {
@@ -88,7 +103,7 @@ export default function Tabletest() {
       }
       
     const handleClick = () => {
-      axios.post('http://localhost:8000/why',{job:job})
+      axios.post('http://localhost:5000/why',{job:job})
         .then(response => setResult(convertList(response.data.number)))
         .catch(error => console.log(error));
         console.log((result));
@@ -158,35 +173,46 @@ export default function Tabletest() {
                         <Select
                         labelId="demo-simple-select-autowidth-label"
                         id="demo-simple-select-autowidth"
-                        value={country}
+                        value={county}
                         onChange={handleChangeCounty}
                         autoWidth
                         label="County"
                         >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Twenty</MenuItem>
-                        <MenuItem value={21}>Twenty one</MenuItem>
-                        <MenuItem value={22}>Twenty one and a half</MenuItem>
+                            {myListElements}
                         </Select>
                     </FormControl>
                     </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+                    <div>
                 {/* Div containing 3 horizontal radio buttons */}
-                <FormControl component="fieldset">
+                    <FormControl component="fieldset">
                     <FormLabel component="legend">Select an option:</FormLabel>
                     <RadioGroup row aria-label="position" name="position" defaultValue="top">
                         
                         <FormControlLabel value="option1" control={<Radio />} label="Seniority" />
                         <FormControlLabel value="option2" control={<Radio />} label="Duration" />
                         <FormControlLabel value="option3" control={<Radio />} label="Years of experience" />
-                        <FormControlLabel value="option4" control={<Radio />} label="Prerequirements" />                   
-                        <FormControlLabel value="option5" control={<Radio />} label="Drivigs license" />
+                        <FormControlLabel value="option4" control={<Radio />} label="Drivings license" />
+                        <FormControlLabel value="option5" control={<Radio />} label="Prerequirements" />
                         <FormControlLabel value="option6" control={<Radio />} label="Employment type" />
+                    
 
                     </RadioGroup>
                 </FormControl>
+                </div>
+
+            
+                
                 </div>
 
             
