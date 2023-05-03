@@ -1,8 +1,45 @@
 import re
+import requests
 
 # Job ad test variable
 job_ad = """
 """
+# Sends large description of job ads to AI API,
+# which returns skills and experience required based on text
+# id, title, and description needs to be string
+def find_req_ai(id, title, description):
+    # URL of the API 
+    url = 'https://jobad-enrichments-api.jobtechdev.se/enrichtextdocumentsbinary'
+    
+    # Set the headers for POST request 
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+
+    # Set the payload for POST request
+    # IMPROVEMENT FOR FUTURE: CAN SEND 100 ADS AT THE SAME TIME INSTEAD OF ONE
+    payload = {
+    "documents_input": [
+        {
+          "doc_id": id,
+          "doc_headline": title,
+          "doc_text": description
+        }
+        ],
+        "add_occupation_concepts": True,
+        "add_skill_concepts": True,
+        "add_workplace_experience_concepts": True
+    }
+
+    # Make the HTTP POST request
+    response = requests.post(url, headers=headers, json=payload)
+
+    # Print the response content
+    print(response.json())
+    return response.json()
+
+
 
 # Define regular expressions for bachelor's, master's, and PhD degrees
 def find_req(job_ad):
