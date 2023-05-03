@@ -115,10 +115,26 @@ export default function Tabletest() {
       }
       
     const handleClick = () => {
-      axios.post('http://localhost:8888/why',{job:job})
-        .then(response => setResult(convertList(response.data.number)))
-        .catch(error => console.log(error));
-        console.log((result));
+        const srcs = []
+        if (activeList[0]){
+            srcs.push('linkedin')
+        }
+        if (activeList[1]){
+            srcs.push('platsbanken')   
+        }
+        if (activeList[2]){
+            srcs.push('ledigajobb')
+        }
+        const queryTbs = []
+        queryTbs.push(srcs)
+        queryTbs.push(county)
+        queryTbs.push(joblist)
+        queryTbs.push('null')
+        console.log(queryTbs)
+        axios.post('http://localhost:8888/why',{job:queryTbs})
+            .then(response => setResult(convertList(response.data.number)))
+            .catch(error => console.log(error));
+            console.log((result));
     };
 
     // Styling exists here
@@ -151,7 +167,7 @@ export default function Tabletest() {
         "Virginia Andrews",
         "Kelly Snyder"
       ];
-     const [selected, setSelected] = useState([]);
+    
      const handleChanges= (event) => {
         const value = event.target.value;
         if (value[value.length - 1] === "all") {
