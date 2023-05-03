@@ -1,5 +1,4 @@
 import sqlite3
-from countyprof import profession_list
 from sys import platform
 
 
@@ -93,7 +92,6 @@ def get_counties_for_profession(sources, counties, profession):
             inner_list.append(fetch)
             outer_list.append(inner_list)
         result.append(outer_list)
-    print(result)
     result = merge_list(result)
     return result
 
@@ -127,7 +125,6 @@ def get_counties_for_profession_with_param(sources, counties, profession, param)
             inner_list.append(fetch)
             outer_list.append(inner_list)
         result.append(outer_list)
-    print(result)
     result = merge_list(result)
     return result
 
@@ -136,7 +133,7 @@ def get_counties_for_profession_with_param(sources, counties, profession, param)
 
 # X-axis: all professions without param
 # Y-axis: number of professions in variable county
-def get_professions_in_county(sources, county, professions): 
+def get_professions_for_county(sources, county, professions): 
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
         result = []
@@ -196,17 +193,30 @@ def get_professions_in_county_with_param(sources, county, professions, param):
     return result
 
 
+# -------------------------------- EXTRACT -------------------------------------------
 # Callee
-def extract(source, county, professions, param):
-    return get_professions_in_county_with_param(source, county, professions, param)
+def extract(source, county, profession, param):
+    # One profession, many counties
+    if isinstance(county, list):
+        if param == 'null':
+            return get_counties_for_profession(source, county, profession)
+        return get_counties_for_profession_with_param(source, county, profession, param)
+    # One county, many professions
+    elif isinstance(profession, list):
+        if param == 'null':
+            return get_professions_for_county(source, county, profession)
+        return get_professions_in_county_with_param(source, county, profession, param)
 
 
 # Test
 if __name__ == '__main__':
+
+    # Extract
+    print(extract(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
     
     # One profession, many counties
     #print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare'))
-    print(get_counties_for_profession_with_param(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare', 'requirement'))
+    #print(get_counties_for_profession_with_param(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare', 'requirement'))
 
     # One county many professions
     #print(get_professions_in_county(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare']))

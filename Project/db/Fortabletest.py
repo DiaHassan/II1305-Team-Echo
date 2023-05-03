@@ -1,7 +1,7 @@
 from flask import Flask, jsonify,request
 # , jsonify, request
 from flask_cors import CORS
-from extract import get_counties_for_profession, get_professions_in_county
+from extract import get_counties_for_profession, get_professions_for_county
 
 # def my_function(arg1, arg2):
 #     # do something with arg1 and arg2
