@@ -1,9 +1,20 @@
 import codecs      #swedish alphabet
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from sys import platform
 import time
 
 
+def find_path(platform):
+    match platform:
+        case "linux":
+            return 'Project/code/linkedIn/geo_ids.txt'
+        case "darwin":
+            return 'Project/code/linkedIn/geo_ids.txt'
+        case _:
+            return 'Project\code\linkedIn\geo_ids.txt'
+
+ 
 url = 'https://www.linkedin.com/jobs/search?trk=guest_homepage-basic_guest_nav_menu_jobs&position=1&pageNum=0'
 driver = webdriver.Firefox()
 driver.get(url)
@@ -13,7 +24,9 @@ municipalities = ["Upplands Väsby, Stockholm", "Vallentuna, Stockholm", "Öster
 #Identifies the searchbar
 searchbar = driver.find_element(By.XPATH, ("//input[@id='job-search-bar-location']"))
 
-file = codecs.open('geo_ids.txt','w', 'utf-8')
+file_path = find_path(platform)
+
+file = codecs.open(file_path,'w', 'utf-8')
 for muni in municipalities:
     # Writes a municipality
     searchbar.clear()
@@ -29,6 +42,8 @@ file.close()
 
 # Existerar ej: "Uppvidinge, Kronoberg", och "Ljusnarsberg, Örebro"
 
+# Has two Geo id's: "Göteborg, Västra Götaland" (One is a radius, and one is functional)
+
 # Geo id gives radius: 
 # [Ta only "{104312072, Täby, Stockholm}" instead of these] "Vallentuna, Stockholm", "Ekerö, Stockholm", "Tyresö, Stockholm", "Täby, Stockholm", "Danderyd, Stockholm", "Sollentuna, Stockholm", "Nacka, Stockholm", "Sundbyberg, Stockholm", "Solna, Stockholm", "Vaxholm, Stockholm", "Nynäshamn, Stockholm", 
 # "{104792890, Gnesta, Södermanland}", 
@@ -38,6 +53,6 @@ file.close()
 # [Use only "{105391169, Östersund, Jämtland}" instead of these] "Bräcke, Jämtland", "Östersund, Jämtland", 
 # [Don't use] "Timrå, Västernorrland", 
 # [Use only "{116351998, Falun, Dalarna}" instead of these] "Falun, Dalarna", "Ludvika, Dalarna", 
-#[Use only "{112614768, Lekeberg, Örebro}" instead of these] "Lekeberg, Örebro", "Hallsberg, Örebro", "Nora, Örebro", 
-#[Use only "{104448936, Kil, Värmland}" instead of theese] "Kil, Värmland", "Hammarö, Värmland", "Munkfors, Värmland", "Grums, Värmland", 
-#[Use only "Göteborg, Västra Götaland" instead of theese] "Skövde, Västra Götaland, "Alingsås, Västra Götaland", "Trollhättan, Västra Götaland", "Mölndal, Västra Götaland", "Göteborg, Västra Götaland", "Essunga, Västra Götaland", "Tjörn, Västra Götaland", "Partille, Västra Götaland"
+# [Use only "{112614768, Lekeberg, Örebro}" instead of these] "Lekeberg, Örebro", "Hallsberg, Örebro", "Nora, Örebro", 
+# [Use only "{104448936, Kil, Värmland}" instead of theese] "Kil, Värmland", "Hammarö, Värmland", "Munkfors, Värmland", "Grums, Värmland", 
+# "Skövde, Västra Götaland, "Alingsås, Västra Götaland", "Trollhättan, Västra Götaland", "Mölndal, Västra Götaland", "Göteborg, Västra Götaland", "Essunga, Västra Götaland", "Tjörn, Västra Götaland", "Partille, Västra Götaland"
