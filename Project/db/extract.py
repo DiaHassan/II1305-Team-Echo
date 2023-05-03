@@ -91,7 +91,8 @@ def get_counties_for_profession(sources, counties, profession, param):
                     ON jl.id = rr.job_listing_id \
                 WHERE job_id IN (SELECT id FROM job WHERE profession LIKE "%' + profession  + '%") \
                 AND jl.county IN (' + counties_str + ') AND jl.source IN (' + sources_str + ') \
-                GROUP BY county, source, requirement ORDER BY jl.job_id'
+                GROUP BY county, source, requirement \
+                ORDER BY jl.job_id'
     else:
         query ='SELECT county,source, j.' + param + ', COUNT(*) \
                 FROM job_listing j \
@@ -125,7 +126,7 @@ def get_professions_for_county(sources, county, professions, param):
                 WHERE job_listing.county = "' + county + '" \
                 AND job_listing.source IN (' + sources_str + ') \
                 AND profession IN (' + professions_str + ')\
-                GROUP BY source, county' 
+                GROUP BY source, county, profession' 
     elif param == "requirement":
         query ='SELECT profession, source, requirement, COUNT(jl.id) FROM job_listing AS jl \
                 INNER JOIN (requirement_relation AS rr \
@@ -163,7 +164,7 @@ if __name__ == '__main__':
     print()
 
     # Extract
-    #print(extract(['platsbanken'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
+    print(extract(['platsbanken', 'ledigajobb'], 'Västmanlands län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'null'))
     
     # One profession, many counties
     #print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare', 'employment_type'))
