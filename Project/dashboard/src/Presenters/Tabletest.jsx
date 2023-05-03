@@ -4,6 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 // import {} from '@material-ui/core'; //test
 import { makeStyles } from '@material-ui/core/styles';
 
+// import { MenuProps, useStyles, options } from "./utils";
+
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -14,6 +16,8 @@ import FormLabel from '@mui/material/FormLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 
 export default function Tabletest() {
@@ -53,7 +57,7 @@ export default function Tabletest() {
 
     const [activeList , setActivelist] = useState([false,false,false,false,false,false,false,false,false])
     const [joblist, setJobList] = useState(initialJobList)  
-    const [county, setCounty] = useState('')  
+    const [county, setCounty] = useState('Västmanlands län')  
     const [linkedinCB, setLinkedinCB] = React.useState(false);
     const [platsbankenCB, setPlatsbankenCB] = React.useState(false);
     const [ledigaCB, SetLedigaCB] = React.useState(false);
@@ -85,11 +89,19 @@ export default function Tabletest() {
 
     const handleChangeCounty = (event) => {
         setCounty(event.target.value);
-      };
+    };
+
+    const handleChangeJob = (event) => {
+        setJobList(event.target.value);
+    };
 
 
       const myListElements = allCounties.map((item) => {
-        return <MenuItem value={{item}} key={item}>{item}</MenuItem>;
+        return <MenuItem value={item} key={item}>{item}</MenuItem>;
+      });
+
+      const myListElementJobs = joblist.map((item) => {
+        return <MenuItem value={item} key={item}> <Checkbox checked={job.indexOf(item) > -1} /><ListItemText primary={item} /></MenuItem>
       });
 
     function convertList(originalList) {
@@ -103,7 +115,7 @@ export default function Tabletest() {
       }
       
     const handleClick = () => {
-      axios.post('http://localhost:5000/why',{job:job})
+      axios.post('http://localhost:8888/why',{job:job})
         .then(response => setResult(convertList(response.data.number)))
         .catch(error => console.log(error));
         console.log((result));
@@ -125,6 +137,35 @@ export default function Tabletest() {
     // const classes = useStyles();
      //className={classes.root}
      //className={classes.formControl}
+
+   
+     const options = [
+        "Oliver Hansen",
+        "Van Henry",
+        "April Tucker",
+        "Ralph Hubbard",
+        "Omar Alexander",
+        "Carlos Abbott",
+        "Miriam Wagner",
+        "Bradley Wilkerson",
+        "Virginia Andrews",
+        "Kelly Snyder"
+      ];
+     const [selected, setSelected] = useState([]);
+     const handleChanges= (event) => {
+        const value = event.target.value;
+        if (value[value.length - 1] === "all") {
+            setJobList(joblist.length === initialJobList.length ? [] : initialJobList);
+          return;
+        }
+        setJobList(value);
+        console.log(value)
+      };
+
+
+
+
+
     return (
         <div className='fortableandlist'>
             
@@ -167,22 +208,52 @@ export default function Tabletest() {
                 
                 {/* Div containing 2 drop-down lists */}
                 <div>
-                <div>
-                    <FormControl sx={{ m: 1, minWidth: 80 }}>
-                        <InputLabel id="demo-simple-select-autowidth-label">County</InputLabel>
+                    <div>
+                        <FormControl sx={{ m: 1, minWidth: 80 }}>
+                            <InputLabel id="demo-simple-select-autowidth-label">County</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-autowidth-label"
+                            id="demo-simple-select-autowidth"
+                            value={county}
+                            onChange={handleChangeCounty}
+                            autoWidth
+                            label="County"
+                            >
+                                {myListElements}
+                            </Select>
+                        </FormControl>
+                    </div>
+                    <div>
+                    <FormControl className="">
+                        <InputLabel id="mutiple-select-label">Multiple Select</InputLabel>
                         <Select
-                        labelId="demo-simple-select-autowidth-label"
-                        id="demo-simple-select-autowidth"
-                        value={county}
-                        onChange={handleChangeCounty}
-                        autoWidth
-                        label="County"
+                            labelId="mutiple-select-label"
+                            multiple
+                            value={joblist}
+                            onChange={handleChanges}
+                            renderValue={(joblist) => joblist.join(", ")}
+                            // MenuProps={MenuProps}
+                            maxwidth = "100"
                         >
-                            {myListElements}
+                            <MenuItem
+                            value="all"
+                            // classes={{
+                            //     root: isAllSelected ? classes.selectedAll : ""
+                            // }}
+                            ></MenuItem>
+                            {initialJobList.map((option) => (
+                            <MenuItem key={option} value={option}>
+                                <ListItemIcon>
+                                <Checkbox checked={joblist.indexOf(option) > -1} />
+                                </ListItemIcon>
+                                <ListItemText primary={option} />
+                            </MenuItem>
+                            ))}
                         </Select>
-                    </FormControl>
+                        </FormControl>
                     </div>
-                    </div>
+
+                </div>
 
 
 
