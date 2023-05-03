@@ -12,7 +12,7 @@ def find_db_path(platform):
                 return "Project/db/echo.db"
             case "darwin":
                 return "Project/db/echo.db"
-            case default:
+            case _:
                 return "Project\db\echo.db"
 
 def find_db_sqlite_path(platform):
@@ -21,7 +21,7 @@ def find_db_sqlite_path(platform):
                 return "Project/db/db_sqlite.sql"
             case "darwin":
                 return "Project/db/db_sqlite.sql"
-            case default:
+            case _:
                 return "Project\db\db_sqlite.sql"
 
 # Builds database

@@ -9,7 +9,7 @@ def find_db_path(platform):
             return "Project/db/echo.db"
         case "darwin":
             return "Project/db/echo.db"
-        case default:
+        case _:
             return "Project\db\echo.db"
 
 db_path = find_db_path(platform)
