@@ -232,6 +232,7 @@ export default function Tabletest() {
         active: false
     };
 
+
     //insert all sources. Format 'sourcename': defaultValue
     const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue,  ledigajobb:defaultValue});
 
@@ -391,32 +392,32 @@ export default function Tabletest() {
                     <div className="radio">
                         {/* Div containing 3 horizontal radio buttons */}
                         <RadioGroup aria-label="position" name="position" defaultValue="top">
-                            <FormControl component="fieldset">
+                            <FormControl component="fieldset" >
 
                                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                     <Grid item xs={6}>
                                         <FormControlLabel value="option1" control={<Radio size="small" />} label="Employment type" 
-                                        disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true} />
+                                        disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <FormControlLabel value="option2" control={<Radio size="small" />} label="Duration"
-                                        disabled={inputs.platsbanken.duration && inputs.linkedin.duration && inputs.ledigajobb.duration ? false : true} />
+                                        disabled={inputs.platsbanken.duration && inputs.linkedin.duration && inputs.ledigajobb.duration ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <FormControlLabel value="option3" control={<Radio size="small" />} label="Seniority"
-                                        disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true} />
+                                        disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <FormControlLabel value="option4" control={<Radio size="small" />} label="Prerequirements"
-                                        disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true} />
+                                        disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <FormControlLabel value="option5" control={<Radio size="small" />} label="Years of experience"
-                                        disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true} />
+                                        disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
                                         <FormControlLabel value="option6" control={<Radio size="small" />} label="Driver's license"
-                                        disabled={inputs.platsbanken.drivers_license && inputs.linkedin.drivers_license && inputs.ledigajobb.drivers_license ? false : true} />
+                                        disabled={inputs.platsbanken.drivers_license && inputs.linkedin.drivers_license && inputs.ledigajobb.drivers_license ? false : true}/>
                                     </Grid>
                                 </Grid>
                             </FormControl>
