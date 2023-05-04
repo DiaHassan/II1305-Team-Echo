@@ -70,7 +70,6 @@ def get_counties_for_profession(sources, counties, profession, param):
     result = []
     sources_str = []
     counties_str = []
-    #Formatting arguments for the queries
     for c in sources:
         sources_str.append("'" + c + "'")
     for c in counties:
@@ -117,7 +116,6 @@ def get_professions_for_county(sources, county, professions, param):
     result = []
     sources_str = []
     professions_str = []
-    #Formatting arguments for the queries
     for c in sources:
         sources_str.append("'" + c + "'")
     for c in professions:
@@ -171,7 +169,7 @@ if __name__ == '__main__':
     print()
 
     # Extract
-    print(extract(['platsbanken', 'ledigajobb'], 'Västmanlands län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'null'))
+    print(extract(['Linkedin', 'ledigajobb'], 'Norrbottens län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'employment_type'))
     
     # One profession, many counties
     #print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare', 'null'))
