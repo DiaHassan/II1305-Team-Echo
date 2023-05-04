@@ -18,6 +18,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import { Grid } from '@mui/material';
 
 
 export default function Tabletest() {
@@ -46,10 +47,10 @@ export default function Tabletest() {
         {name: 'Östergötlands län', value: 0}
       ];
     
-    // Setting varibles and useStates
+    // Setting variables and useStates
     const [result, setResult] = useState(data);
     const [job, setJob] = useState('')
-    const [showLegend, setShowLegend] = useState(true); //test
+    const [showLegend, setShowLegend] = useState(true); //test, du kan ta bort 
 
 
     const initialJobList = ["Ingenjör","Utvecklare","Läkare","Sjuksköterska","Lärare","Operatör","Tekniker","Elektriker","Projektledare","Logistiker"]
@@ -58,9 +59,18 @@ export default function Tabletest() {
     const [activeList , setActivelist] = useState([false,false,false,false,false,false,false,false,false])
     const [joblist, setJobList] = useState(initialJobList)  
     const [county, setCounty] = useState('Västmanlands län')  
+    //Checkboxes
     const [linkedinCB, setLinkedinCB] = React.useState(false);
     const [platsbankenCB, setPlatsbankenCB] = React.useState(false);
     const [ledigaCB, SetLedigaCB] = React.useState(false);
+    //Radiobuttons
+    const [option1, setOption1] = React.useState(false); 
+    const [option2, setOption2] = React.useState(false); 
+    const [option3, setOption3] = React.useState(false); 
+    const [option4, setOption4] = React.useState(false); 
+    const [option5, setOption5] = React.useState(false); 
+    const [option6, setOption6] = React.useState(false); 
+
     // Handlers both onClick and onChange
     const handleChange = (event) => {
         setJob(event.target.value);
@@ -113,6 +123,21 @@ export default function Tabletest() {
         }
         return newList;
       }
+
+      function transformList(list) {
+        const result = [];
+        
+        list.forEach((item) => {
+          const obj = {
+            name: item[0],
+            ledigajobb: item[1][1][0],
+            linkedin: item[2][1][0]
+          };
+          result.push(obj);
+        });
+        
+        return result;
+      }
       
     const handleClick = () => {
         const srcs = []
@@ -136,6 +161,20 @@ export default function Tabletest() {
             .catch(error => console.log(error));
             console.log((result));
     };
+    function transformList(list) {
+  const result = [];
+  
+  list.forEach((item) => {
+    const obj = {
+      name: item[0],
+      ledigajobb: item[1][1][0],
+      platsbanken: item[2][1][0]
+    };
+    result.push(obj);
+  });
+  
+  return result;
+}
 
     // Styling exists here
     // const useStyles = makeStyles((theme) => ({
@@ -192,7 +231,8 @@ export default function Tabletest() {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="value" fill="#8884d8" />
+        <Bar dataKey="ledigajobb" fill="#8884d8" />
+        <Bar dataKey="linkedin"  fill="#924E7D" />
         </BarChart>
         
         <div className='forlist'>  
@@ -272,31 +312,37 @@ export default function Tabletest() {
                 </div>
 
 
+                    <div className="radio">
+                        {/* Div containing 3 horizontal radio buttons */}
+                        <RadioGroup aria-label="position" name="position" defaultValue="top">
+                            <FormControl component="fieldset">
 
+                                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                    <Grid item xs={6}>
+                                        <FormControlLabel value="option1" control={<Radio size="small" />} label="Employment type" />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControlLabel value="option2" control={<Radio size="small" />} label="Duration" />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControlLabel value="option3" control={<Radio size="small" />} label="Seniority" />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControlLabel value="option4" control={<Radio size="small" />} label="Prerequirements" />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControlLabel value="option5" control={<Radio size="small" />} label="Years of experience" />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <FormControlLabel value="option6" control={<Radio size="small" />} label="Driver's license" />
+                                    </Grid>
+                                </Grid>
+                            </FormControl>
 
+                        </RadioGroup>
 
+                    </div>
 
-
-
-
-
-                    <div>
-                {/* Div containing 3 horizontal radio buttons */}
-                    <FormControl component="fieldset">
-                    <FormLabel component="legend">Select an option:</FormLabel>
-                    <RadioGroup row aria-label="position" name="position" defaultValue="top">
-                        
-                        <FormControlLabel value="option1" control={<Radio />} label="Seniority" />
-                        <FormControlLabel value="option2" control={<Radio />} label="Duration" />
-                        <FormControlLabel value="option3" control={<Radio />} label="Years of experience" />
-                        <FormControlLabel value="option4" control={<Radio />} label="Drivings license" />
-                        <FormControlLabel value="option5" control={<Radio />} label="Prerequirements" />
-                        <FormControlLabel value="option6" control={<Radio />} label="Employment type" />
-                    
-
-                    </RadioGroup>
-                </FormControl>
-                </div>
 
             
                 
