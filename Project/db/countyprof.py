@@ -18,7 +18,7 @@ county_list = [
     'Västernorrlands län',
     'Västmanlands län',
     'Västra Götalands län',
-    'Örebro',
+    'Örebro län',
     'Östergötalands län'
 ]
 
