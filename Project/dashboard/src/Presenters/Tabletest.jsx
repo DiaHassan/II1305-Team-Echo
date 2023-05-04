@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,ResponsiveContainer } from 'recharts';
 // import {} from '@material-ui/core'; //test
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -76,6 +76,7 @@ export default function Tabletest() {
         setJob(event.target.value);
     }
     const handleCheckboxliChange = (event) => {
+        handleSource(event);
         setLinkedinCB(event.target.checked)      
         const newList = [...activeList];
         newList[0] = !linkedinCB;
@@ -83,6 +84,7 @@ export default function Tabletest() {
         console.log(activeList)
     };
     const handleCheckboxpbChange = (event) => {
+        handleSource(event);
         setPlatsbankenCB(event.target.checked)
         const newList = [...activeList];
         newList[1] = !platsbankenCB;
@@ -90,6 +92,7 @@ export default function Tabletest() {
         console.log(activeList)   
     };
     const handleCheckboxljChange = (event) => {
+        handleSource(event);
         SetLedigaCB(event.target.checked)  
         const newList = [...activeList];
         newList[2] = !ledigaCB;
@@ -124,25 +127,27 @@ export default function Tabletest() {
         return newList;
       }
 
-      function transformList(list) {
-        const result = [];
-        
-        list.forEach((item) => {
-          const obj = {
-            name: item[0],
-            ledigajobb: item[1][1][0],
-            linkedin: item[2][1][0]
-          };
-          result.push(obj);
-        });
-        
-        return result;
+      function listToDict(list) {
+        const dict = [];
+        for (let i = 0; i < list.length; i++) {
+          const row = list[i];
+          const entry = {name: row[0]};
+          for (let j = 1; j < row.length; j++) {
+            const category = row[j][0];
+            for (let k = 1; k < row[j].length; k++) {
+              const [subcat, value] = row[j][k];
+              const key = `${category}-${subcat}`;
+              entry[key] = value;
+            }
+          }
+          dict.push(entry);
+        }
+        return dict;
       }
-      
     const handleClick = () => {
         const srcs = []
         if (activeList[0]){
-            srcs.push('linkedin')
+            srcs.push('Linkedin')
         }
         if (activeList[1]){
             srcs.push('platsbanken')   
@@ -154,10 +159,10 @@ export default function Tabletest() {
         queryTbs.push(srcs)
         queryTbs.push(county)
         queryTbs.push(joblist)
-        queryTbs.push('null')
+        queryTbs.push('employment_type')
         console.log(queryTbs)
         axios.post('http://localhost:8888/why',{job:queryTbs})
-            .then(response => setResult(response.data.number))
+            .then(response => setResult(listToDict(response.data.number)))
             .catch(error => console.log(error));
             console.log((result));
     };
@@ -218,22 +223,88 @@ export default function Tabletest() {
       };
 
 
+    //   --------------- Handle 'Gray out' functionlity:
+    //insert all default values for buttons:
+    const defaultValue = {
+        employment_type: true,
+        seniority: true,
+        years_of_experience: true,
+        duration: true,
+        prerequirements: true,
+        drivers_license: true,
+        active: false
+    };
+
+
+    //insert all sources. Format 'sourcename': defaultValue
+    const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue,  ledigajobb:defaultValue});
+
+    // Handles any changes to the source buttons
+    const handleSource = (event) => {
+        const name = event.target.name;
+        // Due to the form only returning strings we need to parse it into correct format
+        const value = splitKey(event.target.value);
+        // Updates the values 
+        setInputs(inputs => (
+            {
+                ...inputs,
+                [name]: (event.target.checked ?
+                    handleKeys(value) : defaultValue)
+            }
+
+        ));
+        console.log(inputs);
+    }
+
+    // Parses the input paramater into correct format
+    const splitKey = (s) => {
+        const returnKeyValue = {};
+        var x = s.replace(/[{}"']+/g, '').split(',');
+        for (var i = 0; i < x.length; i++) {
+            var split = x[i].split(':');
+            returnKeyValue[split[0].trim()] = (split[1].trim() === 'true');
+        }
+
+        return returnKeyValue;
+    }
+
+    // Creates a key-value list filled with all changed and unchanged values
+    const handleKeys = (value) => {
+        const template = { ...defaultValue };
+        for (let item of Object.keys(value)) {
+            template[item] = value[item];
+        }
+        template.active = true;
+        return template;
+    }
+
+    const getPropertyName = (obj, expression) => {
+        var res = {};
+        Object.keys(obj).map(k => { res[k] = () => k; });
+        return expression(res)();
+    }
+
+    // --------
+
 
 
 
     return (
         <div className='fortableandlist'>
             
-        
+        {/* <ResponsiveContainer > */}
         <BarChart width={1000} height={600} data={result}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" height={150}  interval={0} angle={-45} textAnchor="end"/>
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="ledigajobb" fill="#8884d8" />
-        <Bar dataKey="linkedin"  fill="#924E7D" />
+        <Bar dataKey="Linkedin-deltid" stackId="a"  fill="#82ca9d" />
+        <Bar dataKey="Linkedin-heltid" stackId="a"  fill="#308446" />
+        <Bar dataKey="ledigajobb-deltid" stackId="b"  fill="#ffc658" />
+        <Bar dataKey="ledigajobb-heltid" stackId="b"  fill="#E55137" />
         </BarChart>
+        {/* </ResponsiveContainer> */}
         
         <div className='forlist'>  
             <div >
@@ -246,16 +317,30 @@ export default function Tabletest() {
                     onChange={handleCheckboxliChange}
                     // inputProps={{ 'aria-label': 'controlled' }}
                     color= 'default'
+                    name="linkedin"
+                    value={JSON.stringify({
+                        employment_type: false
+                    })}
                     />} label="LinkedIn" />
                     <FormControlLabel control={<Checkbox
                     checked={platsbankenCB}
                     onChange={handleCheckboxpbChange}
                     color='default'
+                    name="platsbanken"
+                    value={JSON.stringify({
+                        seniority: false,
+                        drivers_license: false
+                    })}
                     /> } label="Platsbanken" />
                     <FormControlLabel control={<Checkbox
                     checked={ledigaCB}
                     onChange={handleCheckboxljChange}
                     color='default'
+                    name="ledigajobb"
+                    value={JSON.stringify({
+                        prerequirements: false,
+                        employment_type: false
+                    })}
                     /> } label="Lediga jobb" />
                 </FormGroup>
                 </FormControl>
@@ -315,26 +400,32 @@ export default function Tabletest() {
                     <div className="radio">
                         {/* Div containing 3 horizontal radio buttons */}
                         <RadioGroup aria-label="position" name="position" defaultValue="top">
-                            <FormControl component="fieldset">
+                            <FormControl component="fieldset" >
 
                                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option1" control={<Radio size="small" />} label="Employment type" />
+                                        <FormControlLabel value="option1" control={<Radio size="small" />} label="Employment type" 
+                                        disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option2" control={<Radio size="small" />} label="Duration" />
+                                        <FormControlLabel value="option2" control={<Radio size="small" />} label="Duration"
+                                        disabled={inputs.platsbanken.duration && inputs.linkedin.duration && inputs.ledigajobb.duration ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option3" control={<Radio size="small" />} label="Seniority" />
+                                        <FormControlLabel value="option3" control={<Radio size="small" />} label="Seniority"
+                                        disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option4" control={<Radio size="small" />} label="Prerequirements" />
+                                        <FormControlLabel value="option4" control={<Radio size="small" />} label="Prerequirements"
+                                        disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option5" control={<Radio size="small" />} label="Years of experience" />
+                                        <FormControlLabel value="option5" control={<Radio size="small" />} label="Years of experience"
+                                        disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true}/>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option6" control={<Radio size="small" />} label="Driver's license" />
+                                        <FormControlLabel value="option6" control={<Radio size="small" />} label="Driver's license"
+                                        disabled={inputs.platsbanken.drivers_license && inputs.linkedin.drivers_license && inputs.ledigajobb.drivers_license ? false : true}/>
                                     </Grid>
                                 </Grid>
                             </FormControl>
