@@ -30,14 +30,13 @@ def run():
     # Retrieves the 10 occupations and their ids
     occupational_ids = get_occupational_ids()
 
-
     all_ads = []
 
     # Go through each occupation list of ids and adds them to a list of ads
     for index, occupation in enumerate(occupational_ids):
         occupation_ads = get_ads(occupation)
-        all_ads.append(extract_data_all_ads(occupation_ads, index))
-
+        all_ads.extend(extract_data_all_ads(occupation_ads, index))
+    
     return all_ads
 
 
