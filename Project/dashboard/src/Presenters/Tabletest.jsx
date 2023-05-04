@@ -48,12 +48,16 @@ export default function Tabletest() {
     ];
 
     const data2 = [
-        { name: 'Läkare', 'Linkedin-None': 159, 'ledigajobb-0': 445, 'ledigajobb-1': 7, 'ledigajobb-2': 157 },
-        { name: 'Lärare', 'Linkedin-None': 186, 'ledigajobb-0': 677, 'ledigajobb-2': 21, 'ledigajobb-3': 62 },
-        { name: 'Operatör', 'Linkedin-None': 62, 'ledigajobb-0': 58, 'ledigajobb-2': 2, 'ledigajobb-3': 2 },
-        { name: 'Projektledare', 'Linkedin-None': 95, 'ledigajobb-0': 500, 'ledigajobb-2': 1, 'ledigajobb-3': 4 },
-        { name: 'Sjuksköterska', 'Linkedin-None': 186, 'ledigajobb-0': 870, 'ledigajobb-1': 8, 'ledigajobb-2': 268 },
-        { name: 'Utvecklare', 'Linkedin-None': 54, 'ledigajobb-0': 324, 'ledigajobb-6': 35 }
+        { name: 'Elektriker' },
+        { name: 'Ingenjör' },
+        { name: 'Logistiker' },
+        { name: 'Läkare' },
+        { name: 'Lärare' },
+        { name: 'Operatör' },
+        { name: 'Projektledare' },
+        { name: 'Sjuksköterska' },
+        { name: 'Tekniker' },
+        { name: 'Utvecklare' }
     ];
 
     // Setting variables and useStates
@@ -254,17 +258,54 @@ export default function Tabletest() {
         console.log(value)
     };
 
+    const colors = {
+        "Linkedin": [
+            "#1abc9c",
+            "#3498db",
+            "#a569bd",
+            "#85c1e9",
+            "#6c3483",
+            "#58d68d"
+        ]
+        ,
+        "platsbanken": [
+            "#6c3483",
+            "#d35400",
+            "#b7950b",
+            "#a04000",
+            "#1e8449",
+            "#2e86c1"
+        ],
+        "ledigajobb": [
+            "#f5b7b1",
+            "#f9e79f",
+            "#76d7c4",
+            "#a2d9ce",
+            "#d0ece7",
+            "#d2b4de"
+        ]
+    }
+
 
     const getBars = (InputColumns) => {
+        console.log(InputColumns)
+        console.log(colors)
         const bars = [];
+
+
+        const count = { Linkedin: 0, ledigajobb: 0, platsbanken: 0 };
+
+
         if (InputColumns != undefined) {
             for (const [source, col] of Object.entries(InputColumns)) {
                 for (const [barName, trueValue] of Object.entries(col)) {
-                    bars.push([barName, source]);
+
+                    bars.push([barName, source, colors[source][count[source]]]);
+                    count[source] = count[source] + 1;
                 }
             }
         }
-        return bars.map((bar) => <Bar dataKey={bar[0]} stackId={bar[1]}  fill="#82ca9d" />);
+        return bars.map((bar) => <Bar dataKey={bar[0]} stackId={bar[1]} fill={bar[2]} />);
     }
 
 
@@ -365,7 +406,10 @@ export default function Tabletest() {
                                 color='default'
                                 name="linkedin"
                                 value={JSON.stringify({
-                                    employment_type: false
+                                    years_of_experience: false,
+                                    duration: false,
+                                    prerequirements: false,
+                                    drivers_license: false
                                 })}
                             />} label="LinkedIn" />
                             <FormControlLabel control={<Checkbox
@@ -374,8 +418,8 @@ export default function Tabletest() {
                                 color='default'
                                 name="platsbanken"
                                 value={JSON.stringify({
-                                    seniority: false,
-                                    drivers_license: false
+                                    drivers_license: false,
+                                    seniority: false
                                 })}
                             />} label="Platsbanken" />
                             <FormControlLabel control={<Checkbox
@@ -384,8 +428,8 @@ export default function Tabletest() {
                                 color='default'
                                 name="ledigajobb"
                                 value={JSON.stringify({
-                                    prerequirements: false,
-                                    employment_type: false
+                                    duration: false,
+                                    drivers_license: false
                                 })}
                             />} label="Lediga jobb" />
                         </FormGroup>
