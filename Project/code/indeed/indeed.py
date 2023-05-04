@@ -2,6 +2,7 @@ from playwright.sync_api import sync_playwright
 from sys import platform
 from countyprof import county_list, profession_list
 from bs4 import BeautifulSoup
+import time
 
 # Path to dashboard folder for running the website
 def get_html_create_path():
@@ -41,9 +42,19 @@ if __name__ == '__main__':
         context = browser.new_context()
         page = context.new_page()
         data = (get_html(page, 'Lärare', 'Stockholms län'))
-        soup = BeautifulSoup(data,'html')
-        employment_type = soup.find_all('div', class_="attribute_snippet")
-        print(len(employment_type))
-        context.close()
-        browser.close()
-    
+        soup = BeautifulSoup(data, features='lxml')
+        job_ads = soup.find_all('div', class_="slider_container css-77eoo7 eu4oa1w0")
+        print(len(job_ads))
+        for i in range(1, 18):
+            if i == 6 or i == 9:
+                continue
+            try:
+                test = page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]').click(timeout=1000)
+                
+                time.sleep(1)
+            except:
+                continue
+        # context.close()
+        # browser.close()
+
+        time.sleep(1000000)
