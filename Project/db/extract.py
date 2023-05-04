@@ -129,7 +129,7 @@ def get_professions_for_county(sources, county, professions, param):
                 AND job_listing.source IN (' + sources_str + ') \
                 AND profession IN (' + professions_str + ')\
                 GROUP BY source, county, profession \
-                ORDER BY county, source'
+                ORDER BY profession, source'
     elif param == "requirement":
         query ='SELECT profession, source, requirement, COUNT(jl.id) FROM job_listing AS jl \
                 INNER JOIN (requirement_relation AS rr \
@@ -138,7 +138,7 @@ def get_professions_for_county(sources, county, professions, param):
                 WHERE job_id IN (SELECT id FROM job WHERE profession IN (' + professions_str  + ') \
                 AND jl.county = "' + county + '" AND jl.source IN (' + sources_str + ') \
                 GROUP BY profession, source, requirement \
-                ORDER BY county, source'
+                ORDER BY profession, source'
     else:
         query ='SELECT profession, source,' + param + ', COUNT(job_listing.id) as "sum" \
                 FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
@@ -147,7 +147,7 @@ def get_professions_for_county(sources, county, professions, param):
                 AND profession IN (' + professions_str + ')\
                 AND ' + param + ' IS NOT "null" \
                 GROUP BY profession, source, job_listing.' + param + ' \
-                ORDER BY county, source'
+                ORDER BY profession, source'
     fetch = list_of_tuples_to_2d_list(send_query(query))
     result = outer_format(fetch)
     return result
@@ -169,7 +169,7 @@ if __name__ == '__main__':
     print()
 
     # Extract
-    print(extract(['Linkedin', 'ledigajobb'], 'Norrbottens län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'employment_type'))
+    print(extract(['Linkedin', 'ledigajobb'], 'Blekinge län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'employment_type'))
     
     # One profession, many counties
     #print(get_counties_for_profession(['platsbanken'], ['Stockholms län', 'Uppsala län'], 'Städare', 'null'))
