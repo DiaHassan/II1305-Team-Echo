@@ -317,16 +317,30 @@ export default function Tabletest() {
                     onChange={handleCheckboxliChange}
                     // inputProps={{ 'aria-label': 'controlled' }}
                     color= 'default'
+                    name="linkedin"
+                    value={JSON.stringify({
+                        employment_type: false
+                    })}
                     />} label="LinkedIn" />
                     <FormControlLabel control={<Checkbox
                     checked={platsbankenCB}
                     onChange={handleCheckboxpbChange}
                     color='default'
+                    name="platsbanken"
+                    value={JSON.stringify({
+                        seniority: false,
+                        drivers_license: false
+                    })}
                     /> } label="Platsbanken" />
                     <FormControlLabel control={<Checkbox
                     checked={ledigaCB}
                     onChange={handleCheckboxljChange}
                     color='default'
+                    name="ledigajobb"
+                    value={JSON.stringify({
+                        prerequirements: false,
+                        employment_type: false
+                    })}
                     /> } label="Lediga jobb" />
                 </FormGroup>
                 </FormControl>
