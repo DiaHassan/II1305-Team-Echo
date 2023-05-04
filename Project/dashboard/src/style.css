@@ -1,449 +1,460 @@
 :root {
-  --font: Font, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
-  --color-white: #fff;
-  --color-off-white: #f4f4f4;
-  --color-green: #039c88;
-  --color-black: #000;
+    --font: Font, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+    --color-white: #fff;
+    --color-off-white: #f4f4f4;
+    --color-green: #039c88;
+    --color-black: #000;
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: var(--font);
+    padding: 0;
+    margin: 0;
+    font-family: var(--font);
 }
 
 * {
-  box-sizing: border-box;
-  font-family: var(--font);
+    box-sizing: border-box;
+    font-family: var(--font);
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
+
 
 /* --------------- */
 
 nav {
-  position: sticky;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 4rem;
-  padding-right: 4rem;
-  color: var(--color-green);
-  font-weight: bold;
-  font-size: 25px;
-  height: 100px;
-  transition: height 0.3s ease-in-out;
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    color: var(--color-green);
+    font-weight: bold;
+    font-size: 25px;
+    height: 100px;
+    transition: height 0.3s ease-in-out;
 }
 
 .small {
-  background-color: var(--color-white);
-  transition: background-color 0.3s ease-in-out;
-  transition: height 0.3s ease-in-out;
-  color: var(--color-green);
-  background-image: linear-gradient(rgba(0, 0, 0, 0), transparent);
-  height: 60px;
+    background-color: var(--color-white);
+    transition: background-color 0.3s ease-in-out;
+    transition: height 0.3s ease-in-out;
+    color: var(--color-green);
+    background-image: linear-gradient(rgba(0, 0, 0, 0), transparent);
+    height: 60px;
 }
 
 a {
-  color: var(--color-green);
-  text-decoration: none;
+    color: var(--color-green);
+    text-decoration: none;
 }
 
 a:hover {
-  color: var(--color-black);
-  text-decoration: none;
+    color: var(--color-black);
+    text-decoration: none;
 }
 
 nav>ul {
-  list-style: none;
-  margin: 0;
+    list-style: none;
+    margin: 0;
 }
 
 nav>ul>li {
-  display: inline-block;
-  margin-left: 1rem;
-  padding: 2rem;
-  transition: padding 0.3s ease-in-out;
-  border-bottom: 5px solid transparent;
+    display: inline-block;
+    margin-left: 1rem;
+    padding: 2rem;
+    transition: padding 0.3s ease-in-out;
+    border-bottom: 5px solid transparent;
 }
 
 nav>ul>li:hover {
-  border-bottom: 5px solid var(--color-black);
-  border-radius: 2px;
+    border-bottom: 5px solid var(--color-black);
+    border-radius: 2px;
 }
 
 .small>ul>li:hover {
-  border-bottom: 5px solid var(--color-black);
-  border-radius: 2px;
+    border-bottom: 5px solid var(--color-black);
+    border-radius: 2px;
 }
 
 nav>ul>li>a {
-  font-size: large;
-  text-decoration: none;
-  color: var(--color-black)
+    font-size: large;
+    text-decoration: none;
+    color: var(--color-black)
 }
 
 .small>ul>li>a {
-  color: var(--color-black)
+    color: var(--color-black)
 }
 
-.small>ul>li{
-  padding-top:1rem;
-  padding-bottom: 0.75rem;
+.small>ul>li {
+    padding-top: 1rem;
+    padding-bottom: 0.75rem;
 }
 
 .burger {
-  display: none;
-  width: 2rem;
-  height: 2rem;
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  cursor: pointer;
-  content: url("menuHamburger.png");
+    display: none;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    cursor: pointer;
+    content: url("menuHamburger.png");
 }
 
 @media screen {
-  @media (max-width:1040px) {
-    nav {
-      flex-direction: row;
-      display: block;
-      height: auto;
-      padding: 2rem;
+    @media (max-width: 1040px) {
+        nav {
+            flex-direction: row;
+            display: block;
+            height: auto;
+            padding: 2rem;
+        }
+        .small {
+            height: auto;
+        }
+        .navHidden {
+            display: none;
+        }
+        nav>ul {
+            transition: display 0.5s ease-in-out;
+        }
+        nav>ul>li {
+            display: block;
+        }
+        .burger {
+            display: block;
+        }
+        .small>.burger {
+            content: url("menuHamburger.png") !important;
+        }
     }
-
-    .small {
-      height: auto;
-    }
-
-    .navHidden {
-      display: none;
-    }
-  
-    nav>ul {
-      transition: display 0.5s ease-in-out;
-    }
-
-    nav>ul>li {
-      display: block;
-    }
-
-    .burger {
-      display: block;
-    }
-
-    .small>.burger {
-      content: url("menuHamburger.png") !important;
-    }
-  }
 }
-
 
 
 /* ------------------ */
+
 .wrapper {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-image: url("sthlm.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-image: url("sthlm.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .front-wrap {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
 .home-front {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: ; */
-  align-items: center;
-  padding-left: 4rem;
-  padding-right: 4rem;
-  margin-top: 5rem;
-  color: var(--color-white);
+    display: flex;
+    flex-direction: row;
+    /* justify-content: ; */
+    align-items: center;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    margin-top: 5rem;
+    color: var(--color-white);
 }
 
 .home-front>img {
-  height: auto;
-  /* margin: 0 4rem; */
-  /* position:absolute; */
+    height: auto;
+    /* margin: 0 4rem; */
+    /* position:absolute; */
 }
 
 .home-front>div {
-  top: 200px;
-  left: 200px;
-  padding: 0 4rem;
-  width: 50rem;
+    top: 200px;
+    left: 200px;
+    padding: 0 4rem;
+    width: 50rem;
 }
 
 .home-front>div>p {
-  font-size: x-large;
-  padding-right: 9rem;
+    font-size: x-large;
+    padding-right: 9rem;
 }
 
 .home-front>div>h1 {
-  padding-right: 10rem;
-  font-size: xx-large;
+    padding-right: 10rem;
+    font-size: xx-large;
 }
 
 .home-content {
-  padding: 2rem 20vw;
-  background-color: var(--color-off-white);
+    padding: 2rem 20vw;
+    background-color: var(--color-off-white);
 }
 
 
 /* nav for home */
-.front-wrap>nav{
-  background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
-}
-.front-wrap>nav>div, .front-wrap>nav>ul>li>a {
-  color: var(--color-white);
+
+.front-wrap>nav {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
 }
 
-.front-wrap>nav>ul>li>a:hover{
-  color: var(--color-green);
-  border-bottom: 5px solid transparent;
-  border-radius: 2px;
+.front-wrap>nav>div,
+.front-wrap>nav>ul>li>a {
+    color: var(--color-white);
 }
 
-.front-wrap>nav>ul>li:hover{
-  border-bottom: 5px solid transparent;
-  border-radius: 2px;
+
+/* Quick fix for making the title on navbar white on default and green on hover while on the home page. */
+
+.front-wrap>nav>div>a {
+    color: var(--color-white);
 }
 
-.front-wrap>.small>div{
-  color: var(--color-green);
+.front-wrap>nav>div>a:hover {
+    color: var(--color-green);
+}
+
+.front-wrap>.small>div>a {
+    color: var(--color-green)
+}
+
+
+/* ---------------------------------------------------------- */
+
+.front-wrap>nav>ul>li>a:hover {
+    color: var(--color-green);
+    border-bottom: 5px solid transparent;
+    border-radius: 2px;
+}
+
+.front-wrap>nav>ul>li:hover {
+    border-bottom: 5px solid transparent;
+    border-radius: 2px;
+}
+
+.front-wrap>.small>div {
+    color: var(--color-green);
 }
 
 .front-wrap>.small>ul>li>a {
-  color: var(--color-green);
+    color: var(--color-green);
 }
 
 .front-wrap>.small>ul>li>a:hover {
-  color: var(--color-black);
+    color: var(--color-black);
 }
 
-.front-wrap>nav>.burger{
-  content: url("menuHamburgerWhite.png");
+.front-wrap>nav>.burger {
+    content: url("menuHamburgerWhite.png");
 }
 
 @media screen {
-  @media(max-width:1100px) {
-    .home-front {
-      display: block;
-      text-align: center;
+    @media(max-width: 1100px) {
+        .home-front {
+            display: block;
+            text-align: center;
+        }
+        .home-front>div>p {
+            padding-right: 0;
+        }
+        .home-front>div>h1 {
+            padding-right: 0;
+        }
+        .home-front>div {
+            padding: 0;
+            width: auto;
+        }
     }
-
-    .home-front>div>p {
-      padding-right: 0;
-    }
-
-    .home-front>div>h1 {
-      padding-right: 0;
-    }
-
-    .home-front>div {
-      padding: 0;
-      width: auto;
-    }
-
-  }
 }
 
+
 /* ------------------ */
+
 .search {
-  position: relative;
-  display: flex;
-  min-width: 200px;
+    position: relative;
+    display: flex;
+    min-width: 200px;
 }
 
 .search input {
-  border: 2px solid lightgray;
-  border-radius: 5px;
-  height: 2rem;
-  width: 100%;
-  padding: 0.5rem 2rem 0.5rem 3rem;
-  outline: 0;
-  background-color: var(--color-white);
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    height: 2rem;
+    width: 100%;
+    padding: 0.5rem 2rem 0.5rem 3rem;
+    outline: 0;
+    background-color: var(--color-white);
 }
 
 .search button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: auto;
-  height: 100%;
-  background-color: var(--color-off-white);
-  font-weight: bold;
-  border: 2px solid lightgray;
-  border-left: 2px solid var(--color-black);
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    height: 100%;
+    background-color: var(--color-off-white);
+    font-weight: bold;
+    border: 2px solid lightgray;
+    border-left: 2px solid var(--color-black);
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
 }
+
 
 /* ------------------ */
 
 footer {
-  bottom: 0;
-  left: 0;
-  position: relative;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  width: 100%;
-  background-color: var(--color-green);
-  color: var(--color-white);
+    bottom: 0;
+    left: 0;
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 100%;
+    background-color: var(--color-green);
+    color: var(--color-white);
 }
 
 footer>div {
-  margin: 1rem;
+    margin: 1rem;
 }
 
 footer ul {
-  list-style: none;
-  padding-inline-start: 0;
+    list-style: none;
+    padding-inline-start: 0;
 }
 
 footer li {
-  padding-bottom: 1rem;
-  align-self: left;
-  margin: 0;
+    padding-bottom: 1rem;
+    align-self: left;
+    margin: 0;
 }
 
 footer a {
-  text-decoration: none;
-  color: var(--color-black);
-  font-weight: bold;
-  border-bottom: 2px solid transparent;
+    text-decoration: none;
+    color: var(--color-black);
+    font-weight: bold;
+    border-bottom: 2px solid transparent;
 }
 
 footer a:hover {
-  color: var(--color-white);
+    color: var(--color-white);
 }
 
 .vertical-line {
-  border: 2px solid var(--color-white);
-  border-radius: 25px;
-  height: 12rem;
+    border: 2px solid var(--color-white);
+    border-radius: 25px;
+    height: 12rem;
 }
 
 .footer-contact {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 @media screen {
-  @media(max-width:800px) {
-    footer {
-      display: block;
-      align-self: center;
-      text-align: center;
-      padding-left: 15vw;
-      padding-right: 15vw;
-      padding-top: 2rem;
+    @media(max-width: 800px) {
+        footer {
+            display: block;
+            align-self: center;
+            text-align: center;
+            padding-left: 15vw;
+            padding-right: 15vw;
+            padding-top: 2rem;
+        }
+        footer>div {
+            padding-bottom: 1rem;
+        }
+        footer>div>ul {
+            margin-bottom: 0;
+        }
+        footer>.vertical-line {
+            display: none;
+        }
     }
-
-    footer > div{
-      padding-bottom: 1rem;
-    }
-
-    footer > div > ul{
-      margin-bottom:0;
-    }
-
-    footer>.vertical-line {
-      display:none;
-    }
-  }
 }
-
 
 
 /* ------------------- */
 
-.about-wrapper{
-  min-height:90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding:2rem;
+.about-wrapper {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
 }
 
-.about-wrapper div{
-  max-width:60vw;
-  text-align: center;
+.about-wrapper div {
+    max-width: 60vw;
+    text-align: center;
 }
 
-.about-wrapper hr{
-  width: 20rem;
-  border-width: 3px;
+.about-wrapper hr {
+    width: 20rem;
+    border-width: 3px;
 }
-
 
 
 /* ------------------- */
+
 .fortable {
-  display: flex;
-  flex-direction: row;
-  /* justify-content: ; */
-  align-items: center;
-  padding-left: 4rem;
-  padding-right: 4rem;
-  margin-top: 5rem;
-  margin-bottom: 10rem;
-  color: var(--color-white);
-}
-.fortableandlist{
-  display: flex;
-  align-content: space-between;
-  /* flex-direction: row; */
-  align-items: center;
-}
-.forlist{
-  float: left;
-}
-.forlistlist > ul{
-  width: 19rem;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: ; */
+    align-items: center;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    margin-top: 5rem;
+    margin-bottom: 10rem;
+    color: var(--color-white);
 }
 
-.forlistbutton{
-  width: 19rem;
+.fortableandlist {
+    display: flex;
+    align-content: space-between;
+    /* flex-direction: row; */
+    align-items: center;
 }
 
+.forlist {
+    float: left;
+}
 
+.forlistlist>ul {
+    width: 19rem;
+}
+
+.forlistbutton {
+    width: 19rem;
+}
 
 
 /* This needs to be reviewed later */
 
-.forlist{
-  color:black;
-  display:flex;
-  gap: 0.5rem;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
+.forlist {
+    color: black;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
 }
 
-.forlistbutton{
-  padding:0.5rem;
-  font-size: 16px;
-  
+.forlistbutton {
+    padding: 0.5rem;
+    font-size: 16px;
 }
 
-.select_options{
-  color:black;
-  font-size: 16px;
-  padding: 0.5rem;
+.select_options {
+    color: black;
+    font-size: 16px;
+    padding: 0.5rem;
 }
 
-.color-black{
-  color: #000;
+.color-black {
+    color: #000;
 }
