@@ -61,12 +61,12 @@ export default function Tabletest() {
     const [job, setJob] = useState('')
     const [showLegend, setShowLegend] = useState(true); //test, du kan ta bort 
 
-    const initialJobList = ["Ingenjör", "Utvecklare", "Läkare", "Sjuksköterska", "Lärare", "Operatör", "Tekniker", "Elektriker", "Projektledare", "Logistiker"]
-    const allCounties = ["Västmanlands län", "Västernorrlands län", "Västerbottens län", "Värmlands län", "Uppsala län", "Södermanlands län", "Stockholms län", "Skåne län", "Örebro län", "Norrbottens län", "Kalmar län", "Jönköpings län", "Jämtlands län", "Hallands län", "Gävleborgs län", "Gotlands län", "Dalarnas län", "Blekinge län", "Västra Götalands län", "Östergötlands län", "Kronobergs län"]
+    const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
+    const allCounties = ["Alla valda", "Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
 
     const [activeList, setActivelist] = useState([false, false, false, false, false, false, false, false, false])
     const [joblist, setJobList] = useState(initialJobList)
-    const [county, setCounty] = useState('Västmanlands län')
+    const [county, setCounty] = useState('Alla valda')
     //Checkboxes
     const [linkedinCB, setLinkedinCB] = React.useState(false);
     const [platsbankenCB, setPlatsbankenCB] = React.useState(false);
@@ -479,33 +479,7 @@ export default function Tabletest() {
                         </RadioGroup>
 
                     </div>
-
-
-
-
                 </div>
-
-
-
-                <form onSubmit={handleClick} className='forlistlist'>
-                    <label>
-                        <select value={job} onChange={handleChange} className='select_options'>
-                            <option value="">Choose an option</option>
-                            <option value="Kock">Kock</option>
-                            <option value="Städare">Städare</option>
-                            <option value="Utvecklare">Utvecklare</option>
-                            <option value="Sjuksköterska">Sjuksköterska</option>
-                            <option value="Läkare">Läkare</option>
-                            <option value="Lärare">Lärare</option>
-                            <option value="Operatör">Operatör</option>
-                            <option value="Personlig assistent">Personlig assistent</option>
-                            <option value="Mekaniker">Mekaniker</option>
-                            <option value="Butikssäljare">Butikssäljare</option>
-                            <option value="Civilingenjör">Civilingenjör</option>
-                            <option value="Projektledare">Projektledare</option>
-                        </select>
-                    </label>
-                </form>
                 <button onClick={handleClick} className='forlistbutton'>Search</button>
             </div>
         </div>
