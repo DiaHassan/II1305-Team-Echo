@@ -19,6 +19,12 @@ def find_db_path(platform):
 
 database_name = find_db_path(platform)
 
+# Webscrape all available websites
+def run():
+    run_platsbanken()
+    run_linkedin()
+    run_ledigajobb()
+
 # Platsbanken
 def run_platsbanken():
     platsbanken_list = platsbanken.run()
@@ -39,6 +45,7 @@ def run_linkedin():
 
 # Main
 if __name__ == '__main__':
+    #run()
     run_platsbanken()
     #run_ledigajobb()
-    # run_linkedin()
+    #run_linkedin()

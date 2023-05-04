@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 // import {} from '@material-ui/core'; //test
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -44,21 +44,33 @@ export default function Tabletest() {
         { name: 'Västmanlands län', value: 0 },
         { name: 'Västra Götalands län', value: 0 },
         { name: 'Örebro län', value: 0 },
-        { name: 'Östergötlands län', value: 0 }
+        { name: 'Östergötlands län', value: 0 },
+    ];
+
+    const data2 = [
+        { name: 'Elektriker' },
+        { name: 'Ingenjör' },
+        { name: 'Logistiker' },
+        { name: 'Läkare' },
+        { name: 'Lärare' },
+        { name: 'Operatör' },
+        { name: 'Projektledare' },
+        { name: 'Sjuksköterska' },
+        { name: 'Tekniker' },
+        { name: 'Utvecklare' }
     ];
 
     // Setting variables and useStates
-    const [result, setResult] = useState(data);
+    const [result, setResult] = useState(data2);
     const [job, setJob] = useState('')
     const [showLegend, setShowLegend] = useState(true); //test, du kan ta bort 
 
-
-    const initialJobList = ["Ingenjör", "Utvecklare", "Läkare", "Sjuksköterska", "Lärare", "Operatör", "Tekniker", "Elektriker", "Projektledare", "Logistiker"]
-    const allCounties = ["Västmanlands län", "Västernorrlands län", "Västerbottens län", "Värmlands län", "Uppsala län", "Södermanlands län", "Stockholms län", "Skåne län", "Örebro län", "Norrbottens län", "Kalmar län", "Jönköpings län", "Jämtlands län", "Hallands län", "Gävleborgs län", "Gotlands län", "Dalarnas län", "Blekinge län", "Västra Götalands län", "Östergötlands län", "Kronobergs län"]
+    const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
+    const allCounties = ["Alla valda", "Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
 
     const [activeList, setActivelist] = useState([false, false, false, false, false, false, false, false, false])
     const [joblist, setJobList] = useState(initialJobList)
-    const [county, setCounty] = useState('Västmanlands län')
+    const [county, setCounty] = useState('Alla valda')
     //Checkboxes
     const [linkedinCB, setLinkedinCB] = React.useState(false);
     const [platsbankenCB, setPlatsbankenCB] = React.useState(false);
@@ -70,6 +82,8 @@ export default function Tabletest() {
     const [option4, setOption4] = React.useState(false);
     const [option5, setOption5] = React.useState(false);
     const [option6, setOption6] = React.useState(false);
+
+    const [optionRadio, setOptionRadio] = React.useState(null);
 
     // Handlers both onClick and onChange
     const handleChange = (event) => {
@@ -108,6 +122,10 @@ export default function Tabletest() {
         setJobList(event.target.value);
     };
 
+    const handleParams = (event) => {
+        setOptionRadio(event.target.value);
+    }
+
 
     const myListElements = allCounties.map((item) => {
         return <MenuItem value={item} key={item}>{item}</MenuItem>;
@@ -127,25 +145,45 @@ export default function Tabletest() {
         return newList;
     }
 
-    function transformList(list) {
-        const result = [];
+    function listToDict(list) {
+        const dict = [];
+        for (let i = 0; i < list.length; i++) {
+            const row = list[i];
+            const entry = { name: row[0] };
+            for (let j = 1; j < row.length; j++) {
+                const category = row[j][0];
+                for (let k = 1; k < row[j].length; k++) {
+                    const [subcat, value] = row[j][k];
+                    const key = `${category}-${subcat}`;
+                    entry[key] = value;
+                }
+            }
+            dict.push(entry);
+        }
+        return dict;
+    }
 
-        list.forEach((item) => {
-            const obj = {
-                name: item[0],
-                ledigajobb: item[1][1][0],
-                linkedin: item[2][1][0]
-            };
-            result.push(obj);
-        });
+    function dictToColumns(dict) {
+        const columns = {};
+        for (let i = 0; i < dict.length; i++) {
+            for (const [key, value] of Object.entries(dict[i])) {
+                const parts = key.split("-");
+                if (parts[0] != "name") {
+                    if (!(parts[0] in columns)) {
+                        columns[parts[0]] = {};
+                    }
+                    columns[parts[0]][key] = true;
+                }
 
-        return result;
+            }
+        }
+        return columns;
     }
 
     const handleClick = () => {
         const srcs = []
         if (activeList[0]) {
-            srcs.push('linkedin')
+            srcs.push('Linkedin')
         }
         if (activeList[1]) {
             srcs.push('platsbanken')
@@ -157,10 +195,10 @@ export default function Tabletest() {
         queryTbs.push(srcs)
         queryTbs.push(county)
         queryTbs.push(joblist)
-        queryTbs.push('null')
+        queryTbs.push(optionRadio)
         console.log(queryTbs)
         axios.post('http://localhost:8888/why', { job: queryTbs })
-            .then(response => setResult(response.data.number))
+            .then(response => setResult(listToDict(response.data.number)))
             .catch(error => console.log(error));
         console.log((result));
     };
@@ -175,6 +213,7 @@ export default function Tabletest() {
             };
             result.push(obj);
         });
+
         return result;
     }
 
@@ -219,6 +258,56 @@ export default function Tabletest() {
         console.log(value)
     };
 
+    const colors = {
+        "Linkedin": [
+            "#1abc9c",
+            "#3498db",
+            "#a569bd",
+            "#85c1e9",
+            "#6c3483",
+            "#58d68d"
+        ]
+        ,
+        "platsbanken": [
+            "#6c3483",
+            "#d35400",
+            "#b7950b",
+            "#a04000",
+            "#1e8449",
+            "#2e86c1"
+        ],
+        "ledigajobb": [
+            "#f5b7b1",
+            "#f9e79f",
+            "#76d7c4",
+            "#a2d9ce",
+            "#d0ece7",
+            "#d2b4de"
+        ]
+    }
+
+
+    const getBars = (InputColumns) => {
+        console.log(InputColumns)
+        console.log(colors)
+        const bars = [];
+
+
+        const count = { Linkedin: 0, ledigajobb: 0, platsbanken: 0 };
+
+
+        if (InputColumns != undefined) {
+            for (const [source, col] of Object.entries(InputColumns)) {
+                for (const [barName, trueValue] of Object.entries(col)) {
+
+                    bars.push([barName, source, colors[source][count[source]]]);
+                    count[source] = count[source] + 1;
+                }
+            }
+        }
+        return bars.map((bar) => <Bar dataKey={bar[0]} stackId={bar[1]} fill={bar[2]} />);
+    }
+
 
     //   --------------- Handle 'Gray out' functionlity:
     //insert all default values for buttons:
@@ -232,8 +321,9 @@ export default function Tabletest() {
         active: false
     };
 
+
     //insert all sources. Format 'sourcename': defaultValue
-    const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue,  ledigajobb:defaultValue});
+    const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue, ledigajobb: defaultValue });
 
     // Handles any changes to the source buttons
     const handleSource = (event) => {
@@ -288,16 +378,20 @@ export default function Tabletest() {
     return (
         <div className='fortableandlist'>
 
-
+            {/* <ResponsiveContainer > */}
             <BarChart width={1000} height={600} data={result}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="ledigajobb" fill="#8884d8" />
-                <Bar dataKey="linkedin" fill="#924E7D" />
+                {getBars(dictToColumns(result))}
+                {/* <Bar dataKey="Linkedin-deltid" stackId="a" fill="#82ca9d" />
+                <Bar dataKey="Linkedin-heltid" stackId="a" fill="#308446" />
+                <Bar dataKey="ledigajobb-deltid" stackId="b" fill="#ffc658" />
+                <Bar dataKey="ledigajobb-heltid" stackId="b" fill="#E55137" /> */}
             </BarChart>
+            {/* </ResponsiveContainer> */}
 
             <div className='forlist'>
                 <div >
@@ -310,17 +404,21 @@ export default function Tabletest() {
                                 onChange={handleCheckboxliChange}
                                 // inputProps={{ 'aria-label': 'controlled' }}
                                 color='default'
-                                name='linkedin'
+                                name="linkedin"
                                 value={JSON.stringify({
-                                    employment_type: false
+                                    years_of_experience: false,
+                                    duration: false,
+                                    prerequirements: false,
+                                    drivers_license: false
                                 })}
                             />} label="LinkedIn" />
                             <FormControlLabel control={<Checkbox
                                 checked={platsbankenCB}
                                 onChange={handleCheckboxpbChange}
                                 color='default'
-                                name='platsbanken'
+                                name="platsbanken"
                                 value={JSON.stringify({
+                                    drivers_license: false,
                                     seniority: false
                                 })}
                             />} label="Platsbanken" />
@@ -328,9 +426,10 @@ export default function Tabletest() {
                                 checked={ledigaCB}
                                 onChange={handleCheckboxljChange}
                                 color='default'
-                                name='ledigajobb'
+                                name="ledigajobb"
                                 value={JSON.stringify({
-                                    prerequirements: false
+                                    duration: false,
+                                    drivers_license: false
                                 })}
                             />} label="Lediga jobb" />
                         </FormGroup>
@@ -356,7 +455,7 @@ export default function Tabletest() {
                             </FormControl>
                         </div>
                         <div>
-                            <FormControl className="">
+                            <FormControl className="" sx={{ m: 1, maxWidth: 300 }}>
                                 <InputLabel id="mutiple-select-label">Multiple Select</InputLabel>
                                 <Select
                                     labelId="mutiple-select-label"
@@ -391,32 +490,32 @@ export default function Tabletest() {
                     <div className="radio">
                         {/* Div containing 3 horizontal radio buttons */}
                         <RadioGroup aria-label="position" name="position" defaultValue="top">
-                            <FormControl component="fieldset">
+                            <FormControl component="fieldset" >
 
                                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option1" control={<Radio size="small" />} label="Employment type" 
-                                        disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true} />
+                                        <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Employment type" onChange={handleParams}
+                                            disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option2" control={<Radio size="small" />} label="Duration"
-                                        disabled={inputs.platsbanken.duration && inputs.linkedin.duration && inputs.ledigajobb.duration ? false : true} />
+                                        <FormControlLabel value="duration" control={<Radio size="small" />} label="Duration" onChange={handleParams}
+                                            disabled={inputs.platsbanken.duration && inputs.linkedin.duration && inputs.ledigajobb.duration ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option3" control={<Radio size="small" />} label="Seniority"
-                                        disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true} />
+                                        <FormControlLabel value="seniority" control={<Radio size="small" />} label="Seniority" onChange={handleParams}
+                                            disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option4" control={<Radio size="small" />} label="Prerequirements"
-                                        disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true} />
+                                        <FormControlLabel value="requirement" control={<Radio size="small" />} label="Prerequirements" onChange={handleParams}
+                                            disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option5" control={<Radio size="small" />} label="Years of experience"
-                                        disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true} />
+                                        <FormControlLabel value="years_of_experience" control={<Radio size="small" />} label="Years of experience" onChange={handleParams}
+                                            disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="option6" control={<Radio size="small" />} label="Driver's license"
-                                        disabled={inputs.platsbanken.drivers_license && inputs.linkedin.drivers_license && inputs.ledigajobb.drivers_license ? false : true} />
+                                        <FormControlLabel value="null" control={<Radio size="small" />} label="Driver's license" onChange={handleParams}
+                                            disabled={inputs.platsbanken.drivers_license && inputs.linkedin.drivers_license && inputs.ledigajobb.drivers_license ? false : true} />
                                     </Grid>
                                 </Grid>
                             </FormControl>
@@ -424,33 +523,7 @@ export default function Tabletest() {
                         </RadioGroup>
 
                     </div>
-
-
-
-
                 </div>
-
-
-
-                <form onSubmit={handleClick} className='forlistlist'>
-                    <label>
-                        <select value={job} onChange={handleChange} className='select_options'>
-                            <option value="">Choose an option</option>
-                            <option value="Kock">Kock</option>
-                            <option value="Städare">Städare</option>
-                            <option value="Utvecklare">Utvecklare</option>
-                            <option value="Sjuksköterska">Sjuksköterska</option>
-                            <option value="Läkare">Läkare</option>
-                            <option value="Lärare">Lärare</option>
-                            <option value="Operatör">Operatör</option>
-                            <option value="Personlig assistent">Personlig assistent</option>
-                            <option value="Mekaniker">Mekaniker</option>
-                            <option value="Butikssäljare">Butikssäljare</option>
-                            <option value="Civilingenjör">Civilingenjör</option>
-                            <option value="Projektledare">Projektledare</option>
-                        </select>
-                    </label>
-                </form>
                 <button onClick={handleClick} className='forlistbutton'>Search</button>
             </div>
         </div>
