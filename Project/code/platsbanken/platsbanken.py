@@ -42,11 +42,8 @@ def run():
     for index, occupation in enumerate(occupation_ids):
         occupation_ads = get_ads(occupation)
         all_ads.extend(extract_data_all_ads(occupation_ads, index))
-    
-    # Returns a list of ads where none of the ads are void
-    valid_ads = remove_void_ads(all_ads)
 
-    return valid_ads
+    return all_ads
 
 
 # Retrieves all ads (with given ids) in full json format
@@ -142,13 +139,6 @@ def extract_data_ad(ad, index):
             date_extracted,
             ad_id
             ]
-
-
-def remove_void_ads(ads):
-    # Remove ads with void employment_type, publication_date, and years_of_experience
-    filtered_ads = [ad for ad in ads if ad[1] and ad[3] and ad[5]]
-
-    return filtered_ads
 
 
 # Main script
