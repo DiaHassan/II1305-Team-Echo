@@ -455,7 +455,7 @@ export default function Tabletest() {
                             </FormControl>
                         </div>
                         <div>
-                            <FormControl className="">
+                            <FormControl className="" sx={{ m: 1, maxWidth: 300 }}>
                                 <InputLabel id="mutiple-select-label">Multiple Select</InputLabel>
                                 <Select
                                     labelId="mutiple-select-label"
