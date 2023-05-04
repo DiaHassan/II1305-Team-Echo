@@ -46,6 +46,8 @@ nav {
     color: var(--color-green);
     background-image: linear-gradient(rgba(0, 0, 0, 0), transparent);
     height: 60px;
+    /* This is what makes the navbar be on top of everything else, 500 is overkill */
+    z-index: 500;
 }
 
 a {
@@ -214,6 +216,10 @@ nav>ul>li>a {
 
 .front-wrap>nav>div>a:hover {
     color: var(--color-green);
+}
+
+.front-wrap>.small>div>a:hover {
+    color: var(--color-black);
 }
 
 .front-wrap>.small>div>a {
