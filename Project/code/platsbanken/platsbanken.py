@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from reqfinder import find_req, find_seniority
-from get_occupation_id import get_occupational_ids
+from .get_occupation_id import get_occupational_ids
 
 
 # URL and format for settings
@@ -28,7 +28,10 @@ logging.basicConfig(stream=sys.stdout, level=LOG_LEVEL, format=LOG_FORMAT, datef
 # Main function that retrieves all ads and outputs their data in a 2d list
 def run():
     # Retrieves the 10 occupations and their ids
+    print("----before occ-----")
     occupational_ids = get_occupational_ids()
+    print("----after occ-----")
+
 
     all_ads = []
 
