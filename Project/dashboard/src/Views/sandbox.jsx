@@ -31,11 +31,12 @@ export default function Sandbox(props) {
     const defaultValue = {
         county: true,
         seniority: true,
-        job: true
+        job: true,
+        active: false
     };
 
     //insert all sources. Format 'sourcename': defaultValue
-    const [inputs, setInputs] = useState({ src1: defaultValue, src2: defaultValue });
+    const [inputs, setInputs] = useState({ plattsbanken: defaultValue, linkedin: defaultValue });
 
     // Handles any changes to the source buttons
     const handleSource = (event) => {
@@ -51,7 +52,7 @@ export default function Sandbox(props) {
             }
 
         ));
-        // console.log(inputs);
+        console.log(inputs);
     }
 
     // Parses the input paramater into correct format
@@ -72,9 +73,15 @@ export default function Sandbox(props) {
         for (let item of Object.keys(value)) {
             template[item] = value[item];
         }
+        template.active = true;
         return template;
     }
 
+    const getPropertyName = (obj, expression) => {
+        var res = {};
+        Object.keys(obj).map(k => { res[k] = () => k; });
+        return expression(res)();
+    }
     const handleSubmit = (event) => {
 
     }
@@ -85,7 +92,7 @@ export default function Sandbox(props) {
                 <label>
                     <input
                         type="checkbox"
-                        name="src1"
+                        name="plattsbanken"
                         value={JSON.stringify({
                             job: false
                         })}
@@ -96,7 +103,7 @@ export default function Sandbox(props) {
                 <label>
                     <input
                         type="checkbox"
-                        name="src2"
+                        name="linkedin"
                         value={JSON.stringify({
                             seniority: false
                         })}
@@ -108,9 +115,13 @@ export default function Sandbox(props) {
             </form>
 
 
-            <p>{inputs.src1.county && inputs.src1.county ? '+' : '-'} county</p>
-            <p>{inputs.src1.seniority && inputs.src2.seniority ? '+' : '-'} Seniority</p>
-            <p>{inputs.src1.job && inputs.src2.job ? '+' : '-'} Job</p>
+            <p>{inputs.plattsbanken.county && inputs.linkedin.county ? '+' : '-'} county</p>
+            <p>{inputs.plattsbanken.seniority && inputs.linkedin.seniority ? '+' : '-'} Seniority</p>
+            <p>{inputs.plattsbanken.job && inputs.linkedin.job ? '+' : '-'} Job</p>
+
+
+            <p>{inputs.plattsbanken.active ? getPropertyName(inputs, o => o.plattsbanken) : ''}</p>
+            <p>{inputs.linkedin.active ? getPropertyName(inputs, o => o.linkedin) : ''}</p>
 
         </>
     )

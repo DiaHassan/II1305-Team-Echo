@@ -6,7 +6,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from reqfinder import find_req, find_seniority
-from get_occupation_id import get_occupational_ids
+from .get_occupation_id import get_occupational_ids
 
 
 # URL and format for settings
@@ -35,8 +35,8 @@ def run():
     # Go through each occupation list of ids and adds them to a list of ads
     for index, occupation in enumerate(occupational_ids):
         occupation_ads = get_ads(occupation)
-        all_ads.append(extract_data_all_ads(occupation_ads, index))
-
+        all_ads.extend(extract_data_all_ads(occupation_ads, index))
+    
     return all_ads
 
 

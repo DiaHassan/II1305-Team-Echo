@@ -1,4 +1,3 @@
-import codecs      #swedish alphabet
 import requests
 import json
 

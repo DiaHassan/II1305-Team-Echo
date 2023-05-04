@@ -74,7 +74,10 @@ def get_date(response):
 
 # Returns prerequiered
 def get_prerequiered(response):
-    return find_req(response.find('div', class_='mb-1').text)
+    try:
+        return find_req(response.find('div', class_='mb-1').text)
+    except: 
+        return 'None'
   
 
 
