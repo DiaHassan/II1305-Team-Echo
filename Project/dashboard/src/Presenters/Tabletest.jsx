@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,ResponsiveContainer } from 'recharts';
 // import {} from '@material-ui/core'; //test
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -124,25 +124,27 @@ export default function Tabletest() {
         return newList;
       }
 
-      function transformList(list) {
-        const result = [];
-        
-        list.forEach((item) => {
-          const obj = {
-            name: item[0],
-            ledigajobb: item[1][1][0],
-            linkedin: item[2][1][0]
-          };
-          result.push(obj);
-        });
-        
-        return result;
+      function listToDict(list) {
+        const dict = [];
+        for (let i = 0; i < list.length; i++) {
+          const row = list[i];
+          const entry = {name: row[0]};
+          for (let j = 1; j < row.length; j++) {
+            const category = row[j][0];
+            for (let k = 1; k < row[j].length; k++) {
+              const [subcat, value] = row[j][k];
+              const key = `${category}-${subcat}`;
+              entry[key] = value;
+            }
+          }
+          dict.push(entry);
+        }
+        return dict;
       }
-      
     const handleClick = () => {
         const srcs = []
         if (activeList[0]){
-            srcs.push('linkedin')
+            srcs.push('Linkedin')
         }
         if (activeList[1]){
             srcs.push('platsbanken')   
@@ -154,10 +156,10 @@ export default function Tabletest() {
         queryTbs.push(srcs)
         queryTbs.push(county)
         queryTbs.push(joblist)
-        queryTbs.push('null')
+        queryTbs.push('employment_type')
         console.log(queryTbs)
         axios.post('http://localhost:8888/why',{job:queryTbs})
-            .then(response => setResult(response.data.number))
+            .then(response => setResult(listToDict(response.data.number)))
             .catch(error => console.log(error));
             console.log((result));
     };
@@ -224,16 +226,19 @@ export default function Tabletest() {
     return (
         <div className='fortableandlist'>
             
-        
+        {/* <ResponsiveContainer > */}
         <BarChart width={1000} height={600} data={result}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" height={150}  interval={0} angle={-45} textAnchor="end"/>
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="ledigajobb" fill="#8884d8" />
-        <Bar dataKey="linkedin"  fill="#924E7D" />
+        <Bar dataKey="linkedin-deltid" stackId="a"  fill="#82ca9d" />
+        <Bar dataKey="linkedin-heltid" stackId="a"  fill="#ffc658" />
+        <Bar dataKey="ledigajobb-deltid" stackId="b"  fill="#ffc658" />
+        <Bar dataKey="ledigajobb-heltid" stackId="b"  fill="#8284d8" />
         </BarChart>
+        {/* </ResponsiveContainer> */}
         
         <div className='forlist'>  
             <div >
