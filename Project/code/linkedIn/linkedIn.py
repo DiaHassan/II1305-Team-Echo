@@ -1,6 +1,7 @@
 # All code explicit for webscraping LinkedIn.com
 import time
 import requests
+import traceback
 import re
 import os
 import sys
@@ -8,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__))) # Get the directory 
 from reqfinder import find_req # Program to look through bodytext
 from datetime import date, timedelta
 from bs4 import BeautifulSoup, SoupStrainer
+
 
 
 # Duplicates counter (REMOVE LATER)
@@ -122,7 +124,7 @@ def linkedin_scraper(job, municipality, page_number):
 #----------------------------Saves parameters-------------------------------------------------
             
             employment_type, ad_publication_date, county, seniority = format(employment_type, ad_date, location, seniority)
-            temp.append(["Linkedin", employment_type, None, ad_publication_date, job, county, education, None, seniority, date.today().strftime('%Y-%m-%d'), key])
+            temp.append(["linkedin", employment_type, None, ad_publication_date, job, county, education, None, seniority, date.today().strftime('%Y-%m-%d'), key])
 
     #Remove duplicates and the key element 
     list = []
@@ -149,7 +151,7 @@ def run():
     db = []
 
     # Jobs
-    jobs = ["Lärare", "Läkare", "Utvecklare", "Sjuksköterska", "Tekniker", "Operatör", "Elektriker", "Logistiker", "Ingenjör", "Projektledare"]
+    jobs = ['lärare']#, 'läkare', 'utvecklare', 'sjuksköterska', 'tekniker', 'operatör', 'elektriker', 'logistiker', 'ingenjör', 'projektledare']
 
     # Geo ids
     geo_ids = [100564495] 
@@ -161,34 +163,60 @@ def run():
     #         if match:
     #             geo_ids.append(int(match.group(1)))
 
-    for job in jobs:
-        for muni in geo_ids:
-            data = linkedin_scraper(job, muni, 0)
-            db = data + db
-        # Reset seen unique adds when changing career
-        global seen
-        seen = {}
+    #Error handeling
+    try:
+        for job in jobs:
+            for muni in geo_ids:
+                data = linkedin_scraper(job, muni, 0)
+                db = data + db
+            # Reset seen unique adds when changing career
+            global seen
+            seen = {}
 
-    print("Time it took: " + str(time.time()-start_time))
-    print("Success")
-    print("Duplicates: " + str(duplicates))
-    print("Removed jobs: " + str(remove_counter))
-    print("Length of list: " + str(len(db)))
-    return db
+        print("\nSUCCESS")
+        print("Duplicates: " + str(duplicates))
+        print("Removed jobs: " + str(remove_counter))
+    except BaseException as ex:
+        # Get current system exception
+        ex_type, ex_value, ex_traceback = sys.exc_info()
+
+        # Extract unformatter stack traces as tuples
+        trace_back = traceback.extract_tb(ex_traceback)
+
+        # Format stacktrace
+        stack_trace = list()
+
+        for trace in trace_back:
+            stack_trace.append("File : %s , Line : %d, Func.Name : %s, Message : %s" % (trace[0], trace[1], trace[2], trace[3]))
+
+        print("\nException type : %s " % ex_type.__name__)
+        print("Exception message : %s" %ex_value)
+        print("Stack trace : %s" %stack_trace)
+        print("\nFAILURE")
+        print("Crashed while searching: " + db[-1][4] + ", " + db[-1][5])
+        # traceback.print_exc()
+    
+    finally:
+        print("Time it took: " + str(time.time()-start_time))
+        print("Length of list: " + str(len(db)))
+
+        for l in db:
+            print(l)
+        return db
 
 
 # Extracts proper format for db
 def format(emp_type, ad_date, location, seniority):
 
-    # Translating employment type
-    if emp_type == 'Full-time': emp_type = 'Heltid'
-    if emp_type == 'Part-time': emp_type = 'Deltid'
-    if emp_type == 'Contract': emp_type = 'Kontrakt'
-    if emp_type == 'Temporary': emp_type = 'Tillfälligt'
-    if emp_type == 'Internship': emp_type = 'Praktikplats'
-    if emp_type == 'Volunteer': emp_type = 'Volontär'
-    if emp_type == 'Other': emp_type = 'Övrigt'
-
+    # Translating employment type and changing it to lowercase
+    if emp_type == 'Full-time': emp_type = 'heltid'
+    elif emp_type == 'Part-time': emp_type = 'deltid'
+    elif emp_type == 'Contract': emp_type = 'kontrakt'
+    elif emp_type == 'Temporary': emp_type = 'tillfälligt'
+    elif emp_type == 'Internship': emp_type = 'praktikplats'
+    elif emp_type == 'Volunteer': emp_type = 'volontär'
+    elif emp_type == 'Other': emp_type = 'övrigt'
+    else: emp_type = 'null'
 
     # Calculating the estimated publication date (unable to be exact)
     ad_date_list = ad_date.split(" ")
@@ -204,31 +232,38 @@ def format(emp_type, ad_date, location, seniority):
     ad_publication_date = str(ad_publication_date)
 
 
-    # Extracting and translating county
+    # Extracting and translating county while changing it to lowercase
     try:
         county = location[location.index(', ')+2:location.index(' County')]
     except:
         county = location[location.index(', ')+2:location.index(', Sweden')]
 
-    if county == 'Gavleborg': county = 'Gävleborg'
-    if county == 'Jamtland': county = 'Jämtland'
-    if county == 'Jonkoping': county = 'Jonköping'
-    if county == 'Orebro': county = 'Örebro'
-    if county == 'Ostergotland': county = 'Östergötland'
-    if county == 'Sodermanland': county = 'Södermanland'
-    if county == 'Varmland': county = 'Värmland'
-    if county == 'Vastmanland': county = 'Västmanland'
-    if county == 'Vastra Gotland': county = 'Västra Götaland'
+    if county == 'Gavleborg': county = 'gävleborg'
+    elif county == 'Jamtland': county = 'jämtland'
+    elif county == 'Jonkoping': county = 'jonköping'
+    elif county == 'Orebro': county = 'örebro'
+    elif county == 'Ostergotland': county = 'östergötland'
+    elif county == 'Sodermanland': county = 'södermanland'
+    elif county == 'Varmland': county = 'värmland'
+    elif county == 'Vastmanland': county = 'västmanland'
+    elif county == 'Vastra Gotland': county = 'västra vötaland'
+    else: county = county.lower()
+
+    if county != 'blekinge' or 'kalmar' or 'skåne' or 'uppsala' or 'örebro':
+        county = county + "s län"
+    else:
+        county = county + " län"
 
 
-    # Translating seniority
-    if seniority == 'Associate': seniority = 'Medarbetare'
-    if seniority == 'Director': seniority = 'Chef'
-    if seniority == 'Entry level': seniority = 'Basnivå'
-    if seniority == 'Executive': seniority = 'Verksamhetschef'
-    if seniority == 'Internship': seniority = 'Praktikplats'
-    if seniority == 'Mid-Senior level': seniority = 'Mellannivå'
-    if seniority == 'Not Applicable': seniority = 'Ej tillämpligt'
+    # Translating seniority and changing it to lowercase
+    if seniority == 'Associate': seniority = 'medarbetare'
+    elif seniority == 'Director': seniority = 'chef'
+    elif seniority == 'Entry level': seniority = 'basnivå'
+    elif seniority == 'Executive': seniority = 'verksamhetschef'
+    elif seniority == 'Internship': seniority = 'praktikplats'
+    elif seniority == 'Mid-Senior level': seniority = 'mellannivå'
+    elif seniority == 'Not Applicable': seniority = 'ej tillämpligt'
+    else: seniority = 'null'
 
 
     return emp_type, ad_publication_date, county, seniority
