@@ -19,7 +19,7 @@ county_list = [
     'Västmanlands län',
     'Västra Götalands län',
     'Örebro län',
-    'Östergötalands län'
+    'Östergötlands län'
 ]
 
 profession_list =[

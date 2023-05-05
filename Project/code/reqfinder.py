@@ -1,5 +1,6 @@
 import re
 import requests
+import json
 
 # Job ad test variable
 job_ad = """
@@ -35,9 +36,17 @@ def find_req_ai(id, title, description):
     # Make the HTTP POST request
     response = requests.post(url, headers=headers, json=payload)
 
-    # Print the response content
-    print(response.json())
-    return response.json()
+    # Extracts all the 'concept_lablels' (the requirements) from the API response
+    data = json.loads(response.text)
+    labels = []
+    for candidate in data:
+        for competency in candidate['enriched_candidates']['competencies']:
+            labels.append(competency['concept_label'])
+        for trait in candidate['enriched_candidates']['traits']:
+            labels.append(trait['concept_label'])
+    
+    #print(labels)
+    return labels
 
 
 
