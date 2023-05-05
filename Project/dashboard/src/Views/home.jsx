@@ -16,7 +16,9 @@ export default function Home() {
               <h1>How does the job market look in Sweden?</h1>
               <p>Swedish talent observatory gives you a graphical visualization of the statistics within your profession. Find out how many applicable jobs there are within your county and profession.</p>
             </div>
-            <img src="https://i.imgur.com/Q55Nhtn.png" alt="home_img" width="300" height="300" />
+            <a href="https://commons.wikimedia.org/wiki/File:Sverigekarta-Landskap.svg#/media/File:Sverigekarta-Landskap.svg">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Sverigekarta-Landskap.svg/1200px-Sverigekarta-Landskap.svg.png" alt="home_img" width="250" height="580" />
+            </a>
           </div>
         </div>
         <div className="home-content">
