@@ -1,11 +1,11 @@
 # All code explicit for webscraping LinkedIn.com
-import time
-import requests
-import traceback
-import re
-import os
-from sys import exc_info, path, platform
-path.append(os.path.dirname(os.path.dirname(__file__))) # Get the directory above
+from time import time, sleep
+from requests import get
+from traceback import extract_tb
+from re import search
+from os import path as os_path
+from sys import exc_info, platform, path as sys_path
+sys_path.append(os_path.dirname(os_path.dirname(__file__))) # Get the directory above
 from reqfinder import find_req # Program to look through bodytext
 from datetime import date, timedelta
 from bs4 import BeautifulSoup, SoupStrainer
@@ -22,7 +22,7 @@ remove_counter = 0
 seen = {}
 
 # Timer (REMOVE LATER)
-start_time = time.time()
+start_time = time()
 
 # Function to scrape websites
 def linkedin_scraper(job, municipality, page_number):   
@@ -30,7 +30,7 @@ def linkedin_scraper(job, municipality, page_number):
     print(next_page)
     # Establish connection
     while(True):
-        response = requests.get(str(next_page))
+        response = get(str(next_page))
         if(response.status_code == 200):
             break
     soup = BeautifulSoup(response.content,'lxml')
@@ -89,12 +89,12 @@ def linkedin_scraper(job, municipality, page_number):
 
             # Establish connection to ad-page
             while(True):
-                ad_response = requests.get("https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/" + str(key))
+                ad_response = get("https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/" + str(key))
                 # print(ad_response)
                 if(ad_response.status_code == 200 or ad_response.status_code == 500):
                     break
                 print("RETRYING")
-                time.sleep(0.1) # Delay because of status code 429
+                sleep(0.1) # Delay because of status code 429
             if(ad_response.status_code == 500):
                 global remove_counter
                 print("SKIP")
@@ -147,13 +147,13 @@ def linkedin_scraper(job, municipality, page_number):
 # Retrieves list of all professions to webscrape
 def get_professions():
     s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
-    path = os.path.dirname(os.path.dirname(os.path.dirname(__file__))) + s + 'professions.txt'
+    path = os_path.dirname(os_path.dirname(os_path.dirname(__file__))) + s + 'professions.txt'
     return open(path, encoding='utf-8').read().splitlines()
 
 
 
 def run():
-    start_time = time.time()
+    start_time = time()
     # Database
     db = []
 
@@ -166,7 +166,7 @@ def run():
     with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
         for line in f:
             # Patternmatches for a number with a curly bracket before it and a comma sign after it.
-            match = re.search(r'\{(\d+)\,', line)
+            match = search(r'\{(\d+)\,', line)
             if match:
                 geo_ids.append(int(match.group(1)))
 
@@ -188,7 +188,7 @@ def run():
         ex_type, ex_value, ex_traceback = exc_info()
 
         # Extract unformatter stack traces as tuples
-        trace_back = traceback.extract_tb(ex_traceback)
+        trace_back = extract_tb(ex_traceback)
 
         # Format stacktrace
         stack_trace = list()
@@ -204,7 +204,7 @@ def run():
         # traceback.print_exc()
     
     finally:
-        print("Time it took: " + str(time.time()-start_time))
+        print("Time it took: " + str(time()-start_time))
         print("Length of list: " + str(len(db)))
 
         return db

@@ -1,7 +1,7 @@
-import re
-import requests
-import json
-import math
+from re import search
+from requests import post
+from json import loads
+from math import ceil
 
 # Job ad test variable
 job_ad = """
@@ -32,7 +32,7 @@ def find_req_ai_bulk(ids, titles, descriptions):
     all_labels = []
 
     # Calculate the number of chunks to split the descriptions into
-    num_chunks = math.ceil(len(descriptions) / 100)
+    num_chunks = ceil(len(descriptions) / 100)
     
     # Loop over each chunk of descriptions and process them
     for i in range(num_chunks):
@@ -57,10 +57,10 @@ def find_req_ai_bulk(ids, titles, descriptions):
         }
 
         # Make the HTTP POST request
-        response = requests.post(url, headers=headers, json=payload)
+        response = post(url, headers=headers, json=payload)
 
         # Extracts all the 'concept_lablels' (the requirements) from the API response
-        data = json.loads(response.text)
+        data = loads(response.text)
         labels = []
         for candidate in data:
             for competency in candidate['enriched_candidates']['competencies']:
@@ -128,7 +128,7 @@ def find_req(job_ad):
 
     # Search for degrees using regex keywrods by first lowercasing the text
     for reg in regex_list:
-        if re.search(reg[0], job_ad.lower()):
+        if search(reg[0], job_ad.lower()):
             tbr = [reg[1]]
             break
         else:
@@ -179,7 +179,7 @@ def find_seniority(job_ad):
 
     # Search for seniority using regex keywords by first lowercasing the text
     for reg in regex_year:
-        if re.search(reg[0], job_ad.lower()):
+        if search(reg[0], job_ad.lower()):
             tbr = reg[1]
             break
         else:

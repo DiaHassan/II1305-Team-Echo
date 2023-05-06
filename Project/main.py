@@ -1,10 +1,9 @@
-from os.path import exists
-from sqlite3 import connect
 from sys import platform
-from os import chdir
-import subprocess
-import pynpm
+from os.path import exists, chdir
+from sqlite3 import connect
 from code import webscrape
+#import subprocess
+#import pynpm
 
 # Path to database
 def find_db_path():

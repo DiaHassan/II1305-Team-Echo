@@ -1,7 +1,6 @@
-import os
-import sys
-from sys import platform
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from os import path as os_path
+from sys import platform, path as sys_path
+sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from db.insert import send_2d_list
 from ledigajobb import ledigajobb
 from platsbanken import platsbanken
@@ -45,7 +44,7 @@ def run_linkedin():
 
 # Main
 if __name__ == '__main__':
-    #run()
-    # run_platsbanken()
+    run()
+    #run_platsbanken()
     #run_ledigajobb()
-    run_linkedin()
+    #run_linkedin()

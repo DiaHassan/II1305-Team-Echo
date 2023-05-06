@@ -1,8 +1,8 @@
-import requests
+from requests import get
 from bs4 import BeautifulSoup
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from os import path as os_path
+from sys import path as sys_path
+sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from reqfinder import find_req
 from job_info import lan_list, yrke_list
 
@@ -15,7 +15,7 @@ search_url = 'https://ledigajobb.se/sok?'
 # Send a GET request to get the HTML response and parse it
 def get_code(url):
     try:
-        response = requests.get(url)
+        response = get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         return soup
     except:

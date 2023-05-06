@@ -1,15 +1,15 @@
 from playwright.sync_api import sync_playwright
 from sys import platform
 from bs4 import BeautifulSoup
-import time
-import os.path
+from time import sleep
+from os import path
 
 
 # Returns list of all counties to scrape
 def file_to_list(txt):
     s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
-    path = os.path.dirname(os.path.dirname(os.path.dirname(__file__))) + s + txt
-    return open(path, encoding='utf-8').read().splitlines()
+    file_path = path.dirname(path.dirname(path.dirname(__file__))) + s + txt
+    return open(file_path, encoding='utf-8').read().splitlines()
 
 
 # Path to dashboard folder for running the website
@@ -32,8 +32,6 @@ def run():
         page = context.new_page()
         professions = file_to_list('professions.txt')
         counties = file_to_list('counties.txt')
-        print(professions)
-        print(counties)
         for profession in professions:
             for county in counties:
                 result.append(get_html(page, profession, county))
@@ -42,12 +40,11 @@ def run():
     return result
 
 
-# Runs 
+# Returns html from page
 def get_html(page, profession, county): 
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0')
     data = page.content().encode('ascii', 'replace').decode('ascii')
     return data
-
 
 # Test
 if __name__ == '__main__':
@@ -66,10 +63,10 @@ if __name__ == '__main__':
             try:
                 test = page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]').click(timeout=1000)
                 
-                time.sleep(1)
+                sleep(1)
             except:
                 continue
         # context.close()
         # browser.close()
 
-        time.sleep(1000000)
+        sleep(1000000)

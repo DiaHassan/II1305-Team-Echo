@@ -1,12 +1,11 @@
-import sqlite3
-import pandas as pd
+from sqlite3 import connect
 from os.path import exists
 from sys import platform
 
 #Source: https://towardsdatascience.com/starting-with-sql-in-python-948e529586f2
 
 
-def find_db_path(platform):
+def find_db_path():
         match platform:
             case "linux":
                 return "Project/db/echo.db"
@@ -15,7 +14,7 @@ def find_db_path(platform):
             case _:
                 return "Project\db\echo.db"
 
-def find_db_sqlite_path(platform):
+def find_db_sqlite_path():
         match platform:
             case "linux":
                 return "Project/db/db_sqlite.sql"
@@ -27,10 +26,10 @@ def find_db_sqlite_path(platform):
 # Builds database
 def build_db():
 
-    connection = sqlite3.connect(find_db_path(platform))
+    connection = connect(find_db_path())
     cursor = connection.cursor()
 
-    sql_file = open(find_db_sqlite_path(platform), "r")
+    sql_file = open(find_db_sqlite_path(), "r")
     sql_script = sql_file.read()
     sql_file.close()
 
@@ -123,7 +122,7 @@ def insert_data(argument_list, sql_connect, cursor):
 
 # Recieves 1d list of ad and inserts into db
 def send_data(list, path):
-    with sqlite3.connect(path) as sql_connect:
+    with connect(path) as sql_connect:
         # with sql_connect.cursor() as cursor:
         cursor = sql_connect.cursor()
         insert_data(list, sql_connect, cursor) 
@@ -139,7 +138,7 @@ def send_2d_list(list, path):
     if not exists(path):
         build_db()
         
-    with sqlite3.connect(path) as sql_connect:
+    with connect(path) as sql_connect:
         # with sql_connect.cursor() as cursor:
         cursor = sql_connect.cursor()
         for x in list:
@@ -151,9 +150,8 @@ def send_2d_list(list, path):
 
 # Test if run
 if __name__ == '__main__':
-    
     test = [
-            ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', None, ['Requires a relevant degree'], 0, None, '2023-04-20'],
+            ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', 'null', ['Requires a relevant degree'], 0, None, '2023-04-20'],
             ['ledigajobb', 'heltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', [], 0, None, '2023-04-20']
     ]
-    #send_2d_list(test, find_db_path(platform))
+    send_2d_list(test, find_db_path())

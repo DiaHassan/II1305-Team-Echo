@@ -1,10 +1,10 @@
-import requests
-import datetime
-import logging
-import json
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from requests import get
+from datetime import datetime, timedelta
+from logging import INFO, getLogger, basicConfig
+from json import loads
+from sys import stdout, path as sys_path
+from os import path as os_path
+sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from reqfinder import find_req, find_seniority, find_req_ai_bulk
 from .get_occupation_id import get_occupational_ids
 
@@ -16,14 +16,14 @@ DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
 # Logging for settings
-LOG_LEVEL = logging.INFO  # Change INFO to DEBUG for verbose logging
+LOG_LEVEL = INFO  # Change INFO to DEBUG for verbose logging
 LOG_FORMAT = '%(asctime)s  %(levelname)-8s %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 # Logging for termnial
-log = logging.getLogger(__name__)
-logging.basicConfig(stream=sys.stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
+log = getLogger(__name__)
+basicConfig(stream=stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 
 
 # Main function that retrieves all ads and outputs their data in a 2d list
@@ -53,7 +53,7 @@ def get_ads(ids):
     # OBS: date = amount of days to look back for gathering
     #             data, change 1 to desired days
     url = STREAM_URL
-    date = datetime.datetime.now() - datetime.timedelta(1)  
+    date = datetime.now() - timedelta(1)  
     params = {
         'date': date.strftime(DATE_FORMAT),
         'occupation-concept-id': ids
@@ -64,9 +64,9 @@ def get_ads(ids):
 
     # Send GET request to JobStream API 
     headers = {'Accept': 'application/json'}
-    response = requests.get(url, headers=headers, params=params)
+    response = get(url, headers=headers, params=params)
     response.raise_for_status()
-    list_of_ads = json.loads(response.content.decode('utf8'))
+    list_of_ads = loads(response.content.decode('utf8'))
 
     # Log and return
     log.info(f"Got {len(list_of_ads)} ads from {url}")
@@ -117,7 +117,7 @@ def extract_data_ad(ad, index):
     publication_date = ad.get('publication_date', ' ')
     occupation = index_dict[index]
     county = ad.get('workplace_address', {}).get('region', ' ') 
-    date_extracted = datetime.datetime.today().strftime('%Y-%m-%d')
+    date_extracted = datetime.today().strftime('%Y-%m-%d')
     description = ad.get('description', {}).get('text', ' ')
     #prereq_ai = find_req_ai(ad_id, occupation, description)
     prereq = find_req(description)

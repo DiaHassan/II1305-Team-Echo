@@ -1,8 +1,7 @@
-import sqlite3
-
-# Database path
+from sqlite3 import connect
 from sys import platform
-def find_db_path(platform):
+
+def find_db_path():
     match platform:
         case "linux":
             return "Project/db/echo.db"
@@ -10,7 +9,7 @@ def find_db_path(platform):
             return "Project/db/echo.db"
         case _:
             return "Project\db\echo.db"
-db_path = find_db_path(platform)
+db_path = find_db_path()
 
 # ------------------------------------------- HELPERS -------------------------------------------------------
 
@@ -55,7 +54,7 @@ def format(list):
 
 # Connects to database and sends query
 def send_query(query):
-    with sqlite3.connect(db_path) as conn:
+    with connect(db_path) as conn:
       cursor = conn.cursor()
       result = cursor.execute(query).fetchall()
       cursor.close()

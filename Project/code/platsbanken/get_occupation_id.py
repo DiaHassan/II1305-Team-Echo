@@ -1,5 +1,5 @@
-import requests
-import json
+from requests import get
+from json import loads
 from os import path
 from sys import platform
 
@@ -11,10 +11,10 @@ def get_professions():
 
 def get_occupational_ids():
     url = "https://data.jobtechdev.se/taxonomy/yrkesben%C3%A4mningar.json"
-    connection = requests.get(url)
+    connection = get(url)
 
     # Loads the JSON data into a Python dictionary
-    data = json.loads(connection.text)
+    data = loads(connection.text)
     tuples = data['data']['concepts']
 
     jobs = get_professions()

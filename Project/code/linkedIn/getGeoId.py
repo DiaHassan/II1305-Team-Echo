@@ -1,8 +1,8 @@
-import codecs      #swedish alphabet
+from codecs import open      #swedish alphabet
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from sys import platform
-import time
+from time import sleep
 
 
 def find_path(platform):
@@ -26,12 +26,12 @@ searchbar = driver.find_element(By.XPATH, ("//input[@id='job-search-bar-location
 
 file_path = find_path(platform)
 
-file = codecs.open(file_path,'w', 'utf-8')
+file = open(file_path,'w', 'utf-8')
 for muni in municipalities:
     # Writes a municipality
     searchbar.clear()
     searchbar.send_keys(muni)
-    time.sleep(5)
+    sleep(5)
 
     #Find and store the geo_id for the current municipality
     geo_id = driver.find_element(By.XPATH, ("//li[@id='location-1']/span")).get_attribute("data-id")
