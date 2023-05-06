@@ -243,7 +243,7 @@ def format(emp_type, ad_date, location, seniority):
     elif county == 'Sodermanland': county = 'södermanland'
     elif county == 'Varmland': county = 'värmland'
     elif county == 'Vastmanland': county = 'västmanland'
-    elif county == 'Vastra Gotland': county = 'västra götaland'
+    elif county == 'Vastra Gotaland': county = 'västra götaland'
     else: county = county.lower()
 
     if county != 'blekinge' or 'kalmar' or 'skåne' or 'uppsala' or 'örebro':
