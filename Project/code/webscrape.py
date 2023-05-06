@@ -4,7 +4,7 @@ from sys import platform
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from db.insert import send_2d_list
 from ledigajobb import ledigajobb
-# from platsbanken import platsbanken
+from platsbanken import platsbanken
 from linkedIn import linkedIn
 
 

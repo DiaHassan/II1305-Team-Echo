@@ -5,7 +5,7 @@ import json
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from reqfinder import find_req, find_seniority, find_req_ai
+from reqfinder import find_req, find_seniority, find_req_ai_bulk
 from .get_occupation_id import get_occupational_ids
 
 

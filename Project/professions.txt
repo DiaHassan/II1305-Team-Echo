@@ -1,0 +1,10 @@
+projektledare
+ingenjör
+elektriker
+operatör
+tekniker
+sjuksköterska
+utvecklare
+läkare
+lärare
+logistiker
