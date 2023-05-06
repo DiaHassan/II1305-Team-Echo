@@ -4,8 +4,8 @@ import requests
 import traceback
 import re
 import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(__file__))) # Get the directory above
+from sys import exc_info, path, platform
+path.append(os.path.dirname(os.path.dirname(__file__))) # Get the directory above
 from reqfinder import find_req # Program to look through bodytext
 from datetime import date, timedelta
 from bs4 import BeautifulSoup, SoupStrainer
@@ -144,6 +144,13 @@ def linkedin_scraper(job, municipality, page_number):
     return(list)
 
 
+# Retrieves list of all professions to webscrape
+def get_professions():
+    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
+    path = os.path.dirname(os.path.dirname(os.path.dirname(__file__))) + s + 'professions.txt'
+    return open(path, encoding='utf-8').read().splitlines()
+
+
 
 def run():
     start_time = time.time()
@@ -151,7 +158,7 @@ def run():
     db = []
 
     # Jobs
-    jobs = ['lärare', 'läkare', 'utvecklare', 'sjuksköterska', 'tekniker', 'operatör', 'elektriker', 'logistiker', 'ingenjör', 'projektledare']
+    jobs = get_professions()
 
     # Geo ids
     # geo_ids = [105962876] 
@@ -178,7 +185,7 @@ def run():
         print("Removed jobs: " + str(remove_counter))
     except BaseException as ex:
         # Get current system exception
-        ex_type, ex_value, ex_traceback = sys.exc_info()
+        ex_type, ex_value, ex_traceback = exc_info()
 
         # Extract unformatter stack traces as tuples
         trace_back = traceback.extract_tb(ex_traceback)
