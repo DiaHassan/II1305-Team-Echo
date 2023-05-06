@@ -19,6 +19,7 @@ Our project was made externaly for Future Place Leadership as a dashboard collec
  - sqlite3 (Python library)
  - pandas (Python library)
  - flask (Python library)
+ - lxml (Python binder)
 
 ## Usage
 [Early draft]  
