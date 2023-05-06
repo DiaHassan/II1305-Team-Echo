@@ -44,8 +44,8 @@ file.close()
 
 # Has two Geo id's: "Göteborg, Västra Götaland" (One is a radius, and one is functional)
 
-# Geo id gives radius: 
-# [Ta only "{104312072, Täby, Stockholm}" instead of these] "Vallentuna, Stockholm", "Ekerö, Stockholm", "Tyresö, Stockholm", "Täby, Stockholm", "Danderyd, Stockholm", "Sollentuna, Stockholm", "Nacka, Stockholm", "Sundbyberg, Stockholm", "Solna, Stockholm", "Vaxholm, Stockholm", "Nynäshamn, Stockholm", 
+# Geo id's that gives ad in a radius (mostly duplicate ads): 
+# [Use only "{104312072, Täby, Stockholm}" instead of these] "Vallentuna, Stockholm", "Ekerö, Stockholm", "Tyresö, Stockholm", "Täby, Stockholm", "Danderyd, Stockholm", "Sollentuna, Stockholm", "Nacka, Stockholm", "Sundbyberg, Stockholm", "Solna, Stockholm", "Vaxholm, Stockholm", "Nynäshamn, Stockholm", 
 # "{104792890, Gnesta, Södermanland}", 
 # "{104640929, Mullsjö, Jönköping}", 
 # [Use only "{101759788, Malmö, Skåne}" instead of these] "Vellinge, Skåne", "Kävlinge, Skåne", "Perstorp, Skåne", "Åstorp, Skåne", "Malmö, Skåne", "Lund, Skåne", 
