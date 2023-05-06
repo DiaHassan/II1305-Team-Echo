@@ -1,5 +1,13 @@
 import requests
 import json
+from os import path
+from sys import platform
+
+# Retrieves list of all professions to webscrape
+def get_professions():
+    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
+    file = path.dirname(path.dirname(path.dirname(__file__))) + s + 'professions.txt'
+    return open(file, encoding='utf-8').read().splitlines()
 
 def get_occupational_ids():
     url = "https://data.jobtechdev.se/taxonomy/yrkesben%C3%A4mningar.json"
@@ -9,7 +17,7 @@ def get_occupational_ids():
     data = json.loads(connection.text)
     tuples = data['data']['concepts']
 
-    jobs = ["Ingenjör", "Utvecklare", "Läkare", "Sjuksköterska", "Lärare", "Operatör", "Tekniker", "Elektriker", "Projektledare", "Logistiker"]
+    jobs = get_professions()
     all_ids = []
 
     for job in jobs:
