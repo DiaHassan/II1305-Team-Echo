@@ -55,7 +55,7 @@ def insert_data(argument_list, sql_connect, cursor):
     # print(argument_list)
 
     #job_param_list is the list of arguments for the job_listing table.
-    job_param_list = argument_list[0:4] + [argument_list[5], argument_list[7], argument_list[8], argument_list[9]]
+    job_param_list = argument_list
     delimiter = "','"
     # liststr = delimiter.join(job_param_list)
 
@@ -67,19 +67,7 @@ def insert_data(argument_list, sql_connect, cursor):
     if(argument_list[4] == "" or argument_list[4] == " "):
         return
     
-    #getting job id for job_listing insert
-    job_exists_query = "SELECT * FROM job WHERE profession = '" + argument_list[4] + "';"
 
-    job_exist_result = cursor.execute(job_exists_query).fetchall()
-
-    #If job_exist_result is empty(empty lists are interpreted as false), insert profession. 
-    if not job_exist_result:
-        insert_job = "INSERT INTO job(profession) VALUES ('" + argument_list[4] + "');"
-        cursor.execute(insert_job)
-        sql_connect.commit()
-
-    get_job_id = "SELECT id FROM job WHERE profession = '" + argument_list[4] + "';"
-    job_id = str(cursor.execute(get_job_id).fetchall()[0][0])
 
     #Create Job listing here and get job_listing_id
     # Index 0-3 is source, employment type, duration and publication date. These are already strings, job id is a foreing key so the id from job_id is entered there instead of proffession.
@@ -91,34 +79,19 @@ def insert_data(argument_list, sql_connect, cursor):
             job_param_list[2] = "null"
     if not job_param_list[3]:           # Publication Date
          job_param_list[3] = "null"
-    if job_param_list[5] == "None":     # Years of experience
-            job_param_list[5] = "null"
-    if not job_param_list[6]:           # Seniority
+    if not job_param_list[6]:           # Requirements
             job_param_list[6] = "null"
+    if job_param_list[7] == "None":     # Years of experience
+        job_param_list[7] = "null"
+    if not job_param_list[8]:           # Seniority
+            job_param_list[8] = "null"
 
-    insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, seniority, date_gathered) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"
+
+    insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, profession, county, years_of_experience, seniority, requirement, date_gathered) VALUES ('" + delimiter.join(job_param_list) + "');"
 
     cursor.execute(insert_job_listing)
     sql_connect.commit()
     job_listing_id = str(cursor.lastrowid)
-
-    #For each requirement in the job listing, create/find that requirement and create a many-many relation between the job_listing and requirement.
-    for i in argument_list[6]:
-        i = i.replace("'","")
-        requirement_exist_query = "SELECT id FROM requirement WHERE requirement = '" + i + "';"
-        requirement_exist_result = cursor.execute(requirement_exist_query).fetchall()
-        if not requirement_exist_result:
-            Insert_requirement = "INSERT INTO requirement(requirement) VALUES ('" + i + "');"
-            cursor.execute(Insert_requirement)
-            sql_connect.commit()
-        
-        get_requirement_id = "SELECT id FROM requirement WHERE requirement = '" + i + "';"
-        requirement_id = str(cursor.execute(get_requirement_id).fetchall()[0][0])
-
-        #Creates row for many to many relation table requirement_relation
-        insert_requirement_relation = "INSERT INTO requirement_relation(job_listing_id, requirement_id) VALUES (" + job_listing_id + "," + requirement_id + ");"
-        cursor.execute(insert_requirement_relation)
-        sql_connect.commit()
 
 
 # Recieves 1d list of ad and inserts into db
@@ -153,7 +126,7 @@ def send_2d_list(list, path):
 if __name__ == '__main__':
     
     test = [
-            ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', None, ['Requires a relevant degree'], 0, None, '2023-04-20'],
-            ['ledigajobb', 'heltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', [], 0, None, '2023-04-20']
+            ['ledigajobb', 'deltid', 0, '2023-04-19', 'Lärare', 'Stockholms län', 'Requires a relevant degree', 0, None, '2023-04-20'],
+            ['ledigajobb', 'heltid', 0, '2023-04-19', 'Lärare', 'Västra Götalands län', None, 0, 'basnivå', '2023-04-20']
     ]
     #send_2d_list(test, find_db_path(platform))

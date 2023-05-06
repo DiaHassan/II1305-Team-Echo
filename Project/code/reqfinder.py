@@ -129,10 +129,10 @@ def find_req(job_ad):
     # Search for degrees using regex keywrods by first lowercasing the text
     for reg in regex_list:
         if re.search(reg[0], job_ad.lower()):
-            tbr = [reg[1]]
+            tbr = reg[1]
             break
         else:
-            tbr = []
+            tbr = None
 
     return tbr
 
