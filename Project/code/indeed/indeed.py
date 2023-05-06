@@ -34,17 +34,32 @@ def run():
         counties = file_to_list('counties.txt')
         for profession in professions:
             for county in counties:
-                result.append(get_html(page, profession, county))
+                result.append(get_all_html(page, profession, county))
         context.close()
         browser.close()
     return result
 
 
+# Gets all ads with certain profession and county from multiple pages
+def get_all_html(page, profession, county):
+    result = []
+    prev_res = []
+    number = 0
+    while True:
+        new_res = get_html(page, profession, county, number)
+        if new_res == prev_res:
+            break
+        prev_res = new_res
+        result.append(new_res)
+        number += 1
+    return result
+
 # Returns html from page
-def get_html(page, profession, county): 
-    page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0')
+def get_html(page, profession, county, number): 
+    page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={number}')
     data = page.content().encode('ascii', 'replace').decode('ascii')
     return data
+
 
 # Test
 if __name__ == '__main__':
@@ -53,7 +68,7 @@ if __name__ == '__main__':
         browser = playwright.chromium.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
-        data = (get_html(page, 'Lärare', 'Stockholms län'))
+        data = (get_html(page, 'Lärare', 'Stockholms län', 100))
         soup = BeautifulSoup(data, features='lxml')
         job_ads = soup.find_all('div', class_="slider_container css-77eoo7 eu4oa1w0")
         print(len(job_ads))
@@ -62,7 +77,9 @@ if __name__ == '__main__':
                 continue
             try:
                 test = page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]').click(timeout=1000)
-                
+                ad = soup.find('div', class_="jobsearch-RightPane")
+                t = ad.find('div', class_="css-6z8o9s eu4oa1w0").text.strip
+                print(t)
                 sleep(1)
             except:
                 continue
