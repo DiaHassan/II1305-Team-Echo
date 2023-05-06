@@ -151,17 +151,17 @@ def run():
     db = []
 
     # Jobs
-    jobs = ['lärare']#, 'läkare', 'utvecklare', 'sjuksköterska', 'tekniker', 'operatör', 'elektriker', 'logistiker', 'ingenjör', 'projektledare']
+    jobs = ['lärare', 'läkare', 'utvecklare', 'sjuksköterska', 'tekniker', 'operatör', 'elektriker', 'logistiker', 'ingenjör', 'projektledare']
 
     # Geo ids
-    geo_ids = [100564495] 
-    # geo_ids = []
-    # with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
-    #     for line in f:
-    #         # Patternmatches for a number with a curly bracket before it and a comma sign after it.
-    #         match = re.search(r'\{(\d+)\,', line)
-    #         if match:
-    #             geo_ids.append(int(match.group(1)))
+    # geo_ids = [105962876] 
+    geo_ids = []
+    with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
+        for line in f:
+            # Patternmatches for a number with a curly bracket before it and a comma sign after it.
+            match = re.search(r'\{(\d+)\,', line)
+            if match:
+                geo_ids.append(int(match.group(1)))
 
     #Error handeling
     try:
@@ -200,8 +200,6 @@ def run():
         print("Time it took: " + str(time.time()-start_time))
         print("Length of list: " + str(len(db)))
 
-        for l in db:
-            print(l)
         return db
 
 
@@ -209,14 +207,13 @@ def run():
 def format(emp_type, ad_date, location, seniority):
 
     # Translating employment type and changing it to lowercase
-    if emp_type == 'Full-time': emp_type = 'heltid'
-    elif emp_type == 'Part-time': emp_type = 'deltid'
-    elif emp_type == 'Contract': emp_type = 'kontrakt'
-    elif emp_type == 'Temporary': emp_type = 'tillfälligt'
-    elif emp_type == 'Internship': emp_type = 'praktikplats'
-    elif emp_type == 'Volunteer': emp_type = 'volontär'
-    elif emp_type == 'Other': emp_type = 'övrigt'
-    else: emp_type = 'null'
+    if emp_type == 'Full-time': 
+        emp_type = 'heltid'
+    elif emp_type == 'Part-time': 
+        emp_type = 'deltid'
+    elif emp_type == 'Contract' or 'Temporary' or 'Internship' or 'Volunteer' or 'Other': 
+        emp_type = 'övrigt'
+    else: emp_type = None # Extra case for unknown employment type
 
     # Calculating the estimated publication date (unable to be exact)
     ad_date_list = ad_date.split(" ")
@@ -246,7 +243,7 @@ def format(emp_type, ad_date, location, seniority):
     elif county == 'Sodermanland': county = 'södermanland'
     elif county == 'Varmland': county = 'värmland'
     elif county == 'Vastmanland': county = 'västmanland'
-    elif county == 'Vastra Gotland': county = 'västra vötaland'
+    elif county == 'Vastra Gotland': county = 'västra götaland'
     else: county = county.lower()
 
     if county != 'blekinge' or 'kalmar' or 'skåne' or 'uppsala' or 'örebro':
@@ -256,14 +253,14 @@ def format(emp_type, ad_date, location, seniority):
 
 
     # Translating seniority and changing it to lowercase
-    if seniority == 'Associate': seniority = 'medarbetare'
-    elif seniority == 'Director': seniority = 'chef'
-    elif seniority == 'Entry level': seniority = 'basnivå'
-    elif seniority == 'Executive': seniority = 'verksamhetschef'
-    elif seniority == 'Internship': seniority = 'praktikplats'
+    if seniority == 'Director': seniority = 'hög nivå'
+    elif seniority == 'Executive': seniority = 'hög nivå'
     elif seniority == 'Mid-Senior level': seniority = 'mellannivå'
-    elif seniority == 'Not Applicable': seniority = 'ej tillämpligt'
-    else: seniority = 'null'
+    elif seniority == 'Entry level': seniority = 'basnivå'
+    elif seniority == 'Internship': seniority = None
+    elif seniority == 'Associate': seniority = None
+    elif seniority == 'Not Applicable': seniority = None
+    else: seniority = None # Extra case for unknown seniority
 
 
     return emp_type, ad_publication_date, county, seniority

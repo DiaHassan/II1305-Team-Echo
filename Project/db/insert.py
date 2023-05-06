@@ -65,7 +65,7 @@ def insert_data(argument_list, sql_connect, cursor):
     #Get id has to be executed right after the row has been inserted.
 
     if(argument_list[4] == "" or argument_list[4] == " "):
-         return
+        return
     
     #getting job id for job_listing insert
     job_exists_query = "SELECT * FROM job WHERE profession = '" + argument_list[4] + "';"
@@ -85,15 +85,15 @@ def insert_data(argument_list, sql_connect, cursor):
     # Index 0-3 is source, employment type, duration and publication date. These are already strings, job id is a foreing key so the id from job_id is entered there instead of proffession.
 
     # Handling 'None' inputs
-    if not job_param_list[1]:
+    if not job_param_list[1]:           # Employment type   
             job_param_list[1] = "null"
-    if job_param_list[2] == "None":
+    if job_param_list[2] == "None":     # Duration
             job_param_list[2] = "null"
-    if not job_param_list[4]:
-         job_param_list[4] = "null"
-    if job_param_list[5] == "None":
+    if not job_param_list[3]:           # Publication Date
+         job_param_list[3] = "null"
+    if job_param_list[5] == "None":     # Years of experience
             job_param_list[5] = "null"
-    if not job_param_list[6]:
+    if not job_param_list[6]:           # Seniority
             job_param_list[6] = "null"
 
     insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, seniority, date_gathered) VALUES ('" + delimiter.join(job_param_list[0:4]) + "'," + job_id + ",'" + delimiter.join(job_param_list[4:]) + "');"

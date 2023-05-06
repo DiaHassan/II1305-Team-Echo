@@ -4,7 +4,7 @@ from sys import platform
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from db.insert import send_2d_list
 from ledigajobb import ledigajobb
-from platsbanken import platsbanken
+# from platsbanken import platsbanken
 from linkedIn import linkedIn
 
 
@@ -41,11 +41,11 @@ def run_ledigajobb():
 def run_linkedin():
     linkedIn_list = linkedIn.run()
     send_2d_list(linkedIn_list, database_name)
-    print(' LinkedIn done')
+    print('LinkedIn done')
 
 # Main
 if __name__ == '__main__':
     #run()
-    run_platsbanken()
+    # run_platsbanken()
     #run_ledigajobb()
-    #run_linkedin()
+    run_linkedin()
