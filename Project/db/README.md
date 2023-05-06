@@ -33,18 +33,18 @@ Connects to database and sends each list in 2d list to function send_data.
 
 
 ## [extract.py](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/db/extract.py)
-Contains SQL queries to extract data from database.
+Extracts data from database.
 
 ### Functions:
 
 **send_query(query):**
 Connects to database and sends given query to it, returns result in 2d list.
 
-**get_profession_in_counties(profession)**
-Recieves profession, returns list of tuples containing counties and their respective amount of ads for the profession.
+**get_counties_for_profession(sources, counties, profession, param):**
+Queries for extracting data with multiple counties and single profession with optional parameter.
 
-**get_param_per_county(profession, param):**
-Recieves a profession and a parameter in the job_listing SQL table (such as employment_type) and returns a list of tuples countaining counties and the amount of ads in the categories of param.
+**get_professions_for_county(sources, county, professions, param):**
+Queries for extracting data with multiple professions and single county with optional parameter.
 
-**get_professions_in_county(county)**
-Recieves county, returns list of tuples containing professions and their number of ads in the county.  
+**extract(source, county, profession, param):**
+Callee, checks if county or profession is a list and then passes arguments to correct function.
