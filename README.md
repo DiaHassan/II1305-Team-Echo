@@ -38,7 +38,7 @@ By running ```webscrape.py```, the program will scrape the data from the specifi
 ## Team Echo
  - [Hassan Dia](https://github.com/DiaHassan)              | Product Owner/Developer
  - [Tina Basta](https://github.com/tibasta)                | SCRUM Master/Developer
- - [Edwin Ahlstrand](https://github.com/EdwinAhl)          | Developer
+ - [Edwin Ahlstrand](https://github.com/EdwinAhl)          | Master Nuker/Developer
  - [Roy Liu](https://github.com/ruisnake)                  | Developer
  - [Albin Durfors](https://github.com/DrakenDurfors)       | Developer
  - [Axel Lindqvist](https://github.com/ProgrammingCookies) | Developer

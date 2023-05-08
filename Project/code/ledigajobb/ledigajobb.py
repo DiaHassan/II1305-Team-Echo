@@ -1,10 +1,25 @@
+# Imports
 from requests import get
 from bs4 import BeautifulSoup
+
+# Imports for paths
 from os import path as os_path
-from sys import path as sys_path
+from sys import platform, path as sys_path
 sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from reqfinder import find_req
-from job_info import lan_list, yrke_list
+
+# Import counties
+try:
+    from ledigajobb_counties import counties
+except ImportError:
+    from .ledigajobb_counties import counties
+
+
+# Retrieves list of all professions to webscrape
+def get_profession_list():
+    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
+    file = os_path.dirname(os_path.dirname(os_path.dirname(__file__))) + s + 'professions.txt'
+    return open(file, encoding='utf-8').read().splitlines()
 
 
 # Define the URL to scrape
@@ -58,7 +73,6 @@ def replace_after(my_string, to_replace, replacement):
     new_string = my_string[:index] + replacement + my_string[index+1:]
 
 
-
 # Joins url to build link to job ad
 def join_url(base_url, section):
     return base_url + section
@@ -82,7 +96,7 @@ def get_prerequiered(response):
 
 
 # Returns employment type, duration, and seniority
-def get_work_details(response):
+def get_profession_details(response):
     try:
         # Result and path
         info=[]
@@ -123,34 +137,29 @@ def get_work_details(response):
         return [None,None,None]
 
 
-# Find lan
-def find_lan(lan_nb):
-    for lan in lan_list:
-        if (lan_nb == lan[0]):
-            return lan[1]
+# Find county
+def find_county(county_nb):
+    for county in counties:
+        if (county_nb == county[0]):
+            return county[1]
 
-
-# Run from 
-def run():
-    return get_all()
 
 
 # Scrape all required details from the ad
-def scrape_ad(job_link,lan,work):
+def scrape_ad(job_link, county, profession):
     # Init
     job_code = get_code(job_link)
-    work_details = get_work_details(job_code)
-    result = []
+    work_details = get_profession_details(job_code)
 
     # Data
     source = "ledigajobb"
     employment_type = work_details[0]
     duration = work_details[1]
     publication_date = get_date(job_code)
-    profession = work
-    county = find_lan(lan)
+    profession = profession
+    county = find_county(county)
     prerequierment = get_prerequiered(job_code)
-    seniority = work_details[2]
+    #seniority = work_details[2]
 
     return [source, 
             employment_type, 
@@ -165,17 +174,17 @@ def scrape_ad(job_link,lan,work):
             ]
 
 
-
 # Get all info using all parameters
-def get_all():
+def run():
     i = 0
     n = 0
     all_jobs = []
+    professions = get_profession_list()
     # Going through all jobs and locations
-    for work in yrke_list:
-        for lan in range(2,21):
+    for profession in professions:
+        for county_index in range(2,21):
             next_page = True
-            response = get_code(create_search_link(lan,work,1))
+            response = get_code(create_search_link(county_index, profession, 1))
             # Looping through and printing out each page
             while next_page:
                 if(next_page == "Twees"): break
@@ -196,17 +205,13 @@ def get_all():
                     i += 1
                     print("\n I is vvvvvv")
                     print(i) 
-                    all_jobs.append(scrape_ad(base_url+half_link,lan, work))
+                    print(scrape_ad(base_url+half_link,county_index, profession))
                 next_page = get_next_page(response)
                 if (next_page == False): next_page = "Twees"
                 response = get_code(next_page)
-    return all_jobs
-            
+    return all_jobs      
 
-# Main function for testing the code
-def main():
-    run()
 
 if __name__ == '__main__':
-    main()
+    run()
     print("\n")

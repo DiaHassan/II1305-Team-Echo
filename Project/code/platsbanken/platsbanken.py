@@ -1,25 +1,30 @@
+# Imports
 from requests import get
 from datetime import datetime, timedelta
 from logging import INFO, getLogger, basicConfig
 from json import loads
+
+# Requirement finder
 from sys import stdout, path as sys_path
 from os import path as os_path
 sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from reqfinder import find_req, find_seniority, find_req_ai_bulk
-from .get_occupation_id import get_occupational_ids, get_professions
 
+# Occupation ID
+try:
+    from .get_occupation_id import get_occupational_ids, get_professions
+except ImportError:
+    from get_occupation_id import get_occupational_ids, get_professions
 
 # URL and format for settings
 BASE_URL = 'https://jobstream.api.jobtechdev.se'
 STREAM_URL = f"{BASE_URL}/stream"
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
-
 # Logging for settings
 LOG_LEVEL = INFO  # Change INFO to DEBUG for verbose logging
 LOG_FORMAT = '%(asctime)s  %(levelname)-8s %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-
 
 # Logging for termnial
 log = getLogger(__name__)
@@ -74,7 +79,7 @@ def get_ads(ids):
     log.info(f"Got {len(list_of_ads)} ads from {url}")
     return list_of_ads
 
-
+ # Removes ads with "null" value in given field
 def remove_void_ads(ads):
     """
     Remove ads with county set as "null" from the given list of ads.
@@ -115,6 +120,7 @@ def extract_duration(duration):
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad, index):
+    
     # Dictionary with all occupation names, in order
     # of how they appear in the occupation_ids list in run().
     # It is used to give job ads the same desired name
