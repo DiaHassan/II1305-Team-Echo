@@ -2,11 +2,11 @@ from requests import get
 from datetime import datetime, timedelta
 from logging import INFO, getLogger, basicConfig
 from json import loads
+from get_occupation_id import get_occupational_ids, get_professions
 from sys import stdout, path as sys_path
 from os import path as os_path
 sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from reqfinder import find_req, find_seniority, find_req_ai_bulk
-from .get_occupation_id import get_occupational_ids
 
 
 # URL and format for settings
@@ -89,7 +89,7 @@ def extract_duration(duration):
         if char.isnumeric():
           return char
     return 0
-    
+
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad, index):
@@ -97,18 +97,8 @@ def extract_data_ad(ad, index):
     # Dictionary with all occupation names, in order
     # of how they appear in the occupation_ids list in run().
     # It is used to give job ads the same desired name
-    index_dict = {
-        0: "Ingenjör",
-        1: "Utvecklare",
-        2: "Läkare",
-        3: "Sjuksköterska",
-        4: "Lärare",
-        5: "Operatör",
-        6: "Tekniker",
-        7: "Elektriker",
-        8: "Projektledare",
-        9: "Logistiker"
-    }
+    professions = get_professions()
+    index_dict = {index: value for index, value in enumerate(professions)}
     
     # Extract all desired job descriptions
     ad_id = ad['id']
