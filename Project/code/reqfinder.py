@@ -18,7 +18,7 @@ and then loops over each chunk to create the appropriate payload and make the AP
 The resulting labels are appended to a list called all_labels, which is returned at the end of the function.
 """
 
-def find_req_ai_bulk(ids, titles, descriptions):
+def find_req_ai(description):
     # URL of the API 
     url = 'https://jobad-enrichments-api.jobtechdev.se/enrichtextdocumentsbinary'
     
@@ -27,51 +27,33 @@ def find_req_ai_bulk(ids, titles, descriptions):
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     }
+
+    # Set the payload for POST request
+    payload = {
+        "documents_input": [
+            {
+              "doc_text": description
+            }
+        ],
+        "add_occupation_concepts": False,
+        "add_skill_concepts": True,
+        "add_workplace_experience_concepts": False,
+        "required_skill_level": 'REQUIRED'
+    }
+
+    # Make the HTTP POST request
+    response = post(url, headers=headers, json=payload)
+
+    # Extracts all the 'concept_lablels' (the requirements) from the API response
+    data = loads(response.text)
+    labels = []
+    for candidate in data:
+        for competency in candidate['enriched_candidates']['competencies']:
+            labels.append(competency['concept_label'])
+        for trait in candidate['enriched_candidates']['traits']:
+            labels.append(trait['concept_label'])
     
-    # Initialize list to hold all concept labels
-    all_labels = []
-
-    # Calculate the number of chunks to split the descriptions into
-    num_chunks = ceil(len(descriptions) / 100)
-    
-    # Loop over each chunk of descriptions and process them
-    for i in range(num_chunks):
-        start = i * 100
-        end = min(start + 100, len(descriptions))
-        chunk_ids = ids[start:end]
-        chunk_titles = titles[start:end]
-        chunk_descs = descriptions[start:end]
-
-        # Set the payload for POST request
-        payload = {
-            "documents_input": [
-                {
-                    "doc_id": id,
-                    "doc_headline": title,
-                    "doc_text": description
-                } for id, title, description in zip(chunk_ids, chunk_titles, chunk_descs)
-            ],
-            "add_occupation_concepts": True,
-            "add_skill_concepts": True,
-            "add_workplace_experience_concepts": True
-        }
-
-        # Make the HTTP POST request
-        response = post(url, headers=headers, json=payload)
-
-        # Extracts all the 'concept_lablels' (the requirements) from the API response
-        data = loads(response.text)
-        labels = []
-        for candidate in data:
-            for competency in candidate['enriched_candidates']['competencies']:
-                labels.append(competency['concept_label'])
-            for trait in candidate['enriched_candidates']['traits']:
-                labels.append(trait['concept_label'])
-        all_labels += labels
-
-    return all_labels
-
-
+    return data
 
 
 # Define regular expressions for bachelor's, master's, and PhD degrees
