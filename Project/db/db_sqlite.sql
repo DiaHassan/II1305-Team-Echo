@@ -6,7 +6,7 @@ CREATE TABLE job_listing (
     publication_date DATE NOT NULL, 
     profession VARCHAR(50) NOT NULL,
     county VARCHAR(50),
-    requirement VARCHAR(50) NOT NULL,
+    education VARCHAR(50) NOT NULL,
     years_of_experience INT,
     seniority VARCHAR(15),
     date_gathered DATE NOT NULL,
