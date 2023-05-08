@@ -34,19 +34,19 @@ def run():
         counties = file_to_list('counties.txt')
         for profession in professions:
             for county in counties:
-                result.append(get_all_html(page, profession, county))
+                result.append(get_all_ads(page, profession, county))
         context.close()
         browser.close()
     return result
 
 
-# Gets all ads with certain profession and county from multiple pages
-def get_all_html(page, profession, county):
+# Extracts all ads on all pages
+def get_all_ads(page, profession, county):
     result = []
     prev_res = []
     number = 0
     while True:
-        new_res = get_html(page, profession, county, number)
+        new_res = get_ads_on_page(page, profession, county, number)
         if new_res == prev_res:
             break
         prev_res = new_res
@@ -54,11 +54,19 @@ def get_all_html(page, profession, county):
         number += 1
     return result
 
-# Returns html from page
-def get_html(page, profession, county, number): 
+# Extracts data from all ads on one page
+def get_ads_on_page(page, profession, county, number): 
+    result = [] 
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={number}')
     data = page.content().encode('ascii', 'replace').decode('ascii')
-    return data
+    # For each ad on page
+    # Return get_ad
+    
+    
+# Extracts data from one ad
+def get_ad(ad):
+    return #['indeed', profession, county, duration, employment_type, years_of_experience...]
+
 
 # Defeats popups
 def close_popup(page_html):
@@ -77,7 +85,7 @@ if __name__ == '__main__':
         browser = playwright.chromium.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
-        data = (get_html(page, 'Ingenjör', 'Stockholms län', 15))
+        data = (get_ads_on_page(page, 'Ingenjör', 'Stockholms län', 15))
         soup = BeautifulSoup(data, features='lxml')
         close_popup(page)
         job_ads = soup.find_all('div', class_="slider_container css-77eoo7 eu4oa1w0")
