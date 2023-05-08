@@ -14,7 +14,7 @@ The file in the ```ledigajobb``` folder is used to web scrape job listing data f
 ### [ledigajobb.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/ledigajobb/ledigajobb.py)
 Extracts data from Ledigajobb. This file contains several functions.
 
-#### FUNCTIONS
+#### ***FUNCTIONS***
 **get_code(url)**:  
 *Sends an HTTP GET request to the specified* ```url``` *and returns the HTML (*```response```*) if possible.*  
 
@@ -65,8 +65,8 @@ All files in the ```linkedIn``` folder are used to web scrape job listing data f
 The "main" file that has all the data extracting functions. This file is dependent on the output produced by ```getGeoId.py```. 
 Uses BeautifulSoup to analyze HTML elements.
 
-#### FUNCTIONS
-**linkedin_scraper(job, municipality, page_number)**:  
+#### ***FUNCTIONS***
+**linkedin_scraper(job, municipality, page_number)**:
 *Establishes a connection to a page with* ```job``` *and* ```municipality``` *specified. Incrementing* ```page_number``` *and calling itself to load more ads.*
 
 **extract_html(ad, job)**:
@@ -81,7 +81,7 @@ Uses BeautifulSoup to analyze HTML elements.
 **get_professions()**:
 *Gets a list of the wanted proffessions*
 
-**run()**:  
+**run()**:
 *Automates the* ```linkedin_scraper``` *function to scrape a list of jobs and municipalities.*
 
 ### [getGeoId.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/getGeoId.py)
@@ -99,7 +99,7 @@ The program within the file connects to platsbanken API and retrieves all the in
 ### [platsbanken.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/platsbanken/platsbanken.py)
 Extracts data from Platsbanken's API.
 
-#### FUNCTIONS
+#### ***FUNCTIONS***
 **run()**:  
 *Retrieves all ads and outputs their data in a 2D list.*  
 
