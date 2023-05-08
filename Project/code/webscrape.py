@@ -20,6 +20,7 @@ database_name = find_db_path(platform)
 
 # Webscrape all available websites
 def run():
+    print('Running all webscrapers...')
     run_platsbanken()
     run_linkedin()
     run_ledigajobb()
