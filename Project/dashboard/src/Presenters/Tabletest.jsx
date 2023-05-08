@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 // import {} from '@material-ui/core'; //test
-import { makeStyles } from '@material-ui/core/styles';
+import { StylesProvider, makeStyles } from '@material-ui/core/styles';
 
 // import { MenuProps, useStyles, options } from "./utils";
 
@@ -63,7 +63,6 @@ export default function Tabletest() {
     // Setting variables and useStates
     const [result, setResult] = useState(data2);
     const [job, setJob] = useState('')
-    const [showLegend, setShowLegend] = useState(true); //test, du kan ta bort 
 
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
     const allCounties = ["Alla valda", "Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
@@ -71,6 +70,7 @@ export default function Tabletest() {
     const [activeList, setActivelist] = useState([false, false, false, false, false, false, false, false, false])
     const [joblist, setJobList] = useState(initialJobList)
     const [county, setCounty] = useState('Alla valda')
+
     //Checkboxes
     const [linkedinCB, setLinkedinCB] = React.useState(false);
     const [platsbankenCB, setPlatsbankenCB] = React.useState(false);
@@ -97,6 +97,7 @@ export default function Tabletest() {
         setActivelist(newList);
         console.log(activeList)
     };
+
     const handleCheckboxpbChange = (event) => {
         handleSource(event);
         setPlatsbankenCB(event.target.checked)
@@ -325,6 +326,7 @@ export default function Tabletest() {
     //insert all sources. Format 'sourcename': defaultValue
     const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue, ledigajobb: defaultValue });
 
+   
     // Handles any changes to the source buttons
     const handleSource = (event) => {
         const name = event.target.name;
@@ -372,12 +374,40 @@ export default function Tabletest() {
 
     // --------
 
+    //Creates textshadow
+    const textShadow = {
+        textShadow: '2px 2px 4px #000000',
+        transition: 'text-shadow 0.5s ease'
+      };
+      const textShadowHover = {
+        textShadow: '4px 4px 8px #000000',
+      };
 
+      const standard={
+        cursor: 'default'
 
+      };
 
+      function countyTitle(){
+        if (county === 'Alla valda'){
+            return 'Län'; 
+        }else {
+            return county;
+        }
+      }
+
+     
     return (
-        <div className='fortableandlist'>
+        <div>
+        <FormLabel>
+            {countyTitle()}
+        </FormLabel>
 
+        <div className='fortableandlist'>
+            <div>
+            <FormLabel component="legend"></FormLabel>
+            </div>
+    
             {/* <ResponsiveContainer > */}
             <BarChart width={1000} height={600} data={result}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -397,8 +427,9 @@ export default function Tabletest() {
                 <div >
                     {/* Div containing 3 checkboxes */}
                     <FormControl component="fieldset">
-                        <FormLabel component="legend">Select an option:</FormLabel>
+                        <FormLabel component="legend">Välj ett alternativ:</FormLabel>
                         <FormGroup>
+                        <span style={standard} onMouseOver={e => e.target.style.textShadow ='6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                             <FormControlLabel control={<Checkbox
                                 checked={linkedinCB}
                                 onChange={handleCheckboxliChange}
@@ -412,6 +443,8 @@ export default function Tabletest() {
                                     drivers_license: false
                                 })}
                             />} label="LinkedIn" />
+                                                    </span>
+                        <span style={standard} onMouseOver={e => e.target.style.textShadow ='6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                             <FormControlLabel control={<Checkbox
                                 checked={platsbankenCB}
                                 onChange={handleCheckboxpbChange}
@@ -421,7 +454,10 @@ export default function Tabletest() {
                                     drivers_license: false,
                                     seniority: false
                                 })}
+
                             />} label="Platsbanken" />
+                            </span>
+                            <span style={standard} onMouseOver={e => e.target.style.textShadow ='6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                             <FormControlLabel control={<Checkbox
                                 checked={ledigaCB}
                                 onChange={handleCheckboxljChange}
@@ -432,6 +468,7 @@ export default function Tabletest() {
                                     drivers_license: false
                                 })}
                             />} label="Lediga jobb" />
+                            </span>
                         </FormGroup>
                     </FormControl>
 
@@ -439,32 +476,33 @@ export default function Tabletest() {
 
                     {/* Div containing 2 drop-down lists */}
                     <div>
-                        <div>
-                            <FormControl sx={{ m: 1, minWidth: 80 }}>
-                                <InputLabel id="demo-simple-select-autowidth-label">County</InputLabel>
+                        <div className='County'>
+                            <FormControl sx={{ m: 1, width: 200 }}>
+                                <InputLabel id="demo-simple-select-autowidth-label">Län</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-autowidth-label"
                                     id="demo-simple-select-autowidth"
                                     value={county}
                                     onChange={handleChangeCounty}
                                     autoWidth
-                                    label="County"
+                                    label="Län"
                                 >
                                     {myListElements}
                                 </Select>
                             </FormControl>
                         </div>
-                        <div>
-                            <FormControl className="" sx={{ m: 1, maxWidth: 300 }}>
-                                <InputLabel id="mutiple-select-label">Multiple Select</InputLabel>
+                        <div className='Multiple Select'>
+                            <FormControl sx={{ m: 1, width: 200 }}>
+                                <InputLabel id="mutiple-select-autowidth-label">Yrken</InputLabel>
                                 <Select
-                                    labelId="mutiple-select-label"
+                                    labelId="mutiple-select-autowidth-label"
+                                    id="multiple-select-autowidth"
                                     multiple
                                     value={joblist}
                                     onChange={handleChanges}
                                     renderValue={(joblist) => joblist.join(", ")}
-                                    // MenuProps={MenuProps}
-                                    maxwidth="100"
+                                    autoWidth
+                                    label="Yrken"
                                 >
                                     <MenuItem
                                         value="all"
@@ -483,49 +521,50 @@ export default function Tabletest() {
                                 </Select>
                             </FormControl>
                         </div>
-
                     </div>
-
-
                     <div className="radio">
                         {/* Div containing 3 horizontal radio buttons */}
                         <RadioGroup aria-label="position" name="position" defaultValue="top">
-                            <FormControl component="fieldset" >
+                            <FormControl component="fieldset">
+                            <span onMouseOver={e => e.target.style.textShadow ='6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
 
                                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Employment type" onChange={handleParams}
+                                        <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Anställningsform" onChange={handleParams}
                                             disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="duration" control={<Radio size="small" />} label="Duration" onChange={handleParams}
+                                        <FormControlLabel value="duration" control={<Radio size="small" />} label="Varaktighet" onChange={handleParams}
                                             disabled={inputs.platsbanken.duration && inputs.linkedin.duration && inputs.ledigajobb.duration ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="seniority" control={<Radio size="small" />} label="Seniority" onChange={handleParams}
+                                        <FormControlLabel value="seniority" control={<Radio size="small" />} label="Senioritet" onChange={handleParams}
                                             disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="requirement" control={<Radio size="small" />} label="Prerequirements" onChange={handleParams}
-                                            disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true} />
+
+                                        <FormControlLabel value="requirement" control={<Radio size="small" />} label="Villkor/Krav" onChange={handleParams}
+                                          
+                                          disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true} />
+                                                                   
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="years_of_experience" control={<Radio size="small" />} label="Years of experience" onChange={handleParams}
+                                        <FormControlLabel value="years_of_experience" control={<Radio size="small" />} label="Års erfarenhet" onChange={handleParams}
                                             disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <FormControlLabel value="null" control={<Radio size="small" />} label="Driver's license" onChange={handleParams}
-                                            disabled={inputs.platsbanken.drivers_license && inputs.linkedin.drivers_license && inputs.ledigajobb.drivers_license ? false : true} />
+                                        <FormControlLabel style={standard} value="null" control={<Radio size="small" />} label="Inget val" onChange={handleParams}
+                                            disabled={inputs.platsbanken && inputs.linkedin && inputs.ledigajobb ? false : true} />
                                     </Grid>
                                 </Grid>
+                                </span>
                             </FormControl>
-
                         </RadioGroup>
-
                     </div>
                 </div>
-                <button onClick={handleClick} className='forlistbutton'>Search</button>
+                <button onClick={handleClick} className='forlistbutton'> Generera data</button>
             </div>
+        </div>
         </div>
     );
 }

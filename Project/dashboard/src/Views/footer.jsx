@@ -9,23 +9,23 @@ export default function Footer() {
       <footer>
         <div>
           {/* Placeholder */}
-          <h2>Subscribe to our news letter</h2>
+          <h2>Prenumerera på vårt nyhetsbrev</h2>
           <div className="search">
-            <input type="text" placeholder="Enter Email" />
-            <button type="submit">Subscribe</button>
+            <input type="text" placeholder="Ange e-postaddress" />
+            <button type="Skicka">Prenumerera</button>
           </div>
         </div>
         <div className="vertical-line" />
         <div>
           <h3>Navigation</h3>
           <ul>
-            <li><Link to="/" className="">Home</Link></li>
-            <li><Link to="/statistics" className="">Statistics</Link></li>
-            <li><Link to="/about" className="">About</Link></li>
+            <li><Link to="/" className="">Hem</Link></li>
+            <li><Link to="/statistics" className="">Statistik</Link></li>
+            <li><Link to="/about" className="">Om</Link></li>
           </ul>
         </div>
         <div className="footer-contact">
-          <h3>Contact</h3>
+          <h3>Kontakt</h3>
           <a href="mailto:team.echo.kth@gmail.com">team.echo.kth@gmail.com</a>
         </div>
       </footer>

@@ -423,7 +423,8 @@ footer a:hover {
     display: flex;
     align-content: space-between;
     /* flex-direction: row; */
-    align-items: center;
+    /*align-items: center;*/
+    /*padding-left: 2rem;*/
 }
 
 .forlist {
@@ -446,8 +447,8 @@ footer a:hover {
     display: flex;
     gap: 0.5rem;
     flex-direction: column;
-    align-items: center;
-    padding: 2rem;
+    /*align-items: center;*/
+    padding-left: 2rem; 
 }
 
 .forlistbutton {
