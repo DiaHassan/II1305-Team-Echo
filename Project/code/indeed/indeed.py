@@ -51,7 +51,7 @@ def get_all_ads(page, profession, county):
             break
         prev_res = new_res
         result.append(new_res)
-        number += 1
+        number += 10
     return result
 
 # Extracts data from all ads on one page
@@ -59,13 +59,33 @@ def get_ads_on_page(page, profession, county, number):
     result = [] 
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={number}')
     data = page.content().encode('ascii', 'replace').decode('ascii')
+    html = BeautifulSoup(data, features='lxml')
+    ads = html.find_all('div', class_="slider_container css-77eoo7 eu4oa1w0")
+    for i in range(1, 18):
+        try:
+            if (i == 6) or (i == 9):
+                continue
+            else:
+                test = page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]').click(timeout=1000)
+                ad = soup.find('div', class_="jobsearch-RightPane")
+                # skicka ad:en till get_ad
+                ad_data = get_ad(ad)
+
+        except:
+            continue
+
     # For each ad on page
     # Return get_ad
+    print(data)
+    return data
     
     
 # Extracts data from one ad
 def get_ad(ad):
-    return #['indeed', profession, county, duration, employment_type, years_of_experience...]
+    output_list = []
+    employment_type = ad.find('span', {'class': 'jobsearch-JobMetadataHeader-item  icl-u-xs-mt--xs'})
+    output_list.append(employment_type)
+    return output_list#['indeed', profession, county, duration, employment_type, years_of_experience...]
 
 
 # Defeats popups
