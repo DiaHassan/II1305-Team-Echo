@@ -87,6 +87,8 @@ if __name__ == '__main__':
             print(job_title.find('span').get('title').encode('ascii', 'replace').decode('ascii'))
         for i in range(1, 18):
             try:
+                if i == 6 or i == 9:
+                    continue
                 test = page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]').click(timeout=1000)
                 ad = soup.find('div', class_="jobsearch-RightPane")
                 # Finds the entire job description of an ad
