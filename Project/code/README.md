@@ -14,7 +14,7 @@ The file in the ```ledigajobb``` folder is used to web scrape job listing data f
 ### [ledigajobb.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/ledigajobb/ledigajobb.py)
 Extracts data from Ledigajobb. This file contains several functions.
 
-#### Functions
+#### FUNCTIONS
 **get_code(url)**:  
 *Sends an HTTP GET request to the specified* ```url``` *and returns the HTML (*```response```*) if possible.*  
 
@@ -61,16 +61,16 @@ Extracts data from Ledigajobb. This file contains several functions.
 ## [/linkedIn](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/linkedIn)
 All files in the ```linkedIn``` folder are used to web scrape job listing data from LinkedIn.  
 
-## [linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
+### [linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
 The "main" file that has all the data extracting functions. This file is dependent on the output produced by ```getGeoId.py```. 
 Uses BeautifulSoup to analyze HTML elements.
 
-### Functions
+#### FUNCTIONS
 **linkedin_scraper(job, municipality, page_number)**:  
 *Establishes a connection to a page with* ```job``` *and* ```municipality``` *specified. Incrementing* ```page_number``` *and calling itself to load more ads.*
 
 **extract_html(ad, job)**:
-*Extracts some data through HTML for a specific* ```ad``` *.*
+*Extracts some data through HTML for a specific* ```ad```
 
 **extract_ad_page_html(key)**:
 *Gets the rest of the data by connecting to the ad-page of a specific ad with the help of it's* ```key``` *, then extracting data through HTML.*
@@ -99,7 +99,7 @@ The program within the file connects to platsbanken API and retrieves all the in
 ### [platsbanken.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/platsbanken/platsbanken.py)
 Extracts data from Platsbanken's API.
 
-#### Functions
+#### FUNCTIONS
 **run()**:  
 *Retrieves all ads and outputs their data in a 2D list.*  
 
