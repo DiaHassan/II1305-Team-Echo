@@ -44,7 +44,7 @@ def run_linkedin():
 
 # Main
 if __name__ == '__main__':
-    run()
+    # run()
     #run_platsbanken()
     #run_ledigajobb()
-    #run_linkedin()
+    run_linkedin()
