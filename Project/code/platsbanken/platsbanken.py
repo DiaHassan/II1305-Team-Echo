@@ -1,13 +1,20 @@
+# Imports
 from requests import get
 from datetime import datetime, timedelta
 from logging import INFO, getLogger, basicConfig
 from json import loads
-from get_occupation_id import get_occupational_ids, get_professions
+
+# Requirement finder
 from sys import stdout, path as sys_path
 from os import path as os_path
 sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from reqfinder import find_req, find_seniority, find_req_ai_bulk
 
+# Occupation ID
+try:
+    from .get_occupation_id import get_occupational_ids, get_professions
+except ImportError:
+    from get_occupation_id import get_occupational_ids, get_professions
 
 # URL and format for settings
 BASE_URL = 'https://jobstream.api.jobtechdev.se'
