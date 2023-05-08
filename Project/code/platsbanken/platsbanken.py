@@ -2,11 +2,11 @@ from requests import get
 from datetime import datetime, timedelta
 from logging import INFO, getLogger, basicConfig
 from json import loads
-from get_occupation_id import get_occupational_ids, get_professions
 from sys import stdout, path as sys_path
 from os import path as os_path
 sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from reqfinder import find_req, find_seniority, find_req_ai_bulk
+from .get_occupation_id import get_occupational_ids, get_professions
 
 
 # URL and format for settings
@@ -43,7 +43,9 @@ def run():
         occupation_ads = get_ads(occupation)
         all_ads.extend(extract_data_all_ads(occupation_ads, index))
 
-    return all_ads
+    valid_ads = remove_void_ads(all_ads)
+
+    return valid_ads
 
 
 # Retrieves all ads (with given ids) in full json format
@@ -73,6 +75,26 @@ def get_ads(ids):
     return list_of_ads
 
 
+def remove_void_ads(ads):
+    """
+    Remove ads with county set as "null" from the given list of ads.
+
+    Args:
+        ads (list): A list of ads to filter.
+
+    Returns:
+        list: A list of ads with non-empty fields.
+    """
+
+    initial_length = len(ads)
+
+    for ad in ads:
+        if ad[5] == "null":
+            ads.remove(ad)
+    log.info(f"Removed {initial_length - len(ads)} ads out of {initial_length}")
+    return ads
+
+
 # Loads all ads into a list with appropiate parameters
 def extract_data_all_ads(all_ads, index):
     list = []
@@ -93,7 +115,6 @@ def extract_duration(duration):
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad, index):
-
     # Dictionary with all occupation names, in order
     # of how they appear in the occupation_ids list in run().
     # It is used to give job ads the same desired name
@@ -101,15 +122,13 @@ def extract_data_ad(ad, index):
     index_dict = {index: value for index, value in enumerate(professions)}
     
     # Extract all desired job descriptions
-    ad_id = ad['id']
-    employment_type = ad.get('working_hours_type', {}).get('label', ' ')
-    duration = extract_duration(ad.get('duration', {}).get('label', ' '))
-    publication_date = ad.get('publication_date', ' ')
+    employment_type = ad.get('working_hours_type', {}).get('label') or 'null'
+    duration = extract_duration(ad.get('duration', {}).get('label')) or 'null'
+    publication_date = ad.get('publication_date', "null") or 'null'
     occupation = index_dict[index]
-    county = ad.get('workplace_address', {}).get('region', ' ') 
+    county = ad.get('workplace_address', {}).get('region') or 'null'
     date_extracted = datetime.today().strftime('%Y-%m-%d')
-    description = ad.get('description', {}).get('text', ' ')
-    #prereq_ai = find_req_ai(ad_id, occupation, description)
+    description = ad.get('description', {}).get('text') or 'null'
     prereq = find_req(description)
     years = find_seniority(description)
 
@@ -125,9 +144,8 @@ def extract_data_ad(ad, index):
             county, 
             prereq, 
             years, 
-            None, 
-            date_extracted,
-            ad_id
+            'null', 
+            date_extracted
             ]
 
 
