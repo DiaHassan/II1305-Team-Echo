@@ -87,7 +87,7 @@ def insert_data(argument_list, sql_connect, cursor):
             job_param_list[8] = "null"
 
 
-    insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, profession, county, years_of_experience, seniority, requirement, date_gathered) VALUES ('" + delimiter.join(job_param_list) + "');"
+    insert_job_listing = "INSERT INTO job_listing (source, employment_type, duration, publication_date, profession, county, requirement, years_of_experience, seniority, date_gathered) VALUES ('" + delimiter.join(job_param_list) + "');"
 
     cursor.execute(insert_job_listing)
     sql_connect.commit()
