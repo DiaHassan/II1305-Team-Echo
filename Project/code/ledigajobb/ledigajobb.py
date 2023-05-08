@@ -137,7 +137,7 @@ def get_profession_details(response):
         return [None,None,None]
 
 
-# Find lan
+# Find county
 def find_county(county_nb):
     for county in counties:
         if (county_nb == county[0]):
@@ -205,7 +205,7 @@ def run():
                     i += 1
                     print("\n I is vvvvvv")
                     print(i) 
-                    all_jobs.append(scrape_ad(base_url+half_link,county_index, profession))
+                    print(scrape_ad(base_url+half_link,county_index, profession))
                 next_page = get_next_page(response)
                 if (next_page == False): next_page = "Twees"
                 response = get_code(next_page)

@@ -18,6 +18,6 @@ counties = [
     (17, "Gävleborgs län"),
     (18, "Gotlands län"),
     (19, "Dalarnas län"),
-    (20, "Blekinge län")]
-    # Östergötlands län
-    # Kronobergs län
+    (20, "Blekinge län"),
+    (22, "Kronobergs län"),
+    (23, "Östergötlands län")]
