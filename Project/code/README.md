@@ -66,10 +66,22 @@ The "main" file that has all the data extracting functions. This file is depende
 
 #### Functions
 **linkedin_scraper(job, municipality, page_number)**:  
-*Scrapes all ads on the page, with* ```job``` *and* ```municipality``` *specified.*  
+*Establishes a connection to a page with* ```job``` *and* ```municipality``` *specified. Incrementing* ```page_number``` *and calling itself to load more ads.
+
+**extract_html(ad, job)**:
+*Extracts some data through HTML for a specific ```ad```.*
+
+**extract_ad_page_html(key)**:
+*Gets the rest of the data by connecting to the ad-page of a specific ad with the help of it's* ```key```*, then extracting data through HTML.
+
+**format(emp_type, ad_date, location, seniority)**:
+*Makes format changes for * ```emp_type```*, *```ad_date```*, *```location```*, *```seniority``` *such that it matches the other scrapers format.*
+
+**get_professions()**:
+*Gets a list of the wanted proffessions*
 
 **run()**:  
-*Automates the* ```linkedin_scraper``` *function to scrape a list of jobs and municipalities.*  
+*Automates the* ```linkedin_scraper``` *function to scrape a list of jobs and municipalities.*
 
 ### [getGeoId.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/getGeoId.py)
 This script collects the GeoID's of a list of locations. This script is not run by ```main.py```, but if a new list of Geo ID's for different locations is desired, you can change the locations in the ```municipalities``` list:  
