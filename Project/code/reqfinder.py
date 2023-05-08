@@ -17,7 +17,6 @@ descriptions into groups of 100 or less (using the math.ceil function),
 and then loops over each chunk to create the appropriate payload and make the API request. 
 The resulting labels are appended to a list called all_labels, which is returned at the end of the function.
 """
-
 def find_req_ai(description):
     # URL of the API 
     url = 'https://jobad-enrichments-api.jobtechdev.se/enrichtextdocumentsbinary'
@@ -53,7 +52,7 @@ def find_req_ai(description):
         for trait in candidate['enriched_candidates']['traits']:
             labels.append(trait['concept_label'])
     
-    return data
+    return labels
 
 
 # Define regular expressions for bachelor's, master's, and PhD degrees
