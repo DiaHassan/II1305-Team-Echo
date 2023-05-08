@@ -9,9 +9,9 @@ export default function Footer() {
       <footer>
         <div>
           {/* Placeholder */}
-          <h2>Prenumerera på vårt nyhetsbrev</h2>
+          <h2>Prenumerera på nyhetsbrevet</h2>
           <div className="search">
-            <input type="text" placeholder="Ange e-postaddress" />
+            <input type="text" placeholder="Ange e-postaddress ..." />
             <button type="Skicka">Prenumerera</button>
           </div>
         </div>

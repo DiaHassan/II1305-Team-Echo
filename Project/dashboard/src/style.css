@@ -1,3 +1,4 @@
+
 :root {
     --font: Font, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
     --color-white: #fff;
@@ -21,6 +22,19 @@ body {
     display: none;
 }
 
+/* This is the id for the label over the table */
+#graphtitle {
+    font-size: 30px;
+    text-decoration: underline;
+    color: var(--color-green);
+    width: 1000px;
+    display: block;
+    text-align: center;
+    padding-bottom: 30px;
+    margin-left: 80px;
+    font-family: var(--font);
+
+}
 
 /* --------------- */
 
@@ -464,4 +478,8 @@ footer a:hover {
 
 .color-black {
     color: #000;
+}
+
+:disabled{
+    color: grey !important; 
 }

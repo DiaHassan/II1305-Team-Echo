@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./navbar";
 import Footer from "./footer";
 import "../style.css";
 
 
 
+
 export default function Home() {
+
   return (
     <>
       <div className="wrapper">
@@ -14,7 +16,7 @@ export default function Home() {
           <div className="home-front">
             <div>
               <h1>Hur ser arbetsmarknaden ut i Sverige?</h1>
-              <p>"Swedish talent observatory" ger dig med en visuell graf en statistisk överblick över efterfrågan på sveriges arbetsmarknad.
+              <p>Swedish talent observatory ger dig med hjälp utav en visuell graf en statistisk överblick över efterfrågan på sveriges arbetsmarknad.
                 Ta reda på hur många möjliga jobb som finns inom ditt yrke och län!
               </p>
             </div>
@@ -23,6 +25,7 @@ export default function Home() {
             </a>
           </div>
         </div>
+        { /* Unecessary search bar
         <div className="home-content">
 
           <h1>Title</h1>
@@ -31,7 +34,7 @@ export default function Home() {
             <input type="text" placeholder="Search..." />
             <button type="submit">Search</button>
           </div>
-        </div>
+        </div> */}
         <Footer />
       </div>
 
