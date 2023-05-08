@@ -60,6 +60,15 @@ def get_html(page, profession, county, number):
     data = page.content().encode('ascii', 'replace').decode('ascii')
     return data
 
+# Defeats popups
+def close_popup(page_html):
+    try:
+        if page_html.find('//*[@id="mosaic-modal-mosaic-provider-desktopserp-jobalert-popup"]/div/div/div[1]') is not None:
+            print("found you")
+            page_html.find('//*[@id="mosaic-modal-mosaic-provider-desktopserp-jobalert-popup"]/div/div/div[1]/div/button').click(timeout=1000)
+            return
+    except:
+        return
 
 # Test
 if __name__ == '__main__':
@@ -68,19 +77,23 @@ if __name__ == '__main__':
         browser = playwright.chromium.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
-        data = (get_html(page, 'Lärare', 'Stockholms län', 100))
+        data = (get_html(page, 'Ingenjör', 'Stockholms län', 15))
         soup = BeautifulSoup(data, features='lxml')
+        close_popup(page)
         job_ads = soup.find_all('div', class_="slider_container css-77eoo7 eu4oa1w0")
         print(len(job_ads))
+        job_titles = soup.find_all('h2', {'class': 'jobTitle css-1h4a4n5 eu4oa1w0'})
+        for job_title in job_titles:
+            print(job_title.find('span').get('title').encode('ascii', 'replace').decode('ascii'))
         for i in range(1, 18):
-            if i == 6 or i == 9:
-                continue
             try:
                 test = page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]').click(timeout=1000)
                 ad = soup.find('div', class_="jobsearch-RightPane")
-                t = ad.find('div', class_="css-6z8o9s eu4oa1w0").text.strip
-                print(t)
-                sleep(1)
+                # Finds the entire job description of an ad
+                body_text = ad.find('div', {'class': 'jobsearch-jobDescriptionText jobsearch-JobComponent-description'})
+                for paragraph in body_text:
+                    print(paragraph)
+                #sleep(1)
             except:
                 continue
         # context.close()
