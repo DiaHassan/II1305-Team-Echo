@@ -1,28 +1,15 @@
 from sys import platform
-from os.path import exists
+from os import startfile
+from os.path import exists, dirname, join
 from sqlite3 import connect
-# from code import webscrape
-from db import Fortabletest , extract
 import subprocess
-import threading
-import os
-import sys
-#import subprocess
-#import pynpm
+# from code import webscrape
+
 
 # DB path
 db_path = 'Project/db/echo.db'
 sql_path = 'Project/db/db_sqlite.sql'
-            
-# Path to dashboard folder for running the website
-def find_dashboard_path():
-    match platform:
-        case 'linux':
-            return 'Project/dashboard'
-        case 'darwin':
-            return 'Project/dashboard'
-        case _:
-            return 'Project\dashboard'
+   
             
 # Builds database
 def build_db():
@@ -39,7 +26,7 @@ def build_db():
     connection.close()
 
 
-# Main 
+# Main function
 def run():
     # Builds db with tables if it does not already exists
     if not exists(db_path):
@@ -49,11 +36,12 @@ def run():
     # webscrape.run()
 
     # Dashboard
-    table_path = os.path.join(os.path.join('Project', 'db'), 'Fortabletest.py')
-    os.startfile(table_path)
-    path = os.path.join(os.path.dirname(__file__), 'dashboard')
+    table_path = join(join('Project', 'db'), 'Fortabletest.py')
+    startfile(table_path)
+    path = join(dirname(__file__), 'dashboard')
     subprocess.run("npm start", shell=True, cwd=path)
-    
-# Execute
+
+
+# Execute main function
 if __name__ == '__main__':
     run()
