@@ -33,40 +33,45 @@ def close_popup(page):
     except:
         print("failed")
         return
+    
+def extract_ad(ad):
+    # [source, employment_type, duration, publication_date, profession, county, req, years, seniority, date_extracted, desc]
+    data = []
+    print(ad.find('div', class_='jobsearch-JobInfoHeader-title-container'))
+    # employment_type = ad.find('div', {'class': 'css-m539th eu4oa1w0'})
+
+    print(employment_type)
+    if ad.find('Heltid') is not None:
+        employment_type = 'heltid'
+    elif ad.find('Deltid') is not None:
+        employment_type = 'deltid'
+    else:
+        employment_type = 'null'
+    print(employment_type)    
+    return data
+
 
 # Returns the parameters of one ad
-def get_ad(page, profession, county, page_index, ad_list):
+def get_ads_on_page(page, profession, county, page_index):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={page_index}')
     sleep(1)
     close_popup(page)
     for i in range(1, 18):
         try:
-            page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[{str(i)}]/div/div[1]/div/div[1]').click(timeout=1000)
+            page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[{str(i)}]/div/div[1]/div/div[1]').click(timeout=10000)
             data = page.content().encode('ascii', 'replace').decode('ascii')
-            html = BeautifulSoup(data, features='lxml')
-            ad = html.find('div', class_="jobsearch-RightPane")
-            print(ad)
-
-            print("testing")
-            # finds the job title
-            job_title = ad.find('h2', class_="icl-u-xs-mb--xs icl-u-xs-mt--none jobsearch-JobInfoHeader-title is-embedded").find('span')
-            # chars_to_remove = "span<>/"
-            # for char in chars_to_remove:
-            #     job_title = str(job_title).replace(char, "")
-            print(str(job_title))
-
-            #employment_type = 
-
-            sleep(100)
+            soup = BeautifulSoup(data, features='lxml')
+            ad = soup.find('div', class_="jobsearch-RightPane")
+            extract_ad(ad)
         except:
             print(i)
             print("epic fail")
-            sleep(100)
+            sleep(1)
             continue
     
 
 # Returns a list of all ads for a specified profession and county
-def get_all_ads(page, profession, county):
+def get_ads_all_pages(page, profession, county):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={0}')
     data = page.content().encode('ascii', 'replace').decode('ascii')
     html = BeautifulSoup(data, features='lxml')
@@ -83,7 +88,7 @@ def get_all_ads(page, profession, county):
     page_index = 0
     max_ads_scraped = 0
     while max_ads_scraped < job_count:
-        ad_list = (get_ad(page, profession, county, page_index, ad_list))
+        ad_list.append((get_ads_on_page(page, profession, county, page_index)))
         print(max_ads_scraped)
         page_index += 10
         max_ads_scraped += 15
@@ -99,7 +104,7 @@ def run():
         result = []
         for profession in professions:
             for county in counties:
-                result.append(get_all_ads(page, profession, county))
+                result.append(get_ads_all_pages(page, profession, county))
         context.close()
         browser.close()
 
