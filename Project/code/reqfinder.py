@@ -2,11 +2,8 @@ from re import search
 from requests import post
 from json import loads
 
-# Job ad test variable
-job_ad = """
-"""
 
-def find_req_ai(descriptions):
+def find_req_ai(descriptions: list) -> list:
     # URL of the API 
     url = 'https://jobad-enrichments-api.jobtechdev.se/enrichtextdocumentsbinary'
     
@@ -34,6 +31,7 @@ def find_req_ai(descriptions):
             "add_occupation_concepts": False,
             "add_skill_concepts": True,
             "add_workplace_experience_concepts": False,
+            "include_synonyms": True
         }
 
         # Make the HTTP POST request
@@ -42,17 +40,25 @@ def find_req_ai(descriptions):
         # Extracts all the 'concept_lablels' (the requirements) from the API response
         data = loads(response.text)
         for candidate in data:
-            for competency in candidate['enriched_candidates']['competencies']:
-                labels.append(competency['concept_label'])
+            if 'enriched_candidates' in candidate and 'competencies' in candidate['enriched_candidates']:
+                ad_labels = []
+                for competency in candidate['enriched_candidates']['competencies']:
+                    ad_labels.append(competency['concept_label'])
+                    #labels.append(ad_labels)
 
+                labels.append(ad_labels)
+
+    #--------------------- IF WE WANT TO ONLY EXTRACT EDUCATION REQUIREMENTS ---------------------------
+    #                         IF IMPLEMENTED CHANGE RETURN TO edu_labels
+    #
     # Filter the labels based on the educational keywords
-    edu_labels = []
-    for label in labels:
-        for keyword in find_req(label):
-            if keyword not in edu_labels:
-                edu_labels.append(keyword)
+    #edu_labels = []
+    #for label in labels:
+    #    for keyword in find_req(label):
+    #        if keyword not in edu_labels:
+    #            edu_labels.append(keyword)
 
-    return edu_labels
+    return labels
 
 
 
