@@ -8,7 +8,7 @@ from json import loads
 from sys import stdout, path as sys_path
 from os import path as os_path
 sys_path.append(os_path.dirname(os_path.dirname(__file__)))
-from reqfinder import find_req, find_seniority, find_req_ai_bulk
+from reqfinder import find_req, find_seniority, find_req_ai
 
 # Occupation ID
 try:
@@ -21,17 +21,14 @@ BASE_URL = 'https://jobstream.api.jobtechdev.se'
 STREAM_URL = f"{BASE_URL}/stream"
 DATE_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
-
 # Logging for settings
 LOG_LEVEL = INFO  # Change INFO to DEBUG for verbose logging
 LOG_FORMAT = '%(asctime)s  %(levelname)-8s %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-
 # Logging for termnial
 log = getLogger(__name__)
 basicConfig(stream=stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
-
 
 # Main function that retrieves all ads and outputs their data in a 2d list
 def run():
@@ -50,7 +47,9 @@ def run():
         occupation_ads = get_ads(occupation)
         all_ads.extend(extract_data_all_ads(occupation_ads, index))
 
-    return all_ads
+    valid_ads = remove_void_ads(all_ads)
+
+    return valid_ads
 
 
 # Retrieves all ads (with given ids) in full json format
@@ -79,6 +78,26 @@ def get_ads(ids):
     log.info(f"Got {len(list_of_ads)} ads from {url}")
     return list_of_ads
 
+ # Removes ads with "null" value in given field
+def remove_void_ads(ads):
+    """
+    Remove ads with county set as "null" from the given list of ads.
+
+    Args:
+        ads (list): A list of ads to filter.
+
+    Returns:
+        list: A list of ads with non-empty fields.
+    """
+
+    initial_length = len(ads)
+
+    for ad in ads:
+        if ad[5] == "null":
+            ads.remove(ad)
+    log.info(f"Removed {initial_length - len(ads)} ads out of {initial_length}")
+    return ads
+
 
 # Loads all ads into a list with appropiate parameters
 def extract_data_all_ads(all_ads, index):
@@ -97,6 +116,13 @@ def extract_duration(duration):
           return char
     return 0
 
+def extract_prerequirement(ads):
+    ad_descriptions = []
+    for ad in ads:
+        ad_descriptions.extend(ad[10])
+    skills = find_req_ai(ad_descriptions)
+    return skills
+
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad, index):
@@ -108,15 +134,13 @@ def extract_data_ad(ad, index):
     index_dict = {index: value for index, value in enumerate(professions)}
     
     # Extract all desired job descriptions
-    ad_id = ad['id']
-    employment_type = ad.get('working_hours_type', {}).get('label', ' ')
-    duration = extract_duration(ad.get('duration', {}).get('label', ' '))
-    publication_date = ad.get('publication_date', ' ')
+    employment_type = ad.get('working_hours_type', {}).get('label') or 'null'
+    duration = extract_duration(ad.get('duration', {}).get('label')) or 'null'
+    publication_date = ad.get('publication_date', "null") or 'null'
     occupation = index_dict[index]
-    county = ad.get('workplace_address', {}).get('region', ' ') 
+    county = ad.get('workplace_address', {}).get('region') or 'null'
     date_extracted = datetime.today().strftime('%Y-%m-%d')
-    description = ad.get('description', {}).get('text', ' ')
-    #prereq_ai = find_req_ai(ad_id, occupation, description)
+    description = ad.get('description', {}).get('text') or 'null'
     prereq = find_req(description)
     years = find_seniority(description)
 
@@ -132,9 +156,9 @@ def extract_data_ad(ad, index):
             county, 
             prereq, 
             years, 
-            None, 
+            'null', 
             date_extracted,
-            ad_id
+            description
             ]
 
 

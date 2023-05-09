@@ -36,7 +36,7 @@ export default function Sandbox(props) {
     };
 
     //insert all sources. Format 'sourcename': defaultValue
-    const [inputs, setInputs] = useState({ plattsbanken: defaultValue, linkedin: defaultValue });
+    const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue });
 
     // Handles any changes to the source buttons
     const handleSource = (event) => {
@@ -92,7 +92,7 @@ export default function Sandbox(props) {
                 <label>
                     <input
                         type="checkbox"
-                        name="plattsbanken"
+                        name="platsbanken"
                         value={JSON.stringify({
                             job: false
                         })}
@@ -115,12 +115,12 @@ export default function Sandbox(props) {
             </form>
 
 
-            <p>{inputs.plattsbanken.county && inputs.linkedin.county ? '+' : '-'} county</p>
-            <p>{inputs.plattsbanken.seniority && inputs.linkedin.seniority ? '+' : '-'} Seniority</p>
-            <p>{inputs.plattsbanken.job && inputs.linkedin.job ? '+' : '-'} Job</p>
+            <p>{inputs.platsbanken.county && inputs.linkedin.county ? '+' : '-'} Län</p>
+            <p>{inputs.platsbanken.seniority && inputs.linkedin.seniority ? '+' : '-'} Senioritet</p>
+            <p>{inputs.platsbanken.job && inputs.linkedin.job ? '+' : '-'} Jobb</p>
 
 
-            <p>{inputs.plattsbanken.active ? getPropertyName(inputs, o => o.plattsbanken) : ''}</p>
+            <p>{inputs.platsbanken.active ? getPropertyName(inputs, o => o.platsbanken) : ''}</p>
             <p>{inputs.linkedin.active ? getPropertyName(inputs, o => o.linkedin) : ''}</p>
 
         </>

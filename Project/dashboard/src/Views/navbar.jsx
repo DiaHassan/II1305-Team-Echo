@@ -31,18 +31,18 @@ export default function Navbar() {
     <>
       <nav className={`navbar ${isScrolled ? 'small' : ''}`}>
         <div className="navTitle">
-          <Link to="/">Swedish Talent Observatory</Link>
+          <Link to="/">Swedish Talent Observatory Län </Link>
         </div>
         <img src={"Project/dashboard/src/menuHamburger.png"} alt="<" className="burger" onClick={displayList}/>
         <ul className={`${isVisible ? '' : 'navHidden'}`}>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Hem</Link>
           </li>
           <li >
-            <Link to="/statistics">Statistics</Link>
+            <Link to="/statistics">Statistik</Link>
           </li>
           <li  >
-            <Link to="/about">About</Link>
+            <Link to="/about">Om</Link>
           </li>
         </ul>
       </nav>
