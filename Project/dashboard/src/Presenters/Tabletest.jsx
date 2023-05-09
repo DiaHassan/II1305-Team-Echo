@@ -272,6 +272,21 @@ export default function Tabletest() {
         ]
     }
 
+    function displayAll(result){
+        console.log(result)
+        const compare = (select ? joblist.slice() : countyList.slice());
+        for (let index = 0; index < result.length; index++) {
+            const element = result[index];
+            const compareIndex = compare.indexOf(element.name);
+            compare.splice(compareIndex, 1);
+        }
+        for (let index = 0; index < compare.length; index++) {
+            result.push({name: compare[index]} )
+        }
+        // result = _.sortBy(result, 'name')
+        return result;
+    }
+
     const getBars = (InputColumns) => {
         const bars = [];
 
@@ -427,7 +442,7 @@ export default function Tabletest() {
                 </div>
 
                 {/* <ResponsiveContainer > */}
-                <BarChart width={1000} height={600} data={result}>
+                <BarChart width={1000} height={600} data={displayAll(result)}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
                     <YAxis />
@@ -594,7 +609,7 @@ export default function Tabletest() {
                             {<div className='Date'>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                                     <InputLabel htmlFor="grouped-date">Date</InputLabel>
-                                    <Select native defaultValue={checkToday} id="grouped-date" label="Grouping" onChange={handleDate}>
+                                    <Select native defaultValue={checkToday} id="grouped-date" label="Datum" onChange={handleDate}>
                                         {getMonths()}
                                     </Select>
                                 </FormControl>
