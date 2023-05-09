@@ -116,8 +116,6 @@ export default function Tabletest() {
 
 
     function listToDict(list) {
-        //TODO: Decide where to place the calling of groupExperience.
-        //Is it supposed to be called inside listToDict or outside at the calling of listToDict.
         list = groupExperience(list);
         const dict = [];
         for (let i = 0; i < list.length; i++) {
@@ -163,14 +161,11 @@ export default function Tabletest() {
     //A function that groups years of experience into intervals instead of sorting by specific
     //years. If the param is not years of experience then it returns the array unchanged. 
     function groupExperience (list){
-        //Debugging. TODO Delete the two rows below.
-        console.log("Group Experience: ")
-        console.log(list)
-        // ---------------------------------------
         if(optionRadio != "years_of_experience"){
             return list;
         }
-        const group1 = []; //0-2 years of experience
+        const group0 = []; //No experience needed (0)
+        const group1 = []; //1-2 years of experience
         const group2 = []; //3-5 years of experience
         const group3 = []; //6-8 years of experience
         const group4 = []; //8+ years of experience
@@ -178,7 +173,8 @@ export default function Tabletest() {
         // of the arrays.
         for(const x of list) {
             for(let i = 1; i < x.length; i++){
-                const group1 = ["0-2", 0]; //0-2 years of experience
+                const group0 = ["Ingen erfarenhet", 0]; //0 years of experience
+                const group1 = ["1-2", 0]; //1-2 years of experience
                 const group2 = ["3-5", 0]; //3-5 years of experience
                 const group3 = ["6-8", 0]; //6-8 years of experience
                 const group4 = ["8+", 0]; //8+ years of experience
@@ -186,7 +182,9 @@ export default function Tabletest() {
                     //Here, finally, we are inside results
                     const elem = (x[i])[y];
                     const label = elem[0]
-                    if(label <= 2){
+                    if (label == 0) {
+                        group0[1] += elem[1];
+                    }else if(label <= 2){
                        group1[1] += elem[1]; 
                     } else if (label <= 5){
                         group2[1] += elem[1];
@@ -196,31 +194,10 @@ export default function Tabletest() {
                         group4[1] += elem[1];
                     }
                 }
-                x[i] = [(x[i])[0], group1, group2, group3, group4];
+                x[i] = [(x[i])[0], group0, group1, group2, group3, group4];
             }
         }
         return list;
-        /* for (let i = 0; i < list.length; i++) {
-            
-            const element = list[i]
-            //const year = list[[][][][i]];
-            switch(year) {
-                case (year[i] < 2):
-                    group1[i]=list[i];
-                case (year < 5):
-                    group2.push(list[i])
-
-                case(year < 8):
-                group3.push(i)
-            }
-            if (year < 2) {
-                group[i]=list[i];
-            } else if( year < 5){
-
-            } 
-
-        } */
-        
     }
 
     const handleClick = () => {
@@ -443,7 +420,6 @@ export default function Tabletest() {
                         <FormControl component="fieldset">
                             <FormLabel component="legend">Välj plattform:</FormLabel>
                             <FormGroup>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         // checked={linkedinCB}
                                         onChange={handleSource}
@@ -456,8 +432,6 @@ export default function Tabletest() {
                                             drivers_license: false
                                         })}
                                     />} label="LinkedIn"/>
-                                </span>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         onChange={handleSource}
                                         color='default'
@@ -468,8 +442,6 @@ export default function Tabletest() {
                                         })}
 
                                     />} label="Platsbanken" />
-                                </span>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         onChange={handleSource}
                                         color='default'
@@ -479,7 +451,6 @@ export default function Tabletest() {
                                             drivers_license: false
                                         })}
                                     />} label="Lediga jobb" />
-                                </span>
                             </FormGroup>
                         </FormControl>
 
@@ -493,7 +464,7 @@ export default function Tabletest() {
                                     <span className="slider"></span>
                                 </label>
                             </th>
-                            <th align='left' id='fyel'>Flera yrken <br/>Ett län</th>
+                            <th align='left' id='fyel'>Ett yrke <br/>Flera län</th>
                         </table>
 
                         {/* Switch state 1 */}
@@ -527,9 +498,6 @@ export default function Tabletest() {
                                 >
                                     <MenuItem
                                         value="all"
-                                    // classes={{
-                                    //     root: isAllSelected ? classes.selectedAll : ""
-                                    // }}
                                     ></MenuItem>
                                     {initialJobList.map((option) => (
                                         <MenuItem key={option} value={option}>
@@ -559,9 +527,6 @@ export default function Tabletest() {
                                 >
                                     <MenuItem
                                         value="all"
-                                    // classes={{
-                                    //     root: isAllSelected ? classes.selectedAll : ""
-                                    // }}
                                     ></MenuItem>
                                     {allCounties.map((option) => (
                                         <MenuItem key={option} value={option}>
@@ -593,39 +558,19 @@ export default function Tabletest() {
 
                         {<div className='Date'>
                                 <FormControl sx={{ m: 1, width: 200 }}>
-                                    <label><b>Pick Several Month</b><span>(Available months from Feb.2016 to Apr.2020)</span></label>
-                                    <div className="edit">
-                                     {/*   <Picker
-                                            ref={this.pickMulti}
-                                            years={{ min: { year: 2016, month: 2 }, max: { year: 2020, month: 4 } }}
-                                            value={multiValue}
-                                            lang={pickerLang.months}
-                                            theme="dark"
-                                            onChange={this.handleMultiChange}
-                                            onDismiss={this.handleMultiDissmis}
-                                        >
-                                            <MonthBox value={multiValue.map(v => makeText(v)).join(' | ')} onClick={this.handleClickMultiBox} />
-                                        </Picker>*/}
-                                        
-                                    </div>
-                                    {/* <InputLabel id="mutiple-select-autowidth-label">Datum</InputLabel>
+                                     <InputLabel id="mutiple-select-autowidth-label">Datum</InputLabel>
                                     <Select
                                         labelId="mutiple-select-autowidth-label"
                                         id="multiple-select-autowidth"
                                         multiple
                                         value={joblist}
-                                        onChange={handleChanges}
-                                        //renderValue={(joblist) => joblist.join(", ")}
+                                        //onChange={}
                                         autoWidth
                                         label="Datum"
                                     >
-                                        <MenuItem
-                                            value="all"
-                                        // classes={{
-                                        //     root: isAllSelected ? classes.selectedAll : ""
-                                        // }}
-                                        ></MenuItem>
-                                    </Select> */}
+                                        <MenuItem value="all" >
+                                        </MenuItem>
+                                    </Select> 
                                 </FormControl>
                         </div> }
                         
@@ -635,8 +580,6 @@ export default function Tabletest() {
                                 {/* Div containing 3 horizontal radio buttons */}
                                 <RadioGroup aria-label="position" name="position" defaultValue="top">
                                     <FormControl component="fieldset">
-                                {/*       <span onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'} className={{}}>*/}
-
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                                 <Grid item xs={6}>
                                                     <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Anställningsform" onChange={handleParams}
@@ -662,7 +605,6 @@ export default function Tabletest() {
                                                     <FormControlLabel style={standard} value="null" control={<Radio size="small" />} label="Inget val" onChange={handleParams} />
                                                 </Grid>
                                             </Grid>
-                                    {/*</span>*/}
                                     </FormControl>
                                 </RadioGroup>
                         </div>
