@@ -439,10 +439,20 @@ export default function Tabletest() {
                 {/* </ResponsiveContainer> */}
 
                 <div className='forlist'>
+                <div class="hover-container">
+                            <div class="hover-element">
+                                ?
+                            <div class="hover-text">These statistics have some unreliable data. </div>
+                            </div>
+                            </div>
                     <div >
+
+                           
                         {/* Div containing 3 checkboxes */}
                         <FormControl component="fieldset" defaultValue={"linkedin"}>
+
                             <FormLabel component="legend">Välj plattform:</FormLabel>
+                            
                             <FormGroup>
                                 <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
@@ -481,6 +491,7 @@ export default function Tabletest() {
                                         })}
                                     />} label="Lediga jobb" />
                                 </span>
+                                
                             </FormGroup>
                         </FormControl>
 
