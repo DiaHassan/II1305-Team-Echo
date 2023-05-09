@@ -26,7 +26,7 @@ def endpoint():
     print("Arg1: ", arg1)
     if(arg1[3]=='Inget val'):
         arg1[3] = 'null'
-    info = extract(arg1[0],arg1[1],arg1[2],arg1[3])
+    info = extract(arg1[0],arg1[1],arg1[2],arg1[3],arg1[4])
 
     # info.pop(0)
     print(info)

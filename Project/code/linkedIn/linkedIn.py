@@ -1,20 +1,21 @@
 # All code explicit for webscraping LinkedIn.com
-from time import time, sleep
+from bs4 import BeautifulSoup, SoupStrainer
 from requests import get
-from traceback import extract_tb
 from re import search
 from os import path as os_path
 from sys import exc_info, platform, path as sys_path
 sys_path.append(os_path.dirname(os_path.dirname(__file__))) # Get the directory above
-from reqfinder import find_req # Program to look through bodytext
+from traceback import extract_tb
 from datetime import date, timedelta
-from bs4 import BeautifulSoup, SoupStrainer
+from time import time, sleep
+
+from reqfinder import find_req # Module to look through bodytext
 
 
-# Duplicates counter (REMOVE LATER)
+# Duplicates counter
 duplicates = 0
 
-# Removed counter (REMOVE LATER)
+# Removed counter
 remove_counter = 0
 
 # Keep track of unique adds
@@ -25,17 +26,20 @@ start_time = time()
 
 # Function to scrape websites
 def linkedin_scraper(job, municipality, page_number):   
-    next_page = f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords={str(job)}&geoId={str(municipality)}&start={str(page_number)}"
-    print(next_page) # (REMOVE LATER)
+    
     # Establish connection
+    next_page = f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords={str(job)}&geoId={str(municipality)}&start={str(page_number)}"
+    
     while(True):
         response = get(str(next_page))
         if(response.status_code == 200):
             break
     soup = BeautifulSoup(response.content,'lxml')
+    print(next_page) # (REMOVE LATER)
 
     # Temp list for every ad per proffesion per municipality
     temp = []
+
 
     # Check that ads actually exist on page
     found_jobs = soup.find('li')
@@ -47,9 +51,9 @@ def linkedin_scraper(job, municipality, page_number):
         for ad in ads:
             # Data from a single ad
             data = extract_html(ad, job)
-        
             if data:
                 temp.append(data)
+
 
     # Remove duplicates and the "key" parameter 
     list = []
@@ -61,6 +65,7 @@ def linkedin_scraper(job, municipality, page_number):
         else:
             global duplicates
             duplicates = duplicates + 1
+
 
     #Max 25 ad per page
     if page_number < 975 and len(ads) == 25:
@@ -105,9 +110,9 @@ def extract_html(ad, job):
     # Get unique identifier for each ad
     key_tag = ad['data-entity-urn']
     key = key_tag.split(':')[-1]
+    
 
     # print(job_title + " | " + location) # (REMOVE LATER)
-
     # Get more data from ad-page
     seniority, employment_type, education, flag_500 = extract_ad_page_html(key)
 
@@ -126,21 +131,24 @@ def extract_ad_page_html(key):
     # Establish connection to ad-page
     while(True):
         ad_response = get("https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/" + str(key))
-        # print(ad_response)
+
         if(ad_response.status_code == 200 or ad_response.status_code == 500):
             break
         print("RETRYING")
         sleep(0.1) # Delay because of status code 429
+    
+    # Skips ad if status code 500
     if(ad_response.status_code == 500):
         global remove_counter
         print("SKIP")
         remove_counter = remove_counter + 1
-        # Skips ad if status code 500
         return seniority, employment_type, education, False
     
+
     #Access only part of the HTML file
     strainer = SoupStrainer('section', attrs={'class':'core-section-container my-3 description'})
     ad_soup = BeautifulSoup(ad_response.content,'html.parser', parse_only=strainer)
+
 
     #Get HTML element for ad-page
     ad_criterias = ad_soup.find_all('li', class_='description__job-criteria-item')
@@ -149,7 +157,6 @@ def extract_ad_page_html(key):
     # Look for seniority and employment type
     for item in ad_criterias:
         header = item.find('h3', class_='description__job-criteria-subheader').text.strip()
-        # print(header)
         if(header == 'Seniority level'):
             seniority = item.find('span', class_='description__job-criteria-text--criteria').text.strip()
         if(header == 'Employment type'):
@@ -157,6 +164,7 @@ def extract_ad_page_html(key):
     
     # Look through body text for education
     education = find_req(ad_description) 
+
 
     return seniority, employment_type, education, True
 
@@ -173,6 +181,7 @@ def format(emp_type, ad_date, location, seniority):
     elif emp_type == 'Contract' or 'Temporary' or 'Internship' or 'Volunteer' or 'Other': 
         emp_type = 'övrigt'
     else: emp_type = None # Extra case for unknown employment type
+
 
     # Calculating the estimated publication date (unable to be exact)
     ad_date_list = ad_date.split(" ")
