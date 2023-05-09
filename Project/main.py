@@ -1,29 +1,18 @@
 from sys import platform
-from os.path import exists, chdir
+from os.path import exists
 from sqlite3 import connect
-from code import webscrape
+# from code import webscrape
+from db import Fortabletest , extract
+import subprocess
+import threading
+import os
+import sys
 #import subprocess
 #import pynpm
 
-# Path to database
-def find_db_path():
-    match platform:
-        case "linux":
-            return "Project/db/echo.db"
-        case "darwin":
-            return "Project/db/echo.db"
-        case _:
-            return "Project\db\echo.db"
-
-# Path to sql for building database
-def find_sql_path():
-    match platform:
-        case "linux":
-            return "Project/db/db_sqlite.sql"
-        case "darwin":
-            return "Project/db/db_sqlite.sql"
-        case _:
-            return "Project\db\db_sqlite.sql"
+# DB path
+db_path = 'Project/db/echo.db'
+sql_path = 'Project/db/db_sqlite.sql'
             
 # Path to dashboard folder for running the website
 def find_dashboard_path():
@@ -36,7 +25,7 @@ def find_dashboard_path():
             return 'Project\dashboard'
             
 # Builds database
-def build_db(db_path, sql_path):
+def build_db():
 
     connection = connect(db_path)
     cursor = connection.cursor()
@@ -52,17 +41,28 @@ def build_db(db_path, sql_path):
 
 # Main 
 def run():
-  # Builds db with tables if it does not already exists
-  db_path = find_db_path()
-  if not exists(db_path):
-    build_db(db_path, find_sql_path())
-  
-  # Fill database
-  webscrape.run()
+    # Builds db with tables if it does not already exists
+    if not exists(db_path):
+        build_db()
+    
+    # Fill database
+    # webscrape.run()
+    # path = os.path(os.walk('dashboard'))
+    # print(path)
+    # os.system("cd C:\\Users\\hassa\\OneDrive\\Documents\\Echo\\Project\\dashboard ; npm run start")
+    path = os.path.join(os.path.dirname(__file__), 'dashboard')
+    
+    # p1 = multiprocessing(subprocess.run("npm start", shell=True, cwd=path))
+    # Dashboard
+    # p2 = multiprocessing(Fortabletest.run())
+    os.startfile("Project\db\Fortabletest.py")
+    # t2 = threading.Thread(target = Fortabletest.run())
+    # t1 = threading.Thread(target = subprocess.run("npm start", shell=True, cwd=path))
+    subprocess.run("npm start", shell=True, cwd=path)
+    # t2.start()
+    
 
-  # Dashboard
-  # TODO
-  # -- npm stuff --   
+    # -- npm stuff --   
 
 # Execute
 if __name__ == '__main__':
