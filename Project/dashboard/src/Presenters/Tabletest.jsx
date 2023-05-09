@@ -493,7 +493,7 @@ export default function Tabletest() {
                                     <span className="slider"></span>
                                 </label>
                             </th>
-                            <th align='left' id='fyel'>Flera yrken <br/>Ett län</th>
+                            <th align='left' id='fley'>Flera län <br/>Ett yrke</th>
                         </table>
 
                         {/* Switch state 1 */}
