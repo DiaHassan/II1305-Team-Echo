@@ -2,14 +2,14 @@
 from bs4 import BeautifulSoup, SoupStrainer
 from requests import get
 from re import search
-from os import path as os_path
-from sys import exc_info, platform, path as sys_path
-sys_path.append(os_path.dirname(os_path.dirname(__file__))) # Get the directory above
+from os.path import dirname
+from sys import exc_info, path
+path.append(dirname(dirname(__file__))) # Get the directory above
 from traceback import extract_tb
 from datetime import date, timedelta
 from time import time, sleep
-
 from reqfinder import find_req # Module to look through bodytext
+from file_to_list import file_to_list
 
 
 # Duplicates counter
@@ -237,22 +237,13 @@ def format(emp_type, ad_date, location, seniority):
     return emp_type, ad_publication_date, county, seniority
 
 
-
-# Retrieves list of all professions to webscrape
-def get_professions():
-    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
-    path = os_path.dirname(os_path.dirname(os_path.dirname(__file__))) + s + 'professions.txt'
-    return open(path, encoding='utf-8').read().splitlines()
-
-
-
 def run():
     start_time = time() # (REMOVE LATER)
     # Database
     db = []
 
     # Jobs
-    jobs = get_professions()
+    jobs = file_to_list('professions.txt')
 
     # Geo ids
     # geo_ids = [105391169] # (REMOVE LATER)
@@ -302,3 +293,6 @@ def run():
         print("Length of list: " + str(len(db)))
 
         return db
+    
+if __name__ == '__main__':
+    run()
