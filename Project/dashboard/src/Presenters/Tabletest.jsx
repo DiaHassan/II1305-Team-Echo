@@ -409,10 +409,10 @@ export default function Tabletest() {
             </optgroup>));
     }
 
-    const makeText = m => {
-        if (m && m.year && m.month) return (pickerLang.months[m.month-1] + '. ' + m.year)
-        return '?'
-    }
+    // const makeText = m => {
+    //     if (m && m.year && m.month) return (pickerLang.months[m.month-1] + '. ' + m.year)
+    //     return '?'
+    // }
     useEffect(() => {
         handleClick()
       },[select]);

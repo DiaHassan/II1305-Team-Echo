@@ -47,23 +47,13 @@ def run():
     
     # Fill database
     # webscrape.run()
-    # path = os.path(os.walk('dashboard'))
-    # print(path)
-    # os.system("cd C:\\Users\\hassa\\OneDrive\\Documents\\Echo\\Project\\dashboard ; npm run start")
-    path = os.path.join(os.path.dirname(__file__), 'dashboard')
-    
-    # p1 = multiprocessing(subprocess.run("npm start", shell=True, cwd=path))
+
     # Dashboard
-    # p2 = multiprocessing(Fortabletest.run())
-    os.startfile("Project\db\Fortabletest.py")
-    # t2 = threading.Thread(target = Fortabletest.run())
-    # t1 = threading.Thread(target = subprocess.run("npm start", shell=True, cwd=path))
+    table_path = os.path.join(os.path.join('Project', 'db'), 'Fortabletest.py')
+    os.startfile(table_path)
+    path = os.path.join(os.path.dirname(__file__), 'dashboard')
     subprocess.run("npm start", shell=True, cwd=path)
-    # t2.start()
     
-
-    # -- npm stuff --   
-
 # Execute
 if __name__ == '__main__':
     run()
