@@ -1,23 +1,12 @@
 from re import search
 from requests import post
 from json import loads
-from math import ceil
 
 # Job ad test variable
 job_ad = """
 """
 
-"""
-The find_req_ai_bulk function takes in three lists: ids, titles, and descriptions. 
-Each element of these lists correspond to the doc_id, doc_headline, 
-and doc_text parameters of the API request, respectively.
-
-The function first calculates the number of chunks needed to split the 
-descriptions into groups of 100 or less (using the math.ceil function), 
-and then loops over each chunk to create the appropriate payload and make the API request. 
-The resulting labels are appended to a list called all_labels, which is returned at the end of the function.
-"""
-def find_req_ai(description):
+def find_req_ai(descriptions):
     # URL of the API 
     url = 'https://jobad-enrichments-api.jobtechdev.se/enrichtextdocumentsbinary'
     
@@ -27,32 +16,44 @@ def find_req_ai(description):
         'Accept': 'application/json'
     }
 
-    # Set the payload for POST request
-    payload = {
-        "documents_input": [
-            {
-              "doc_text": description
-            }
-        ],
-        "add_occupation_concepts": False,
-        "add_skill_concepts": True,
-        "add_workplace_experience_concepts": False,
-        "required_skill_level": 'REQUIRED'
-    }
+    # Split descriptions into chunks of 100 at most
+    chunks = [descriptions[i:i+100] for i in range(0, len(descriptions), 100)]
 
-    # Make the HTTP POST request
-    response = post(url, headers=headers, json=payload)
-
-    # Extracts all the 'concept_lablels' (the requirements) from the API response
-    data = loads(response.text)
+    # Initialize an empty list for the labels
     labels = []
-    for candidate in data:
-        for competency in candidate['enriched_candidates']['competencies']:
-            labels.append(competency['concept_label'])
-        for trait in candidate['enriched_candidates']['traits']:
-            labels.append(trait['concept_label'])
-    
-    return labels
+
+    # Send each chunk to the API and extract the labels
+    for chunk in chunks:
+        # Set the payload for POST request
+        payload = {
+            "documents_input": [
+                {
+                  "doc_text": d
+                } for i, d in enumerate(chunk)
+            ],
+            "add_occupation_concepts": False,
+            "add_skill_concepts": True,
+            "add_workplace_experience_concepts": False,
+        }
+
+        # Make the HTTP POST request
+        response = post(url, headers=headers, json=payload)
+
+        # Extracts all the 'concept_lablels' (the requirements) from the API response
+        data = loads(response.text)
+        for candidate in data:
+            for competency in candidate['enriched_candidates']['competencies']:
+                labels.append(competency['concept_label'])
+
+    # Filter the labels based on the educational keywords
+    edu_labels = []
+    for label in labels:
+        for keyword in find_req(label):
+            if keyword not in edu_labels:
+                edu_labels.append(keyword)
+
+    return edu_labels
+
 
 
 # Define regular expressions for bachelor's, master's, and PhD degrees

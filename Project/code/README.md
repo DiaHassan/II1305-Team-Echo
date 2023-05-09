@@ -58,33 +58,33 @@ Extracts data from Ledigajobb. This file contains several functions.
 *Gets all information specified in* ```yrke_list``` *(occupation list) and* ```lan_list``` *(county list) using the above functions.*
 
 
-## [/linkedIn](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/linkedIn)
+## [/linkedIn](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/linkedIn)  
 All files in the ```linkedIn``` folder are used to web scrape job listing data from LinkedIn.  
 
-### [linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)
+### [linkedIn.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/linkedIn.py)  
 The "main" file that has all the data extracting functions. This file is dependent on the output produced by ```getGeoId.py```. 
 Uses BeautifulSoup to analyze HTML elements.
 
 #### ***FUNCTIONS***
-**linkedin_scraper(job, municipality, page_number)**:
+**linkedin_scraper(job, municipality, page_number)**:  
 *Establishes a connection to a page with* ```job``` *and* ```municipality``` *specified. Incrementing* ```page_number``` *and calling itself to load more ads.*
 
-**extract_html(ad, job)**:
-*Extracts some data through HTML for a specific* ```ad```
+**extract_html(ad, job)**:  
+*Extracts some data through HTML for a specific* ```ad```*.*
 
-**extract_ad_page_html(key)**:
+**extract_ad_page_html(key)**:  
 *Gets the rest of the data by connecting to the ad-page of a specific ad with the help of it's* ```key``` *, then extracting data through HTML.*
 
-**format(emp_type, ad_date, location, seniority)**:
+**format(emp_type, ad_date, location, seniority)**:  
 *Makes format changes for* ```emp_type``` *, * ```ad_date``` *, * ```location``` *, * ```seniority``` *such that it matches the other scrapers format.*
 
-**get_professions()**:
+**get_professions()**:  
 *Gets a list of the wanted proffessions*
 
-**run()**:
+**run()**:  
 *Automates the* ```linkedin_scraper``` *function to scrape a list of jobs and municipalities.*
 
-### [getGeoId.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/getGeoId.py)
+### [getGeoId.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/linkedIn/getGeoId.py)  
 This script collects the GeoID's of a list of locations. This script is not run by ```main.py```, but if a new list of Geo ID's for different locations is desired, you can change the locations in the ```municipalities``` list:  
 ```python
 municipalities = ["Upplands Väsby, Stockholm", "Österåker, Stockholm"]
