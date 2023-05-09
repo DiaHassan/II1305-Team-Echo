@@ -18,8 +18,11 @@ def endpoint():
 
     data = request.get_json()
     arg1 = data['job']
-    print(arg1)
+    print("Arg1: ", arg1)
+    if(arg1[3]=='Inget val'):
+        arg1[3] = 'null'
     info = extract(arg1[0],arg1[1],arg1[2],arg1[3])
+
     # info.pop(0)
     print(info)
 
