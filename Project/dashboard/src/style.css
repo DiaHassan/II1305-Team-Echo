@@ -152,92 +152,152 @@ nav>ul>li>a {
 }
 
 
-/* ------------------ */
+/* ----------Front page---------------- */
 
-.wrapper {
+/* Mobile styles */
+@media only screen and (max-width: 600px) {
+
+    .home-front {
+      flex-direction: column;
+      padding: 2rem;
+    }
+  
+    .home-front>div {
+      padding: 0;
+      text-align: center;
+      margin-top: 2rem;
+    }
+  
+    .home-front>div>p {
+      font-size: medium;
+      padding-right: 0;
+    }
+  
+    .home-front>div>h1 {
+      padding-right: 0;
+      font-size: large;
+    }
+  
+    .home-front>img {
+      height: auto;
+      width: 80%;
+      margin-top: 2rem;
+    }
+  
+  }
+  
+  /* Tablet and desktop styles */
+  @media only screen and (min-width: 601px) {
+  
+    .home-front {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        margin-top: 5rem;
+        color: var(--color-white);
+      }
+      
+      .home-front>img {
+        height: auto;
+        margin-left: 4rem;
+      }
+      
+      .home-front>div {
+        padding: 0 4rem;
+        width: 50rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      
+    .home-front>div>p {
+      font-size: large;
+      padding-right: 2rem;
+    }
+  
+    .home-front>div>h1 {
+      padding-right: 2rem;
+      font-size: x-large;
+    }
+  
+    .home-content {
+      padding: 2rem 20vw;
+      background-color: var(--color-off-white);
+      height: calc(100% - 6rem);
+    }
+  
+  }
+  
+  /* General styles */
+  
+  .wrapper {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     top: 0;
     left: 0;
     background-image: url("sthlm.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-}
-
-.front-wrap {
+  }
+  
+  .front-wrap {
     min-height: 100vh;
-}
-
-.home-front {
-    display: flex;
-    flex-direction: row;
-    /* justify-content: ; */
-    align-items: center;
-    padding-left: 4rem;
-    padding-right: 4rem;
-    margin-top: 5rem;
-    color: var(--color-white);
-}
-
-.home-front>img {
+  }
+  
+  .home-front>img {
     height: auto;
-    /* margin: 0 4rem; */
-    /* position:absolute; */
-}
-
-.home-front>div {
+  }
+  
+  .home-front>div {
     top: 200px;
     left: 200px;
-    padding: 0 4rem;
     width: 50rem;
-}
-
-.home-front>div>p {
+  }
+  
+  .home-front>div>p {
     font-size: x-large;
     padding-right: 9rem;
-}
-
-.home-front>div>h1 {
+    color: var(--color-off-white);
+  }
+  
+  .home-front>div>h1 {
     padding-right: 10rem;
     font-size: xx-large;
-}
-
-.home-content {
-    padding: 2rem 20vw;
-    background-color: var(--color-off-white);
-}
-
-
-/* nav for home */
-
-.front-wrap>nav {
+    color: var(--color-off-white);
+  }
+  
+  /* nav for home */
+  
+  .front-wrap>nav {
     background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
-}
-
-.front-wrap>nav>div,
-.front-wrap>nav>ul>li>a {
+  }
+  
+  .front-wrap>nav>div,
+  .front-wrap>nav>ul>li>a {
     color: var(--color-white);
-}
-
-
-/* Quick fix for making the title on navbar white on default and green on hover while on the home page. */
-
-.front-wrap>nav>div>a {
+  }
+  
+  /* Quick fix for making the title on navbar white on default and green on hover while on the home page. */
+  
+  .front-wrap>nav>div>a {
     color: var(--color-white);
-}
-
-.front-wrap>nav>div>a:hover {
+  }
+  
+  .front-wrap>nav>div>a:hover {
     color: var(--color-green);
-}
-
-.front-wrap>.small>div>a:hover {
+  }
+  
+  .front-wrap>.small>div>a:hover {
     color: var(--color-black);
-}
-
-.front-wrap>.small>div>a {
+  }
+  
+  .front-wrap>.small>div>a {
     color: var(--color-green)
-}
+  }
+  
 
 
 /* ---------------------------------------------------------- */
