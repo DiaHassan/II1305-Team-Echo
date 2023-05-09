@@ -30,8 +30,10 @@ body {
     display: inline-block;
     color: var(--color-black);
     width: 12px;
-    right: 0px;
+    right: 30px;
     font-weight: bold;
+    border: 1px solid black;
+    border-radius: 50%;
 }
 
 .hover-text {
