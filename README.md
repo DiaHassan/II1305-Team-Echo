@@ -9,14 +9,15 @@ Our project was made externaly for Future Place Leadership as a dashboard collec
 
 ### Built With
 - python
-- sql
+- sqlite
 - javascript and react
 - html and css
 
 ### Dependencies
 Python packages used:
-[requirements.txt](https://github.com/DiaHassan/II1305-Team-Echo/requirements.txt)
-To install, run: ```pip install -r requirements.txt```
+[requirements.txt](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/requirements.txt)
+
+To install all dependencies using pip, run: ```pip install -r requirements.txt```
 
 ## Usage
 [Early draft]  
