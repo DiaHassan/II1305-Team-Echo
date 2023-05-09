@@ -1,29 +1,18 @@
 from sys import platform
-from os.path import exists, chdir
+from os.path import exists
 from sqlite3 import connect
-from code import webscrape
+# from code import webscrape
+from db import Fortabletest , extract
+import subprocess
+import threading
+import os
+import sys
 #import subprocess
 #import pynpm
 
-# Path to database
-def find_db_path():
-    match platform:
-        case "linux":
-            return "Project/db/echo.db"
-        case "darwin":
-            return "Project/db/echo.db"
-        case _:
-            return "Project\db\echo.db"
-
-# Path to sql for building database
-def find_sql_path():
-    match platform:
-        case "linux":
-            return "Project/db/db_sqlite.sql"
-        case "darwin":
-            return "Project/db/db_sqlite.sql"
-        case _:
-            return "Project\db\db_sqlite.sql"
+# DB path
+db_path = 'Project/db/echo.db'
+sql_path = 'Project/db/db_sqlite.sql'
             
 # Path to dashboard folder for running the website
 def find_dashboard_path():
@@ -36,7 +25,7 @@ def find_dashboard_path():
             return 'Project\dashboard'
             
 # Builds database
-def build_db(db_path, sql_path):
+def build_db():
 
     connection = connect(db_path)
     cursor = connection.cursor()
@@ -52,18 +41,19 @@ def build_db(db_path, sql_path):
 
 # Main 
 def run():
-  # Builds db with tables if it does not already exists
-  db_path = find_db_path()
-  if not exists(db_path):
-    build_db(db_path, find_sql_path())
-  
-  # Fill database
-  webscrape.run()
+    # Builds db with tables if it does not already exists
+    if not exists(db_path):
+        build_db()
+    
+    # Fill database
+    # webscrape.run()
 
-  # Dashboard
-  # TODO
-  # -- npm stuff --   
-
+    # Dashboard
+    table_path = os.path.join(os.path.join('Project', 'db'), 'Fortabletest.py')
+    os.startfile(table_path)
+    path = os.path.join(os.path.dirname(__file__), 'dashboard')
+    subprocess.run("npm start", shell=True, cwd=path)
+    
 # Execute
 if __name__ == '__main__':
     run()

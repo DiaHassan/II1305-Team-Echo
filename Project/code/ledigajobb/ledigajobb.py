@@ -177,7 +177,6 @@ def scrape_ad(job_link, county, profession):
 # Get all info using all parameters
 def run():
     i = 0
-    n = 0
     all_jobs = []
     professions = get_profession_list()
     # Going through all jobs and locations
