@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-// import {} from '@material-ui/core'; //test
-import { StylesProvider, makeStyles } from '@material-ui/core/styles';
-
 import "../style.css";
-
-// import { MenuProps, useStyles, options } from "./utils";
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -25,29 +20,29 @@ import { Grid } from '@mui/material';
 
 export default function Tabletest() {
 
-    const data = [
-        { name: 'Blekinge län', value: 0 },
-        { name: 'Dalarnas län', value: 0 },
-        { name: 'Gotlands län', value: 0 },
-        { name: 'Gävleborgs län', value: 0 },
-        { name: 'Hallands län', value: 0 },
-        { name: 'Jämtlands län', value: 0 },
-        { name: 'Jönköpings län', value: 0 },
-        { name: 'Kalmar län', value: 0 },
-        { name: 'Kronobergs län', value: 0 },
-        { name: 'Norrbottens län', value: 0 },
-        { name: 'Skåne län', value: 0 },
-        { name: 'Stockholms län', value: 0 },
-        { name: 'Södermanlands län', value: 0 },
-        { name: 'Uppsala län', value: 0 },
-        { name: 'Värmlands län', value: 0 },
-        { name: 'Västerbottens län', value: 0 },
-        { name: 'Västernorrlands län', value: 0 },
-        { name: 'Västmanlands län', value: 0 },
-        { name: 'Västra Götalands län', value: 0 },
-        { name: 'Örebro län', value: 0 },
-        { name: 'Östergötlands län', value: 0 },
-    ];
+    // const data = [
+    //     { name: 'Blekinge län', value: 0 },
+    //     { name: 'Dalarnas län', value: 0 },
+    //     { name: 'Gotlands län', value: 0 },
+    //     { name: 'Gävleborgs län', value: 0 },
+    //     { name: 'Hallands län', value: 0 },
+    //     { name: 'Jämtlands län', value: 0 },
+    //     { name: 'Jönköpings län', value: 0 },
+    //     { name: 'Kalmar län', value: 0 },
+    //     { name: 'Kronobergs län', value: 0 },
+    //     { name: 'Norrbottens län', value: 0 },
+    //     { name: 'Skåne län', value: 0 },
+    //     { name: 'Stockholms län', value: 0 },
+    //     { name: 'Södermanlands län', value: 0 },
+    //     { name: 'Uppsala län', value: 0 },
+    //     { name: 'Värmlands län', value: 0 },
+    //     { name: 'Västerbottens län', value: 0 },
+    //     { name: 'Västernorrlands län', value: 0 },
+    //     { name: 'Västmanlands län', value: 0 },
+    //     { name: 'Västra Götalands län', value: 0 },
+    //     { name: 'Örebro län', value: 0 },
+    //     { name: 'Östergötlands län', value: 0 },
+    // ];
 
     const data2 = [
         { name: 'Elektriker' },
@@ -68,13 +63,15 @@ export default function Tabletest() {
 
     //  TODO: call function to automatically create lists
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
-    const allCounties = ["Alla valda", "Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
+    const allCounties = ["Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
 
+    const [job, setJob] = useState("Elektriker")
     const [joblist, setJobList] = useState(initialJobList)
-    const [county, setCounty] = useState('Alla valda')
+    const [county, setCounty] = useState("Blekinge län")
+    const [countyList, setCountyList] = useState(allCounties)
     const [graphtitle, setGraphtitle] = useState('Län')
     const [profession, setProfession] = useState('Yrke')
-
+    const [select, setSelect] = useState(true);
     const [optionRadio, setOptionRadio] = React.useState(null);
 
     const handleChangeCounty = (event) => {
@@ -85,18 +82,38 @@ export default function Tabletest() {
         setJobList(event.target.value);
     };
 
+    const handleChangesJob = (event) => {
+        const value = event.target.value;
+        if (value[value.length - 1] === "all") {
+            setJobList(joblist.length === initialJobList.length ? [] : initialJobList);
+            return;
+        }
+        setJobList(value);
+        console.log(value)
+    };
+
+    const handleChangesCounty = (event) => {
+        const value = event.target.value;
+        if (value[value.length - 1] === "all") {
+            setCountyList(countyList.length === allCounties.length ? [] : allCounties);
+            return;
+        }
+        setCountyList(value);
+        console.log(value)
+    };
+
     const handleParams = (event) => {
         setOptionRadio(event.target.value);
     }
 
-
-    const myListElements = allCounties.map((item) => {
+    const countyListElements = allCounties.map((item) => {
         return <MenuItem value={item} key={item}>{item}</MenuItem>;
     });
 
-    // const myListElementJobs = joblist.map((item) => {
-    //     return <MenuItem value={item} key={item}> <Checkbox checked={job.indexOf(item) > -1} /><ListItemText primary={item} /></MenuItem>
-    // });
+    const jobListElements = initialJobList.map((item) => {
+        return <MenuItem value={item} key={item}>{item}</MenuItem>;
+    });
+
 
     function listToDict(list) {
         const dict = [];
@@ -168,16 +185,6 @@ export default function Tabletest() {
             .then(response => setResult(listToDict(response.data.number)))
             .catch(error => console.log(error));
         console.log((result));
-    };
-
-    const handleChanges = (event) => {
-        const value = event.target.value;
-        if (value[value.length - 1] === "all") {
-            setJobList(joblist.length === initialJobList.length ? [] : initialJobList);
-            return;
-        }
-        setJobList(value);
-        console.log(value)
     };
 
     const colors = {
@@ -282,11 +289,11 @@ export default function Tabletest() {
         return template;
     }
 
-    const getPropertyName = (obj, expression) => {
-        var res = {};
-        Object.keys(obj).map(k => { res[k] = () => k; });
-        return expression(res)();
-    }
+    // const getPropertyName = (obj, expression) => {
+    //     var res = {};
+    //     Object.keys(obj).map(k => { res[k] = () => k; });
+    //     return expression(res)();
+    // }
 
     // --------
 
@@ -321,10 +328,6 @@ function professionTitle(){
         return profession
     }
 }
-    let changeSelect = true;
-    let changeTitle = false;
-
-
 
     // Testing date
     const multiValue = [ {year: 2016, month: 7}, {year: 2016, month: 11}, {year: 2017, month: 3}, {year: 2019, month: 5}, ];
@@ -406,56 +409,115 @@ function professionTitle(){
                             </FormGroup>
                         </FormControl>
 
-                        {/* Div containing 2 drop-down lists */}
-                        <div>
-                            {changeSelect && <div className='County'>
-                                <FormControl sx={{ m: 1, width: 200 }}>
-                                    <InputLabel id="demo-simple-select-autowidth-label">Län</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-autowidth-label"
-                                        id="demo-simple-select-autowidth"
-                                        value={county}
-                                        onChange={handleChangeCounty}
-                                        autoWidth
-                                        label="Län"
-                                    >
-                                        {myListElements}
-                                    </Select>
-                                </FormControl>
-                            </div>}
+                           {/* Div containing 2 drop-down lists */}
+                           <div>
+                        <table className='toggleTable'>
+                            <th align='left'>Ett län <br/>Flera yrken</th>
+                            <th>
+                                <label className="toggleSwitch">
+                                    <input type="checkbox" onClick={() => setSelect((prev) => !prev)}/>
+                                    <span class="slider"></span>
+                                </label>
+                            </th>
+                            <th align='left' id='fyel'>Flera yrken <br/>Ett län</th>
+                        </table>
 
-                            {changeSelect && <div className='Multiple Select'>
-                                <FormControl sx={{ m: 1, width: 200 }}>
-                                    <InputLabel id="mutiple-select-autowidth-label">Yrken</InputLabel>
-                                    <Select
-                                        labelId="mutiple-select-autowidth-label"
-                                        id="multiple-select-autowidth"
-                                        multiple
-                                        value={joblist}
-                                        onChange={handleChanges}
-                                        renderValue={(joblist) => joblist.join(", ")}
-                                        autoWidth
-                                        label="Yrken"
-                                    >
-                                        <MenuItem
-                                            value="all"
-                                        // classes={{
-                                        //     root: isAllSelected ? classes.selectedAll : ""
-                                        // }}
-                                        ></MenuItem>
-                                        {initialJobList.map((option) => (
-                                            <MenuItem key={option} value={option}>
-                                                <ListItemIcon>
-                                                    <Checkbox checked={joblist.indexOf(option) > -1} />
-                                                </ListItemIcon>
-                                                <ListItemText primary={option} />
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </div>}
+                        {/* Switch state 1 */}
+                        { select && <div className='County'>
+                            <FormControl sx={{ m: 1, width: 200 }}>
+                                <InputLabel id="demo-simple-select-autowidth-label">Län</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-autowidth-label"
+                                    id="demo-simple-select-autowidth"
+                                    value={county}
+                                    onChange={handleChangeCounty}
+                                    autoWidth
+                                    label="Län1"
+                                >
+                                    {countyListElements}
+                                </Select>
+                            </FormControl>
+                        </div> }
+                        { select && <div className='Multiple Select'>
+                            <FormControl sx={{ m: 1, width: 200 }}>
+                                <InputLabel id="mutiple-select-autowidth-label">Yrken</InputLabel>
+                                <Select
+                                    labelId="mutiple-select-autowidth-label"
+                                    id="multiple-select-autowidth"
+                                    multiple
+                                    value={joblist}
+                                    onChange={handleChangesJob}
+                                    renderValue={(joblist) => joblist.join(", ")}
+                                    autoWidth
+                                    label="Yrke1"
+                                >
+                                    <MenuItem
+                                        value="all"
+                                    // classes={{
+                                    //     root: isAllSelected ? classes.selectedAll : ""
+                                    // }}
+                                    ></MenuItem>
+                                    {initialJobList.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                            <ListItemIcon>
+                                                <Checkbox checked={joblist.indexOf(option) > -1} />
+                                            </ListItemIcon>
+                                            <ListItemText primary={option} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>}
 
-                            {changeSelect && <div className='Date'>
+                        {/* Switch state 2 */}
+                        { !select && <div className='Multiple Select'>
+                            <FormControl sx={{ m: 1, width: 200 }}>
+                                <InputLabel id="mutiple-select-autowidth-label">Län</InputLabel>
+                                <Select
+                                    labelId="mutiple-select-autowidth-label"
+                                    id="multiple-select-autowidth"
+                                    multiple
+                                    value={countyList}
+                                    onChange={handleChangesCounty}
+                                    renderValue={(countyList) => countyList.join(", ")}
+                                    autoWidth
+                                    label="Län2"
+                                >
+                                    <MenuItem
+                                        value="all"
+                                    // classes={{
+                                    //     root: isAllSelected ? classes.selectedAll : ""
+                                    // }}
+                                    ></MenuItem>
+                                    {allCounties.map((option) => (
+                                        <MenuItem key={option} value={option}>
+                                            <ListItemIcon>
+                                                <Checkbox checked={countyList.indexOf(option) > -1} />
+                                            </ListItemIcon>
+                                            <ListItemText primary={option} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>}
+
+                        { !select && <div className='County'>
+                            <FormControl sx={{ m: 1, width: 200 }}>
+                                <InputLabel id="demo-simple-select-autowidth-label">Yrke</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-autowidth-label"
+                                    id="demo-simple-select-autowidth"
+                                    value={job}
+                                    onChange={handleChangeJob}
+                                    autoWidth
+                                    label="Yrke2"
+                                >
+                                    {jobListElements}
+                                </Select>
+                            </FormControl>
+                        </div> }
+
+                            {<div className='Date'>
                                 <FormControl sx={{ m: 1, width: 200 }}>
                                     <label><b>Pick Several Month</b><span>(Available months from Feb.2016 to Apr.2020)</span></label>
                                     <div className="edit">
