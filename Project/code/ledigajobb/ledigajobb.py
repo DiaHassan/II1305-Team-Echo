@@ -120,7 +120,7 @@ def get_profession_details(response):
             elif(info[1] == "Max 10 dagar"):
                 info[1] = 1
             else:
-                info[1] = 0 
+                info[1] = "null"
             info[2] = info[2].strip().split()
 
             try:
@@ -129,12 +129,12 @@ def get_profession_details(response):
                 info[2] = info[2][0]
         else:
             info[0] = "övrigt"
-            info.append("None")
-            info.append("None")
+            info.append("null")
+            info.append("null")
 
         return info
     except:
-        return [None,None,None]
+        return ["null","null","null"]
 
 
 # Find county
@@ -168,8 +168,8 @@ def scrape_ad(job_link, county, profession):
             profession, 
             county, 
             prerequierment, 
-            0,
-            None,
+            "null",
+            "null",
             "2023-04-20"
             ]
 
@@ -182,7 +182,9 @@ def run():
     professions = get_profession_list()
     # Going through all jobs and locations
     for profession in professions:
-        for county_index in range(2,21):
+        for county_index in range(2,24):
+            if( county_index == 21):
+                continue
             next_page = True
             response = get_code(create_search_link(county_index, profession, 1))
             # Looping through and printing out each page
@@ -192,9 +194,6 @@ def run():
                     job_links = get_job_links(get_jobs(response))
                 except:
                     try:
-                        n += 1 
-                        print("\n N is vvvvvv")
-                        print(n) 
                         next_page = get_next_page(response)
                         if (next_page == False): next_page = "Twees"
                         response = get_code(next_page)
@@ -203,9 +202,8 @@ def run():
                 # Gets all the sub links then to joing them with the base url and 
                 for half_link in job_links:
                     i += 1
-                    print("\n I is vvvvvv")
                     print(i) 
-                    print(scrape_ad(base_url+half_link,county_index, profession))
+                    all_jobs.append(scrape_ad(base_url+half_link,county_index, profession))
                 next_page = get_next_page(response)
                 if (next_page == False): next_page = "Twees"
                 response = get_code(next_page)
