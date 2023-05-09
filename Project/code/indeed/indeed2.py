@@ -3,6 +3,7 @@ from sys import platform
 from bs4 import BeautifulSoup
 from time import sleep
 from os import path
+import random
 
 # Path to dashboard folder for running the website
 def get_html_path():
@@ -28,7 +29,7 @@ def close_popup(page):
             page.locator('//*[@id="google-Only-Modal"]/div/div[1]/button').click(timeout=1000, force=True)
             sleep(1)
             page.locator('//*[@id="mosaic-modal-mosaic-provider-desktopserp-jobalert-popup"]/div/div/div[1]/div/button').click(timeout=1000, force=True)
-            return
+        return
     except:
         print("failed")
         return
@@ -37,17 +38,32 @@ def close_popup(page):
 def get_ad(page, profession, county, page_index, ad_list):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={page_index}')
     sleep(1)
-    data = page.content().encode('ascii', 'replace').decode('ascii')
-    html = BeautifulSoup(data, features='lxml')
     close_popup(page)
     for i in range(1, 18):
         try:
             page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[{str(i)}]/div/div[1]/div/div[1]').click(timeout=1000)
-            sleep(1)
+            data = page.content().encode('ascii', 'replace').decode('ascii')
+            html = BeautifulSoup(data, features='lxml')
+            ad = html.find('div', class_="jobsearch-RightPane")
+            print(ad)
+
+            print("testing")
+            # finds the job title
+            job_title = ad.find('h2', class_="icl-u-xs-mb--xs icl-u-xs-mt--none jobsearch-JobInfoHeader-title is-embedded").find('span')
+            # chars_to_remove = "span<>/"
+            # for char in chars_to_remove:
+            #     job_title = str(job_title).replace(char, "")
+            print(str(job_title))
+
+            #employment_type = 
+
+            sleep(100)
         except:
             print(i)
+            print("epic fail")
+            sleep(100)
             continue
-    sleep(100000) #Fortsätt här!!
+    
 
 # Returns a list of all ads for a specified profession and county
 def get_all_ads(page, profession, county):
@@ -72,8 +88,6 @@ def get_all_ads(page, profession, county):
         page_index += 10
         max_ads_scraped += 15
     return ad_list
-
-    sleep(1000000)
 
 def run():
     with sync_playwright() as playwright:

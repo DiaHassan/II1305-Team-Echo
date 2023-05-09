@@ -106,7 +106,7 @@ def extract_html(ad, job):
     key_tag = ad['data-entity-urn']
     key = key_tag.split(':')[-1]
 
-    print(job_title + " | " + location) # (REMOVE LATER)
+    # print(job_title + " | " + location) # (REMOVE LATER)
 
     # Get more data from ad-page
     seniority, employment_type, education, flag_500 = extract_ad_page_html(key)
@@ -190,7 +190,10 @@ def format(emp_type, ad_date, location, seniority):
 
     # Extracting and translating county while changing it to lowercase
     try:
-        county = location[location.index(', ')+2:location.index(' County')]
+        if location[location.index(', ')+2:location.index(' County')] == '':
+            county = location[:location.index(' County')]
+        else:  
+            county = location[location.index(', ')+2:location.index(' County')]
     except:
         county = location[location.index(', ')+2:location.index(', Sweden')]
 
@@ -205,7 +208,7 @@ def format(emp_type, ad_date, location, seniority):
     elif county == 'Vastra Gotaland': county = 'västra götaland'
     else: county = county.lower()
 
-    if county not in ['blekinge', 'kalmar', 'skåne', 'uppsala', 'örebro', '']:
+    if county not in ['blekinge', 'kalmar', 'skåne', 'uppsala', 'örebro']:
         county = county + "s län"
     else:
         county = county + " län"
@@ -235,7 +238,7 @@ def get_professions():
 
 
 def run():
-    start_time = time()
+    start_time = time() # (REMOVE LATER)
     # Database
     db = []
 
@@ -243,7 +246,7 @@ def run():
     jobs = get_professions()
 
     # Geo ids
-    # geo_ids = [105962876] 
+    # geo_ids = [105391169] # (REMOVE LATER)
     geo_ids = []
     with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
         for line in f:
