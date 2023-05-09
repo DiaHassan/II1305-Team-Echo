@@ -17,7 +17,6 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { Grid } from '@mui/material';
 
-
 export default function Tabletest() {
 
     // const data = [
@@ -65,19 +64,19 @@ export default function Tabletest() {
 
 
     //  TODO: call function to automatically create lists
-    const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
+    const initialJobList = ["elektriker", "ingenjör", "logistiker", "läkare", "lärare", "operatör", "projektledare", "sjuksköterska", "tekniker", "utvecklare"]
     const allCounties = ["Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
 
 
-    const [job, setJob] = useState("Elektriker")
+    const [job, setJob] = useState("Sjuksköterska")
     const [joblist, setJobList] = useState(initialJobList)
     const [county, setCounty] = useState("Blekinge län")
     const [countyList, setCountyList] = useState(allCounties)
     const [graphtitle, setGraphtitle] = useState('Län')
-    const [profession, setProfession] = useState('Yrke')
     const [select, setSelect] = useState(true);
     const [date, setDate] = useState(startDate);
     const [optionRadio, setOptionRadio] = React.useState(null);
+    const [selectRadio, setSelectRadio] = useState(false);
 
     const handleChangeCounty = (event) => {
         setCounty(event.target.value);
@@ -215,7 +214,7 @@ export default function Tabletest() {
             setGraphtitle(countyTitle());
         }
         else {
-            setGraphtitle(professionTitle());
+            setGraphtitle(jobTitle());
         }
         
         for (let item of Object.keys(inputs)) {
@@ -305,6 +304,7 @@ export default function Tabletest() {
 
     //insert all sources. Format 'sourcename': defaultValue
     const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue, ledigajobb: defaultValue });
+    
     // Handles any changes to the source buttons
     const handleSource = (event) => {
         const name = event.target.name;
@@ -368,19 +368,11 @@ export default function Tabletest() {
 
     //County title above graph
     function countyTitle() {
-        if (county === 'Alla valda') {
-            return 'Län';
-        } else {
-            return county;
-        }
+        return county;
     }
     /* Profession title above graph */
-    function professionTitle(){
-        if(job == 'Yrke'){
-            return 'Yrke'
-        } else {
-            return job;
-        }
+    function jobTitle(){
+        return job;
     }
 
     // Testing date
@@ -416,6 +408,15 @@ export default function Tabletest() {
                 }
             </optgroup>));
     }
+
+    const makeText = m => {
+        if (m && m.year && m.month) return (pickerLang.months[m.month-1] + '. ' + m.year)
+        return '?'
+    }
+    useEffect(() => {
+        handleClick()
+      },[select]);
+    
     return (
         <div>
             <FormLabel id='graphtitle'>
@@ -508,7 +509,7 @@ export default function Tabletest() {
                             </table>
 
                             {/* Switch state 1 */}
-                            {select && <div className='County'>
+                            { select && <div className='County'>
                                 <FormControl sx={{ m: 1, width: 200 }}>
                                     <InputLabel id="demo-simple-select-autowidth-label">Län</InputLabel>
                                     <Select
@@ -522,8 +523,8 @@ export default function Tabletest() {
                                         {countyListElements}
                                     </Select>
                                 </FormControl>
-                            </div>}
-                            {select && <div className='Multiple Select'>
+                            </div> }
+                            { select && <div className='Multiple Select'>
                                 <FormControl sx={{ m: 1, width: 200 }}>
                                     <InputLabel id="mutiple-select-autowidth-label">Yrken</InputLabel>
                                     <Select
@@ -552,7 +553,7 @@ export default function Tabletest() {
                                         ))}
                                     </Select>
                                 </FormControl>
-                            </div>}
+                            </div> }
 
                             {/* Switch state 2 */}
                             {!select && <div className='Multiple Select'>
@@ -570,9 +571,7 @@ export default function Tabletest() {
                                     >
                                         <MenuItem
                                             value="all"
-                                        // classes={{
-                                        //     root: isAllSelected ? classes.selectedAll : ""
-                                        // }}
+
                                         ></MenuItem>
                                         {allCounties.map((option) => (
                                             <MenuItem key={option} value={option}>
@@ -584,9 +583,9 @@ export default function Tabletest() {
                                         ))}
                                     </Select>
                                 </FormControl>
-                            </div>}
+                            </div> }
 
-                            {!select && <div className='County'>
+                            { !select && <div className='County'>
                                 <FormControl sx={{ m: 1, width: 200 }}>
                                     <InputLabel id="demo-simple-select-autowidth-label">Yrke</InputLabel>
                                     <Select
@@ -600,7 +599,7 @@ export default function Tabletest() {
                                         {jobListElements}
                                     </Select>
                                 </FormControl>
-                            </div>}
+                            </div> }
 
                             {<div className='Date'>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -609,45 +608,55 @@ export default function Tabletest() {
                                         {getMonths()}
                                     </Select>
                                 </FormControl>
-                            </div>
+                            </div>}
+                    </div>
+                        <table className='toggleTable'>
+                            <th align='left'>Filtrera val</th>
+                            <th>
+                                <label className="toggleSwitch">
+                                    <input type="checkbox" value = "null" onClick={() => setSelectRadio((prev) => !prev)} onChange={handleParams}/>
+                                    <span className="slider"></span>
+                                </label>
+                            </th>
+                            <th align='left' id='fley'></th>
+                        </table>
 
-                            }
-                        </div>
-                        <div className="radio">
+                        { selectRadio && <div className="radio">
+                    
                             {/* Div containing 3 horizontal radio buttons */}
                             <RadioGroup aria-label="position" name="position" defaultValue="top">
                                 <FormControl component="fieldset">
                                     {/*       <span onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'} className={{}}>*/}
 
-                                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                        <Grid item xs={6}>
-                                            <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Anställningsform" onChange={handleParams}
-                                                disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true} />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <FormControlLabel value="duration" control={<Radio size="small" />} label="Varaktighet" onChange={handleParams}
-                                                disabled={inputs.platsbanken.duration && inputs.linkedin.duration && inputs.ledigajobb.duration ? false : true} />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <FormControlLabel value="seniority" control={<Radio size="small" />} label="Senioritet" onChange={handleParams}
-                                                disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true} />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <FormControlLabel value="requirement" control={<Radio size="small" />} label="Villkor/Krav" onChange={handleParams}
-                                                disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true} />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <FormControlLabel value="years_of_experience" control={<Radio size="small" />} label="Års erfarenhet" onChange={handleParams}
-                                                disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true} />
-                                        </Grid>
-                                        <Grid item xs={6}>
-                                            <FormControlLabel style={standard} value="null" control={<Radio size="small" />} label="Inget val" onChange={handleParams} />
-                                        </Grid>
-                                    </Grid>
+                                            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                                <Grid item xs={6}>
+                                                    <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Anställningsform" onChange={handleParams}
+                                                        disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true} />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControlLabel value="duration" control={<Radio size="small" />} label="Varaktighet" onChange={handleParams}
+                                                        disabled={inputs.platsbanken.duration && inputs.linkedin.duration && inputs.ledigajobb.duration ? false : true} />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControlLabel value="seniority" control={<Radio size="small" />} label="Senioritet" onChange={handleParams}
+                                                        disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true} />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControlLabel value="requirement" control={<Radio size="small" />} label="Utbildning" onChange={handleParams}
+                                                        disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true} />
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                    <FormControlLabel value="years_of_experience" control={<Radio size="small" />} label="Erfarenhet (år)" onChange={handleParams}
+                                                        disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true} />
+                                                </Grid>
+                                                {/* <Grid item xs={6}>
+                                                    <FormControlLabel style={standard} value="null" control={<Radio size="small" />} label="Inget val" onChange={handleParams} />
+                                                </Grid> */}
+                                            </Grid>
                                     {/*</span>*/}
-                                </FormControl>
-                            </RadioGroup>
-                        </div>
+                                    </FormControl>
+                                </RadioGroup>
+                        </div> }
                     </div>
                     <button onClick={handleClick} className='forlistbutton'> Visa resultat</button>
                 </div>

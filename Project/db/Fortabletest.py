@@ -1,7 +1,11 @@
 from flask import Flask, jsonify,request
 # , jsonify, request
 from flask_cors import CORS
-from extract import extract
+
+try:
+  from extract import extract
+except ImportError:
+  from .extract import extract
 
 # def my_function(arg1, arg2):
 #     # do something with arg1 and arg2
@@ -14,6 +18,7 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/why', methods=['GET','POST'])
+
 def endpoint():
 
     data = request.get_json()
@@ -29,5 +34,8 @@ def endpoint():
     return jsonify({'number':(info)})
 
 
+def run():
+    app.run(port=8888)
 
-app.run(port=8888)
+if __name__ == '__main__':
+    run()
