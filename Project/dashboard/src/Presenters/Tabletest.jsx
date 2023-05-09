@@ -17,7 +17,6 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { Grid } from '@mui/material';
 
-
 export default function Tabletest() {
 
     // const data = [
@@ -57,6 +56,8 @@ export default function Tabletest() {
         { name: 'Utvecklare' }
     ];
 
+
+
     // Setting variables and useStates
     const [result, setResult] = useState(data2);
 
@@ -72,7 +73,9 @@ export default function Tabletest() {
     const [graphtitle, setGraphtitle] = useState('Län')
     //const [profession, setProfession] = useState('Yrke')
     const [select, setSelect] = useState(true);
-    const [optionRadio, setOptionRadio] = React.useState(null);
+    const [optionRadio, setOptionRadio] = useState(null);
+
+    const [selectRadio, setSelectRadio] = useState(false);
 
     const handleChangeCounty = (event) => {
         setCounty(event.target.value);
@@ -631,7 +634,18 @@ export default function Tabletest() {
                         
                     </div>
 
-                        <div className="radio">
+                        <table className='toggleTable'>
+                            <th align='left'>Filtrera val</th>
+                            <th>
+                                <label className="toggleSwitch">
+                                    <input type="checkbox" value = "null" onClick={() => setSelectRadio((prev) => !prev)} onChange={handleParams}/>
+                                    <span className="slider"></span>
+                                </label>
+                            </th>
+                            <th align='left' id='fley'></th>
+                        </table>
+
+                        { selectRadio && <div className="radio">
                                 {/* Div containing 3 horizontal radio buttons */}
                                 <RadioGroup aria-label="position" name="position" defaultValue="top">
                                     <FormControl component="fieldset">
@@ -651,21 +665,21 @@ export default function Tabletest() {
                                                         disabled={inputs.platsbanken.seniority && inputs.linkedin.seniority && inputs.ledigajobb.seniority ? false : true} />
                                                 </Grid>
                                                 <Grid item xs={6}>
-                                                    <FormControlLabel value="requirement" control={<Radio size="small" />} label="Villkor/Krav" onChange={handleParams}
+                                                    <FormControlLabel value="requirement" control={<Radio size="small" />} label="Utbildning" onChange={handleParams}
                                                         disabled={inputs.platsbanken.prerequirements && inputs.linkedin.prerequirements && inputs.ledigajobb.prerequirements ? false : true} />
                                                 </Grid>
                                                 <Grid item xs={6}>
-                                                    <FormControlLabel value="years_of_experience" control={<Radio size="small" />} label="Års erfarenhet" onChange={handleParams}
+                                                    <FormControlLabel value="years_of_experience" control={<Radio size="small" />} label="Erfarenhet (år)" onChange={handleParams}
                                                         disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true} />
                                                 </Grid>
-                                                <Grid item xs={6}>
+                                                {/* <Grid item xs={6}>
                                                     <FormControlLabel style={standard} value="null" control={<Radio size="small" />} label="Inget val" onChange={handleParams} />
-                                                </Grid>
+                                                </Grid> */}
                                             </Grid>
                                     {/*</span>*/}
                                     </FormControl>
                                 </RadioGroup>
-                        </div>
+                        </div> }
                     </div>
                     <button onClick={handleClick} className='forlistbutton'> Visa resultat</button>
                 </div>
