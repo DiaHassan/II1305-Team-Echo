@@ -1,7 +1,11 @@
 from flask import Flask, jsonify,request
 # , jsonify, request
 from flask_cors import CORS
-from extract import extract
+
+try:
+  from extract import extract
+except ImportError:
+  from .extract import extract
 
 # def my_function(arg1, arg2):
 #     # do something with arg1 and arg2
@@ -14,6 +18,7 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/why', methods=['GET','POST'])
+
 def endpoint():
 
     data = request.get_json()
@@ -21,7 +26,7 @@ def endpoint():
     print("Arg1: ", arg1)
     if(arg1[3]=='Inget val'):
         arg1[3] = 'null'
-    info = extract(arg1[0],arg1[1],arg1[2],arg1[3])
+    info = extract(arg1[0],arg1[1],arg1[2],arg1[3],arg1[4])
 
     # info.pop(0)
     print(info)
@@ -29,5 +34,8 @@ def endpoint():
     return jsonify({'number':(info)})
 
 
+def run():
+    app.run(port=8888)
 
-app.run(port=8888)
+if __name__ == '__main__':
+    run()
