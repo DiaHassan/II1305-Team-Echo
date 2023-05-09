@@ -56,7 +56,8 @@ export default function Tabletest() {
         { name: 'Utvecklare' }
     ];
 
-
+    const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
+    const checkToday = new Date().getFullYear() + '-' + new Date().getMonth();
 
     // Setting variables and useStates
     const [result, setResult] = useState(data2);
@@ -66,15 +67,15 @@ export default function Tabletest() {
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
     const allCounties = ["Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
 
+
     const [job, setJob] = useState("Sjuksköterska")
     const [joblist, setJobList] = useState(initialJobList)
     const [county, setCounty] = useState("Blekinge län")
     const [countyList, setCountyList] = useState(allCounties)
     const [graphtitle, setGraphtitle] = useState('Län')
-    //const [profession, setProfession] = useState('Yrke')
     const [select, setSelect] = useState(true);
-    const [optionRadio, setOptionRadio] = useState(null);
-
+    const [date, setDate] = useState(startDate);
+    const [optionRadio, setOptionRadio] = React.useState(null);
     const [selectRadio, setSelectRadio] = useState(false);
 
     const handleChangeCounty = (event) => {
@@ -82,7 +83,7 @@ export default function Tabletest() {
     };
 
     const handleChangeJob = (event) => {
-        setJob(event.target.value);
+        setJobList(event.target.value);
     };
 
     const handleChangesJob = (event) => {
@@ -109,6 +110,10 @@ export default function Tabletest() {
         setOptionRadio(event.target.value);
     }
 
+    const handleDate = (event) => {
+        setDate(event.target.value);
+    }
+
     const countyListElements = allCounties.map((item) => {
         return <MenuItem value={item} key={item}>{item}</MenuItem>;
     });
@@ -119,8 +124,6 @@ export default function Tabletest() {
 
 
     function listToDict(list) {
-        //TODO: Decide where to place the calling of groupExperience.
-        //Is it supposed to be called inside listToDict or outside at the calling of listToDict.
         list = groupExperience(list);
         const dict = [];
         for (let i = 0; i < list.length; i++) {
@@ -131,14 +134,13 @@ export default function Tabletest() {
                 for (let k = 1; k < row[j].length; k++) {
                     const [subcat, value] = row[j][k];
                     let key = "";
-                    if(optionRadio == "null"){
+                    if (optionRadio == "null") {
                         key = `${category}`;
                         entry[key] = subcat;
                     } else {
                         key = `${category}-${subcat}`;
                         entry[key] = value;
                     }
-                    
                 }
             }
             dict.push(entry);
@@ -166,14 +168,11 @@ export default function Tabletest() {
     //A function that groups years of experience into intervals instead of sorting by specific
     //years. If the param is not years of experience then it returns the array unchanged. 
     function groupExperience (list){
-        //Debugging. TODO Delete the two rows below.
-        console.log("Group Experience: ")
-        console.log(list)
-        // ---------------------------------------
         if(optionRadio != "years_of_experience"){
             return list;
         }
-        const group1 = []; //0-2 years of experience
+        const group0 = []; //No experience needed (0)
+        const group1 = []; //1-2 years of experience
         const group2 = []; //3-5 years of experience
         const group3 = []; //6-8 years of experience
         const group4 = []; //8+ years of experience
@@ -181,7 +180,8 @@ export default function Tabletest() {
         // of the arrays.
         for(const x of list) {
             for(let i = 1; i < x.length; i++){
-                const group1 = ["0-2", 0]; //0-2 years of experience
+                const group0 = ["Ingen erfarenhet", 0]; //0 years of experience
+                const group1 = ["1-2", 0]; //1-2 years of experience
                 const group2 = ["3-5", 0]; //3-5 years of experience
                 const group3 = ["6-8", 0]; //6-8 years of experience
                 const group4 = ["8+", 0]; //8+ years of experience
@@ -189,7 +189,9 @@ export default function Tabletest() {
                     //Here, finally, we are inside results
                     const elem = (x[i])[y];
                     const label = elem[0]
-                    if(label <= 2){
+                    if (label == 0) {
+                        group0[1] += elem[1];
+                    }else if(label <= 2){
                        group1[1] += elem[1]; 
                     } else if (label <= 5){
                         group2[1] += elem[1];
@@ -199,31 +201,10 @@ export default function Tabletest() {
                         group4[1] += elem[1];
                     }
                 }
-                x[i] = [(x[i])[0], group1, group2, group3, group4];
+                x[i] = [(x[i])[0], group0, group1, group2, group3, group4];
             }
         }
         return list;
-        /* for (let i = 0; i < list.length; i++) {
-            
-            const element = list[i]
-            //const year = list[[][][][i]];
-            switch(year) {
-                case (year[i] < 2):
-                    group1[i]=list[i];
-                case (year < 5):
-                    group2.push(list[i])
-
-                case(year < 8):
-                group3.push(i)
-            }
-            if (year < 2) {
-                group[i]=list[i];
-            } else if( year < 5){
-
-            } 
-
-        } */
-        
     }
 
     const handleClick = () => {
@@ -233,10 +214,9 @@ export default function Tabletest() {
             setGraphtitle(countyTitle());
         }
         else {
-            setGraphtitle(professionTitle());
+            setGraphtitle(jobTitle());
         }
         
-
         for (let item of Object.keys(inputs)) {
             if (inputs[item].active) {
                 srcs.push(item)
@@ -254,6 +234,7 @@ export default function Tabletest() {
             queryTbs.push(job)
         }
         queryTbs.push(optionRadio)
+        queryTbs.push(date)
         console.log(queryTbs)
         axios.post('http://localhost:8888/why', { job: queryTbs })
             .then(response => setResult(listToDict(response.data.number))) /* Returned extract info from fortabletest */
@@ -387,29 +368,47 @@ export default function Tabletest() {
 
     //County title above graph
     function countyTitle() {
-       
-        if (county === 'Alla valda') {
-            return 'Län';
-        } else {
-            return county;
-        }
+        return county;
     }
     /* Profession title above graph */
-    function professionTitle(){
-        if(job == 'Yrke'){
-            return 'Yrke'
-        } else {
-            return job;
-        }
+    function jobTitle(){
+        return job;
     }
 
     // Testing date
-    const multiValue = [ {year: 2016, month: 7}, {year: 2016, month: 11}, {year: 2017, month: 3}, {year: 2019, month: 5}, ];
-    let pickMulti = React.createRef();
-    const pickerLang = {
-        months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        from: 'From', to: 'To',
+    function getMonths() {
+        var totalMonths = {};
+        const startPoint = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        const endPoint = new Date(startDate.replace(" ", " ,1 "));
+        while (endPoint <= startPoint) {
+            let currentYear = startPoint.getFullYear();
+            let months = [];
+
+            while (startPoint.getFullYear() === currentYear && endPoint <= startPoint) {
+                let currentMonth = startPoint.getMonth() + 1;
+                if (currentMonth < 10) {
+                    currentMonth = '0' + currentMonth;
+                }
+                months.push([currentYear + '-' + currentMonth, startPoint.toLocaleString('default', { month: 'long' })]);
+                startPoint.setMonth(startPoint.getMonth() - 1);
+            }
+            totalMonths[currentYear] = months;
+        }
+        const returnList = [];
+        for (var year_value in totalMonths) {
+            returnList.push([year_value, totalMonths[year_value]])
+        }
+
+        
+        return returnList.map((item) => (
+            <optgroup label={item[0]}>
+                {item[1].map((m =>
+                    <option value={m[0]}>{m[1]}</option>
+                ))
+                }
+            </optgroup>));
     }
+
     const makeText = m => {
         if (m && m.year && m.month) return (pickerLang.months[m.month-1] + '. ' + m.year)
         return '?'
@@ -417,13 +416,12 @@ export default function Tabletest() {
     useEffect(() => {
         handleClick()
       },[select]);
-
+    
     return (
         <div>
             <FormLabel id='graphtitle'>
                 <p>{graphtitle}</p>
             </FormLabel>
-
             <div className='fortableandlist'>
                 <div>
                     <FormLabel component="legend"></FormLabel>
@@ -434,7 +432,7 @@ export default function Tabletest() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
                     <YAxis />
-                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black', textShadow: '0px 0px 0px #000000' }} />
+                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' }} />
                     <Legend />
                     {getBars(dictToColumns(result))}
                 </BarChart>
@@ -443,7 +441,7 @@ export default function Tabletest() {
                 <div className='forlist'>
                     <div >
                         {/* Div containing 3 checkboxes */}
-                        <FormControl component="fieldset">
+                        <FormControl component="fieldset" defaultValue={"linkedin"}>
                             <FormLabel component="legend">Välj plattform:</FormLabel>
                             <FormGroup>
                                 <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
@@ -458,7 +456,7 @@ export default function Tabletest() {
                                             prerequirements: false,
                                             drivers_license: false
                                         })}
-                                    />} label="LinkedIn"/>
+                                    />} label="LinkedIn" />
                                 </span>
                                 <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
@@ -486,141 +484,47 @@ export default function Tabletest() {
                             </FormGroup>
                         </FormControl>
 
-                    {/* Div containing 2 drop-down lists */}
-                    <div>
-                        <table className='toggleTable'>
-                            <th align='left'>Ett län <br/>Flera yrken</th>
-                            <th>
-                                <label className="toggleSwitch">
-                                    <input type="checkbox" onClick={() => setSelect((prev) => !prev)}/>
-                                    <span className="slider"></span>
-                                </label>
-                            </th>
-                            <th align='left' id='fley'>Flera län <br/>Ett yrke</th>
-                        </table>
+                        {/* Div containing 2 drop-down lists */}
+                        <div>
+                            <table className='toggleTable'>
+                                <th align='left'>Ett län <br />Flera yrken</th>
+                                <th>
+                                    <label className="toggleSwitch">
+                                        <input type="checkbox" onClick={() => setSelect((prev) => !prev)} />
+                                        <span className="slider"></span>
+                                    </label>
+                                </th>
+                                <th align='left' id='fyel'>Flera yrken <br />Ett län</th>
+                            </table>
 
-                        {/* Switch state 1 */}
-                        { select && <div className='County'>
-                            <FormControl sx={{ m: 1, width: 200 }}>
-                                <InputLabel id="demo-simple-select-autowidth-label">Län</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-autowidth-label"
-                                    id="demo-simple-select-autowidth"
-                                    value={county}
-                                    onChange={handleChangeCounty}
-                                    autoWidth
-                                    label="Län1"
-                                >
-                                    {countyListElements}
-                                </Select>
-                            </FormControl>
-                        </div> }
-                        { select && <div className='Multiple Select'>
-                            <FormControl sx={{ m: 1, width: 200 }}>
-                                <InputLabel id="mutiple-select-autowidth-label">Yrken</InputLabel>
-                                <Select
-                                    labelId="mutiple-select-autowidth-label"
-                                    id="multiple-select-autowidth"
-                                    multiple
-                                    value={joblist}
-                                    onChange={handleChangesJob}
-                                    renderValue={(joblist) => joblist.join(", ")}
-                                    autoWidth
-                                    label="Yrke1"
-                                >
-                                    <MenuItem
-                                        value="all"
-                                    // classes={{
-                                    //     root: isAllSelected ? classes.selectedAll : ""
-                                    // }}
-                                    ></MenuItem>
-                                    {initialJobList.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                            <ListItemIcon>
-                                                <Checkbox checked={joblist.indexOf(option) > -1} />
-                                            </ListItemIcon>
-                                            <ListItemText primary={option} />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </div> }
-
-                        {/* Switch state 2 */}
-                        { !select && <div className='Multiple Select'>
-                            <FormControl sx={{ m: 1, width: 200 }}>
-                                <InputLabel id="mutiple-select-autowidth-label">Län</InputLabel>
-                                <Select
-                                    labelId="mutiple-select-autowidth-label"
-                                    id="multiple-select-autowidth"
-                                    multiple
-                                    value={countyList}
-                                    onChange={handleChangesCounty}
-                                    renderValue={(countyList) => countyList.join(", ")}
-                                    autoWidth
-                                    label="Län2"
-                                >
-                                    <MenuItem
-                                        value="all"
-                                    // classes={{
-                                    //     root: isAllSelected ? classes.selectedAll : ""
-                                    // }}
-                                    ></MenuItem>
-                                    {allCounties.map((option) => (
-                                        <MenuItem key={option} value={option}>
-                                            <ListItemIcon>
-                                                <Checkbox checked={countyList.indexOf(option) > -1} />
-                                            </ListItemIcon>
-                                            <ListItemText primary={option} />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </div> }
-
-                        { !select && <div className='County'>
-                            <FormControl sx={{ m: 1, width: 200 }}>
-                                <InputLabel id="demo-simple-select-autowidth-label">Yrke</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-autowidth-label"
-                                    id="demo-simple-select-autowidth"
-                                    value={job}
-                                    onChange={handleChangeJob}
-                                    autoWidth
-                                    label="Yrke2"
-                                >
-                                    {jobListElements}
-                                </Select>
-                            </FormControl>
-                        </div> }
-
-                        {<div className='Date'>
+                            {/* Switch state 1 */}
+                            { select && <div className='County'>
                                 <FormControl sx={{ m: 1, width: 200 }}>
-                                    <label><b>Pick Several Month</b><span>(Available months from Feb.2016 to Apr.2020)</span></label>
-                                    <div className="edit">
-                                     {/*   <Picker
-                                            ref={this.pickMulti}
-                                            years={{ min: { year: 2016, month: 2 }, max: { year: 2020, month: 4 } }}
-                                            value={multiValue}
-                                            lang={pickerLang.months}
-                                            theme="dark"
-                                            onChange={this.handleMultiChange}
-                                            onDismiss={this.handleMultiDissmis}
-                                        >
-                                            <MonthBox value={multiValue.map(v => makeText(v)).join(' | ')} onClick={this.handleClickMultiBox} />
-                                        </Picker>*/}
-                                        
-                                    </div>
-                                    {/* <InputLabel id="mutiple-select-autowidth-label">Datum</InputLabel>
+                                    <InputLabel id="demo-simple-select-autowidth-label">Län</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-autowidth-label"
+                                        id="demo-simple-select-autowidth"
+                                        value={county}
+                                        onChange={handleChangeCounty}
+                                        autoWidth
+                                        label="Län1"
+                                    >
+                                        {countyListElements}
+                                    </Select>
+                                </FormControl>
+                            </div> }
+                            { select && <div className='Multiple Select'>
+                                <FormControl sx={{ m: 1, width: 200 }}>
+                                    <InputLabel id="mutiple-select-autowidth-label">Yrken</InputLabel>
                                     <Select
                                         labelId="mutiple-select-autowidth-label"
                                         id="multiple-select-autowidth"
                                         multiple
                                         value={joblist}
-                                        onChange={handleChanges}
-                                        //renderValue={(joblist) => joblist.join(", ")}
+                                        onChange={handleChangesJob}
+                                        renderValue={(joblist) => joblist.join(", ")}
                                         autoWidth
-                                        label="Datum"
+                                        label="Yrke1"
                                     >
                                         <MenuItem
                                             value="all"
@@ -628,12 +532,73 @@ export default function Tabletest() {
                                         //     root: isAllSelected ? classes.selectedAll : ""
                                         // }}
                                         ></MenuItem>
-                                    </Select> */}
+                                        {initialJobList.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                                <ListItemIcon>
+                                                    <Checkbox checked={joblist.indexOf(option) > -1} />
+                                                </ListItemIcon>
+                                                <ListItemText primary={option} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </FormControl>
-                        </div> }
-                        
-                    </div>
+                            </div> }
 
+                            {/* Switch state 2 */}
+                            {!select && <div className='Multiple Select'>
+                                <FormControl sx={{ m: 1, width: 200 }}>
+                                    <InputLabel id="mutiple-select-autowidth-label">Län</InputLabel>
+                                    <Select
+                                        labelId="mutiple-select-autowidth-label"
+                                        id="multiple-select-autowidth"
+                                        multiple
+                                        value={countyList}
+                                        onChange={handleChangesCounty}
+                                        renderValue={(countyList) => countyList.join(", ")}
+                                        autoWidth
+                                        label="Län2"
+                                    >
+                                        <MenuItem
+                                            value="all"
+
+                                        ></MenuItem>
+                                        {allCounties.map((option) => (
+                                            <MenuItem key={option} value={option}>
+                                                <ListItemIcon>
+                                                    <Checkbox checked={countyList.indexOf(option) > -1} />
+                                                </ListItemIcon>
+                                                <ListItemText primary={option} />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </div> }
+
+                            { !select && <div className='County'>
+                                <FormControl sx={{ m: 1, width: 200 }}>
+                                    <InputLabel id="demo-simple-select-autowidth-label">Yrke</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-autowidth-label"
+                                        id="demo-simple-select-autowidth"
+                                        value={job}
+                                        onChange={handleChangeJob}
+                                        autoWidth
+                                        label="Yrke2"
+                                    >
+                                        {jobListElements}
+                                    </Select>
+                                </FormControl>
+                            </div> }
+
+                            {<div className='Date'>
+                                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                                    <InputLabel htmlFor="grouped-date">Date</InputLabel>
+                                    <Select native defaultValue={checkToday} id="grouped-date" label="Grouping" onChange={handleDate}>
+                                        {getMonths()}
+                                    </Select>
+                                </FormControl>
+                            </div>}
+                    </div>
                         <table className='toggleTable'>
                             <th align='left'>Filtrera val</th>
                             <th>
@@ -646,10 +611,11 @@ export default function Tabletest() {
                         </table>
 
                         { selectRadio && <div className="radio">
-                                {/* Div containing 3 horizontal radio buttons */}
-                                <RadioGroup aria-label="position" name="position" defaultValue="top">
-                                    <FormControl component="fieldset">
-                                {/*       <span onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'} className={{}}>*/}
+                    
+                            {/* Div containing 3 horizontal radio buttons */}
+                            <RadioGroup aria-label="position" name="position" defaultValue="top">
+                                <FormControl component="fieldset">
+                                    {/*       <span onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'} className={{}}>*/}
 
                                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                                 <Grid item xs={6}>
