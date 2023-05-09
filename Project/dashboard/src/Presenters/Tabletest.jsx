@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import "../style.css";
@@ -68,6 +68,7 @@ export default function Tabletest() {
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
     const allCounties = ["Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
 
+
     const [job, setJob] = useState("Elektriker")
     const [joblist, setJobList] = useState(initialJobList)
     const [county, setCounty] = useState("Blekinge län")
@@ -124,6 +125,7 @@ export default function Tabletest() {
 
 
     function listToDict(list) {
+        list = groupExperience(list);
         const dict = [];
         for (let i = 0; i < list.length; i++) {
             const row = list[i];
@@ -140,7 +142,6 @@ export default function Tabletest() {
                         key = `${category}-${subcat}`;
                         entry[key] = value;
                     }
-
                 }
             }
             dict.push(entry);
@@ -165,18 +166,58 @@ export default function Tabletest() {
         return columns;
     }
 
+    //A function that groups years of experience into intervals instead of sorting by specific
+    //years. If the param is not years of experience then it returns the array unchanged. 
+    function groupExperience (list){
+        if(optionRadio != "years_of_experience"){
+            return list;
+        }
+        const group0 = []; //No experience needed (0)
+        const group1 = []; //1-2 years of experience
+        const group2 = []; //3-5 years of experience
+        const group3 = []; //6-8 years of experience
+        const group4 = []; //8+ years of experience
+        //Starts at index 1 because the name of the source/profession is the first element
+        // of the arrays.
+        for(const x of list) {
+            for(let i = 1; i < x.length; i++){
+                const group0 = ["Ingen erfarenhet", 0]; //0 years of experience
+                const group1 = ["1-2", 0]; //1-2 years of experience
+                const group2 = ["3-5", 0]; //3-5 years of experience
+                const group3 = ["6-8", 0]; //6-8 years of experience
+                const group4 = ["8+", 0]; //8+ years of experience
+                for(let y = 1; y < x[i].length; y++){
+                    //Here, finally, we are inside results
+                    const elem = (x[i])[y];
+                    const label = elem[0]
+                    if (label == 0) {
+                        group0[1] += elem[1];
+                    }else if(label <= 2){
+                       group1[1] += elem[1]; 
+                    } else if (label <= 5){
+                        group2[1] += elem[1];
+                    } else if (label <= 8){
+                        group3[1] += elem[1];
+                    } else if (label > 8){
+                        group4[1] += elem[1];
+                    }
+                }
+                x[i] = [(x[i])[0], group0, group1, group2, group3, group4];
+            }
+        }
+        return list;
+    }
+
     const handleClick = () => {
         const srcs = []
 
-        setGraphtitle(countyTitle());
-
-        /* TODO: Add once Klara is done with her part and the branches are merged
-        if(state){ 
-        setGraphtitle(countyTitle());
-        } else {
+        if(select){
+            setGraphtitle(countyTitle());
+        }
+        else {
             setGraphtitle(professionTitle());
-        }  */
-
+        }
+        
         for (let item of Object.keys(inputs)) {
             if (inputs[item].active) {
                 srcs.push(item)
@@ -185,14 +226,21 @@ export default function Tabletest() {
 
         const queryTbs = []
         queryTbs.push(srcs)
-        queryTbs.push(county)
-        queryTbs.push(joblist)
+        if(select){
+            queryTbs.push(county)
+            queryTbs.push(joblist)
+        }
+        else {
+            queryTbs.push(countyList)
+            queryTbs.push(job)
+        }
         queryTbs.push(optionRadio)
         queryTbs.push(date)
         console.log(queryTbs)
         axios.post('http://localhost:8888/why', { job: queryTbs })
-            .then(response => setResult(listToDict(response.data.number)))
+            .then(response => setResult(listToDict(response.data.number))) /* Returned extract info from fortabletest */
             .catch(error => console.log(error));
+
         console.log((result));
     };
 
@@ -257,8 +305,6 @@ export default function Tabletest() {
 
     //insert all sources. Format 'sourcename': defaultValue
     const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue, ledigajobb: defaultValue });
-
-
     // Handles any changes to the source buttons
     const handleSource = (event) => {
         const name = event.target.name;
@@ -322,7 +368,6 @@ export default function Tabletest() {
 
     //County title above graph
     function countyTitle() {
-
         if (county === 'Alla valda') {
             return 'Län';
         } else {
@@ -330,18 +375,15 @@ export default function Tabletest() {
         }
     }
     /* Profession title above graph */
-    function professionTitle() {
-        if (profession == 'Yrke') {
+    function professionTitle(){
+        if(job == 'Yrke'){
             return 'Yrke'
         } else {
-            return profession
+            return job;
         }
     }
 
     // Testing date
-
-    
-
     function getMonths() {
         var totalMonths = {};
         const startPoint = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
@@ -379,7 +421,6 @@ export default function Tabletest() {
             <FormLabel id='graphtitle'>
                 <p>{graphtitle}</p>
             </FormLabel>
-
             <div className='fortableandlist'>
                 <div>
                     <FormLabel component="legend"></FormLabel>
