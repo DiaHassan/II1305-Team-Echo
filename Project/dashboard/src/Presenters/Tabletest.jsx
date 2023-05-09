@@ -57,6 +57,9 @@ export default function Tabletest() {
         { name: 'Utvecklare' }
     ];
 
+    const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
+    const checkToday = new Date().getFullYear() + '-' + new Date().getMonth();
+
     // Setting variables and useStates
     const [result, setResult] = useState(data2);
 
@@ -72,10 +75,8 @@ export default function Tabletest() {
     const [graphtitle, setGraphtitle] = useState('Län')
     const [profession, setProfession] = useState('Yrke')
     const [select, setSelect] = useState(true);
+    const [date, setDate] = useState(startDate);
     const [optionRadio, setOptionRadio] = React.useState(null);
-
-    // TODO: Move this to top when done
-    const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
 
     const handleChangeCounty = (event) => {
         setCounty(event.target.value);
@@ -107,6 +108,10 @@ export default function Tabletest() {
 
     const handleParams = (event) => {
         setOptionRadio(event.target.value);
+    }
+
+    const handleDate = (event) => {
+        setDate(event.target.value);
     }
 
     const countyListElements = allCounties.map((item) => {
@@ -183,6 +188,7 @@ export default function Tabletest() {
         queryTbs.push(county)
         queryTbs.push(joblist)
         queryTbs.push(optionRadio)
+        queryTbs.push(date)
         console.log(queryTbs)
         axios.post('http://localhost:8888/why', { job: queryTbs })
             .then(response => setResult(listToDict(response.data.number)))
@@ -337,14 +343,11 @@ export default function Tabletest() {
     
 
     function getMonths() {
-        console.log("1");
         var totalMonths = {};
         const startPoint = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
         const endPoint = new Date(startDate.replace(" ", " ,1 "));
-        console.log(endPoint, startPoint)
         while (endPoint <= startPoint) {
             let currentYear = startPoint.getFullYear();
-            console.log(currentYear)
             let months = [];
 
             while (startPoint.getFullYear() === currentYear && endPoint <= startPoint) {
@@ -352,8 +355,6 @@ export default function Tabletest() {
                 if (currentMonth < 10) {
                     currentMonth = '0' + currentMonth;
                 }
-
-                console.log(currentMonth);
                 months.push([currentYear + '-' + currentMonth, startPoint.toLocaleString('default', { month: 'long' })]);
                 startPoint.setMonth(startPoint.getMonth() - 1);
             }
@@ -373,7 +374,6 @@ export default function Tabletest() {
                 }
             </optgroup>));
     }
-    const checkToday = new Date().getFullYear() + '-' + new Date().getMonth();
     return (
         <div>
             <FormLabel id='graphtitle'>
@@ -553,7 +553,7 @@ export default function Tabletest() {
                             {<div className='Date'>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                                     <InputLabel htmlFor="grouped-date">Date</InputLabel>
-                                    <Select native defaultValue={checkToday} id="grouped-date" label="Grouping">
+                                    <Select native defaultValue={checkToday} id="grouped-date" label="Grouping" onChange={handleDate}>
                                         {getMonths()}
                                     </Select>
                                 </FormControl>
