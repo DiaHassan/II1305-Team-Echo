@@ -14,12 +14,9 @@ Our project was made externaly for Future Place Leadership as a dashboard collec
 - html and css
 
 ### Dependencies
- - Selenium (Python library)
- - BeautifulSoup (Python library)
- - sqlite3 (Python library)
- - pandas (Python library)
- - flask (Python library)
- - lxml (Python binder)
+Python packages used:
+[requirements.txt](https://github.com/DiaHassan/II1305-Team-Echo/requirements.txt)
+To install, run: ```pip install -r requirements.txt```
 
 ## Usage
 [Early draft]  
