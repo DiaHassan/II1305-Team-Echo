@@ -70,7 +70,7 @@ Uses BeautifulSoup to analyze HTML elements.
 *Establishes a connection to a page with* ```job``` *and* ```municipality``` *specified. Incrementing* ```page_number``` *and calling itself to load more ads.*
 
 **extract_html(ad, job)**:
-*Extracts some data through HTML for a specific* ```ad```
+*Extracts some data through HTML for a specific* ```ad```*.*
 
 **extract_ad_page_html(key)**:
 *Gets the rest of the data by connecting to the ad-page of a specific ad with the help of it's* ```key``` *, then extracting data through HTML.*
