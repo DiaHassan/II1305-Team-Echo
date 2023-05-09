@@ -44,22 +44,17 @@ def find_req_ai(descriptions: list) -> list:
                 ad_labels = []
                 for competency in candidate['enriched_candidates']['competencies']:
                     ad_labels.append(competency['concept_label'])
-                    #labels.append(ad_labels)
 
                 labels.append(ad_labels)
 
-    #--------------------- IF WE WANT TO ONLY EXTRACT EDUCATION REQUIREMENTS ---------------------------
-    #                         IF IMPLEMENTED CHANGE RETURN TO edu_labels
-    #
     # Filter the labels based on the educational keywords
-    #edu_labels = []
-    #for label in labels:
-    #    for keyword in find_req(label):
-    #        if keyword not in edu_labels:
-    #            edu_labels.append(keyword)
+    edu_labels = []
+    for label in labels:
+        for keyword in find_req(label):
+            if keyword not in edu_labels:
+                edu_labels.append(keyword)
 
-    return labels
-
+    return edu_labels
 
 
 # Define regular expressions for bachelor's, master's, and PhD degrees
