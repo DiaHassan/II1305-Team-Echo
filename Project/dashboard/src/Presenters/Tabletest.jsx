@@ -71,14 +71,14 @@ export default function Tabletest() {
 
     //  TODO: call function to automatically create lists
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
-    const allCounties = ["Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
+    const allCounties = ["Blekinge Län", "Dalarnas Län", "Gotlands Län", "Gävleborgs Län", "Hallands Län", "Jämtlands Län", "Jönköpings Län", "Kalmar Län", "Kronobergs Län", "Norrbottens Län", "Skåne Län", "Stockholms Län", "Södermanlands Län", "Uppsala Län", "Värmlands Län", "Västerbottens Län", "Västernorrlands Län", "Västmanlands Län", "Västra Götalands Län", "Örebro Län", "Östergötlands Län"]
 
 
     const [job, setJob] = useState("Sjuksköterska")
     const [joblist, setJobList] = useState(initialJobList)
-    const [county, setCounty] = useState("Blekinge län")
+    const [county, setCounty] = useState("Blekinge Län")
     const [countyList, setCountyList] = useState(allCounties)
-    const [graphtitle, setGraphtitle] = useState("Blekinge län")
+    const [graphtitle, setGraphtitle] = useState("Blekinge Län")
     const [select, setSelect] = useState(true);
     const [date, setDate] = useState(checkToday);
     const [optionRadio, setOptionRadio] = useState("null");
@@ -310,22 +310,25 @@ export default function Tabletest() {
         ]
     }
 
-    function displayAll(result) {
-        const compare = (select ? joblist.slice() : countyList.slice());
-        for (let index = 0; index < result.length; index++) {
-            const element = result[index];
+    function displayAll(resultChange) {
+
+        let compare = (select ? joblist.slice() : countyList.slice());
+
+        for (let index = 0; index < resultChange.length; index++) {
+            const element = resultChange[index];
             const compareIndex = compare.indexOf(element.name);
             compare.splice(compareIndex, 1);
         }
         for (let index = 0; index < compare.length; index++) {
-            result.push({ name: compare[index] })
+
+            resultChange.push({ name: compare[index] })
         }
 
-        result = result.sort(function (a, b) {
+        resultChange = resultChange.sort(function (a, b) {
             return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
         });
 
-        return result;
+        return resultChange;
     }
 
     const getBars = (InputColumns) => {
