@@ -65,7 +65,7 @@ def send_query(query):
 
 # X-axis: given counties
 # Y-axis: count of ads satisfy param for profession
-def get_counties_for_profession(sources, counties, profession, param):
+def get_counties_for_profession(sources, counties, profession, param, date):
     result = []
     sources_str = []
     counties_str = []
@@ -82,6 +82,7 @@ def get_counties_for_profession(sources, counties, profession, param):
                 WHERE p.profession = "{profession}" \
                 AND j.county IN ({counties_str}) \
                 AND j.source IN ({sources_str})\
+                AND strftime("%Y-%m", j.date_gathered) = "{date}" \
                 GROUP BY county, source \
                 ORDER BY county, source'
     elif param == "requirement":
@@ -91,6 +92,7 @@ def get_counties_for_profession(sources, counties, profession, param):
                     ON jl.id = rr.job_listing_id \
                 WHERE job_id IN (SELECT id FROM job WHERE profession = "{profession}") \
                 AND jl.county IN ({counties_str}) AND jl.source IN ({sources_str}) \
+                AND strftime("%Y-%m", jl.date_gathered) = "{date}" \
                 GROUP BY county, source, requirement \
                 ORDER BY county, source'
     else:
@@ -101,7 +103,8 @@ def get_counties_for_profession(sources, counties, profession, param):
                 AND j.{param} IS NOT + "null"\
                 AND j.county IN ({counties_str}) \
                 AND j.source IN ({sources_str}) \
-                GROUP BY county, source, j.{param}\
+                AND strftime("%Y-%m", j.date_gathered) = "{date}" \
+                GROUP BY county, source, j.{param} \
                 ORDER BY county, source'
     fetch = list_of_tuples_to_2d_list(send_query(query))
     result = outer_format(fetch)
@@ -111,7 +114,7 @@ def get_counties_for_profession(sources, counties, profession, param):
 
 # X-axis: given professions 
 # Y-axis: count of ads satisfying param in county
-def get_professions_for_county(sources, county, professions, param): 
+def get_professions_for_county(sources, county, professions, param, date): 
     result = []
     sources_str = []
     professions_str = []
@@ -122,11 +125,12 @@ def get_professions_for_county(sources, county, professions, param):
     sources_str = ",".join(sources_str)
     professions_str = ",".join(professions_str)
     if param == 'null':
-        query = f'SELECT profession, source, COUNT(job_listing.id) \
-                FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
-                WHERE job_listing.county = "{county}" \
-                AND job_listing.source IN ({sources_str}) \
+        query = f'SELECT profession, source, COUNT(jl.id) \
+                FROM job_listing jl INNER JOIN job ON job.id = jl.job_id \
+                WHERE jl.county = "{county}" \
+                AND jl.source IN ({sources_str}) \
                 AND profession IN ({professions_str}) \
+                AND strftime("%Y-%m", jl.date_gathered) = "{date}" \
                 GROUP BY source, county, profession \
                 ORDER BY profession, source'
     elif param == "requirement":
@@ -135,17 +139,20 @@ def get_professions_for_county(sources, county, professions, param):
                 INNER JOIN requirement AS r ON rr.requirement_id = r.id) \
                 ON jl.id = rr.job_listing_id \
                 INNER JOIN (SELECT * FROM job WHERE profession IN ({professions_str})) AS a ON a.id = jl.job_id \
-                WHERE jl.county = "{county}" AND jl.source IN ({sources_str}) \
+                WHERE jl.county = "{county}" \
+                AND jl.source IN ({sources_str}) \
+                AND strftime("%Y-%m", jl.date_gathered) = "{date}" \
                 GROUP BY profession, source, requirement \
                 ORDER BY profession, source'
     else:
-        query = f'SELECT profession, source, {param}, COUNT(job_listing.id) as "sum" \
-                FROM job_listing INNER JOIN job ON job.id = job_listing.job_id \
-                WHERE job_listing.county = "{county}" \
-                AND job_listing.source IN ({sources_str}) \
+        query = f'SELECT profession, source, {param}, COUNT(jl.id) as "sum" \
+                FROM job_listing jl INNER JOIN job ON job.id = jl.job_id \
+                WHERE jl.county = "{county}" \
+                AND jl.source IN ({sources_str}) \
                 AND profession IN ({professions_str}) \
                 AND {param} IS NOT "null" \
-                GROUP BY profession, source, job_listing.{param} \
+                AND strftime("%Y-%m", jl.date_gathered) = "{date}" \
+                GROUP BY profession, source, jl.{param} \
                 ORDER BY profession, source'
     fetch = list_of_tuples_to_2d_list(send_query(query))
     result = outer_format(fetch)
@@ -154,23 +161,23 @@ def get_professions_for_county(sources, county, professions, param):
 # -------------------------------- EXTRACT -------------------------------------------
 
 # Callee
-def extract(source, county, profession, param):
+def extract(source, county, profession, param, date):
     # One profession, many counties
     if isinstance(county, list):
-        return get_counties_for_profession(source, county, profession, param)
+        return get_counties_for_profession(source, county, profession, param, date)
     # One county, many professions
     elif isinstance(profession, list):
-        return get_professions_for_county(source, county, profession, param)
+        return get_professions_for_county(source, county, profession, param, date)
 
 
 # Test
 if __name__ == '__main__':
 
     # Extract
-    print(extract(['Linkedin', 'ledigajobb'], 'Blekinge län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'null'))
+    #print(extract(['Linkedin', 'ledigajobb'], 'Blekinge län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'null'))
     
     # One profession, many counties
-    #print(get_counties_for_profession(['Linkedin'], ['Stockholms län', 'Uppsala län'], 'Städare', 'requirement'))
+    #print(get_counties_for_profession(['Linkedin'], ['Stockholms län', 'Uppsala län'], 'Städare', 'employment_type', '2023-04'))
 
     # One county many professions
-    #print(get_professions_for_county(['Linkedin'], 'Stockholms län', ['Städare', 'Lärare'], 'employment_type'))
+    print(get_professions_for_county(['Linkedin'], 'Stockholms län', ['Städare', 'Lärare'], 'requirement', '2023-04'))

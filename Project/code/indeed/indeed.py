@@ -1,27 +1,18 @@
 from playwright.sync_api import sync_playwright
-from sys import platform
 from bs4 import BeautifulSoup
 from time import sleep
-from os import path
+from os.path import dirname
+from sys import path
+path.append(dirname(dirname(__file__)))
+from file_to_list import file_to_list
 import random
 
-# Path to dashboard folder for running the website
-def get_html_path():
-    match platform:
-        case 'linux':
-            return 'Project/code/indeed/html.txt'
-        case 'darwin':
-            return 'Project/code/indeed/html.txt'
-        case _:
-            return 'Project\code\indeed\html.txt'
-        
-# Returns list of all counties to scrape
-def file_to_list(txt):
-    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
-    file_path = path.dirname(path.dirname(path.dirname(__file__))) + s + txt
-    return open(file_path, encoding='utf-8').read().splitlines()
 
-# Defeats popups
+# Path to hmtl.txt
+html_path = 'Project/code/indeed/html.txt'
+
+
+# Annihilates popups
 def close_popup(page):
     try:
         if page.locator('//*[@id="mosaic-modal-mosaic-provider-desktopserp-jobalert-popup"]/div/div/div[1]') is not None:
@@ -35,27 +26,42 @@ def close_popup(page):
         return
     
 # FORTSÄTT HÄR
+# Should annihilate popup tabs
 def handle_popup_tab(popup):
     popup.wait_for_load_state()
     print(popup.title())
 
+# Extracts data from one ad   
+# nu orkar jag inte koda på Githubs laggiga sida så fortsätt med: byt så att argumentet ad istället är en page, och gör så
+# all extraktion är gjord med playwrights locator istället
+def extract_ad(ad):
+    # [source, employment_type, duration, publication_date, profession, county, req, years, seniority, date_extracted, desc]
+    data = []
+    print(ad.find('div', class_='jobsearch-JobInfoHeader-title-container'))
+    # employment_type = ad.find('div', {'class': 'css-m539th eu4oa1w0'})
+
+    print(employment_type)
+    if ad.find('Heltid') is not None:
+        employment_type = 'heltid'
+    elif ad.find('Deltid') is not None:
+        employment_type = 'deltid'
+    else:
+        employment_type = 'null'
+    print(employment_type)    
+    return data
+
 # Returns the parameters of one ad
-def get_ad(page, profession, county, page_index, ad_list):
+def get_ads_on_page(page, profession, county, page_index):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={page_index}')
     sleep(1)
     close_popup(page)
     for i in range(1, 18):
         try:
-            print("i survived 0")
             page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[{str(i)}]/div/div[1]/div/div[1]').click(timeout=1000)
             data = page.content().encode('ascii', 'replace').decode('ascii')
-            print("i survived 1")
             html = BeautifulSoup(data, features='lxml')
             ad = html.find('div', class_="jobsearch-RightPane")
-            print("survivo 2")
-            #print(ad)
 
-            print("testing")
             # finds the job title
             #job_title = html.find('div', {'class': 'css-1p3gyjy e1xnxm2i0'})
             sleep(0.5)
@@ -74,9 +80,9 @@ def get_ad(page, profession, county, page_index, ad_list):
             print(i)
             print("epic fail")
             continue
-    
+  
 # Returns a list of all ads for a specified profession and county
-def get_all_ads(page, profession, county):
+def get_ads_all_pages(page, profession, county):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={0}')
     data = page.content().encode('ascii', 'replace').decode('ascii')
     html = BeautifulSoup(data, features='lxml')
@@ -100,6 +106,7 @@ def get_all_ads(page, profession, county):
         sleep(random.randint(1, 3))
     return ad_list
 
+# Main function
 def run():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
@@ -110,9 +117,10 @@ def run():
         result = []
         for profession in professions:
             for county in counties:
-                result.append(get_all_ads(page, profession, county))
+                result.append(get_ads_all_pages(page, profession, county))
         context.close()
         browser.close()
 
+# Run test
 if __name__ == '__main__':
     run()
