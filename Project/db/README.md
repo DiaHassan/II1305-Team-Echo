@@ -1,6 +1,7 @@
 # Documentation
 
 ## [db_sqlite.sql](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/db/db_sqlite.sql)
+Database of job listings from different sources with specific paramaters extracted.
 
 **job_listing:**
 Contains all data parameters for an ad, has FK to table job.
