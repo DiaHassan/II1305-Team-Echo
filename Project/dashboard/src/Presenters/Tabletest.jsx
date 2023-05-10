@@ -165,7 +165,7 @@ export default function Tabletest() {
                                     key = `${category}-${employmentNull}`;
                                     break;
                                 case "requirement":
-                                    key = `${category}-${employmentNull}`;
+                                    key = `${category}-${reqNull}`;
                                     break;
                                 default:
                                     key = `${category}-${subcat}`;
@@ -186,7 +186,7 @@ export default function Tabletest() {
     function dictToColumns(dict) {
         const columns = {};
         for (let i = 0; i < dict.length; i++) {
-            for (const [key, val] of Object.entries(dict[i])) {
+            for (const [key] of Object.entries(dict[i])) {
                 const parts = key.split("-");
                 if (parts[0] !== "name") {
                     if (!(parts[0] in columns)) {
@@ -206,11 +206,6 @@ export default function Tabletest() {
         if (optionRadio !== "years_of_experience") {
             return list;
         }
-        const group0 = []; //No experience needed (0)
-        const group1 = []; //1-2 years of experience
-        const group2 = []; //3-5 years of experience
-        const group3 = []; //6-8 years of experience
-        const group4 = []; //8+ years of experience
         //Starts at index 1 because the name of the source/profession is the first element
         // of the arrays.
         for (const x of list) {
@@ -278,6 +273,12 @@ export default function Tabletest() {
         console.log((result));
     };
 
+
+    //Use this for instant updates
+    // useEffect(() => {
+    //     handleClick()
+    // }, [select, handleClick]);
+
     useEffect(() => {
         handleClick()
     }, [select]);
@@ -338,7 +339,7 @@ export default function Tabletest() {
 
         if (InputColumns !== undefined) {
             for (const [source, col] of Object.entries(InputColumns)) {
-                for (const [barName, trueValue] of Object.entries(col)) {
+                for (const [barName] of Object.entries(col)) {
 
                     bars.push([barName, source, colors[source][count[source]]]);
                     count[source] = count[source] + 1;
@@ -403,21 +404,6 @@ export default function Tabletest() {
     }
 
     // --------
-
-    //Creates textshadow
-    const textShadow = {
-        textShadow: '2px 2px 4px #000000',
-        transition: 'text-shadow 0.5s ease'
-    };
-    const textShadowHover = {
-        textShadow: '4px 4px 8px #000000',
-    };
-
-    const standard = {
-        cursor: 'default'
-
-    };
-
     //County title above graph
     function countyTitle() {
         return county;
@@ -488,10 +474,10 @@ export default function Tabletest() {
                 {/* </ResponsiveContainer> */}
 
                 <div className='forlist'>
-                    <div class="questionmark-container">
-                        <div class="hover-element">
+                    <div className="questionmark-container">
+                        <div className="hover-element">
                             !
-                            <div class="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
+                            <div className="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
                         </div>
                     </div>
                     <div >
@@ -507,8 +493,6 @@ export default function Tabletest() {
                                     value={JSON.stringify({
                                         years_of_experience: false,
                                         duration: false,
-                                        prerequirements: false,
-                                        drivers_license: false
                                     })}
                                 />} label="LinkedIn" />
                                 <FormControlLabel control={<Checkbox
@@ -516,7 +500,6 @@ export default function Tabletest() {
                                     color='default'
                                     name="platsbanken"
                                     value={JSON.stringify({
-                                        drivers_license: false,
                                         seniority: false
                                     })}
 
@@ -526,8 +509,7 @@ export default function Tabletest() {
                                     color='default'
                                     name="ledigajobb"
                                     value={JSON.stringify({
-                                        duration: false,
-                                        drivers_license: false
+                                        duration: false
                                     })}
                                 />} label="Lediga jobb" />
                             </FormGroup>
