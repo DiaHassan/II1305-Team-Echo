@@ -64,6 +64,10 @@ export default function Tabletest() {
     // Setting variables and useStates
     const [result, setResult] = useState(data2);
 
+    const seniorityNull = "ej applicerbart";
+    const employmentNull = "ospecifierat";
+    const reqNull = "ospecifierat";
+
 
     //  TODO: call function to automatically create lists
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
@@ -130,7 +134,11 @@ export default function Tabletest() {
         const dict = [];
         for (let i = 0; i < list.length; i++) {
             const row = list[i];
-            const entry = { name: row[0] };
+            var partStr = row[0].toLowerCase().split(' ');
+            for (let i = 0; i < partStr.length; i++) {
+                partStr[i] = partStr[i].charAt(0).toUpperCase() + partStr[i].substring(1);
+            }
+            const entry = { name: partStr.join(' ') };
             for (let j = 1; j < row.length; j++) {
                 const category = row[j][0];
                 for (let k = 1; k < row[j].length; k++) {
@@ -140,7 +148,24 @@ export default function Tabletest() {
                         key = `${category}`;
                         entry[key] = subcat;
                     } else {
-                        key = `${category}-${subcat}`;
+                        if (subcat === "null") {
+                            switch (optionRadio) {
+                                case "seniority":
+                                    key = `${category}-${seniorityNull}`;
+                                    break;
+                                case "employment_type":
+                                    key = `${category}-${employmentNull}`;
+                                    break;
+                                case "requirement":
+                                    key = `${category}-${employmentNull}`;
+                                    break;
+                                default:
+                                    key = `${category}-${subcat}`;
+                                    break;
+                            }
+                        } else {
+                            key = `${category}-${subcat}`;
+                        }
                         entry[key] = value;
                     }
                 }
@@ -438,7 +463,7 @@ export default function Tabletest() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
                     <YAxis />
-                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' , textShadow: '0px 0px 0px #000000'}} />
+                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black', textShadow: '0px 0px 0px #000000' }} />
                     <Legend />
                     {getBars(dictToColumns(result))}
                 </BarChart>
@@ -456,37 +481,37 @@ export default function Tabletest() {
                         <FormControl component="fieldset" defaultValue={"linkedin"}>
                             <FormLabel component="legend">Välj plattform:</FormLabel>
                             <FormGroup>
-                                    <FormControlLabel control={<Checkbox
-                                        // checked={linkedinCB}
-                                        onChange={handleSource}
-                                        color='default'
-                                        name="linkedin"
-                                        value={JSON.stringify({
-                                            years_of_experience: false,
-                                            duration: false,
-                                            prerequirements: false,
-                                            drivers_license: false
-                                        })}
-                                    />} label="LinkedIn" />
-                                    <FormControlLabel control={<Checkbox
-                                        onChange={handleSource}
-                                        color='default'
-                                        name="platsbanken"
-                                        value={JSON.stringify({
-                                            drivers_license: false,
-                                            seniority: false
-                                        })}
+                                <FormControlLabel control={<Checkbox
+                                    // checked={linkedinCB}
+                                    onChange={handleSource}
+                                    color='default'
+                                    name="linkedin"
+                                    value={JSON.stringify({
+                                        years_of_experience: false,
+                                        duration: false,
+                                        prerequirements: false,
+                                        drivers_license: false
+                                    })}
+                                />} label="LinkedIn" />
+                                <FormControlLabel control={<Checkbox
+                                    onChange={handleSource}
+                                    color='default'
+                                    name="platsbanken"
+                                    value={JSON.stringify({
+                                        drivers_license: false,
+                                        seniority: false
+                                    })}
 
-                                    />} label="Platsbanken" />
-                                    <FormControlLabel control={<Checkbox
-                                        onChange={handleSource}
-                                        color='default'
-                                        name="ledigajobb"
-                                        value={JSON.stringify({
-                                            duration: false,
-                                            drivers_license: false
-                                        })}
-                                    />} label="Lediga jobb" />
+                                />} label="Platsbanken" />
+                                <FormControlLabel control={<Checkbox
+                                    onChange={handleSource}
+                                    color='default'
+                                    name="ledigajobb"
+                                    value={JSON.stringify({
+                                        duration: false,
+                                        drivers_license: false
+                                    })}
+                                />} label="Lediga jobb" />
                             </FormGroup>
                         </FormControl>
 
@@ -596,10 +621,10 @@ export default function Tabletest() {
                                 <FormControl sx={{ m: 1, width: 200 }}>
                                     <InputLabel htmlFor="grouped-date">Datum</InputLabel>
                                     <Select
-                                    native defaultValue={checkToday}
-                                    id="grouped-date" 
-                                    label="Datum" 
-                                    onChange={handleDate}>
+                                        native defaultValue={checkToday}
+                                        id="grouped-date"
+                                        label="Datum"
+                                        onChange={handleDate}>
                                         {getMonths()}
                                     </Select>
                                 </FormControl>
