@@ -5,16 +5,17 @@ from logging import INFO, getLogger, basicConfig
 from json import loads
 
 # Requirement finder
-from sys import stdout, path as sys_path
-from os import path as os_path
-sys_path.append(os_path.dirname(os_path.dirname(__file__)))
+from sys import stdout, path
+from os.path import dirname
+path.append(dirname(dirname(__file__)))
 from reqfinder import find_req, find_seniority, find_req_ai
+from file_to_list import file_to_list
 
 # Occupation ID
 try:
-    from .get_occupation_id import get_occupational_ids, get_professions
+    from .get_occupation_id import get_occupational_ids
 except ImportError:
-    from get_occupation_id import get_occupational_ids, get_professions
+    from get_occupation_id import get_occupational_ids
 
 # URL and format for settings
 BASE_URL = 'https://jobstream.api.jobtechdev.se'
@@ -130,7 +131,8 @@ def extract_data_ad(ad, index):
     # Dictionary with all occupation names, in order
     # of how they appear in the occupation_ids list in run().
     # It is used to give job ads the same desired name
-    professions = get_professions()
+    professions = file_to_list('professions.txt')
+
     index_dict = {index: value for index, value in enumerate(professions)}
     
     # Extract all desired job descriptions

@@ -10,7 +10,7 @@ import subprocess
 db_path = 'Project/db/echo.db'
 sql_path = 'Project/db/db_sqlite.sql'
    
-            
+
 # Builds database
 def build_db():
 
@@ -36,7 +36,7 @@ def run():
     # webscrape.run()
 
     # Dashboard
-    table_path = join(join('Project', 'db'), 'Fortabletest.py')
+    table_path = join(join('Project', 'db'), 'data_handler.py')
     startfile(table_path)
     path = join(dirname(__file__), 'dashboard')
     subprocess.run("npm start", shell=True, cwd=path)

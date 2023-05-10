@@ -69,12 +69,11 @@ export default function Tabletest() {
     const allCounties = ["Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
 
 
-    const [job, setJob] = useState("Elektriker")
+    const [job, setJob] = useState("Sjuksköterska")
     const [joblist, setJobList] = useState(initialJobList)
     const [county, setCounty] = useState("Blekinge län")
     const [countyList, setCountyList] = useState(allCounties)
-    const [graphtitle, setGraphtitle] = useState('Län')
-    const [profession, setProfession] = useState('Yrke')
+    const [graphtitle, setGraphtitle] = useState("Blekinge län")
     const [select, setSelect] = useState(true);
     const [date, setDate] = useState(startDate);
     const [optionRadio, setOptionRadio] = useState("null");
@@ -216,7 +215,7 @@ export default function Tabletest() {
             setGraphtitle(countyTitle());
         }
         else {
-            setGraphtitle(professionTitle());
+            setGraphtitle(jobTitle());
         }
 
         for (let item of Object.keys(inputs)) {
@@ -244,6 +243,10 @@ export default function Tabletest() {
 
         console.log((result));
     };
+
+    useEffect(() => {
+        handleClick()
+    }, [select]);
 
     const colors = {
         "linkedin": [
@@ -358,12 +361,6 @@ export default function Tabletest() {
         return template;
     }
 
-    // const getPropertyName = (obj, expression) => {
-    //     var res = {};
-    //     Object.keys(obj).map(k => { res[k] = () => k; });
-    //     return expression(res)();
-    // }
-
     // --------
 
     //Creates textshadow
@@ -382,19 +379,12 @@ export default function Tabletest() {
 
     //County title above graph
     function countyTitle() {
-        if (county === 'Alla valda') {
-            return 'Län';
-        } else {
-            return county;
-        }
+        return county;
     }
+
     /* Profession title above graph */
-    function professionTitle() {
-        if (job == 'Yrke') {
-            return 'Yrke'
-        } else {
-            return job;
-        }
+    function jobTitle() {
+        return job;
     }
 
     // Testing date
@@ -430,6 +420,8 @@ export default function Tabletest() {
                 }
             </optgroup>));
     }
+
+
     return (
         <div>
             <FormLabel id='graphtitle'>
@@ -445,7 +437,7 @@ export default function Tabletest() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
                     <YAxis />
-                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' }} />
+                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' , textShadow: '0px 0px 0px #000000'}} />
                     <Legend />
                     {getBars(dictToColumns(result))}
                 </BarChart>
@@ -455,7 +447,7 @@ export default function Tabletest() {
                     <div class="hover-container">
                         <div class="hover-element">
                             ?
-                            <div class="hover-text">These statistics have some unreliable data. </div>
+                            <div class="hover-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
                         </div>
                     </div>
                     <div >
