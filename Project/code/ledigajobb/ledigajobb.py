@@ -3,23 +3,17 @@ from requests import get
 from bs4 import BeautifulSoup
 
 # Imports for paths
-from os import path as os_path
-from sys import platform, path as sys_path
-sys_path.append(os_path.dirname(os_path.dirname(__file__)))
+from os.path import dirname
+from sys import path
+path.append(dirname(dirname(__file__)))
 from reqfinder import find_req
+from file_to_list import file_to_list
 
 # Import counties
 try:
     from ledigajobb_counties import counties
 except ImportError:
     from .ledigajobb_counties import counties
-
-
-# Retrieves list of all professions to webscrape
-def get_profession_list():
-    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
-    file = os_path.dirname(os_path.dirname(os_path.dirname(__file__))) + s + 'professions.txt'
-    return open(file, encoding='utf-8').read().splitlines()
 
 
 # Define the URL to scrape
@@ -178,7 +172,7 @@ def scrape_ad(job_link, county, profession):
 def run():
     i = 0
     all_jobs = []
-    professions = get_profession_list()
+    professions = file_to_list('professions.txt')
     # Going through all jobs and locations
     for profession in professions:
         for county_index in range(2,24):
