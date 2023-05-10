@@ -1,5 +1,4 @@
-from sys import platform
-from os import startfile
+import os
 from os.path import exists, dirname, join
 from sqlite3 import connect
 import subprocess
@@ -37,7 +36,7 @@ def run():
 
     # Dashboard
     table_path = join(join('Project', 'db'), 'data_handler.py')
-    startfile(table_path)
+    os.startfile(table_path)
     path = join(dirname(__file__), 'dashboard')
     subprocess.run("npm start", shell=True, cwd=path)
 
