@@ -49,6 +49,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
+    color: var(--color-black);
 }
 
 .questionmark-container:hover .warning-text {
