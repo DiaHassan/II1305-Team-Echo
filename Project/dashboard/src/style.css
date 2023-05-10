@@ -48,7 +48,7 @@ nav {
     color: var(--color-green);
     font-weight: bold;
     font-size: 25px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent); */
     height: 100px;
     transition: height 0.3s ease-in-out;
 }
@@ -88,12 +88,12 @@ nav>ul>li {
 }
 
 nav>ul>li:hover {
-    border-bottom: 5px solid var(--color-black);
+    border-bottom: 5px solid var(--color-green);
     border-radius: 2px;
 }
 
 .small>ul>li:hover {
-    border-bottom: 5px solid var(--color-black);
+    border-bottom: 5px solid var(--color-green);
     border-radius: 2px;
 }
 
@@ -566,6 +566,7 @@ footer a:hover {
 .fortableandlist {
     display: flex;
     align-content: space-between;
+    margin-top: 5rem;
     margin-bottom: 5rem;
     /* flex-direction: row; */
     /*align-items: center;*/
