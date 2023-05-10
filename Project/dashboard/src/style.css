@@ -612,3 +612,53 @@ footer a:hover {
 :disabled{
     color: grey !important; 
 }
+
+
+/* These classes are tests and are for clean up */
+
+
+/* ----------Stats page---------------- */
+
+/* Mobile styles */
+@media only screen and (max-width: 600px) {
+    /* .fortableandlist{
+        display:flex;
+        flex-direction: column;
+        overflow-x: scroll;
+    } */
+    .tableandtitle{
+        display: flex;
+        overflow-x: scroll;
+    }
+    
+}
+
+@media screen {
+    @media(max-width: 1300px) {
+        .fortableandlist{
+            display:flex;
+            flex-direction: column;
+            overflow-x: scroll;
+
+        }
+        .tableandtitle{
+            width: 100%;
+            display: flex;
+            overflow-x: scroll;
+        }
+    }
+}
+
+/* Tablet and desktop styles */
+@media only screen and (min-width: 1301px) {
+    .fortableandlist{
+          display:flex;
+          flex-direction: row;
+        
+    }
+    /* .tableandtitle{
+
+    } */
+    
+  
+  }

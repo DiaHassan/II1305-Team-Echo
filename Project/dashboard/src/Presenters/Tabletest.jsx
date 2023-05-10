@@ -77,7 +77,7 @@ export default function Tabletest() {
     const [profession, setProfession] = useState('Yrke')
     const [select, setSelect] = useState(true);
     const [date, setDate] = useState(startDate);
-    const [optionRadio, setOptionRadio] = useState(null);
+    const [optionRadio, setOptionRadio] = useState("null");
     const [selectRadio, setSelectRadio] = useState(false);
 
     const handleChangeCounty = (event) => {
@@ -434,23 +434,25 @@ export default function Tabletest() {
     }
     return (
         <div>
+            <div className='fortableandlist'>
             <FormLabel id='graphtitle'>
                 <p>{graphtitle}</p>
             </FormLabel>
-            <div className='fortableandlist'>
-                <div>
-                    <FormLabel component="legend"></FormLabel>
-                </div>
+                <div className='tableandtitle'>
+                    <div>
+                        <FormLabel component="legend"></FormLabel>
+                    </div>
 
-                {/* <ResponsiveContainer > */}
-                <BarChart width={1000} height={600} data={displayAll(result)}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
-                    <YAxis />
-                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' }} />
-                    <Legend />
-                    {getBars(dictToColumns(result))}
-                </BarChart>
+                    {/* <ResponsiveContainer > */}
+                    <BarChart width={1000} height={600} data={displayAll(result)}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis  tick={{ fontSize: '0.9em' }} dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
+                        <YAxis />
+                        <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' }} />
+                        <Legend />
+                        {getBars(dictToColumns(result))}
+                    </BarChart>
+                </div>
                 {/* </ResponsiveContainer> */}
 
                 <div className='forlist'>
