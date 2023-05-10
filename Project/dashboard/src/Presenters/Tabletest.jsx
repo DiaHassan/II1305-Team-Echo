@@ -128,6 +128,14 @@ export default function Tabletest() {
     function listToDict(list) {
         list = groupExperience(list);
         const dict = [];
+        if (!list){
+            //Disclaimer of no data
+            
+            
+        } else {
+            //Set display: None on disclaime
+        }
+
         for (let i = 0; i < list.length; i++) {
             const row = list[i];
             const entry = { name: row[0] };
@@ -429,12 +437,15 @@ export default function Tabletest() {
                 <p>{graphtitle}</p>
             </FormLabel>
             <div className='fortableandlist'>
+            <p id="nodatalabel"> Ingen data tillgänglig </p>
                 <div>
                     <FormLabel component="legend"></FormLabel>
                 </div>
 
                 {/* <ResponsiveContainer > */}
+                
                 <BarChart width={1000} height={600} data={displayAll(result)}>
+                
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
                     <YAxis />
@@ -447,7 +458,7 @@ export default function Tabletest() {
                 <div className='forlist'>
                     <div class="questionmark-container">
                         <div class="hover-element">
-                            ?
+                            !
                             <div class="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
                         </div>
                     </div>
