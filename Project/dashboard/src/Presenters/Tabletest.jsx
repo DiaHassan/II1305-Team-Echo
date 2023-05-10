@@ -132,10 +132,10 @@ export default function Tabletest() {
     function listToDict(list) {
         list = groupExperience(list);
         const dict = [];
-        if (!list){
+        if (!list) {
             //Disclaimer of no data
-            
-            
+
+
         } else {
             //Set display: None on disclaime
         }
@@ -320,7 +320,11 @@ export default function Tabletest() {
         for (let index = 0; index < compare.length; index++) {
             result.push({ name: compare[index] })
         }
-        // result = _.sortBy(result, 'name')
+
+        result = result.sort(function (a, b) {
+            return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+        });
+
         return result;
     }
 
@@ -462,15 +466,15 @@ export default function Tabletest() {
                 <p>{graphtitle}</p>
             </FormLabel>
             <div className='fortableandlist'>
-            <p id="nodatalabel"> Ingen data tillgänglig </p>
+                <p id="nodatalabel"> Ingen data tillgänglig </p>
                 <div>
                     <FormLabel component="legend"></FormLabel>
                 </div>
 
                 {/* <ResponsiveContainer > */}
-                
+
                 <BarChart width={1000} height={600} data={displayAll(result)}>
-                
+
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
                     <YAxis />
