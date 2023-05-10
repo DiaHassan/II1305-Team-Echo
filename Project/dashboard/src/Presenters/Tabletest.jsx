@@ -57,7 +57,7 @@ export default function Tabletest() {
         { name: 'Utvecklare' }
     ];
 
-    const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
+    const startDate = 'May 2023'; //TODO: Change into more accurate start date
     let thisMonth = new Date().getMonth() + 1;
     const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
 
@@ -71,14 +71,14 @@ export default function Tabletest() {
 
     //  TODO: call function to automatically create lists
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
-    const allCounties = ["Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
+    const allCounties = ["Blekinge Län", "Dalarnas Län", "Gotlands Län", "Gävleborgs Län", "Hallands Län", "Jämtlands Län", "Jönköpings Län", "Kalmar Län", "Kronobergs Län", "Norrbottens Län", "Skåne Län", "Stockholms Län", "Södermanlands Län", "Uppsala Län", "Värmlands Län", "Västerbottens Län", "Västernorrlands Län", "Västmanlands Län", "Västra Götalands Län", "Örebro Län", "Östergötlands Län"]
 
 
     const [job, setJob] = useState("Sjuksköterska")
     const [joblist, setJobList] = useState(initialJobList)
-    const [county, setCounty] = useState("Blekinge län")
+    const [county, setCounty] = useState("Blekinge Län")
     const [countyList, setCountyList] = useState(allCounties)
-    const [graphtitle, setGraphtitle] = useState("Blekinge län")
+    const [graphtitle, setGraphtitle] = useState("Blekinge Län")
     const [select, setSelect] = useState(true);
     const [date, setDate] = useState(checkToday);
     const [optionRadio, setOptionRadio] = useState("null");
@@ -165,7 +165,7 @@ export default function Tabletest() {
                                     key = `${category}-${employmentNull}`;
                                     break;
                                 case "requirement":
-                                    key = `${category}-${employmentNull}`;
+                                    key = `${category}-${reqNull}`;
                                     break;
                                 default:
                                     key = `${category}-${subcat}`;
@@ -186,7 +186,7 @@ export default function Tabletest() {
     function dictToColumns(dict) {
         const columns = {};
         for (let i = 0; i < dict.length; i++) {
-            for (const [key, val] of Object.entries(dict[i])) {
+            for (const [key] of Object.entries(dict[i])) {
                 const parts = key.split("-");
                 if (parts[0] !== "name") {
                     if (!(parts[0] in columns)) {
@@ -206,11 +206,6 @@ export default function Tabletest() {
         if (optionRadio !== "years_of_experience") {
             return list;
         }
-        const group0 = []; //No experience needed (0)
-        const group1 = []; //1-2 years of experience
-        const group2 = []; //3-5 years of experience
-        const group3 = []; //6-8 years of experience
-        const group4 = []; //8+ years of experience
         //Starts at index 1 because the name of the source/profession is the first element
         // of the arrays.
         for (const x of list) {
@@ -278,6 +273,12 @@ export default function Tabletest() {
         console.log((result));
     };
 
+
+    //Use this for instant updates
+    // useEffect(() => {
+    //     handleClick()
+    // }, [select, handleClick]);
+
     useEffect(() => {
         handleClick()
     }, [select]);
@@ -314,22 +315,25 @@ export default function Tabletest() {
         ]
     }
 
-    function displayAll(result) {
-        const compare = (select ? joblist.slice() : countyList.slice());
-        for (let index = 0; index < result.length; index++) {
-            const element = result[index];
+    function displayAll(resultChange) {
+
+        let compare = (select ? joblist.slice() : countyList.slice());
+
+        for (let index = 0; index < resultChange.length; index++) {
+            const element = resultChange[index];
             const compareIndex = compare.indexOf(element.name);
             compare.splice(compareIndex, 1);
         }
         for (let index = 0; index < compare.length; index++) {
-            result.push({ name: compare[index] })
+
+            resultChange.push({ name: compare[index] })
         }
 
-        result = result.sort(function (a, b) {
+        resultChange = resultChange.sort(function (a, b) {
             return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
         });
 
-        return result;
+        return resultChange;
     }
 
     const getBars = (InputColumns) => {
@@ -339,7 +343,7 @@ export default function Tabletest() {
 
         if (InputColumns !== undefined) {
             for (const [source, col] of Object.entries(InputColumns)) {
-                for (const [barName, trueValue] of Object.entries(col)) {
+                for (const [barName] of Object.entries(col)) {
 
                     bars.push([barName, source, colors[source][count[source]]]);
                     count[source] = count[source] + 1;
@@ -404,21 +408,6 @@ export default function Tabletest() {
     }
 
     // --------
-
-    //Creates textshadow
-    const textShadow = {
-        textShadow: '2px 2px 4px #000000',
-        transition: 'text-shadow 0.5s ease'
-    };
-    const textShadowHover = {
-        textShadow: '4px 4px 8px #000000',
-    };
-
-    const standard = {
-        cursor: 'default'
-
-    };
-
     //County title above graph
     function countyTitle() {
         return county;
@@ -453,6 +442,7 @@ export default function Tabletest() {
             returnList.push([year_value, totalMonths[year_value]])
         }
 
+        returnList.sort(function(a,b){return b[0].localeCompare(a[0]);});
 
         return returnList.map((item) => (
             <optgroup label={item[0]}>
@@ -489,10 +479,10 @@ export default function Tabletest() {
                 {/* </ResponsiveContainer> */}
 
                 <div className='forlist'>
-                    <div class="questionmark-container">
-                        <div class="hover-element">
+                    <div className="questionmark-container">
+                        <div className="hover-element">
                             !
-                            <div class="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
+                            <div className="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
                         </div>
                     </div>
                     <div >
@@ -508,8 +498,6 @@ export default function Tabletest() {
                                     value={JSON.stringify({
                                         years_of_experience: false,
                                         duration: false,
-                                        prerequirements: false,
-                                        drivers_license: false
                                     })}
                                 />} label="LinkedIn" />
                                 <FormControlLabel control={<Checkbox
@@ -517,7 +505,6 @@ export default function Tabletest() {
                                     color='default'
                                     name="platsbanken"
                                     value={JSON.stringify({
-                                        drivers_license: false,
                                         seniority: false
                                     })}
 
@@ -527,8 +514,7 @@ export default function Tabletest() {
                                     color='default'
                                     name="ledigajobb"
                                     value={JSON.stringify({
-                                        duration: false,
-                                        drivers_license: false
+                                        duration: false
                                     })}
                                 />} label="Lediga jobb" />
                             </FormGroup>
