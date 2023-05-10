@@ -414,10 +414,13 @@ input:checked+.slider:before {
     padding-left: 8px;
 }
 
-#fley {
-    padding-left: 8px;
+#sc .slider {
+    background-color: #f3aa21;
 }
 
+#sc input:checked+.slider {
+    background-color: #f3aa21;
+}
 
 /* ------------------ */
 

@@ -493,14 +493,14 @@ export default function Tabletest() {
                         {/* Div containing 2 drop-down lists */}
                         <div>
                             <table className='toggleTable'>
-                                <th align='left'>Ett län <br />Flera yrken</th>
-                                <th>
-                                    <label className="toggleSwitch">
+                                <th align='left' width="75px">Ett län <br />Flera yrken</th>
+                                <th align='left' width="60px">
+                                    <label className="toggleSwitch" id="sc">
                                         <input type="checkbox" onClick={() => setSelect((prev) => !prev)} />
                                         <span className="slider"></span>
                                     </label>
                                 </th>
-                                <th align='left' id='fyel'>Flera län <br />Ett yrke</th>
+                                <th align='left' width="75px">Flera län <br />Ett yrke</th>
                             </table>
 
                             {/* Switch state 1 */}
@@ -608,14 +608,14 @@ export default function Tabletest() {
                             }
                         </div>
                         <table className='toggleTable'>
-                            <th align='left'>Filtrera val</th>
-                            <th>
+                            <th align='left' width="75px">Filtrera val</th>
+                            <th align='left' width="60px">
                                 <label className="toggleSwitch">
                                     <input type="checkbox" value="null" onClick={() => setSelectRadio((prev) => !prev)} onChange={handleParams} />
                                     <span className="slider"></span>
                                 </label>
                             </th>
-                            <th align='left' id='fley'></th>
+                            <th align='left' width="75px"></th>
                         </table>
 
                         {selectRadio && <div className="radio">
