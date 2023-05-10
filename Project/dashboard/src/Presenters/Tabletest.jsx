@@ -445,10 +445,10 @@ export default function Tabletest() {
                 {/* </ResponsiveContainer> */}
 
                 <div className='forlist'>
-                    <div class="hover-container">
+                    <div class="questionmark-container">
                         <div class="hover-element">
                             ?
-                            <div class="hover-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
+                            <div class="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
                         </div>
                     </div>
                     <div >
@@ -456,7 +456,6 @@ export default function Tabletest() {
                         <FormControl component="fieldset" defaultValue={"linkedin"}>
                             <FormLabel component="legend">Välj plattform:</FormLabel>
                             <FormGroup>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         // checked={linkedinCB}
                                         onChange={handleSource}
@@ -469,8 +468,6 @@ export default function Tabletest() {
                                             drivers_license: false
                                         })}
                                     />} label="LinkedIn" />
-                                </span>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         onChange={handleSource}
                                         color='default'
@@ -481,8 +478,6 @@ export default function Tabletest() {
                                         })}
 
                                     />} label="Platsbanken" />
-                                </span>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         onChange={handleSource}
                                         color='default'
@@ -492,7 +487,6 @@ export default function Tabletest() {
                                             drivers_license: false
                                         })}
                                     />} label="Lediga jobb" />
-                                </span>
                             </FormGroup>
                         </FormControl>
 
@@ -540,9 +534,6 @@ export default function Tabletest() {
                                     >
                                         <MenuItem
                                             value="all"
-                                        // classes={{
-                                        //     root: isAllSelected ? classes.selectedAll : ""
-                                        // }}
                                         ></MenuItem>
                                         {initialJobList.map((option) => (
                                             <MenuItem key={option} value={option}>
@@ -572,9 +563,6 @@ export default function Tabletest() {
                                     >
                                         <MenuItem
                                             value="all"
-                                        // classes={{
-                                        //     root: isAllSelected ? classes.selectedAll : ""
-                                        // }}
                                         ></MenuItem>
                                         {allCounties.map((option) => (
                                             <MenuItem key={option} value={option}>
@@ -605,9 +593,13 @@ export default function Tabletest() {
                             </div>}
 
                             {<div className='Date'>
-                                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                    <InputLabel htmlFor="grouped-date">Date</InputLabel>
-                                    <Select native defaultValue={checkToday} id="grouped-date" label="Datum" onChange={handleDate}>
+                                <FormControl sx={{ m: 1, width: 200 }}>
+                                    <InputLabel htmlFor="grouped-date">Datum</InputLabel>
+                                    <Select
+                                    native defaultValue={checkToday}
+                                    id="grouped-date" 
+                                    label="Datum" 
+                                    onChange={handleDate}>
                                         {getMonths()}
                                     </Select>
                                 </FormControl>
@@ -630,8 +622,6 @@ export default function Tabletest() {
                             {/* Div containing 3 horizontal radio buttons */}
                             <RadioGroup aria-label="position" name="position" defaultValue="top">
                                 <FormControl component="fieldset">
-                                    {/*       <span onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'} className={{}}>*/}
-
                                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                         <Grid item xs={6}>
                                             <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Anställningsform" onChange={handleParams}
@@ -657,7 +647,6 @@ export default function Tabletest() {
                                             <FormControlLabel style={standard} value="null" control={<Radio size="small" />} label="Inget val" onChange={handleParams} />
                                         </Grid> */}
                                     </Grid>
-                                    {/*</span>*/}
                                 </FormControl>
                             </RadioGroup>
                         </div>}
