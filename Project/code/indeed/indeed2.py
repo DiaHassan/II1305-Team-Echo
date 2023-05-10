@@ -1,25 +1,15 @@
 from playwright.sync_api import sync_playwright
-from sys import platform
 from bs4 import BeautifulSoup
 from time import sleep
-from os import path
-import random
+from os.path import dirname
+from sys import path
+path.append(dirname(dirname(__file__)))
+from file_to_list import file_to_list
+
 
 # Path to dashboard folder for running the website
-def get_html_path():
-    match platform:
-        case 'linux':
-            return 'Project/code/indeed/html.txt'
-        case 'darwin':
-            return 'Project/code/indeed/html.txt'
-        case _:
-            return 'Project\code\indeed\html.txt'
-        
-# Returns list of all counties to scrape
-def file_to_list(txt):
-    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
-    file_path = path.dirname(path.dirname(path.dirname(__file__))) + s + txt
-    return open(file_path, encoding='utf-8').read().splitlines()
+html_path = 'Project/code/indeed/html.txt'
+
 
 # Defeats popups
 def close_popup(page):
