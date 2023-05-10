@@ -285,27 +285,31 @@ export default function Tabletest() {
 
     const colors = {
         "linkedin": [
-            "#1abc9c",
-            "#3498db",
-            "#a569bd",
-            "#85c1e9",
-            "#6c3483",
-            "#58d68d"
-        ]
-        ,
-        "platsbanken": [
-            "#6c3483",
-            "#d35400",
-            "#b7950b",
-            "#a04000",
-            "#1e8449",
-            "#2e86c1"
+            // green
+            "#73c6b6",
+            "#16a085",
+            "#117a65",
+            "#0e6655",
+            "#06610d",
+            "#6d876f"
         ],
+
+        "platsbanken": [
+            // yellow
+            "#F9E79F",
+            "#F7DC6F",
+            "#F1C40F",
+            "#F39C12",
+            "#D4AC0D",
+            "#7D6608"           
+        ],
+
         "ledigajobb": [
-            "#f5b7b1",
-            "#f9e79f",
-            "#76d7c4",
-            "#a2d9ce",
+            // purple
+            "#d7bde2",
+            "#af7ac5",
+            "#8e44ad",
+            "#4a235a",
             "#d0ece7",
             "#d2b4de"
         ]
