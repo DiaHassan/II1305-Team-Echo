@@ -293,6 +293,7 @@ def run():
         print("Length of list: " + str(len(db)))
 
         return db
-    
+
+# Test    
 if __name__ == '__main__':
     run()

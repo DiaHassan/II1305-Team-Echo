@@ -10,7 +10,7 @@ import subprocess
 db_path = 'Project/db/echo.db'
 sql_path = 'Project/db/db_sqlite.sql'
    
-            
+
 # Builds database
 def build_db():
 
