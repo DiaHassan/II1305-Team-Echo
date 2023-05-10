@@ -2,7 +2,7 @@ import os
 from os.path import exists, dirname, join
 from sqlite3 import connect
 from subprocess import run as subprocess_run
-import code.webscrape as webscrape
+#import code.webscrape as webscrape
 
 
 # DB path
