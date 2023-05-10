@@ -58,7 +58,8 @@ export default function Tabletest() {
     ];
 
     const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
-    const checkToday = new Date().getFullYear() + '-' + new Date().getMonth();
+    let thisMonth = new Date().getMonth() + 1;
+    const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
 
     // Setting variables and useStates
     const [result, setResult] = useState(data2);
@@ -75,7 +76,7 @@ export default function Tabletest() {
     const [countyList, setCountyList] = useState(allCounties)
     const [graphtitle, setGraphtitle] = useState("Blekinge län")
     const [select, setSelect] = useState(true);
-    const [date, setDate] = useState(startDate);
+    const [date, setDate] = useState(checkToday);
     const [optionRadio, setOptionRadio] = useState("null");
     const [selectRadio, setSelectRadio] = useState(false);
 
