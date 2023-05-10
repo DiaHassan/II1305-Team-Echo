@@ -48,6 +48,7 @@ nav {
     color: var(--color-green);
     font-weight: bold;
     font-size: 25px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
     height: 100px;
     transition: height 0.3s ease-in-out;
 }
@@ -271,9 +272,9 @@ nav>ul>li>a {
   
   /* nav for home */
   
-  .front-wrap>nav {
+  /* .front-wrap>nav {
     background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
-  }
+  } */
   
   .front-wrap>nav>div,
   .front-wrap>nav>ul>li>a {
