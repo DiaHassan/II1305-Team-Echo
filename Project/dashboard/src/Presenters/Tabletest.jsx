@@ -436,11 +436,11 @@ export default function Tabletest() {
             <div className='fortableandlist'>
                 <div className='flex-row'>
 
-                    <div>
+                    
                         <FormLabel id='graphtitle'>
                             <p>{graphtitle}</p>
                         </FormLabel>
-                    </div>
+                    
                     <div>
                         <div className='tableandtitle'>
                             <p id="nodatalabel"> Ingen data tillgänglig </p>
