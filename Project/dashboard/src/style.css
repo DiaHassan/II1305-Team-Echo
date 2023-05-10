@@ -42,7 +42,7 @@ body {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
+    left: -100px;
     background-color: #f9f9f9;
     padding: 5px;
     border: 1px solid #ccc;
@@ -54,6 +54,14 @@ body {
 
 .questionmark-container:hover .warning-text {
     display: block;
+}
+
+#nodatalabel {
+    position: absolute;
+    left: 40%;
+    top: 80%;
+    color: var(--color-black);
+    text-align: center;
 }
 
 
@@ -414,10 +422,13 @@ input:checked+.slider:before {
     padding-left: 8px;
 }
 
-#fley {
-    padding-left: 8px;
+#sc .slider {
+    background-color: #f3aa21;
 }
 
+#sc input:checked+.slider {
+    background-color: #f3aa21;
+}
 
 /* ------------------ */
 
