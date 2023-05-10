@@ -32,7 +32,7 @@ log = getLogger(__name__)
 basicConfig(stream=stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 
 # Main function that retrieves all ads and outputs their data in a 2d list
-def run():
+def run() -> list:
     # Retrieves the 10 requested occupations and their ids 
     # [Ingenjör, Utvecklare, Läkare, Sjuksköterska, Lärare, 
     # Operatör, Tekniker, Elektriker, Projektledare, Logistiker]
@@ -53,7 +53,7 @@ def run():
     return valid_ads
 
 # Retrieves all ads (with given ids) in full json format
-def get_ads(ids):
+def get_ads(ids: list) -> list:
 
     # Declare variables
     # OBS: date = amount of days to look back for gathering
@@ -91,7 +91,7 @@ def remove_void_ads(ads: list) -> list:
 
 
 # Loads all ads into a list with appropiate parameters
-def extract_data_all_ads(all_ads, index):
+def extract_data_all_ads(all_ads: list, index: int) -> list:
     list = []
     for ad in all_ads:
       list.append(extract_data_ad(ad, index)) 
@@ -100,7 +100,7 @@ def extract_data_all_ads(all_ads, index):
 
 
 # Takes first duration found
-def extract_duration(duration):
+def extract_duration(duration: str) -> (str | int):
     duration = str(duration)
     for char in duration:
         if char.isnumeric():
@@ -108,7 +108,7 @@ def extract_duration(duration):
     return 0
 
 # Creates a list for one ad with correct parameters
-def extract_data_ad(ad, index):
+def extract_data_ad(ad: list, index: int) -> list:
 
     # Dictionary with all occupation names, in order
     # of how they appear in the occupation_ids list in run().
