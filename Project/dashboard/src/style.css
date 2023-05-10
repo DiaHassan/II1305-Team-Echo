@@ -21,7 +21,42 @@ body {
     display: none;
 }
 
+
+/* Alert message for user that the data is "unreliable" */
+
+.hover-container {
+    position: absolute;
+    top: 2px;
+    display: inline-block;
+    color: var(--color-black);
+    width: 13px;
+    height: 20px;
+    right: 30px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.hover-text {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.hover-container:hover .hover-text {
+    display: block;
+}
+
+
 /* This is the id for the label over the table */
+
 #graphtitle {
     font-size: 30px;
     text-decoration: underline;
@@ -32,8 +67,8 @@ body {
     padding-bottom: 30px;
     margin-left: 80px;
     font-family: var(--font);
-
 }
+
 
 /* --------------- */
 
@@ -120,35 +155,6 @@ nav>ul>li>a {
     right: 2rem;
     cursor: pointer;
     content: url("menuHamburger.png");
-}
-
-@media screen {
-    @media (max-width: 1040px) {
-        nav {
-            flex-direction: row;
-            display: block;
-            height: auto;
-            padding: 2rem;
-        }
-        .small {
-            height: auto;
-        }
-        .navHidden {
-            display: none;
-        }
-        nav>ul {
-            transition: display 0.5s ease-in-out;
-        }
-        nav>ul>li {
-            display: block;
-        }
-        .burger {
-            display: block;
-        }
-        .small>.burger {
-            content: url("menuHamburger.png") !important;
-        }
-    }
 }
 
 
@@ -329,6 +335,9 @@ nav>ul>li>a {
     content: url("menuHamburgerWhite.png");
 }
 
+
+/* Css changes for different screen sizes */
+
 @media screen {
     @media(max-width: 1100px) {
         .home-front {
@@ -346,9 +355,57 @@ nav>ul>li>a {
             width: auto;
         }
     }
+    @media (max-width: 1040px) {
+        nav {
+            flex-direction: row;
+            display: block;
+            height: auto;
+            padding: 2rem;
+        }
+        .small {
+            height: auto;
+        }
+        .navHidden {
+            display: none;
+        }
+        nav>ul {
+            transition: display 0.5s ease-in-out;
+        }
+        nav>ul>li {
+            display: block;
+        }
+        .burger {
+            display: block;
+        }
+        .small>.burger {
+            content: url("menuHamburger.png") !important;
+        }
+    }
+    @media(max-width: 800px) {
+        footer {
+            display: block;
+            align-self: center;
+            text-align: center;
+            padding-left: 15vw;
+            padding-right: 15vw;
+            padding-top: 2rem;
+        }
+        footer>div {
+            padding-bottom: 1rem;
+        }
+        footer>div>ul {
+            margin-bottom: 0;
+        }
+        footer>.vertical-line {
+            display: none;
+        }
+    }
 }
 
+
 /* ------------------ */
+
+
 /* Source: https://www.w3schools.com/howto/howto_css_switch.asp */
 
 .toggleSwitch {
@@ -357,15 +414,15 @@ nav>ul>li>a {
     width: 45px;
     height: 26px;
     padding-top: 10px;
-  }
-  
-  .toggleSwitch input { 
+}
+
+.toggleSwitch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
+}
 
-  .slider {
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -376,9 +433,9 @@ nav>ul>li>a {
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
-  }
-  
-  .slider:before {
+}
+
+.slider:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -389,23 +446,23 @@ nav>ul>li>a {
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 50%;
-  }
-  
-  input:checked + .slider {
+}
+
+input:checked+.slider {
     background-color: #2196F3;
-  }
-  
-  input:focus + .slider {
+}
+
+input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
+}
+
+input:checked+.slider:before {
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
-  }
+}
 
-  .toggleTable {
+.toggleTable {
     height: 60px;
     width: 210px;
     text-align: center;
@@ -415,9 +472,10 @@ nav>ul>li>a {
     padding-left: 8px;
 }
 
-#fyel {
+#fley {
     padding-left: 8px;
 }
+
 
 /* ------------------ */
 
@@ -503,28 +561,6 @@ footer a:hover {
     flex-direction: column;
 }
 
-@media screen {
-    @media(max-width: 800px) {
-        footer {
-            display: block;
-            align-self: center;
-            text-align: center;
-            padding-left: 15vw;
-            padding-right: 15vw;
-            padding-top: 2rem;
-        }
-        footer>div {
-            padding-bottom: 1rem;
-        }
-        footer>div>ul {
-            margin-bottom: 0;
-        }
-        footer>.vertical-line {
-            display: none;
-        }
-    }
-}
-
 
 /* ------------------- */
 
@@ -570,10 +606,6 @@ footer a:hover {
     /*padding-left: 2rem;*/
 }
 
-.forlist {
-    float: left;
-}
-
 .forlistlist>ul {
     width: 19rem;
 }
@@ -591,7 +623,9 @@ footer a:hover {
     gap: 0.5rem;
     flex-direction: column;
     /*align-items: center;*/
-    padding-left: 2rem; 
+    padding-left: 2rem;
+    float: left;
+    position: relative;
 }
 
 .forlistbutton {
@@ -609,6 +643,6 @@ footer a:hover {
     color: #000;
 }
 
-:disabled{
-    color: grey !important; 
+:disabled {
+    color: grey !important;
 }
