@@ -57,7 +57,7 @@ export default function Tabletest() {
         { name: 'Utvecklare' }
     ];
 
-    const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
+    const startDate = 'May 2023'; //TODO: Change into more accurate start date
     let thisMonth = new Date().getMonth() + 1;
     const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
 
@@ -438,6 +438,7 @@ export default function Tabletest() {
             returnList.push([year_value, totalMonths[year_value]])
         }
 
+        returnList.sort(function(a,b){return b[0].localeCompare(a[0]);});
 
         return returnList.map((item) => (
             <optgroup label={item[0]}>
