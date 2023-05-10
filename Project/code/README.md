@@ -142,7 +142,7 @@ Output:
 **extract_duration(duration)**:  
 *Extracts the job's duration from the listing.*  
 
-**remove_void_ads(ads)**
+**remove_void_ads(ads)**:
 *Iterates through each ad and removes it if county is null*
 
 
