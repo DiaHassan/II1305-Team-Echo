@@ -58,7 +58,9 @@ export default function Tabletest() {
     ];
 
     const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
+    
     let thisMonth = new Date().getMonth() + 1;
+ 
     const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
 
     // Setting variables and useStates
@@ -79,6 +81,7 @@ export default function Tabletest() {
     const [date, setDate] = useState(checkToday);
     const [optionRadio, setOptionRadio] = useState("null");
     const [selectRadio, setSelectRadio] = useState(false);
+    const [foundData, setFoundData] = useState(true);
 
     const handleChangeCounty = (event) => {
         setCounty(event.target.value);
@@ -130,10 +133,10 @@ export default function Tabletest() {
         const dict = [];
         if (!list){
             //Disclaimer of no data
-            
-            
+            setFoundData(false);
         } else {
-            //Set display: None on disclaime
+            //Found data
+            setFoundData(true)
         }
 
         for (let i = 0; i < list.length; i++) {
@@ -181,11 +184,11 @@ export default function Tabletest() {
         if (optionRadio !== "years_of_experience") {
             return list;
         }
-        const group0 = []; //No experience needed (0)
-        const group1 = []; //1-2 years of experience
-        const group2 = []; //3-5 years of experience
-        const group3 = []; //6-8 years of experience
-        const group4 = []; //8+ years of experience
+        //const group0 = []; //No experience needed (0)
+        //const group1 = []; //1-2 years of experience
+        //const group2 = []; //3-5 years of experience
+        //const group3 = []; //6-8 years of experience
+        //const group4 = []; //8+ years of experience
         //Starts at index 1 because the name of the source/profession is the first element
         // of the arrays.
         for (const x of list) {
@@ -219,11 +222,12 @@ export default function Tabletest() {
 
     const handleClick = () => {
         const srcs = []
-
-        if (select) {
+        if(foundData){
+            console.log("Ingen tillgänglig data!")
+            setGraphtitle("Ingen tillgänglig data");
+        } else if (select) {
             setGraphtitle(countyTitle());
-        }
-        else {
+        } else {
             setGraphtitle(jobTitle());
         }
 
@@ -433,40 +437,35 @@ export default function Tabletest() {
 
     return (
         <div>
+            <FormLabel id='graphtitle'>
+                <p>{graphtitle}</p>
+            </FormLabel>
             <div className='fortableandlist'>
-                <div className='flex-row'>
-
-                    <div>
-                        <p id="nodatalabel"> Ingen data tillgänglig </p>
-                        <FormLabel id='graphtitle'>
-                            <p>{graphtitle}</p>
-                        </FormLabel>
-                    </div>
-                    <div>
-                        <div className='tableandtitle'>
-                            {/* <div>
-                                <FormLabel component="legend"></FormLabel>
-                            </div> */}
-
-                            {/* <ResponsiveContainer > */}
-                            <BarChart width={1000} height={600} data={displayAll(result)}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis  tick={{ fontSize: '0.9em' }} dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
-                                <YAxis />
-                                <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' , textShadow: '0px 0px 0px #000000'}} />
-                                <Legend />
-                                {getBars(dictToColumns(result))}
-                            </BarChart>
-                    </div>
-                    {/* </ResponsiveContainer> */}
+            {/*<p id="nodatalabel" style={dynamicDisplay}> Ingen data tillgänglig </p> */}
+                <div>
+                    <FormLabel component="legend"></FormLabel>
                 </div>
-            </div>
+
+                {/* <ResponsiveContainer > */}
+                
+                <BarChart width={1000} height={600} data={displayAll(result)}>
+                
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
+                    <YAxis />
+                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' , textShadow: '0px 0px 0px #000000'}} />
+                    <Legend />
+                    {getBars(dictToColumns(result))}
+                </BarChart>
+                {/* </ResponsiveContainer> */}
 
                 <div className='forlist'>
                     <div class="questionmark-container">
                         <div class="hover-element">
                             !
-                            <div class="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
+                            <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
+                           {/* <div class="warning-text">Sanningsavvikande data kan bero på urval av annonser</div>*/}
+                        
                         </div>
                     </div>
                     <div >

@@ -40,8 +40,8 @@ body {
 
 .warning-text {
     display: none;
-    position: absolute;
-    top: 100%;
+    position: relative;
+    border-top-right-radius: 100%;
     left: -100px;
     background-color: #f9f9f9;
     padding: 5px;
@@ -50,6 +50,7 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
     color: var(--color-black);
+    width: 100px;
 }
 
 .questionmark-container:hover .warning-text {
@@ -596,6 +597,8 @@ footer a:hover {
 /* ------------------- */
 
 .fortable {
+    /* relative is used to make the question mark be placed on the right place. */
+    position:relative;
     display: flex;
     flex-direction: row;
     /* justify-content: ; */
@@ -640,6 +643,7 @@ footer a:hover {
     flex-direction: column;
     /*align-items: center;*/
     padding-left: 2rem; 
+    position: relative;
 }
 
 .forlistbutton {
