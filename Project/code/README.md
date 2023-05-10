@@ -101,19 +101,44 @@ Extracts data from Platsbanken's API.
 
 #### ***FUNCTIONS***
 **run()**:  
-*Retrieves all ads and outputs their data in a 2D list.*  
+*Retrieves all ads from given job ids and outputs their data in a 2D list.*
 
-**get_ads()**:  
-*Retrieves all ads from the API in full.*  
+It achives this in a quite simple structure:
+ 1. Job ID:s are retrieved from the 10 occupations with occupation_ids
+ 2. Job ads are retrieved from given ID:s with occupation_ads
+ 3. Relevant Job ads data extracted from extract_data_all_ads
+ 4. Void ads are removed with remove_void_ads
+ 5. Return all ads left 
+
+
+**get_ads(ids, index)**:  
+*Retrieves all ads from a single occupation from the API in full.*  
+*Input:*
+Ids: List of all ids under a single occupation
+Index: Integer from the for-loop in run(), used for logging and easier readability in terminal.
+
+*Output:* Returns a list of gathered ads with ALL information available.
 
 **extract_data_all_ads(all_ads)**:  
 *Extracts the relevant data from all ads into a list.*  
 
+*Input:* List of all ads in in FULL format gathered from get_ads()
+*Output:* List of all ads with RELEVANT data.
+
+**extract_data_ad(ad, index)**:  
+*Extracts neccesary data from an ad and returns it in a list*
+
+*Input:* 
+ad: List of a single ad with ALL informaton available
+index: Integer from for-loop in run(), represents which job TITLE is being worked on
+
+*Output:* List of a single ad and its relevant data
+
 **extract_duration(duration)**:  
 *Extracts the job's duration from the listing.*  
 
-**extract_data_ad()**:  
-*Extracts neccesary data from an ad using json and returns it in an array*  
+**remove_void_ads(ads)**
+*Iterates through each ad and removes it if county is null*
 
 
 ## [job_info.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/job_info.py)  
