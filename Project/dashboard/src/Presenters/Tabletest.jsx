@@ -449,7 +449,7 @@ export default function Tabletest() {
                     <div class="hover-container">
                         <div class="hover-element">
                             ?
-                            <div class="hover-text">These statistics have some unreliable data. </div>
+                            <div class="hover-text">Statistiken är inte helt pålitlig</div>
                         </div>
                     </div>
                     <div >
