@@ -44,7 +44,7 @@ def format(list:list) -> list:
 
 
 # Connects to database and sends query
-def send_query(query:str):
+def send_query(query:str) -> list:
     with connect(db_path) as conn:
       cursor = conn.cursor()
       result = cursor.execute(query).fetchall()
@@ -150,7 +150,7 @@ def get_professions_for_county(sources:list, county:str, professions:list, param
 # -------------------------------- EXTRACT -------------------------------------------
 
 # Callee
-def extract(source:list, county: (list|str), profession: (list|str), param:str, date:str):
+def extract(source:list, county: (list|str), profession: (list|str), param:str, date:str) -> list:
     # One profession, many counties
     if isinstance(county, list):
         return get_counties_for_profession(source, county, profession, param, date)
