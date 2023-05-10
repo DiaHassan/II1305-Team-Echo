@@ -21,7 +21,7 @@ remove_counter = 0
 # Keep track of unique adds
 seen = {}
 
-# Timer (REMOVE LATER)
+# Timer
 start_time = time()
 
 # Function to scrape websites
@@ -35,7 +35,6 @@ def linkedin_scraper(job, municipality, page_number):
         if(response.status_code == 200):
             break
     soup = BeautifulSoup(response.content,'lxml')
-    print(next_page) # (REMOVE LATER)
 
     # Temp list for every ad per proffesion per municipality
     temp = []
@@ -112,7 +111,6 @@ def extract_html(ad, job):
     key = key_tag.split(':')[-1]
     
 
-    # print(job_title + " | " + location) # (REMOVE LATER)
     # Get more data from ad-page
     seniority, employment_type, education, flag_500 = extract_ad_page_html(key)
 
@@ -238,7 +236,7 @@ def format(emp_type, ad_date, location, seniority):
 
 
 def run():
-    start_time = time() # (REMOVE LATER)
+    start_time = time()
     # Database
     db = []
 
@@ -246,7 +244,6 @@ def run():
     jobs = file_to_list('professions.txt')
 
     # Geo ids
-    # geo_ids = [105391169] # (REMOVE LATER)
     geo_ids = []
     with open('project\code\linkedIn\geo_ids.txt', 'r') as f:
         for line in f:
