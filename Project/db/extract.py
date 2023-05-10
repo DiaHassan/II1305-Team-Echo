@@ -1,20 +1,11 @@
 from sqlite3 import connect
-from sys import platform
 
-def find_db_path():
-    match platform:
-        case "linux":
-            return "Project/db/echo.db"
-        case "darwin":
-            return "Project/db/echo.db"
-        case _:
-            return "Project\db\echo.db"
-db_path = find_db_path()
+db_path = 'Project/db/echo.db'
 
 # ------------------------------------------- HELPERS -------------------------------------------------------
 
 # [(a,b), (c,d)] --> [[a,b], [c,d]]
-def list_of_tuples_to_2d_list(list_of_tuples):
+def list_of_tuples_to_2d_list(list_of_tuples:list) -> list:
     result = []
     for t in list_of_tuples:
        result.append(list(t)) 
@@ -23,7 +14,7 @@ def list_of_tuples_to_2d_list(list_of_tuples):
 
 # Takes [[County, source, param(Optional), nr] ... ]
 # Returns [[Xaxis-value 1, [scr1, [param(optional), nr], ..., [param(optional), nr]]], ... ]
-def outer_format(list):
+def outer_format(list:list) -> list:
     if not list:
         return []
     brist = format(list)
@@ -36,7 +27,7 @@ def outer_format(list):
 
 
 # [[X, param(optional), nr] ... ] --> [[x, [param, nr], ...], ...]
-def format(list):
+def format(list:list) -> list:
     r = []
     sourceList = []
     src = None
@@ -53,7 +44,7 @@ def format(list):
 
 
 # Connects to database and sends query
-def send_query(query):
+def send_query(query:str):
     with connect(db_path) as conn:
       cursor = conn.cursor()
       result = cursor.execute(query).fetchall()
@@ -65,7 +56,7 @@ def send_query(query):
 
 # X-axis: given counties
 # Y-axis: count of ads satisfy param for profession
-def get_counties_for_profession(sources, counties, profession, param, date):
+def get_counties_for_profession(sources:list, counties:list, profession:str, param:str, date:str) -> list:
     result = []
     sources_str = []
     counties_str = []
@@ -113,7 +104,7 @@ def get_counties_for_profession(sources, counties, profession, param, date):
 
 # X-axis: given professions 
 # Y-axis: count of ads satisfying param in county
-def get_professions_for_county(sources, county, professions, param, date): 
+def get_professions_for_county(sources:list, county:str, professions:list, param:str, date:str) -> list: 
     result = []
     sources_str = []
     professions_str = []
@@ -159,7 +150,7 @@ def get_professions_for_county(sources, county, professions, param, date):
 # -------------------------------- EXTRACT -------------------------------------------
 
 # Callee
-def extract(source, county, profession, param, date):
+def extract(source:list, county: (list|str), profession: (list|str), param:str, date:str):
     # One profession, many counties
     if isinstance(county, list):
         return get_counties_for_profession(source, county, profession, param, date)
@@ -172,10 +163,10 @@ def extract(source, county, profession, param, date):
 if __name__ == '__main__':
 
     # Extract
-    #print(extract(['Linkedin', 'ledigajobb'], 'Blekinge län', ['Utvecklare', 'Läkare', 'Sjuksköterska', 'Lärare'], 'null'))
+    print(extract(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-04'))
     
     # One profession, many counties
-    #print(get_counties_for_profession(['Linkedin'], ['Stockholms län', 'Uppsala län'], 'Städare', 'employment_type', '2023-04'))
+    #print(get_counties_for_profession(['linkedin', 'platsbanken', 'ledigajobb'], ['stockholms län', 'uppsala län'], 'ingenjör', 'employment_type', '2023-04'))
 
     # One county many professions
-    print(get_professions_for_county(['Linkedin'], 'Stockholms län', ['Städare', 'Lärare'], 'requirement', '2023-04'))
+    #print(get_professions_for_county(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'requirement', '2023-04'))
