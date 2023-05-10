@@ -112,7 +112,8 @@ It achives this in a quite simple structure:
 
 
 **get_ads(ids, index)**:  
-*Retrieves all ads from a single occupation from the API in full.*  
+*Retrieves all ads from a single occupation from the API in full.*
+
 Input:
 - Ids: List of all ids under a single occupation
 - Index: Integer from the for-loop in run(), used for logging and easier readability in terminal.
