@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import "../style.css";
 
 import InputLabel from '@mui/material/InputLabel';
@@ -58,7 +58,8 @@ export default function Tabletest() {
     ];
 
     const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
-    const checkToday = new Date().getFullYear() + '-' + new Date().getMonth();
+    let thisMonth = new Date().getMonth() + 1;
+    const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
 
     // Setting variables and useStates
     const [result, setResult] = useState(data2);
@@ -75,7 +76,7 @@ export default function Tabletest() {
     const [countyList, setCountyList] = useState(allCounties)
     const [graphtitle, setGraphtitle] = useState("Blekinge län")
     const [select, setSelect] = useState(true);
-    const [date, setDate] = useState(startDate);
+    const [date, setDate] = useState(checkToday);
     const [optionRadio, setOptionRadio] = useState("null");
     const [selectRadio, setSelectRadio] = useState(false);
 
@@ -94,7 +95,7 @@ export default function Tabletest() {
             return;
         }
         setJobList(value);
-        console.log(value)
+        // console.log(value)
     };
 
     const handleChangesCounty = (event) => {
@@ -104,7 +105,7 @@ export default function Tabletest() {
             return;
         }
         setCountyList(value);
-        console.log(value)
+        // console.log(value)
     };
 
     const handleParams = (event) => {
@@ -135,7 +136,7 @@ export default function Tabletest() {
                 for (let k = 1; k < row[j].length; k++) {
                     const [subcat, value] = row[j][k];
                     let key = "";
-                    if (optionRadio == "null") {
+                    if (optionRadio === "null") {
                         key = `${category}`;
                         entry[key] = subcat;
                     } else {
@@ -152,9 +153,9 @@ export default function Tabletest() {
     function dictToColumns(dict) {
         const columns = {};
         for (let i = 0; i < dict.length; i++) {
-            for (const [key, _] of Object.entries(dict[i])) {
+            for (const [key, val] of Object.entries(dict[i])) {
                 const parts = key.split("-");
-                if (parts[0] != "name") {
+                if (parts[0] !== "name") {
                     if (!(parts[0] in columns)) {
                         columns[parts[0]] = {};
                     }
@@ -169,7 +170,7 @@ export default function Tabletest() {
     //A function that groups years of experience into intervals instead of sorting by specific
     //years. If the param is not years of experience then it returns the array unchanged. 
     function groupExperience(list) {
-        if (optionRadio != "years_of_experience") {
+        if (optionRadio !== "years_of_experience") {
             return list;
         }
         const group0 = []; //No experience needed (0)
@@ -190,7 +191,7 @@ export default function Tabletest() {
                     //Here, finally, we are inside results
                     const elem = (x[i])[y];
                     const label = elem[0]
-                    if (label == 0) {
+                    if (label === 0) {
                         group0[1] += elem[1];
                     } else if (label <= 2) {
                         group1[1] += elem[1];
@@ -227,12 +228,12 @@ export default function Tabletest() {
         const queryTbs = []
         queryTbs.push(srcs)
         if (select) {
-            queryTbs.push(county)
-            queryTbs.push(joblist)
+            queryTbs.push(county.toLowerCase())
+            queryTbs.push(joblist.map(word => word.toLowerCase()));
         }
         else {
-            queryTbs.push(countyList)
-            queryTbs.push(job)
+            queryTbs.push(countyList.map(word => word.toLowerCase()));
+            queryTbs.push(job.toLowerCase())
         }
         queryTbs.push(optionRadio)
         queryTbs.push(date)
@@ -249,7 +250,7 @@ export default function Tabletest() {
     }, [select]);
 
     const colors = {
-        "Linkedin": [
+        "linkedin": [
             "#1abc9c",
             "#3498db",
             "#a569bd",
@@ -277,7 +278,6 @@ export default function Tabletest() {
     }
 
     function displayAll(result) {
-        console.log(result)
         const compare = (select ? joblist.slice() : countyList.slice());
         for (let index = 0; index < result.length; index++) {
             const element = result[index];
@@ -294,9 +294,9 @@ export default function Tabletest() {
     const getBars = (InputColumns) => {
         const bars = [];
 
-        const count = { Linkedin: 0, ledigajobb: 0, platsbanken: 0 };
+        const count = { linkedin: 0, ledigajobb: 0, platsbanken: 0 };
 
-        if (InputColumns != undefined) {
+        if (InputColumns !== undefined) {
             for (const [source, col] of Object.entries(InputColumns)) {
                 for (const [barName, trueValue] of Object.entries(col)) {
 
@@ -338,7 +338,6 @@ export default function Tabletest() {
             }
 
         ));
-        console.log(inputs);
     }
 
     // Parses the input paramater into correct format
@@ -446,10 +445,10 @@ export default function Tabletest() {
                 {/* </ResponsiveContainer> */}
 
                 <div className='forlist'>
-                    <div class="hover-container">
+                    <div class="questionmark-container">
                         <div class="hover-element">
                             ?
-                            <div class="hover-text">Statistiken är inte helt pålitlig</div>
+                            <div class="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
                         </div>
                     </div>
                     <div >
@@ -457,7 +456,6 @@ export default function Tabletest() {
                         <FormControl component="fieldset" defaultValue={"linkedin"}>
                             <FormLabel component="legend">Välj plattform:</FormLabel>
                             <FormGroup>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         // checked={linkedinCB}
                                         onChange={handleSource}
@@ -470,8 +468,6 @@ export default function Tabletest() {
                                             drivers_license: false
                                         })}
                                     />} label="LinkedIn" />
-                                </span>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         onChange={handleSource}
                                         color='default'
@@ -482,8 +478,6 @@ export default function Tabletest() {
                                         })}
 
                                     />} label="Platsbanken" />
-                                </span>
-                                <span style={standard} onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'}>
                                     <FormControlLabel control={<Checkbox
                                         onChange={handleSource}
                                         color='default'
@@ -493,7 +487,6 @@ export default function Tabletest() {
                                             drivers_license: false
                                         })}
                                     />} label="Lediga jobb" />
-                                </span>
                             </FormGroup>
                         </FormControl>
 
@@ -507,7 +500,7 @@ export default function Tabletest() {
                                         <span className="slider"></span>
                                     </label>
                                 </th>
-                                <th align='left' id='fyel'>Flera yrken <br />Ett län</th>
+                                <th align='left' id='fyel'>Flera län <br />Ett yrke</th>
                             </table>
 
                             {/* Switch state 1 */}
@@ -541,9 +534,6 @@ export default function Tabletest() {
                                     >
                                         <MenuItem
                                             value="all"
-                                        // classes={{
-                                        //     root: isAllSelected ? classes.selectedAll : ""
-                                        // }}
                                         ></MenuItem>
                                         {initialJobList.map((option) => (
                                             <MenuItem key={option} value={option}>
@@ -573,9 +563,6 @@ export default function Tabletest() {
                                     >
                                         <MenuItem
                                             value="all"
-                                        // classes={{
-                                        //     root: isAllSelected ? classes.selectedAll : ""
-                                        // }}
                                         ></MenuItem>
                                         {allCounties.map((option) => (
                                             <MenuItem key={option} value={option}>
@@ -606,9 +593,13 @@ export default function Tabletest() {
                             </div>}
 
                             {<div className='Date'>
-                                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                    <InputLabel htmlFor="grouped-date">Date</InputLabel>
-                                    <Select native defaultValue={checkToday} id="grouped-date" label="Datum" onChange={handleDate}>
+                                <FormControl sx={{ m: 1, width: 200 }}>
+                                    <InputLabel htmlFor="grouped-date">Datum</InputLabel>
+                                    <Select
+                                    native defaultValue={checkToday}
+                                    id="grouped-date" 
+                                    label="Datum" 
+                                    onChange={handleDate}>
                                         {getMonths()}
                                     </Select>
                                 </FormControl>
@@ -631,8 +622,6 @@ export default function Tabletest() {
                             {/* Div containing 3 horizontal radio buttons */}
                             <RadioGroup aria-label="position" name="position" defaultValue="top">
                                 <FormControl component="fieldset">
-                                    {/*       <span onMouseOver={e => e.target.style.textShadow = '6px 6px 8px #000000'} onMouseOut={e => e.target.style.textShadow = '0px 0px 0px #000000'} className={{}}>*/}
-
                                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                         <Grid item xs={6}>
                                             <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Anställningsform" onChange={handleParams}
@@ -658,7 +647,6 @@ export default function Tabletest() {
                                             <FormControlLabel style={standard} value="null" control={<Radio size="small" />} label="Inget val" onChange={handleParams} />
                                         </Grid> */}
                                     </Grid>
-                                    {/*</span>*/}
                                 </FormControl>
                             </RadioGroup>
                         </div>}

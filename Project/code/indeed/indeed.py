@@ -5,6 +5,7 @@ from os.path import dirname
 from sys import path
 path.append(dirname(dirname(__file__)))
 from file_to_list import file_to_list
+import random
 
 
 # Path to hmtl.txt
@@ -24,8 +25,15 @@ def close_popup(page):
         print("failed")
         return
     
+# FORTSÄTT HÄR
+# Should annihilate popup tabs
+def handle_popup_tab(popup):
+    popup.wait_for_load_state()
+    print(popup.title())
 
-# Extracts data from one ad     
+# Extracts data from one ad   
+# nu orkar jag inte koda på Githubs laggiga sida så fortsätt med: byt så att argumentet ad istället är en page, och gör så
+# all extraktion är gjord med playwrights locator istället
 def extract_ad(ad):
     # [source, employment_type, duration, publication_date, profession, county, req, years, seniority, date_extracted, desc]
     data = []
@@ -42,7 +50,6 @@ def extract_ad(ad):
     print(employment_type)    
     return data
 
-
 # Returns the parameters of one ad
 def get_ads_on_page(page, profession, county, page_index):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={page_index}')
@@ -50,18 +57,30 @@ def get_ads_on_page(page, profession, county, page_index):
     close_popup(page)
     for i in range(1, 18):
         try:
-            page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[{str(i)}]/div/div[1]/div/div[1]').click(timeout=10000)
+            page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[{str(i)}]/div/div[1]/div/div[1]').click(timeout=1000)
             data = page.content().encode('ascii', 'replace').decode('ascii')
-            soup = BeautifulSoup(data, features='lxml')
-            ad = soup.find('div', class_="jobsearch-RightPane")
-            extract_ad(ad)
+            html = BeautifulSoup(data, features='lxml')
+            ad = html.find('div', class_="jobsearch-RightPane")
+
+            # finds the job title
+            #job_title = html.find('div', {'class': 'css-1p3gyjy e1xnxm2i0'})
+            sleep(0.5)
+            job_title = page.locator('//*[@id="jobsearch-ViewjobPaneWrapper"]/div/div/div/div[1]/div/div/div[1]/div[1]/h2').all_text_contents()
+            employment_type = page.locator('//*[@id="jobDetailsSection"]/div[2]/div[2]/div/div[1]').all_text_contents()
+            body_text = page.locator('//*[@id="jobDescriptionText"]').all_text_contents()
+            # chars_to_remove = "span<>/"
+            # for char in chars_to_remove:
+            #     job_title = str(job_title).replace(char, "")
+            print(job_title)
+            print(employment_type)
+            print(body_text)
+
+            sleep(0.5)
         except:
             print(i)
             print("epic fail")
-            sleep(1)
             continue
-    
-
+  
 # Returns a list of all ads for a specified profession and county
 def get_ads_all_pages(page, profession, county):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={0}')
@@ -80,12 +99,12 @@ def get_ads_all_pages(page, profession, county):
     page_index = 0
     max_ads_scraped = 0
     while max_ads_scraped < job_count:
-        ad_list.append((get_ads_on_page(page, profession, county, page_index)))
+        ad_list = (get_ad(page, profession, county, page_index, ad_list))
         print(max_ads_scraped)
         page_index += 10
         max_ads_scraped += 15
+        sleep(random.randint(1, 3))
     return ad_list
-
 
 # Main function
 def run():
