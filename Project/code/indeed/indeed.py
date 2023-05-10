@@ -3,14 +3,7 @@ from sys import platform
 from bs4 import BeautifulSoup
 from time import sleep
 from os import path
-
-
-# Returns list of all counties to scrape
-def file_to_list(txt):
-    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
-    file_path = path.dirname(path.dirname(path.dirname(__file__))) + s + txt
-    return open(file_path, encoding='utf-8').read().splitlines()
-
+import random
 
 # Path to dashboard folder for running the website
 def get_html_path():
@@ -21,112 +14,105 @@ def get_html_path():
             return 'Project/code/indeed/html.txt'
         case _:
             return 'Project\code\indeed\html.txt'
+        
+# Returns list of all counties to scrape
+def file_to_list(txt):
+    s = '/' if (platform == 'linux' or platform =='darwin') else '\\'
+    file_path = path.dirname(path.dirname(path.dirname(__file__))) + s + txt
+    return open(file_path, encoding='utf-8').read().splitlines()
 
+# Defeats popups
+def close_popup(page):
+    try:
+        if page.locator('//*[@id="mosaic-modal-mosaic-provider-desktopserp-jobalert-popup"]/div/div/div[1]') is not None:
+            print("time to pop you, popup")
+            page.locator('//*[@id="google-Only-Modal"]/div/div[1]/button').click(timeout=1000, force=True)
+            sleep(1)
+            page.locator('//*[@id="mosaic-modal-mosaic-provider-desktopserp-jobalert-popup"]/div/div/div[1]/div/button').click(timeout=1000, force=True)
+        return
+    except:
+        print("failed")
+        return
+    
+# FORTSÄTT HÄR
+def handle_popup_tab(popup):
+    popup.wait_for_load_state()
+    print(popup.title())
 
-# Main
+# Returns the parameters of one ad
+def get_ad(page, profession, county, page_index, ad_list):
+    page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={page_index}')
+    sleep(1)
+    close_popup(page)
+    for i in range(1, 18):
+        try:
+            print("i survived 0")
+            page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[{str(i)}]/div/div[1]/div/div[1]').click(timeout=1000)
+            data = page.content().encode('ascii', 'replace').decode('ascii')
+            print("i survived 1")
+            html = BeautifulSoup(data, features='lxml')
+            ad = html.find('div', class_="jobsearch-RightPane")
+            print("survivo 2")
+            #print(ad)
+
+            print("testing")
+            # finds the job title
+            #job_title = html.find('div', {'class': 'css-1p3gyjy e1xnxm2i0'})
+            sleep(0.5)
+            job_title = page.locator('//*[@id="jobsearch-ViewjobPaneWrapper"]/div/div/div/div[1]/div/div/div[1]/div[1]/h2').all_text_contents()
+            employment_type = page.locator('//*[@id="jobDetailsSection"]/div[2]/div[2]/div/div[1]').all_text_contents()
+            body_text = page.locator('//*[@id="jobDescriptionText"]').all_text_contents()
+            # chars_to_remove = "span<>/"
+            # for char in chars_to_remove:
+            #     job_title = str(job_title).replace(char, "")
+            print(job_title)
+            print(employment_type)
+            print(body_text)
+
+            sleep(0.5)
+        except:
+            print(i)
+            print("epic fail")
+            continue
+    
+# Returns a list of all ads for a specified profession and county
+def get_all_ads(page, profession, county):
+    page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={0}')
+    data = page.content().encode('ascii', 'replace').decode('ascii')
+    html = BeautifulSoup(data, features='lxml')
+
+    # finds the total amount of jobs found
+    job_count = html.find('div', {'class': 'jobsearch-JobCountAndSortPane-jobCount'}).find('span')
+    chars_to_remove = "spanjob<>/"
+    for char in chars_to_remove:
+        job_count = str(job_count).replace(char, "")
+    job_count = int(job_count)
+
+    # scrape data on all pages until max_ads_scraped >= job_count
+    ad_list = []
+    page_index = 0
+    max_ads_scraped = 0
+    while max_ads_scraped < job_count:
+        ad_list = (get_ad(page, profession, county, page_index, ad_list))
+        print(max_ads_scraped)
+        page_index += 10
+        max_ads_scraped += 15
+        sleep(random.randint(1, 3))
+    return ad_list
+
 def run():
-    result = []
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
         context = browser.new_context()
         page = context.new_page()
         professions = file_to_list('professions.txt')
         counties = file_to_list('counties.txt')
+        result = []
         for profession in professions:
             for county in counties:
                 result.append(get_all_ads(page, profession, county))
         context.close()
         browser.close()
-    return result
 
-
-# Extracts all ads on all pages
-def get_all_ads(page, profession, county):
-    result = []
-    prev_res = []
-    number = 0
-    while True:
-        new_res = get_ads_on_page(page, profession, county, number)
-        if new_res == prev_res:
-            break
-        prev_res = new_res
-        result.append(new_res)
-        number += 10
-    return result
-
-# Extracts data from all ads on one page
-def get_ads_on_page(page, profession, county, number): 
-    result = [] 
-    page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={number}')
-    data = page.content().encode('ascii', 'replace').decode('ascii')
-    html = BeautifulSoup(data, features='lxml')
-    ads = html.find_all('div', class_="slider_container css-77eoo7 eu4oa1w0")
-    for i in range(1, 18):
-        try:
-            if (i == 6) or (i == 9):
-                continue
-            else:
-                test = page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]').click(timeout=1000)
-                ad = soup.find('div', class_="jobsearch-RightPane")
-                # skicka ad:en till get_ad
-                ad_data = get_ad(ad)
-
-        except:
-            continue
-
-    # For each ad on page
-    # Return get_ad
-    print(data)
-    return data
-    
-    
-# Extracts data from one ad
-def get_ad(ad):
-    output_list = []
-    employment_type = ad.find('span', {'class': 'jobsearch-JobMetadataHeader-item  icl-u-xs-mt--xs'})
-    output_list.append(employment_type)
-    return output_list#['indeed', profession, county, duration, employment_type, years_of_experience...]
-
-
-# Defeats popups
-def close_popup(page_html):
-    try:
-        if page_html.find('//*[@id="mosaic-modal-mosaic-provider-desktopserp-jobalert-popup"]/div/div/div[1]') is not None:
-            print("found you")
-            page_html.find('//*[@id="mosaic-modal-mosaic-provider-desktopserp-jobalert-popup"]/div/div/div[1]/div/button').click(timeout=1000)
-            return
-    except:
-        return
-
-# Test
 if __name__ == '__main__':
-    #run()
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
-        context = browser.new_context()
-        page = context.new_page()
-        data = (get_ads_on_page(page, 'Ingenjör', 'Stockholms län', 15))
-        soup = BeautifulSoup(data, features='lxml')
-        close_popup(page)
-        job_ads = soup.find_all('div', class_="slider_container css-77eoo7 eu4oa1w0")
-        print(len(job_ads))
-        job_titles = soup.find_all('h2', {'class': 'jobTitle css-1h4a4n5 eu4oa1w0'})
-        for job_title in job_titles:
-            print(job_title.find('span').get('title').encode('ascii', 'replace').decode('ascii'))
-        for i in range(1, 18):
-            try:
-                if i == 6 or i == 9:
-                    continue
-                test = page.locator(f'xpath=//*[@id="mosaic-provider-jobcards"]/ul/li[' + str(i) + ']/div/div[1]/div/div[1]').click(timeout=1000)
-                ad = soup.find('div', class_="jobsearch-RightPane")
-                # Finds the entire job description of an ad
-                body_text = ad.find('div', {'class': 'jobsearch-jobDescriptionText jobsearch-JobComponent-description'})
-                for paragraph in body_text:
-                    print(paragraph)
-                #sleep(1)
-            except:
-                continue
-        # context.close()
-        # browser.close()
-
-        sleep(1000000)
+    run()
