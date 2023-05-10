@@ -94,7 +94,7 @@ export default function Tabletest() {
             return;
         }
         setJobList(value);
-        console.log(value)
+        // console.log(value)
     };
 
     const handleChangesCounty = (event) => {
@@ -104,7 +104,7 @@ export default function Tabletest() {
             return;
         }
         setCountyList(value);
-        console.log(value)
+        // console.log(value)
     };
 
     const handleParams = (event) => {
@@ -227,12 +227,12 @@ export default function Tabletest() {
         const queryTbs = []
         queryTbs.push(srcs)
         if (select) {
-            queryTbs.push(county)
-            queryTbs.push(joblist)
+            queryTbs.push(county.toLowerCase())
+            queryTbs.push(joblist.map(word => word.toLowerCase()));
         }
         else {
-            queryTbs.push(countyList)
-            queryTbs.push(job)
+            queryTbs.push(countyList.map(word => word.toLowerCase()));
+            queryTbs.push(job.toLowerCase())
         }
         queryTbs.push(optionRadio)
         queryTbs.push(date)
@@ -249,7 +249,7 @@ export default function Tabletest() {
     }, [select]);
 
     const colors = {
-        "Linkedin": [
+        "linkedin": [
             "#1abc9c",
             "#3498db",
             "#a569bd",
@@ -277,7 +277,6 @@ export default function Tabletest() {
     }
 
     function displayAll(result) {
-        console.log(result)
         const compare = (select ? joblist.slice() : countyList.slice());
         for (let index = 0; index < result.length; index++) {
             const element = result[index];
@@ -294,7 +293,7 @@ export default function Tabletest() {
     const getBars = (InputColumns) => {
         const bars = [];
 
-        const count = { Linkedin: 0, ledigajobb: 0, platsbanken: 0 };
+        const count = { linkedin: 0, ledigajobb: 0, platsbanken: 0 };
 
         if (InputColumns != undefined) {
             for (const [source, col] of Object.entries(InputColumns)) {
@@ -338,7 +337,6 @@ export default function Tabletest() {
             }
 
         ));
-        console.log(inputs);
     }
 
     // Parses the input paramater into correct format
@@ -507,7 +505,7 @@ export default function Tabletest() {
                                         <span className="slider"></span>
                                     </label>
                                 </th>
-                                <th align='left' id='fyel'>Flera yrken <br />Ett län</th>
+                                <th align='left' id='fyel'>Flera län <br />Ett yrke</th>
                             </table>
 
                             {/* Switch state 1 */}
