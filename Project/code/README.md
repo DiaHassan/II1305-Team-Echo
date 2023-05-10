@@ -1,13 +1,5 @@
 # Documentation
 
-## Necessary installations:  
-In order to run the code, the following libraries and programs will be needed:  
- - Selenium (Python library)
- - BeautifulSoup (Python library)
- - pandas (Python library)
- - DB Browser (SQLite)
-
-
 ## [/ledigajobb](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/ledigajobb)
 The file in the ```ledigajobb``` folder is used to web scrape job listing data from Ledigajobb.  
 
@@ -146,13 +138,13 @@ Output:
 *Iterates through each ad and removes it if county is null*
 
 
-## [job_info.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/job_info.py)  
-All of the occupations and counties we are web scraping for.
-
-
 ## [reqfinder.py](https://github.com/DiaHassan/II1305-Team-Echo/tree/main/Project/code/reqfinder.py)
 Reads a string and finds the first recognizable pre-condition for a job application and returns it.  
 
+## [file_to_list](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/file_to_list.py)
+Only has one function which has the same name, for importing: 
+- [professions.txt](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/professions.txt)
+- [counties.txt](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/counties.txt)
 
 ## [webscrape.py](https://github.com/DiaHassan/II1305-Team-Echo/blob/main/Project/code/webscrape.py)
 This program retrieves a list of all the webscraped data from the websites selected and forwards the data to the database to be inserted.  
