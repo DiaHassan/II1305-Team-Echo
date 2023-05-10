@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import "../style.css";
 
 import InputLabel from '@mui/material/InputLabel';
@@ -136,7 +136,7 @@ export default function Tabletest() {
                 for (let k = 1; k < row[j].length; k++) {
                     const [subcat, value] = row[j][k];
                     let key = "";
-                    if (optionRadio == "null") {
+                    if (optionRadio === "null") {
                         key = `${category}`;
                         entry[key] = subcat;
                     } else {
@@ -153,9 +153,9 @@ export default function Tabletest() {
     function dictToColumns(dict) {
         const columns = {};
         for (let i = 0; i < dict.length; i++) {
-            for (const [key, _] of Object.entries(dict[i])) {
+            for (const [key, val] of Object.entries(dict[i])) {
                 const parts = key.split("-");
-                if (parts[0] != "name") {
+                if (parts[0] !== "name") {
                     if (!(parts[0] in columns)) {
                         columns[parts[0]] = {};
                     }
@@ -170,7 +170,7 @@ export default function Tabletest() {
     //A function that groups years of experience into intervals instead of sorting by specific
     //years. If the param is not years of experience then it returns the array unchanged. 
     function groupExperience(list) {
-        if (optionRadio != "years_of_experience") {
+        if (optionRadio !== "years_of_experience") {
             return list;
         }
         const group0 = []; //No experience needed (0)
@@ -191,7 +191,7 @@ export default function Tabletest() {
                     //Here, finally, we are inside results
                     const elem = (x[i])[y];
                     const label = elem[0]
-                    if (label == 0) {
+                    if (label === 0) {
                         group0[1] += elem[1];
                     } else if (label <= 2) {
                         group1[1] += elem[1];
@@ -296,7 +296,7 @@ export default function Tabletest() {
 
         const count = { linkedin: 0, ledigajobb: 0, platsbanken: 0 };
 
-        if (InputColumns != undefined) {
+        if (InputColumns !== undefined) {
             for (const [source, col] of Object.entries(InputColumns)) {
                 for (const [barName, trueValue] of Object.entries(col)) {
 
