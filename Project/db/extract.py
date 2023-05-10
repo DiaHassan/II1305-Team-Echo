@@ -100,7 +100,6 @@ def get_counties_for_profession(sources, counties, profession, param, date):
                 FROM job_listing j \
                 JOIN job p ON j.job_id = p.id \
                 WHERE p.profession = "{profession}" \
-                AND j.{param} IS NOT + "null"\
                 AND j.county IN ({counties_str}) \
                 AND j.source IN ({sources_str}) \
                 AND strftime("%Y-%m", j.date_gathered) = "{date}" \
@@ -150,7 +149,6 @@ def get_professions_for_county(sources, county, professions, param, date):
                 WHERE jl.county = "{county}" \
                 AND jl.source IN ({sources_str}) \
                 AND profession IN ({professions_str}) \
-                AND {param} IS NOT "null" \
                 AND strftime("%Y-%m", jl.date_gathered) = "{date}" \
                 GROUP BY profession, source, jl.{param} \
                 ORDER BY profession, source'
