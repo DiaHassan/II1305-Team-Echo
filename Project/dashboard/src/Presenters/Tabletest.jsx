@@ -446,10 +446,10 @@ export default function Tabletest() {
                 {/* </ResponsiveContainer> */}
 
                 <div className='forlist'>
-                    <div class="hover-container">
+                    <div class="questionmark-container">
                         <div class="hover-element">
                             ?
-                            <div class="hover-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
+                            <div class="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
                         </div>
                     </div>
                     <div >

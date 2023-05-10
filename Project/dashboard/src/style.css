@@ -24,20 +24,21 @@ body {
 
 /* Alert message for user that the data is "unreliable" */
 
-.hover-container {
+.questionmark-container {
     position: absolute;
     top: 2px;
     display: inline-block;
-    color: var(--color-black);
-    width: 13px;
+    color: blue;
+    width: 20px;
     height: 20px;
     right: 30px;
+    text-align: center;
     font-weight: bold;
-    border: 1px solid black;
+    border: 1px solid blue;
     border-radius: 50%;
 }
 
-.hover-text {
+.warning-text {
     display: none;
     position: absolute;
     top: 100%;
@@ -50,7 +51,7 @@ body {
     z-index: 100;
 }
 
-.hover-container:hover .hover-text {
+.questionmark-container:hover .warning-text {
     display: block;
 }
 
