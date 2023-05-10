@@ -113,26 +113,30 @@ It achives this in a quite simple structure:
 
 **get_ads(ids, index)**:  
 *Retrieves all ads from a single occupation from the API in full.*  
-*Input:*
-Ids: List of all ids under a single occupation
-Index: Integer from the for-loop in run(), used for logging and easier readability in terminal.
+Input:
+- Ids: List of all ids under a single occupation
+- Index: Integer from the for-loop in run(), used for logging and easier readability in terminal.
 
-*Output:* Returns a list of gathered ads with ALL information available.
+Output:
+- Returns a list of gathered ads with ALL information available.
 
 **extract_data_all_ads(all_ads)**:  
 *Extracts the relevant data from all ads into a list.*  
 
-*Input:* List of all ads in in FULL format gathered from get_ads()
-*Output:* List of all ads with RELEVANT data.
+Input: 
+- List of all ads in in FULL format gathered from get_ads()
+Output: 
+- List of all ads with RELEVANT data.
 
 **extract_data_ad(ad, index)**:  
 *Extracts neccesary data from an ad and returns it in a list*
 
-*Input:* 
-ad: List of a single ad with ALL informaton available
-index: Integer from for-loop in run(), represents which job TITLE is being worked on
+Input: 
+- ad: List of a single ad with ALL informaton available
+- index: Integer from for-loop in run(), represents which job TITLE is being worked on
 
-*Output:* List of a single ad and its relevant data
+Output:
+- List of a single ad and its relevant data
 
 **extract_duration(duration)**:  
 *Extracts the job's duration from the listing.*  
