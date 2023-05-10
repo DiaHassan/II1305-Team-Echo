@@ -31,11 +31,15 @@ LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 log = getLogger(__name__)
 basicConfig(stream=stdout, level=LOG_LEVEL, format=LOG_FORMAT, datefmt=LOG_DATE_FORMAT)
 
+# Dictionary with all occupation names, in order
+# of how they appear in the occupation_ids list in run().
+# It is used to give job ads the same desired name
+professions = file_to_list('professions.txt')
+index_dict = {index: value for index, value in enumerate(professions)}
+
 # Main function that retrieves all ads and outputs their data in a 2d list
 def run() -> list:
     # Retrieves the 10 requested occupations and their ids 
-    # [Ingenjör, Utvecklare, Läkare, Sjuksköterska, Lärare, 
-    # Operatör, Tekniker, Elektriker, Projektledare, Logistiker]
     occupation_ids = get_occupational_ids()
 
     # Create an instance of the ads list variable
@@ -45,19 +49,20 @@ def run() -> list:
     # The get_ads func can take multiple ids at once, so every id for "ingenjör"
     # is inputed at the same time, same for the 9 other occupations
     for index, occupation in enumerate(occupation_ids):
-        occupation_ads = get_ads(occupation)
+        occupation_ads = get_ads(occupation, index)
         all_ads.extend(extract_data_all_ads(occupation_ads, index))
 
+    # Removes ads with "null" as county
     valid_ads = remove_void_ads(all_ads)
 
     return valid_ads
 
 # Retrieves all ads (with given ids) in full json format
-def get_ads(ids: list) -> list:
+def get_ads(ids: list, index: int) -> list:
 
     # Declare variables
-    # OBS: date = amount of days to look back for gathering
-    #             data, change 1 to desired days
+    # OBS: date = amount of days to look back 
+    # for gathering data, change 1 to desired days
     url = STREAM_URL
     date = datetime.now() - timedelta(1)  
     params = {
@@ -66,7 +71,7 @@ def get_ads(ids: list) -> list:
         }
 
     # Writing log info to the terminal
-    log.info(f'Collecting ads from: {url}')
+    log.info(f'Collecting ads from: {index_dict[index]}')
 
     # Send GET request to JobStream API 
     headers = {'Accept': 'application/json'}
@@ -75,7 +80,7 @@ def get_ads(ids: list) -> list:
     list_of_ads = loads(response.content.decode('utf8'))
 
     # Log and return
-    log.info(f"Got {len(list_of_ads)} ads from {url}")
+    log.info(f"----> Received {len(list_of_ads)}")
     return list_of_ads
 
 
@@ -109,14 +114,6 @@ def extract_duration(duration: str) -> (str | int):
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad: list, index: int) -> list:
-
-    # Dictionary with all occupation names, in order
-    # of how they appear in the occupation_ids list in run().
-    # It is used to give job ads the same desired name
-    professions = file_to_list('professions.txt')
-
-    index_dict = {index: value for index, value in enumerate(professions)}
-    
     # Extract all desired job descriptions
     employment_type = ad.get('working_hours_type', {}).get('label') or 'null'
     duration = extract_duration(ad.get('duration', {}).get('label')) or 'null'
