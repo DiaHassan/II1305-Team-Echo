@@ -30,8 +30,7 @@ def find_req_ai(descriptions: list) -> list:
             ],
             "add_occupation_concepts": False,
             "add_skill_concepts": True,
-            "add_workplace_experience_concepts": False,
-            "include_synonyms": True
+            "add_workplace_experience_concepts": False
         }
 
         # Make the HTTP POST request
@@ -45,16 +44,18 @@ def find_req_ai(descriptions: list) -> list:
                 for competency in candidate['enriched_candidates']['competencies']:
                     ad_labels.append(competency['concept_label'])
 
-                labels.append(ad_labels)
+                # Extract only one education requirement from each label
+                edu_labels = []
+                for label in ad_labels:
+                    if "degree" in label.lower() or "utbildning" in label.lower():
+                        edu_req = find_req(label)
+                        if edu_req:
+                            edu_labels.append(edu_req[0])
+                
+                labels.append(edu_labels)
 
-    # Filter the labels based on the educational keywords
-    edu_labels = []
-    for label in labels:
-        for keyword in find_req(label):
-            if keyword not in edu_labels:
-                edu_labels.append(keyword)
+    return labels
 
-    return edu_labels
 
 
 # Define regular expressions for bachelor's, master's, and PhD degrees
