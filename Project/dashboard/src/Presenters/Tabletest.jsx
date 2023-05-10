@@ -435,25 +435,32 @@ export default function Tabletest() {
     return (
         <div>
             <div className='fortableandlist'>
-            <FormLabel id='graphtitle'>
-                <p>{graphtitle}</p>
-            </FormLabel>
-                <div className='tableandtitle'>
-                    <div>
-                        <FormLabel component="legend"></FormLabel>
-                    </div>
+                <div className='flex-row'>
 
-                    {/* <ResponsiveContainer > */}
-                    <BarChart width={1000} height={600} data={displayAll(result)}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis  tick={{ fontSize: '0.9em' }} dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
-                        <YAxis />
-                        <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' }} />
-                        <Legend />
-                        {getBars(dictToColumns(result))}
-                    </BarChart>
+                    <div>
+                        <FormLabel id='graphtitle'>
+                            <p>{graphtitle}</p>
+                        </FormLabel>
+                    </div>
+                    <div>
+                        <div className='tableandtitle'>
+                            {/* <div>
+                                <FormLabel component="legend"></FormLabel>
+                            </div> */}
+
+                            {/* <ResponsiveContainer > */}
+                            <BarChart width={1000} height={600} data={displayAll(result)}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis  tick={{ fontSize: '0.9em' }} dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
+                                <YAxis />
+                                <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' }} />
+                                <Legend />
+                                {getBars(dictToColumns(result))}
+                            </BarChart>
+                    </div>
+                    {/* </ResponsiveContainer> */}
                 </div>
-                {/* </ResponsiveContainer> */}
+            </div>
 
                 <div className='forlist'>
                     <div class="hover-container">

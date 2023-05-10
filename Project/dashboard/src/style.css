@@ -28,7 +28,7 @@ body {
     color: var(--color-green);
     width: 1000px;
     display: block;
-    text-align: center;
+    text-align: left;
     padding-bottom: 30px;
     margin-left: 80px;
     font-family: var(--font);
@@ -565,6 +565,7 @@ footer a:hover {
 .fortableandlist {
     display: flex;
     align-content: space-between;
+    margin-bottom: 5rem;
     /* flex-direction: row; */
     /*align-items: center;*/
     /*padding-left: 2rem;*/
@@ -572,6 +573,7 @@ footer a:hover {
 
 .forlist {
     float: left;
+    width: 400px;
 }
 
 .forlistlist>ul {
@@ -629,6 +631,7 @@ footer a:hover {
     .tableandtitle{
         display: flex;
         overflow-x: scroll;
+        overflow-y: hidden;
     }
     
 }
@@ -638,13 +641,14 @@ footer a:hover {
         .fortableandlist{
             display:flex;
             flex-direction: column;
-            overflow-x: scroll;
+            overflow-x: hidden;
 
         }
         .tableandtitle{
             width: 100%;
             display: flex;
             overflow-x: scroll;
+            overflow-y: hidden;
         }
     }
 }
@@ -662,3 +666,9 @@ footer a:hover {
     
   
   }
+
+.flex-row{
+    display: flex;
+    flex-direction: column;
+}
+
