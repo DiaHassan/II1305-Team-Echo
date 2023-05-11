@@ -129,14 +129,15 @@ export default function Tabletest() {
 
 
     function listToDict(list) {
+        console.log(list)
         list = groupExperience(list);
         const dict = [];
-        if (!list){
-            //Disclaimer of no data
-            setFoundData(false);
+        if (list.length === 0){
+            setGraphtitle("Ingen tillgänglig data");
+        } else if (select) {
+            setGraphtitle(countyTitle());
         } else {
-            //Found data
-            setFoundData(true)
+            setGraphtitle(jobTitle());
         }
 
         for (let i = 0; i < list.length; i++) {
@@ -222,7 +223,7 @@ export default function Tabletest() {
 
     const handleClick = () => {
         const srcs = []
-        if(foundData){
+        if(!foundData){
             console.log("Ingen tillgänglig data!")
             setGraphtitle("Ingen tillgänglig data");
         } else if (select) {
