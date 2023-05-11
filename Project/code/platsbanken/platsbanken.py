@@ -109,7 +109,7 @@ def extract_duration(duration: str) -> (str | int):
     duration = str(duration)
     if duration.lower() == 'tills vidare' or duration == 'tillsvidare':
         return '0'
-    # gör så tillsvidare ger 0
+    # Gives 'tillsvidare' the value 0
     for char in duration:
         if char.isnumeric():
           return char
