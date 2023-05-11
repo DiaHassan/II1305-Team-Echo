@@ -317,6 +317,13 @@ nav>ul>li>a {
     color: var(--color-off-white);
 }
 
+#stat {
+    color: var(--color-off-white);
+}
+
+#stat:hover {
+    color: var(--color-green);
+}
 
 /* nav for home */
 
