@@ -229,6 +229,10 @@ nav>ul>li>a {
         width: 80%;
         margin-top: 2rem;
     }
+    .search>input {
+        font-size: 0.6rem !important;
+        padding: 0 !important;
+    }
 }
 
 
