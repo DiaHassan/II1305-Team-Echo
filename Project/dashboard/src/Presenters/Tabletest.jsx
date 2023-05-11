@@ -546,8 +546,7 @@ export default function Tabletest() {
                                     color='default'
                                     name="linkedin"
                                     value={JSON.stringify({
-                                        years_of_experience: false,
-                                        duration: false,
+                                        years_of_experience: false
                                     })}
                                 />} label="LinkedIn" />
                                 <FormControlLabel control={<Checkbox
@@ -564,7 +563,8 @@ export default function Tabletest() {
                                     color='default'
                                     name="ledigajobb"
                                     value={JSON.stringify({
-                                        duration: false
+                                        seniority: false,
+                                        years_of_experience: false
                                     })}
                                 />} label="Lediga jobb" />
                             </FormGroup>
