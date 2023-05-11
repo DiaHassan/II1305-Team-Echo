@@ -733,6 +733,7 @@ footer a:hover {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            height: 300px;
         }
         #radioButtons {
             width: 300px;
