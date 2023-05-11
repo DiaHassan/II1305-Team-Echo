@@ -437,27 +437,34 @@ export default function Tabletest() {
 
     return (
         <div>
-            <FormLabel id='graphtitle'>
-                <p>{graphtitle}</p>
-            </FormLabel>
             <div className='fortableandlist'>
-            {/*<p id="nodatalabel" style={dynamicDisplay}> Ingen data tillgänglig </p> */}
-                <div>
-                    <FormLabel component="legend"></FormLabel>
-                </div>
+                <div className='flex-row'>
 
-                {/* <ResponsiveContainer > */}
-                
-                <BarChart width={1000} height={600} data={displayAll(result)}>
-                
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
-                    <YAxis />
-                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' , textShadow: '0px 0px 0px #000000'}} />
-                    <Legend />
-                    {getBars(dictToColumns(result))}
-                </BarChart>
-                {/* </ResponsiveContainer> */}
+                    
+                        <FormLabel id='graphtitle'>
+                            <p>{graphtitle}</p>
+                        </FormLabel>
+                    
+                    <div>
+                        <div className='tableandtitle'>
+                            {/*<p id="nodatalabel"> Ingen data tillgänglig </p>
+                             <div>
+                                <FormLabel component="legend"></FormLabel>
+                            </div> */}
+
+                            {/* <ResponsiveContainer > */}
+                            <BarChart width={1000} height={600} data={displayAll(result)}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis  tick={{ fontSize: '0.9em' }} dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
+                                <YAxis />
+                                <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' , textShadow: '0px 0px 0px #000000'}} />
+                                <Legend />
+                                {getBars(dictToColumns(result))}
+                            </BarChart>
+                    </div>
+                    {/* </ResponsiveContainer> */}
+                </div>
+            </div>
 
                 <div className='forlist'>
                     <div class="questionmark-container">
