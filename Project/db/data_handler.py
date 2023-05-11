@@ -29,7 +29,7 @@ def endpoint():
 
 # Main function
 def run():
-    app.run(port=8888)
+    app.run(host="0.0.0.0",debug=False, port=8888)
 
 
 # Run main function
