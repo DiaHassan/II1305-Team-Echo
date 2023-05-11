@@ -19,32 +19,7 @@ import { Grid } from '@mui/material';
 
 
 export default function Tabletest() {
-
-    // const data = [
-    //     { name: 'Blekinge län', value: 0 },
-    //     { name: 'Dalarnas län', value: 0 },
-    //     { name: 'Gotlands län', value: 0 },
-    //     { name: 'Gävleborgs län', value: 0 },
-    //     { name: 'Hallands län', value: 0 },
-    //     { name: 'Jämtlands län', value: 0 },
-    //     { name: 'Jönköpings län', value: 0 },
-    //     { name: 'Kalmar län', value: 0 },
-    //     { name: 'Kronobergs län', value: 0 },
-    //     { name: 'Norrbottens län', value: 0 },
-    //     { name: 'Skåne län', value: 0 },
-    //     { name: 'Stockholms län', value: 0 },
-    //     { name: 'Södermanlands län', value: 0 },
-    //     { name: 'Uppsala län', value: 0 },
-    //     { name: 'Värmlands län', value: 0 },
-    //     { name: 'Västerbottens län', value: 0 },
-    //     { name: 'Västernorrlands län', value: 0 },
-    //     { name: 'Västmanlands län', value: 0 },
-    //     { name: 'Västra Götalands län', value: 0 },
-    //     { name: 'Örebro län', value: 0 },
-    //     { name: 'Östergötlands län', value: 0 },
-    // ];
-
-    const data2 = [
+    const data = [
         { name: 'Elektriker' },
         { name: 'Ingenjör' },
         { name: 'Logistiker' },
@@ -57,22 +32,74 @@ export default function Tabletest() {
         { name: 'Utvecklare' }
     ];
 
-    const startDate = 'April 2023'; //TODO: Change into more accurate start date
-    let thisMonth = new Date().getMonth() + 1;
- 
+    //Colors for the different sources
+    const colors = {
+        "linkedin": [
+            // green
+            "#A2D9CE",
+            "#73C6B6",
+            "#45B39D",
+            "#16A085",
+            "#117A65",
+            "#0E6655"
+        ],
+
+        "platsbanken": [
+            // orange
+            "#F0B27A",
+            "#EB984E",
+            "#E67E22",
+            "#CA6F1E",
+            "#AF601A",
+            "#935116"
+        ],
+
+        "ledigajobb": [
+            // purple
+            "#D7BDE2",
+            "#C39BD3",
+            "#AF7AC5",
+            "#9B59B6",
+            "#76448A",
+            "#512E5F"
+        ]
+    }
+
+    // Specifes the first month were data was gathered:
+    const startDate = 'May 2023';
+    const thisMonth = new Date().getMonth() + 1;
     const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
 
     // Setting variables and useStates
-    const [result, setResult] = useState(data2);
+    const [result, setResult] = useState(data);
 
     const seniorityNull = "ej applicerbart";
     const employmentNull = "ospecifierat";
     const reqNull = "ospecifierat";
 
 
-    //  TODO: call function to automatically create lists
+    /**
+     * Every entry in this list should have the first letters of each word capitalized
+     */
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
+    /**
+     * Every entry in this list should have the first letters of each word capitalized
+     */
     const allCounties = ["Blekinge Län", "Dalarnas Län", "Gotlands Län", "Gävleborgs Län", "Hallands Län", "Jämtlands Län", "Jönköpings Län", "Kalmar Län", "Kronobergs Län", "Norrbottens Län", "Skåne Län", "Stockholms Län", "Södermanlands Län", "Uppsala Län", "Värmlands Län", "Västerbottens Län", "Västernorrlands Län", "Västmanlands Län", "Västra Götalands Län", "Örebro Län", "Östergötlands Län"]
+
+    //insert all default values for filtering buttons:
+    const defaultValue = {
+        employment_type: true,
+        seniority: true,
+        years_of_experience: true,
+        duration: true,
+        prerequirements: true,
+        active: false
+    };
+
+
+    //insert all sources. Format 'sourcename' (lowercase): defaultValue
+    const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue, ledigajobb: defaultValue });
 
 
     const [job, setJob] = useState("Sjuksköterska")
@@ -86,14 +113,26 @@ export default function Tabletest() {
     const [selectRadio, setSelectRadio] = useState(false);
     const [foundData, setFoundData] = useState(true);
 
+    /**
+     * Used to change which county is selected, used for "one county, many jobs" scenario.
+     * @param {onChange} event 
+     */
     const handleChangeCounty = (event) => {
         setCounty(event.target.value);
     };
 
+    /**
+     * Used to change which job is selected, used for "many counties, one job" scenario.
+     * @param {onChange} event 
+     */
     const handleChangeJob = (event) => {
         setJob(event.target.value);
     };
 
+    /**
+     * Used to change which jobs are selected, used for "one county, many jobs" scenario.
+     * @param {onChange} event 
+     */
     const handleChangesJob = (event) => {
         const value = event.target.value;
         if (value[value.length - 1] === "all") {
@@ -104,6 +143,10 @@ export default function Tabletest() {
         // console.log(value)
     };
 
+    /**
+     * Used to change which counties are selected, used for "many counties, one job" scenario.
+     * @param {onChange} event 
+     */
     const handleChangesCounty = (event) => {
         const value = event.target.value;
         if (value[value.length - 1] === "all") {
@@ -114,14 +157,23 @@ export default function Tabletest() {
         // console.log(value)
     };
 
+    /**
+     * Changes the selected parameter for filtering
+     * @param {onChange} event 
+     */
     const handleParams = (event) => {
         setOptionRadio(event.target.value);
     }
 
+    /**
+     * Changes the selected date for filtering
+     * @param {onChange} event 
+     */
     const handleDate = (event) => {
         setDate(event.target.value);
     }
 
+    //Creates the select lists
     const countyListElements = allCounties.map((item) => {
         return <MenuItem value={item} key={item}>{item}</MenuItem>;
     });
@@ -131,6 +183,10 @@ export default function Tabletest() {
     });
 
 
+    /**
+     * Converts the data from the database into the correct format for the graph
+     * @param {[[name:string, [source:string, [param:string, count:int], ...[]], ...[]], ...[]]} list
+     */
     function listToDict(list) {
         console.log(list)
         list = groupExperience(list);
@@ -186,6 +242,11 @@ export default function Tabletest() {
         return dict;
     }
 
+    /**
+     * Takes the output from listToDict() and returns a list of all columns needed to display that data
+     * @param {*} dict 
+     * @returns list of columns
+     */
     function dictToColumns(dict) {
         const columns = {};
         for (let i = 0; i < dict.length; i++) {
@@ -202,9 +263,10 @@ export default function Tabletest() {
         }
         return columns;
     }
-
-    //A function that groups years of experience into intervals instead of sorting by specific
-    //years. If the param is not years of experience then it returns the array unchanged. 
+    /**
+     * A function that groups years of experience into intervals instead of sorting by specific
+     * years. If the param is not years of experience then it returns the array unchanged. 
+     */
     function groupExperience(list) {
         if (optionRadio !== "years_of_experience") {
             return list;
@@ -240,6 +302,9 @@ export default function Tabletest() {
         return list;
     }
 
+    /**
+     * Function for requesting data from the database, takes the selected paramaters and sets the result of the query.
+     */
     const handleClick = () => {
         const srcs = []
         if(!foundData){
@@ -277,48 +342,16 @@ export default function Tabletest() {
         console.log((result));
     };
 
-
-    //Use this for instant updates
-    // useEffect(() => {
-    //     handleClick()
-    // }, [select, handleClick]);
-
     useEffect(() => {
         handleClick()
     }, [select]);
 
-    const colors = {
-        "linkedin": [
-            // green
-            "#A2D9CE",
-            "#73C6B6",
-            "#45B39D",
-            "#16A085",
-            "#117A65",
-            "#0E6655"
-        ],
 
-        "platsbanken": [
-            // orange
-            "#F0B27A",
-            "#EB984E",
-            "#E67E22",
-            "#CA6F1E",
-            "#AF601A",
-            "#935116"
-        ],
-
-        "ledigajobb": [
-            // purple
-            "#D7BDE2",
-            "#C39BD3",
-            "#AF7AC5",
-            "#9B59B6",
-            "#76448A",
-            "#512E5F"
-        ]
-    }
-
+    /**
+     * Takes the result list and adds missing empty data fields
+     * @param {*} resultChange 
+     * @returns list of data
+     */
     function displayAll(resultChange) {
 
         let compare = (select ? joblist.slice() : countyList.slice());
@@ -340,6 +373,11 @@ export default function Tabletest() {
         return resultChange;
     }
 
+    /**
+     * Takes the return list from dictToColumns() and supplements columns if data was not found.
+     * @param {*} InputColumns 
+     * @returns List of all columns that should have a place in the chart
+     */
     const getBars = (InputColumns) => {
         const bars = [];
 
@@ -358,22 +396,10 @@ export default function Tabletest() {
         return bars.map((bar) => <Bar dataKey={bar[0]} stackId={bar[1]} fill={bar[2]} />);
     }
 
-
-    //   --------------- Handle 'Gray out' functionlity:
-    //insert all default values for buttons:
-    const defaultValue = {
-        employment_type: true,
-        seniority: true,
-        years_of_experience: true,
-        duration: true,
-        prerequirements: true,
-        active: false
-    };
-
-
-    //insert all sources. Format 'sourcename': defaultValue
-    const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue, ledigajobb: defaultValue });
-    // Handles any changes to the source buttons
+    /**
+     * Handles any changes to the source buttons
+     * @param {*} event 
+     */
     const handleSource = (event) => {
         const name = event.target.name;
         // Due to the form only returning strings we need to parse it into correct format
@@ -389,7 +415,11 @@ export default function Tabletest() {
         ));
     }
 
-    // Parses the input paramater into correct format
+    /**
+     * Parses the input paramater into correct format for "handleKeys()"
+     * @param {*} s 
+     * @returns 
+     */
     const splitKey = (s) => {
         const returnKeyValue = {};
         var x = s.replace(/[{}"']+/g, '').split(',');
@@ -401,7 +431,11 @@ export default function Tabletest() {
         return returnKeyValue;
     }
 
-    // Creates a key-value list filled with all changed and unchanged values
+    /**
+     * Creates a key-value list filled with all changed and unchanged values for "inputs"
+     * @param {*} value 
+     * @returns 
+     */
     const handleKeys = (value) => {
         const template = { ...defaultValue };
         for (let item of Object.keys(value)) {
@@ -412,17 +446,26 @@ export default function Tabletest() {
     }
 
     // --------
-    //County title above graph
+    /**
+     * County title above graph
+     * @returns county
+     */
     function countyTitle() {
         return county;
     }
 
-    /* Profession title above graph */
+    /**
+     * Profession title above graph
+     * @returns profession
+     */
     function jobTitle() {
         return job;
     }
 
-    // Testing date
+    /**
+     * Get all months from startDate to today
+     * @returns a list of html options
+     */
     function getMonths() {
         var totalMonths = {};
         const startPoint = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
@@ -446,7 +489,7 @@ export default function Tabletest() {
             returnList.push([year_value, totalMonths[year_value]])
         }
 
-        returnList.sort(function(a,b){return b[0].localeCompare(a[0]);});
+        returnList.sort(function (a, b) { return b[0].localeCompare(a[0]); });
 
         return returnList.map((item) => (
             <optgroup label={item[0]}>
@@ -490,17 +533,17 @@ export default function Tabletest() {
             </div>
 
                 <div className='forlist'>
-                    <div className="questionmark-container">
-                        <div className="hover-element">
-                            !
-                            <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
-                           {/* <div class="warning-text">Sanningsavvikande data kan bero på urval av annonser</div>*/}
-                        </div>
-                    </div>
-                    <div >
+                    <div id="choicesDiv">
                         {/* Div containing 3 checkboxes */}
-                        <FormControl component="fieldset" defaultValue={"linkedin"}>
-                            <FormLabel component="legend">Välj plattform:</FormLabel>
+                        <FormControl component="fieldset" defaultValue={"linkedin"} id="chooseSourceContainer">
+                            <FormLabel component="legend" id="chooseSourceLabel">Välj plattform:
+                                <div className="questionmark-container">
+                                <div className="hover-element">
+                                !
+                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
+                                </div>
+                                </div>
+                        </FormLabel>
                             <FormGroup>
                                 <FormControlLabel control={<Checkbox
                                     // checked={linkedinCB}
@@ -649,6 +692,7 @@ export default function Tabletest() {
 
                             }
                         </div>
+                        <div id="chooseParamsContainer">
                         <table className='toggleTable'>
                             <th align='left' width="75px">Filtrera val</th>
                             <th align='left' width="60px">
@@ -664,7 +708,7 @@ export default function Tabletest() {
                             {/* Div containing 3 horizontal radio buttons */}
                             <RadioGroup aria-label="position" name="position" defaultValue="top">
                                 <FormControl component="fieldset">
-                                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} id="paramListContainer">
                                         <Grid item xs={6}>
                                             <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Anställningsform" onChange={handleParams}
                                                 disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true} />
@@ -692,6 +736,7 @@ export default function Tabletest() {
                                 </FormControl>
                             </RadioGroup>
                         </div>}
+                        </div>
                     </div>
                     <button onClick={handleClick} className='forlistbutton'> Visa resultat</button>
                 </div>

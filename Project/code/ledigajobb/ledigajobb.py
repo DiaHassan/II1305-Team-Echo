@@ -14,7 +14,8 @@ try:
     from ledigajobb_counties import counties
 except ImportError:
     from .ledigajobb_counties import counties
-
+from datetime import datetime
+today = datetime.today().strftime('%Y-%m-%d')
 
 # Define the URL to scrape
 base_url = 'https://ledigajobb.se'
@@ -164,7 +165,7 @@ def scrape_ad(job_link, county, profession):
             prerequierment, 
             "null",
             "null",
-            "2023-04-20"
+            today
             ]
 
 
