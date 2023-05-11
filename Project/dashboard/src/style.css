@@ -737,6 +737,9 @@ footer a:hover {
         .questionmark-container {
             right: 0px;
         }
+        #paramListContainer {
+            flex-direction: column;
+        }
     }
 }
 
