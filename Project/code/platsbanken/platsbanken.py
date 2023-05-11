@@ -107,10 +107,13 @@ def extract_data_all_ads(all_ads: list, index: int) -> list:
 # Takes first duration found
 def extract_duration(duration: str) -> (str | int):
     duration = str(duration)
+    if duration.lower() == 'tills vidare' or duration == 'tillsvidare':
+        return '0'
+    # gör så tillsvidare ger 0
     for char in duration:
         if char.isnumeric():
           return char
-    return 0
+    return 'null'
 
 # Creates a list for one ad with correct parameters
 def extract_data_ad(ad: list, index: int) -> list:
