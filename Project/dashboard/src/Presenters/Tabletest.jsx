@@ -57,7 +57,7 @@ export default function Tabletest() {
         { name: 'Utvecklare' }
     ];
 
-    const startDate = 'May 2023'; //TODO: Change into more accurate start date
+    const startDate = 'April 2023'; //TODO: Change into more accurate start date
     let thisMonth = new Date().getMonth() + 1;
     const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
 
@@ -286,32 +286,32 @@ export default function Tabletest() {
     const colors = {
         "linkedin": [
             // green
-            "#73c6b6",
-            "#16a085",
-            "#117a65",
-            "#0e6655",
-            "#06610d",
-            "#6d876f"
+            "#A2D9CE",
+            "#73C6B6",
+            "#45B39D",
+            "#16A085",
+            "#117A65",
+            "#0E6655"
         ],
 
         "platsbanken": [
-            // yellow
-            "#F9E79F",
-            "#F7DC6F",
-            "#F1C40F",
-            "#F39C12",
-            "#D4AC0D",
-            "#7D6608"           
+            // orange
+            "#F0B27A",
+            "#EB984E",
+            "#E67E22",
+            "#CA6F1E",
+            "#AF601A",
+            "#935116"
         ],
 
         "ledigajobb": [
             // purple
-            "#d7bde2",
-            "#af7ac5",
-            "#8e44ad",
-            "#4a235a",
-            "#d0ece7",
-            "#d2b4de"
+            "#D7BDE2",
+            "#C39BD3",
+            "#AF7AC5",
+            "#9B59B6",
+            "#76448A",
+            "#512E5F"
         ]
     }
 
