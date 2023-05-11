@@ -73,9 +73,9 @@ export default function Tabletest() {
     // Setting variables and useStates
     const [result, setResult] = useState(data);
 
-    const seniorityNull = "ej applicerbart";
-    const employmentNull = "ospecifierat";
-    const reqNull = "ospecifierat";
+    const seniorityNull = "ej kategoriserad";
+    const employmentNull = "ej kategoriserad";
+    const reqNull = "ej kategoriserad";
 
 
     /**
