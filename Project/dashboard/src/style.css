@@ -737,11 +737,8 @@ footer a:hover {
         #radioButtons {
             width: 300px;
         }
-        #chooseSourceContainer {
-            width: 100%;
-        }
         #chooseSourceLabel {
-            width: 50%;
+            width: 100%;
         }
         .questionmark-container {
             right: 0px;
@@ -765,6 +762,7 @@ footer a:hover {
     }
     .forlist {
         width: 100%;
+        margin-top: 100px;
     }
     #chooseSourceContainer {
         width: 100%;
