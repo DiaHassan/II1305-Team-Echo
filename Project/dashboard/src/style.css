@@ -76,7 +76,6 @@ body {
     display: block;
     text-align: center;
     padding-bottom: 30px;
-    /* margin-left: 80px; */
     font-family: var(--font);
 }
 
@@ -94,7 +93,6 @@ nav {
     color: var(--color-green);
     font-weight: bold;
     font-size: 25px;
-    /* background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent); */
     height: 100px;
     transition: height 0.3s ease-in-out;
 }
@@ -315,18 +313,10 @@ nav>ul>li>a {
 
 /* nav for home */
 
-
-/* .front-wrap>nav {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
-  } */
-
 .front-wrap>nav>div,
 .front-wrap>nav>ul>li>a {
     color: var(--color-white);
 }
-
-
-/* Quick fix for making the title on navbar white on default and green on hover while on the home page. */
 
 .front-wrap>nav>div>a {
     color: var(--color-white);
@@ -395,9 +385,6 @@ nav>ul>li>a {
 
 
 /* ------------------ */
-
-
-/* Source: https://www.w3schools.com/howto/howto_css_switch.asp */
 
 .toggleSwitch {
     position: relative;
@@ -612,7 +599,6 @@ footer a:hover {
     position: relative;
     display: flex;
     flex-direction: row;
-    /* justify-content: ; */
     align-items: center;
     padding-left: 4rem;
     padding-right: 4rem;
@@ -626,9 +612,6 @@ footer a:hover {
     align-content: space-between;
     margin-top: 5rem;
     margin-bottom: 5rem;
-    /* flex-direction: row; */
-    /*align-items: center;*/
-    /*padding-left: 2rem;*/
 }
 
 .forlist {
@@ -645,15 +628,11 @@ footer a:hover {
     width: 19rem;
 }
 
-
-/* This needs to be reviewed later */
-
 .forlist {
     color: black;
     display: flex;
     gap: 0.5rem;
     flex-direction: column;
-    /*align-items: center;*/
     padding-left: 2rem;
     position: relative;
 }
@@ -678,25 +657,26 @@ footer a:hover {
 }
 
 
-/* These classes are tests and are for clean up */
-
-
 /* ----------Stats page---------------- */
 
 
 /* Mobile styles */
 
 @media only screen and (max-width: 600px) {
-    /* .fortableandlist{
-        display:flex;
-        flex-direction: column;
-        overflow-x: scroll;
-    } */
     .tableandtitle {
         display: flex;
         flex-direction: column;
         overflow-x: scroll;
         overflow-y: hidden;
+    }
+    #choicesDiv {
+        flex-direction: column !important;
+    }
+    .forlistbutton {
+        width: 80%;
+    }
+    #chooseSourceLabel {
+        width: 70% !important;
     }
 }
 
@@ -724,15 +704,13 @@ footer a:hover {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            height: 300px;
         }
         #radioButtons {
             width: 300px;
         }
-        #chooseSourceContainer {
-            width: 100%;
-        }
         #chooseSourceLabel {
-            width: 50%;
+            width: 100%;
         }
         .questionmark-container {
             right: 0px;
@@ -756,6 +734,7 @@ footer a:hover {
     }
     .forlist {
         width: 100%;
+        margin-top: 100px;
     }
     #chooseSourceContainer {
         width: 100%;

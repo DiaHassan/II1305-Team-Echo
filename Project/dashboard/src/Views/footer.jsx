@@ -26,7 +26,7 @@ export default function Footer() {
         </div>
         <div className="footer-contact">
           <h3>Kontakt</h3>
-          <a href="mailto:team.echo.kth@gmail.com">team.echo.kth@gmail.com</a>
+          <a href="mailto:sk@futureplaceleadership.com">sk@futureplaceleadership.com</a>
         </div>
       </footer>
     </>

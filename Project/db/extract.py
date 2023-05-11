@@ -150,7 +150,7 @@ def get_professions_for_county(sources:list, county:str, professions:list, param
 # -------------------------------- EXTRACT -------------------------------------------
 
 # Callee
-def extract(source:list, county: (list|str), profession: (list|str), param:str, date:str) -> list:
+def extract(source:list, county: (list), profession: (list), param:str, date:str) -> list:
     # One profession, many counties
     if isinstance(county, list):
         return get_counties_for_profession(source, county, profession, param, date)
