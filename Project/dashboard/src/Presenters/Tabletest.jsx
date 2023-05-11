@@ -73,9 +73,9 @@ export default function Tabletest() {
     // Setting variables and useStates
     const [result, setResult] = useState(data);
 
-    const seniorityNull = "ej applicerbart";
-    const employmentNull = "ospecifierat";
-    const reqNull = "ospecifierat";
+    const seniorityNull = "ej kategoriserad";
+    const employmentNull = "ej kategoriserad";
+    const reqNull = "ej kategoriserad";
 
 
     /**
@@ -479,7 +479,7 @@ export default function Tabletest() {
                 if (currentMonth < 10) {
                     currentMonth = '0' + currentMonth;
                 }
-                months.push([currentYear + '-' + currentMonth, startPoint.toLocaleString('default', { month: 'long' })]);
+                months.push([currentYear + '-' + currentMonth, startPoint.toLocaleString('sv-SE', { month: 'long' })]);
                 startPoint.setMonth(startPoint.getMonth() - 1);
             }
             totalMonths[currentYear] = months;
