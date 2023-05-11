@@ -698,6 +698,15 @@ footer a:hover {
         overflow-x: scroll;
         overflow-y: hidden;
     }
+    #choicesDiv {
+        flex-direction: column !important;
+    }
+    .forlistbutton {
+        width: 80%;
+    }
+    #chooseSourceLabel {
+        width: 70% !important;
+    }
 }
 
 @media screen {
