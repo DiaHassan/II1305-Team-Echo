@@ -459,11 +459,11 @@ input:checked+.slider:before {
 }
 
 #sc .slider {
-    background-color: #f3aa21;
+    background-color: #2196F3;
 }
 
 #sc input:checked+.slider {
-    background-color: #f3aa21;
+    background-color: #2196F3;
 }
 
 
