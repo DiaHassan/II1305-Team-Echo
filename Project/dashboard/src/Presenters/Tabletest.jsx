@@ -182,7 +182,6 @@ export default function Tabletest() {
         return <MenuItem value={item} key={item}>{item}</MenuItem>;
     });
 
-
     /**
      * Converts the data from the database into the correct format for the graph
      * @param {[[name:string, [source:string, [param:string, count:int], ...[]], ...[]], ...[]]} list
@@ -305,6 +304,7 @@ export default function Tabletest() {
     /**
      * Function for requesting data from the database, takes the selected paramaters and sets the result of the query.
      */
+
     const handleClick = () => {
         const srcs = []
         if(!foundData){
@@ -346,12 +346,12 @@ export default function Tabletest() {
         handleClick()
     }, [select]);
 
-
     /**
      * Takes the result list and adds missing empty data fields
      * @param {*} resultChange 
      * @returns list of data
      */
+
     function displayAll(resultChange) {
 
         let compare = (select ? joblist.slice() : countyList.slice());
@@ -513,11 +513,6 @@ export default function Tabletest() {
                     
                     <div>
                         <div className='tableandtitle'>
-                            {/* <p id="nodatalabel"> Ingen data tillgänglig </p> */}
-                            {/* <div>
-                                <FormLabel component="legend"></FormLabel>
-                            </div> */}
-
                             {/* <ResponsiveContainer > */}
                             <BarChart width={1000} height={600} data={displayAll(result)}>
                                 <CartesianGrid strokeDasharray="3 3" />
@@ -729,9 +724,6 @@ export default function Tabletest() {
                                             <FormControlLabel value="years_of_experience" control={<Radio size="small" />} label="Erfarenhet (år)" onChange={handleParams}
                                                 disabled={inputs.platsbanken.years_of_experience && inputs.linkedin.years_of_experience && inputs.ledigajobb.years_of_experience ? false : true} />
                                         </Grid>
-                                        {/* <Grid item xs={6}>
-                                            <FormControlLabel style={standard} value="null" control={<Radio size="small" />} label="Inget val" onChange={handleParams} />
-                                        </Grid> */}
                                     </Grid>
                                 </FormControl>
                             </RadioGroup>
