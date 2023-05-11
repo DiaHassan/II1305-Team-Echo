@@ -531,13 +531,13 @@ footer li {
 
 footer a {
     text-decoration: none;
-    color: var(--color-black);
+    color: var(--color-off-white);
     font-weight: bold;
     border-bottom: 2px solid transparent;
 }
 
 footer a:hover {
-    color: var(--color-white);
+    color: var(--color-black);
 }
 
 .vertical-line {
