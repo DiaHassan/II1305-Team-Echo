@@ -30,15 +30,12 @@ def close_popup(page):
         print("failed")
         return
     
-# FORTSÄTT HÄR
 # Should annihilate popup tabs
 def handle_popup_tab(popup):
     popup.wait_for_load_state()
     print(popup.title())
 
 # Extracts data from one ad   
-# nu orkar jag inte koda på Githubs laggiga sida så fortsätt med: byt så att argumentet ad istället är en page, och gör så
-# all extraktion är gjord med playwrights locator istället
 def extract_ad(ad):
     # [source, employment_type, duration, publication_date, profession, county, req, years, seniority, date_extracted, desc]
     data = []
