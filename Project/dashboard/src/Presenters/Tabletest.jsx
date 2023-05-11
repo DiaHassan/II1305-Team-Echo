@@ -59,6 +59,7 @@ export default function Tabletest() {
 
     const startDate = 'April 2023'; //TODO: Change into more accurate start date
     let thisMonth = new Date().getMonth() + 1;
+ 
     const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
 
     // Setting variables and useStates
@@ -83,6 +84,7 @@ export default function Tabletest() {
     const [date, setDate] = useState(checkToday);
     const [optionRadio, setOptionRadio] = useState("null");
     const [selectRadio, setSelectRadio] = useState(false);
+    const [foundData, setFoundData] = useState(true);
 
     const handleChangeCounty = (event) => {
         setCounty(event.target.value);
@@ -130,14 +132,15 @@ export default function Tabletest() {
 
 
     function listToDict(list) {
+        console.log(list)
         list = groupExperience(list);
         const dict = [];
-        if (!list) {
-            //Disclaimer of no data
-
-
+        if (list.length === 0){
+            setGraphtitle("Ingen tillgänglig data");
+        } else if (select) {
+            setGraphtitle(countyTitle());
         } else {
-            //Set display: None on disclaime
+            setGraphtitle(jobTitle());
         }
 
         for (let i = 0; i < list.length; i++) {
@@ -239,11 +242,12 @@ export default function Tabletest() {
 
     const handleClick = () => {
         const srcs = []
-
-        if (select) {
+        if(!foundData){
+            console.log("Ingen tillgänglig data!")
+            setGraphtitle("Ingen tillgänglig data");
+        } else if (select) {
             setGraphtitle(countyTitle());
-        }
-        else {
+        } else {
             setGraphtitle(jobTitle());
         }
 
@@ -456,33 +460,41 @@ export default function Tabletest() {
 
     return (
         <div>
-            <FormLabel id='graphtitle'>
-                <p>{graphtitle}</p>
-            </FormLabel>
             <div className='fortableandlist'>
-                <p id="nodatalabel"> Ingen data tillgänglig </p>
-                <div>
-                    <FormLabel component="legend"></FormLabel>
+                <div className='flex-row'>
+
+                    
+                        <FormLabel id='graphtitle'>
+                            <p>{graphtitle}</p>
+                        </FormLabel>
+                    
+                    <div>
+                        <div className='tableandtitle'>
+                            {/* <p id="nodatalabel"> Ingen data tillgänglig </p> */}
+                            {/* <div>
+                                <FormLabel component="legend"></FormLabel>
+                            </div> */}
+
+                            {/* <ResponsiveContainer > */}
+                            <BarChart width={1000} height={600} data={displayAll(result)}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis  tick={{ fontSize: '0.9em' }} dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
+                                <YAxis />
+                                <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black' , textShadow: '0px 0px 0px #000000'}} />
+                                <Legend />
+                                {getBars(dictToColumns(result))}
+                            </BarChart>
+                    </div>
+                    {/* </ResponsiveContainer> */}
                 </div>
-
-                {/* <ResponsiveContainer > */}
-
-                <BarChart width={1000} height={600} data={displayAll(result)}>
-
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" height={150} interval={0} angle={-45} textAnchor="end" />
-                    <YAxis />
-                    <Tooltip contentStyle={{ textShadow: '1px 1px 1px #000000' }} labelStyle={{ color: 'black', textShadow: '0px 0px 0px #000000' }} />
-                    <Legend />
-                    {getBars(dictToColumns(result))}
-                </BarChart>
-                {/* </ResponsiveContainer> */}
+            </div>
 
                 <div className='forlist'>
                     <div className="questionmark-container">
                         <div className="hover-element">
                             !
-                            <div className="warning-text">Risk för opålitlig data på grund av urvalet av annonser.</div>
+                            <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
+                           {/* <div class="warning-text">Sanningsavvikande data kan bero på urval av annonser</div>*/}
                         </div>
                     </div>
                     <div >

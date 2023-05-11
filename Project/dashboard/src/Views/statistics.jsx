@@ -8,7 +8,7 @@ export default function Stats() {
     return(
       <>
         <Navbar/>
-        <div className="fortable">
+        <div className="">
           {/* <Toberem /> */}
           <Tabletest/>
         </div>
