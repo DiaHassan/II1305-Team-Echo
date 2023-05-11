@@ -50,7 +50,7 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
     color: var(--color-black);
-    width: 100px;
+    width: 150px;
 }
 
 .questionmark-container:hover .warning-text {
@@ -232,10 +232,6 @@ nav>ul>li>a {
         height: auto;
         width: 80%;
         margin-top: 2rem;
-    }
-    .search>input {
-        font-size: 0.6rem !important;
-        padding: 0 !important;
     }
 }
 
@@ -467,11 +463,11 @@ input:checked+.slider:before {
 }
 
 #sc .slider {
-    background-color: #2196F3;
+    background-color: #f3aa21;
 }
 
 #sc input:checked+.slider {
-    background-color: #2196F3;
+    background-color: #f3aa21;
 }
 
 
@@ -539,13 +535,13 @@ footer li {
 
 footer a {
     text-decoration: none;
-    color: var(--color-off-white);
+    color: var(--color-black);
     font-weight: bold;
     border-bottom: 2px solid transparent;
 }
 
 footer a:hover {
-    color: var(--color-black);
+    color: var(--color-white);
 }
 
 .vertical-line {

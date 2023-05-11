@@ -76,6 +76,7 @@ export default function Tabletest() {
     const seniorityNull = "ej kategoriserad";
     const employmentNull = "ej kategoriserad";
     const reqNull = "ej kategoriserad";
+    const durationNull = "ej kategoriserad";
 
 
     /**
@@ -225,12 +226,27 @@ export default function Tabletest() {
                                 case "requirement":
                                     key = `${category}-${reqNull}`;
                                     break;
+                                case "duration":
+                                    key = `${category}-${durationNull}`;
+                                    break;
                                 default:
                                     key = `${category}-${subcat}`;
                                     break;
                             }
                         } else {
-                            key = `${category}-${subcat}`;
+                            if(optionRadio === "duration"){
+                                switch(subcat){
+                                    case "0":
+                                        key = `${category}-tillsvidare`;
+                                        break;
+                                    default:
+                                        key = `${category}-${subcat} månader`;
+                                        break;
+                                }
+
+                            } else {
+                                key = `${category}-${subcat}`;
+                            }
                         }
                         entry[key] = value;
                     }
@@ -470,6 +486,7 @@ export default function Tabletest() {
         var totalMonths = {};
         const startPoint = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
         const endPoint = new Date(startDate.replace(" ", " ,1 "));
+
         while (endPoint <= startPoint) {
             let currentYear = startPoint.getFullYear();
             let months = [];
@@ -535,7 +552,7 @@ export default function Tabletest() {
                                 <div className="questionmark-container">
                                 <div className="hover-element">
                                 !
-                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
+                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga dataanalyser.</div>
                                 </div>
                                 </div>
                         </FormLabel>
@@ -548,7 +565,7 @@ export default function Tabletest() {
                                     value={JSON.stringify({
                                         years_of_experience: false
                                     })}
-                                />} label="LinkedIn" />
+                                />} label="Linkedin" />
                                 <FormControlLabel control={<Checkbox
                                     onChange={handleSource}
                                     color='default'
