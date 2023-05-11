@@ -470,6 +470,7 @@ export default function Tabletest() {
         var totalMonths = {};
         const startPoint = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
         const endPoint = new Date(startDate.replace(" ", " ,1 "));
+
         while (endPoint <= startPoint) {
             let currentYear = startPoint.getFullYear();
             let months = [];
@@ -535,7 +536,7 @@ export default function Tabletest() {
                                 <div className="questionmark-container">
                                 <div className="hover-element">
                                 !
-                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
+                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga dataanalyser.</div>
                                 </div>
                                 </div>
                         </FormLabel>
@@ -548,7 +549,7 @@ export default function Tabletest() {
                                     value={JSON.stringify({
                                         years_of_experience: false
                                     })}
-                                />} label="LinkedIn" />
+                                />} label="Linkedin" />
                                 <FormControlLabel control={<Checkbox
                                     onChange={handleSource}
                                     color='default'

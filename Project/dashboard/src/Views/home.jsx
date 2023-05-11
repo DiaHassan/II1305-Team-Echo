@@ -16,7 +16,7 @@ export default function Home() {
           <div className="home-front">
             <div>
               <h1>Hur ser arbetsmarknaden ut i Sverige?</h1>
-              <p>Swedish talent observatory ger dig med hjälp utav en visuell graf en statistisk överblick över efterfrågan på Sveriges arbetsmarknad.
+              <p>Swedish Talent Monitor ger dig med hjälp utav en visuell graf en statistisk överblick över efterfrågan på Sveriges arbetsmarknad.
                 Ta reda på hur många möjliga jobb som finns inom ditt yrke och län!
               </p>
             </div>
