@@ -233,6 +233,10 @@ nav>ul>li>a {
         width: 80%;
         margin-top: 2rem;
     }
+    .search>input {
+        font-size: 0.6rem !important;
+        padding: 0 !important;
+    }
 }
 
 /* Tablet and desktop styles */
@@ -456,11 +460,11 @@ input:checked+.slider:before {
 }
 
 #sc .slider {
-    background-color: #f3aa21;
+    background-color: #2196F3;
 }
 
 #sc input:checked+.slider {
-    background-color: #f3aa21;
+    background-color: #2196F3;
 }
 
 
@@ -528,13 +532,13 @@ footer li {
 
 footer a {
     text-decoration: none;
-    color: var(--color-black);
+    color: var(--color-off-white);
     font-weight: bold;
     border-bottom: 2px solid transparent;
 }
 
 footer a:hover {
-    color: var(--color-white);
+    color: var(--color-black);
 }
 
 .vertical-line {
