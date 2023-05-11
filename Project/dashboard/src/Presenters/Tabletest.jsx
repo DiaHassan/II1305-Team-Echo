@@ -533,17 +533,17 @@ export default function Tabletest() {
             </div>
 
                 <div className='forlist'>
-                    <div className="questionmark-container">
-                        <div className="hover-element">
-                            !
-                            <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
-                           {/* <div class="warning-text">Sanningsavvikande data kan bero på urval av annonser</div>*/}
-                        </div>
-                    </div>
-                    <div >
+                    <div id="choicesDiv">
                         {/* Div containing 3 checkboxes */}
                         <FormControl component="fieldset" defaultValue={"linkedin"}>
-                            <FormLabel component="legend">Välj plattform:</FormLabel>
+                            <FormLabel component="legend" id="chooseSourceLabel">Välj plattform:
+                                <div className="questionmark-container">
+                                <div className="hover-element">
+                                !
+                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
+                                </div>
+                                </div>
+                        </FormLabel>
                             <FormGroup>
                                 <FormControlLabel control={<Checkbox
                                     // checked={linkedinCB}
