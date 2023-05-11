@@ -1,3 +1,8 @@
+###########################
+# As of 10/5-2023, broken #
+###########################
+
+# Imports
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from time import sleep
@@ -25,15 +30,12 @@ def close_popup(page):
         print("failed")
         return
     
-# FORTSÄTT HÄR
 # Should annihilate popup tabs
 def handle_popup_tab(popup):
     popup.wait_for_load_state()
     print(popup.title())
 
 # Extracts data from one ad   
-# nu orkar jag inte koda på Githubs laggiga sida så fortsätt med: byt så att argumentet ad istället är en page, och gör så
-# all extraktion är gjord med playwrights locator istället
 def extract_ad(ad):
     # [source, employment_type, duration, publication_date, profession, county, req, years, seniority, date_extracted, desc]
     data = []
@@ -51,7 +53,7 @@ def extract_ad(ad):
     return data
 
 # Returns the parameters of one ad
-def get_ads_on_page(page, profession, county, page_index):
+def get_ads_on_page(page, profession:str, county:str, page_index:int):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={page_index}')
     sleep(1)
     close_popup(page)
@@ -82,7 +84,7 @@ def get_ads_on_page(page, profession, county, page_index):
             continue
   
 # Returns a list of all ads for a specified profession and county
-def get_ads_all_pages(page, profession, county):
+def get_ads_all_pages(page, profession:str, county:str):
     page.goto(f'https://se.indeed.com/jobb?q={profession}&l={county}&radius=0&start={0}')
     data = page.content().encode('ascii', 'replace').decode('ascii')
     html = BeautifulSoup(data, features='lxml')
@@ -99,7 +101,7 @@ def get_ads_all_pages(page, profession, county):
     page_index = 0
     max_ads_scraped = 0
     while max_ads_scraped < job_count:
-        ad_list = (get_ad(page, profession, county, page_index, ad_list))
+        ad_list.append((get_ads_on_page(page, profession, county, page_index)))
         print(max_ads_scraped)
         page_index += 10
         max_ads_scraped += 15

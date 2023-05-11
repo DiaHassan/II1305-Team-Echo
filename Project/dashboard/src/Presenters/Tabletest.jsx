@@ -57,8 +57,7 @@ export default function Tabletest() {
         { name: 'Utvecklare' }
     ];
 
-    const startDate = 'Mars 2023'; //TODO: Change into more accurate start date
-    
+    const startDate = 'April 2023'; //TODO: Change into more accurate start date
     let thisMonth = new Date().getMonth() + 1;
  
     const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
@@ -66,17 +65,21 @@ export default function Tabletest() {
     // Setting variables and useStates
     const [result, setResult] = useState(data2);
 
+    const seniorityNull = "ej applicerbart";
+    const employmentNull = "ospecifierat";
+    const reqNull = "ospecifierat";
+
 
     //  TODO: call function to automatically create lists
     const initialJobList = ["Elektriker", "Ingenjör", "Logistiker", "Läkare", "Lärare", "Operatör", "Projektledare", "Sjuksköterska", "Tekniker", "Utvecklare"]
-    const allCounties = ["Blekinge län", "Dalarnas län", "Gotlands län", "Gävleborgs län", "Hallands län", "Jämtlands län", "Jönköpings län", "Kalmar län", "Kronobergs län", "Norrbottens län", "Skåne län", "Stockholms län", "Södermanlands län", "Uppsala län", "Värmlands län", "Västerbottens län", "Västernorrlands län", "Västmanlands län", "Västra Götalands län", "Örebro län", "Östergötlands län"]
+    const allCounties = ["Blekinge Län", "Dalarnas Län", "Gotlands Län", "Gävleborgs Län", "Hallands Län", "Jämtlands Län", "Jönköpings Län", "Kalmar Län", "Kronobergs Län", "Norrbottens Län", "Skåne Län", "Stockholms Län", "Södermanlands Län", "Uppsala Län", "Värmlands Län", "Västerbottens Län", "Västernorrlands Län", "Västmanlands Län", "Västra Götalands Län", "Örebro Län", "Östergötlands Län"]
 
 
     const [job, setJob] = useState("Sjuksköterska")
     const [joblist, setJobList] = useState(initialJobList)
-    const [county, setCounty] = useState("Blekinge län")
+    const [county, setCounty] = useState("Blekinge Län")
     const [countyList, setCountyList] = useState(allCounties)
-    const [graphtitle, setGraphtitle] = useState("Blekinge län")
+    const [graphtitle, setGraphtitle] = useState("Blekinge Län")
     const [select, setSelect] = useState(true);
     const [date, setDate] = useState(checkToday);
     const [optionRadio, setOptionRadio] = useState("null");
@@ -142,7 +145,11 @@ export default function Tabletest() {
 
         for (let i = 0; i < list.length; i++) {
             const row = list[i];
-            const entry = { name: row[0] };
+            var partStr = row[0].toLowerCase().split(' ');
+            for (let i = 0; i < partStr.length; i++) {
+                partStr[i] = partStr[i].charAt(0).toUpperCase() + partStr[i].substring(1);
+            }
+            const entry = { name: partStr.join(' ') };
             for (let j = 1; j < row.length; j++) {
                 const category = row[j][0];
                 for (let k = 1; k < row[j].length; k++) {
@@ -152,7 +159,24 @@ export default function Tabletest() {
                         key = `${category}`;
                         entry[key] = subcat;
                     } else {
-                        key = `${category}-${subcat}`;
+                        if (subcat === "null") {
+                            switch (optionRadio) {
+                                case "seniority":
+                                    key = `${category}-${seniorityNull}`;
+                                    break;
+                                case "employment_type":
+                                    key = `${category}-${employmentNull}`;
+                                    break;
+                                case "requirement":
+                                    key = `${category}-${reqNull}`;
+                                    break;
+                                default:
+                                    key = `${category}-${subcat}`;
+                                    break;
+                            }
+                        } else {
+                            key = `${category}-${subcat}`;
+                        }
                         entry[key] = value;
                     }
                 }
@@ -165,7 +189,7 @@ export default function Tabletest() {
     function dictToColumns(dict) {
         const columns = {};
         for (let i = 0; i < dict.length; i++) {
-            for (const [key, val] of Object.entries(dict[i])) {
+            for (const [key] of Object.entries(dict[i])) {
                 const parts = key.split("-");
                 if (parts[0] !== "name") {
                     if (!(parts[0] in columns)) {
@@ -185,11 +209,6 @@ export default function Tabletest() {
         if (optionRadio !== "years_of_experience") {
             return list;
         }
-        //const group0 = []; //No experience needed (0)
-        //const group1 = []; //1-2 years of experience
-        //const group2 = []; //3-5 years of experience
-        //const group3 = []; //6-8 years of experience
-        //const group4 = []; //8+ years of experience
         //Starts at index 1 because the name of the source/profession is the first element
         // of the arrays.
         for (const x of list) {
@@ -258,50 +277,67 @@ export default function Tabletest() {
         console.log((result));
     };
 
+
+    //Use this for instant updates
+    // useEffect(() => {
+    //     handleClick()
+    // }, [select, handleClick]);
+
     useEffect(() => {
         handleClick()
     }, [select]);
 
     const colors = {
         "linkedin": [
-            "#1abc9c",
-            "#3498db",
-            "#a569bd",
-            "#85c1e9",
-            "#6c3483",
-            "#58d68d"
-        ]
-        ,
-        "platsbanken": [
-            "#6c3483",
-            "#d35400",
-            "#b7950b",
-            "#a04000",
-            "#1e8449",
-            "#2e86c1"
+            // green
+            "#A2D9CE",
+            "#73C6B6",
+            "#45B39D",
+            "#16A085",
+            "#117A65",
+            "#0E6655"
         ],
+
+        "platsbanken": [
+            // orange
+            "#F0B27A",
+            "#EB984E",
+            "#E67E22",
+            "#CA6F1E",
+            "#AF601A",
+            "#935116"
+        ],
+
         "ledigajobb": [
-            "#f5b7b1",
-            "#f9e79f",
-            "#76d7c4",
-            "#a2d9ce",
-            "#d0ece7",
-            "#d2b4de"
+            // purple
+            "#D7BDE2",
+            "#C39BD3",
+            "#AF7AC5",
+            "#9B59B6",
+            "#76448A",
+            "#512E5F"
         ]
     }
 
-    function displayAll(result) {
-        const compare = (select ? joblist.slice() : countyList.slice());
-        for (let index = 0; index < result.length; index++) {
-            const element = result[index];
+    function displayAll(resultChange) {
+
+        let compare = (select ? joblist.slice() : countyList.slice());
+
+        for (let index = 0; index < resultChange.length; index++) {
+            const element = resultChange[index];
             const compareIndex = compare.indexOf(element.name);
             compare.splice(compareIndex, 1);
         }
         for (let index = 0; index < compare.length; index++) {
-            result.push({ name: compare[index] })
+
+            resultChange.push({ name: compare[index] })
         }
-        // result = _.sortBy(result, 'name')
-        return result;
+
+        resultChange = resultChange.sort(function (a, b) {
+            return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+        });
+
+        return resultChange;
     }
 
     const getBars = (InputColumns) => {
@@ -311,7 +347,7 @@ export default function Tabletest() {
 
         if (InputColumns !== undefined) {
             for (const [source, col] of Object.entries(InputColumns)) {
-                for (const [barName, trueValue] of Object.entries(col)) {
+                for (const [barName] of Object.entries(col)) {
 
                     bars.push([barName, source, colors[source][count[source]]]);
                     count[source] = count[source] + 1;
@@ -376,21 +412,6 @@ export default function Tabletest() {
     }
 
     // --------
-
-    //Creates textshadow
-    const textShadow = {
-        textShadow: '2px 2px 4px #000000',
-        transition: 'text-shadow 0.5s ease'
-    };
-    const textShadowHover = {
-        textShadow: '4px 4px 8px #000000',
-    };
-
-    const standard = {
-        cursor: 'default'
-
-    };
-
     //County title above graph
     function countyTitle() {
         return county;
@@ -425,6 +446,7 @@ export default function Tabletest() {
             returnList.push([year_value, totalMonths[year_value]])
         }
 
+        returnList.sort(function(a,b){return b[0].localeCompare(a[0]);});
 
         return returnList.map((item) => (
             <optgroup label={item[0]}>
@@ -468,12 +490,11 @@ export default function Tabletest() {
             </div>
 
                 <div className='forlist'>
-                    <div class="questionmark-container">
-                        <div class="hover-element">
+                    <div className="questionmark-container">
+                        <div className="hover-element">
                             !
                             <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
                            {/* <div class="warning-text">Sanningsavvikande data kan bero på urval av annonser</div>*/}
-                        
                         </div>
                     </div>
                     <div >
@@ -481,51 +502,47 @@ export default function Tabletest() {
                         <FormControl component="fieldset" defaultValue={"linkedin"}>
                             <FormLabel component="legend">Välj plattform:</FormLabel>
                             <FormGroup>
-                                    <FormControlLabel control={<Checkbox
-                                        // checked={linkedinCB}
-                                        onChange={handleSource}
-                                        color='default'
-                                        name="linkedin"
-                                        value={JSON.stringify({
-                                            years_of_experience: false,
-                                            duration: false,
-                                            prerequirements: false,
-                                            drivers_license: false
-                                        })}
-                                    />} label="LinkedIn" />
-                                    <FormControlLabel control={<Checkbox
-                                        onChange={handleSource}
-                                        color='default'
-                                        name="platsbanken"
-                                        value={JSON.stringify({
-                                            drivers_license: false,
-                                            seniority: false
-                                        })}
+                                <FormControlLabel control={<Checkbox
+                                    // checked={linkedinCB}
+                                    onChange={handleSource}
+                                    color='default'
+                                    name="linkedin"
+                                    value={JSON.stringify({
+                                        years_of_experience: false,
+                                        duration: false,
+                                    })}
+                                />} label="LinkedIn" />
+                                <FormControlLabel control={<Checkbox
+                                    onChange={handleSource}
+                                    color='default'
+                                    name="platsbanken"
+                                    value={JSON.stringify({
+                                        seniority: false
+                                    })}
 
-                                    />} label="Platsbanken" />
-                                    <FormControlLabel control={<Checkbox
-                                        onChange={handleSource}
-                                        color='default'
-                                        name="ledigajobb"
-                                        value={JSON.stringify({
-                                            duration: false,
-                                            drivers_license: false
-                                        })}
-                                    />} label="Lediga jobb" />
+                                />} label="Platsbanken" />
+                                <FormControlLabel control={<Checkbox
+                                    onChange={handleSource}
+                                    color='default'
+                                    name="ledigajobb"
+                                    value={JSON.stringify({
+                                        duration: false
+                                    })}
+                                />} label="Lediga jobb" />
                             </FormGroup>
                         </FormControl>
 
                         {/* Div containing 2 drop-down lists */}
                         <div>
                             <table className='toggleTable'>
-                                <th align='left'>Ett län <br />Flera yrken</th>
-                                <th>
-                                    <label className="toggleSwitch">
+                                <th align='left' width="75px">Ett län <br />Flera yrken</th>
+                                <th align='left' width="60px">
+                                    <label className="toggleSwitch" id="sc">
                                         <input type="checkbox" onClick={() => setSelect((prev) => !prev)} />
                                         <span className="slider"></span>
                                     </label>
                                 </th>
-                                <th align='left' id='fyel'>Flera län <br />Ett yrke</th>
+                                <th align='left' width="75px">Flera län <br />Ett yrke</th>
                             </table>
 
                             {/* Switch state 1 */}
@@ -621,10 +638,10 @@ export default function Tabletest() {
                                 <FormControl sx={{ m: 1, width: 200 }}>
                                     <InputLabel htmlFor="grouped-date">Datum</InputLabel>
                                     <Select
-                                    native defaultValue={checkToday}
-                                    id="grouped-date" 
-                                    label="Datum" 
-                                    onChange={handleDate}>
+                                        native defaultValue={checkToday}
+                                        id="grouped-date"
+                                        label="Datum"
+                                        onChange={handleDate}>
                                         {getMonths()}
                                     </Select>
                                 </FormControl>
@@ -633,14 +650,14 @@ export default function Tabletest() {
                             }
                         </div>
                         <table className='toggleTable'>
-                            <th align='left'>Filtrera val</th>
-                            <th>
+                            <th align='left' width="75px">Filtrera val</th>
+                            <th align='left' width="60px">
                                 <label className="toggleSwitch">
                                     <input type="checkbox" value="null" onClick={() => setSelectRadio((prev) => !prev)} onChange={handleParams} />
                                     <span className="slider"></span>
                                 </label>
                             </th>
-                            <th align='left' id='fley'></th>
+                            <th align='left' width="75px"></th>
                         </table>
 
                         {selectRadio && <div className="radio">

@@ -2,7 +2,8 @@ from re import search
 from requests import post
 from json import loads
 
-
+# Inputs a list of descriptions, analyses them with the NLP API
+# and extracts skill keywords from the text and returns it in a list
 def find_req_ai(descriptions: list) -> list:
     # URL of the API 
     url = 'https://jobad-enrichments-api.jobtechdev.se/enrichtextdocumentsbinary'
@@ -43,16 +44,6 @@ def find_req_ai(descriptions: list) -> list:
                 ad_labels = []
                 for competency in candidate['enriched_candidates']['competencies']:
                     ad_labels.append(competency['concept_label'])
-
-                # Extract only one education requirement from each label
-                edu_labels = []
-                for label in ad_labels:
-                    if "degree" in label.lower() or "utbildning" in label.lower():
-                        edu_req = find_req(label)
-                        if edu_req:
-                            edu_labels.append(edu_req[0])
-                
-                labels.append(edu_labels)
 
     return labels
 

@@ -145,11 +145,15 @@ nav>ul>li:hover {
 nav>ul>li>a {
     font-size: large;
     text-decoration: none;
-    color: var(--color-black)
+    color: var(--color-green);
 }
 
 .small>ul>li>a {
-    color: var(--color-black)
+    color: var(--color-green);
+}
+
+.small>ul>li>a:hover {
+    color: var(--color-black);
 }
 
 .small>ul>li {
@@ -463,6 +467,14 @@ nav>ul>li>a {
 
 #fyel {
     padding-left: 8px;
+}
+
+#sc .slider {
+    background-color: #f3aa21;
+}
+
+#sc input:checked+.slider {
+    background-color: #f3aa21;
 }
 
 /* ------------------ */

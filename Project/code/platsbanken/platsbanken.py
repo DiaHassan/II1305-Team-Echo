@@ -64,7 +64,7 @@ def get_ads(ids: list, index: int) -> list:
     # OBS: date = amount of days to look back 
     # for gathering data, change 1 to desired days
     url = STREAM_URL
-    date = datetime.now() - timedelta(1)  
+    date = datetime.now() - timedelta(30)  
     params = {
         'date': date.strftime(DATE_FORMAT),
         'occupation-concept-id': ids

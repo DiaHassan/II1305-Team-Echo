@@ -17,7 +17,7 @@ export default function Footer() {
         </div>
         <div className="vertical-line" />
         <div>
-          <h3>Navigation</h3>
+          <h3>Sidor</h3>
           <ul>
             <li><Link to="/" className="">Hem</Link></li>
             <li><Link to="/statistics" className="">Statistik</Link></li>

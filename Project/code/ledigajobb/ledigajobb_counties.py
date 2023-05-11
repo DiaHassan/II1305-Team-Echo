@@ -1,6 +1,6 @@
 # List of counties
 counties = [
-    (2,  "västra Götalands län"),
+    (2,  "västra götalands län"),
     (3,  "västmanlands län"),
     (4,  "västernorrlands län"),
     (5,  "västerbottens län"),
