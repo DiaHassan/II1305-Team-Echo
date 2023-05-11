@@ -443,7 +443,7 @@ export default function Tabletest() {
                     
                     <div>
                         <div className='tableandtitle'>
-                            <p id="nodatalabel"> Ingen data tillgänglig </p>
+                            {/* <p id="nodatalabel"> Ingen data tillgänglig </p> */}
                             {/* <div>
                                 <FormLabel component="legend"></FormLabel>
                             </div> */}
