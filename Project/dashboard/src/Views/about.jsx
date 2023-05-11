@@ -13,7 +13,7 @@ export default function About() {
 
       <div className="about-wrapper">
         <div className="svensk-om">
-          <h1>Om Swedish Talent Observatory</h1>
+          <h1>Om Swedish Talent Monitor</h1>
           <hr/>
           <p>
             Swedish Talent Observatory är ett statistiskt hjälpmedel för den svenska arbetsmarknaden baserad på insamlad data från olika arbetsplattformar. Statistiken ger en överblick över antal jobbannonser i relation till yrke och län i Sverige och har sin utgångspunkt i fyra olika plattformar.
