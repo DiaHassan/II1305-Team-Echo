@@ -1,6 +1,6 @@
 from sqlite3 import connect
 
-db_path = 'Project/db/echo.db'
+db_path = 'echo.db'
 
 # ------------------------------------------- HELPERS -------------------------------------------------------
 

@@ -57,6 +57,11 @@ body {
     display: block;
 }
 
+.hover-element{
+    font-size: 1rem;
+    margin-top: -2px;
+}
+
 #nodatalabel {
     position: absolute;
     left: 40%;
@@ -78,7 +83,6 @@ body {
     padding-bottom: 30px;
     font-family: var(--font);
 }
-
 
 /* --------------- */
 
@@ -104,7 +108,7 @@ nav {
     color: var(--color-green);
     background-image: linear-gradient(rgba(0, 0, 0, 0), transparent);
     height: 60px;
-    /* This is what makes the navbar be on top of everything else, 500 is overkill */
+    /* This is what makes the navbar be on top of everything else*/
     z-index: 500;
 }
 
@@ -229,8 +233,11 @@ nav>ul>li>a {
         width: 80%;
         margin-top: 2rem;
     }
+    .search>input {
+        font-size: 0.6rem !important;
+        padding: 0 !important;
+    }
 }
-
 
 /* Tablet and desktop styles */
 
@@ -334,7 +341,6 @@ nav>ul>li>a {
     color: var(--color-green)
 }
 
-
 /* ---------------------------------------------------------- */
 
 .front-wrap>nav>ul>li>a:hover {
@@ -382,7 +388,6 @@ nav>ul>li>a {
         }
     }
 }
-
 
 /* ------------------ */
 
@@ -455,11 +460,11 @@ input:checked+.slider:before {
 }
 
 #sc .slider {
-    background-color: #f3aa21;
+    background-color: #2196F3;
 }
 
 #sc input:checked+.slider {
-    background-color: #f3aa21;
+    background-color: #2196F3;
 }
 
 
@@ -527,13 +532,13 @@ footer li {
 
 footer a {
     text-decoration: none;
-    color: var(--color-black);
+    color: var(--color-off-white);
     font-weight: bold;
     border-bottom: 2px solid transparent;
 }
 
 footer a:hover {
-    color: var(--color-white);
+    color: var(--color-black);
 }
 
 .vertical-line {
@@ -671,6 +676,7 @@ footer a:hover {
     }
     #choicesDiv {
         flex-direction: column !important;
+        height: auto !important;
     }
     .forlistbutton {
         width: 80%;
