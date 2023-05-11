@@ -5,7 +5,7 @@
 Testing/
 *.log
 *output.csv
-*.db
+
 echo.db.sql
 echo.sqbpro
 
