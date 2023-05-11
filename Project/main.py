@@ -37,8 +37,8 @@ def run():
     # Dashboard
     table_path = join(join('Project', 'db'), 'data_handler.py')
     os.startfile(table_path)
-    path = join(dirname(__file__), 'dashboard')
-    subprocess_run("npm start", shell=True, cwd=path)
+    # path = join(dirname(__file__), 'dashboard')
+    # subprocess_run("npm start", shell=True, cwd=path)
 
 
 # Execute main function

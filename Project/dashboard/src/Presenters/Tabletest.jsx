@@ -533,17 +533,17 @@ export default function Tabletest() {
             </div>
 
                 <div className='forlist'>
-                    <div className="questionmark-container">
-                        <div className="hover-element">
-                            !
-                            <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
-                           {/* <div class="warning-text">Sanningsavvikande data kan bero på urval av annonser</div>*/}
-                        </div>
-                    </div>
-                    <div >
+                    <div id="choicesDiv">
                         {/* Div containing 3 checkboxes */}
-                        <FormControl component="fieldset" defaultValue={"linkedin"}>
-                            <FormLabel component="legend">Välj plattform:</FormLabel>
+                        <FormControl component="fieldset" defaultValue={"linkedin"} id="chooseSourceContainer">
+                            <FormLabel component="legend" id="chooseSourceLabel">Välj plattform:
+                                <div className="questionmark-container">
+                                <div className="hover-element">
+                                !
+                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga data analyser.</div>
+                                </div>
+                                </div>
+                        </FormLabel>
                             <FormGroup>
                                 <FormControlLabel control={<Checkbox
                                     // checked={linkedinCB}
@@ -692,6 +692,7 @@ export default function Tabletest() {
 
                             }
                         </div>
+                        <div id="chooseParamsContainer">
                         <table className='toggleTable'>
                             <th align='left' width="75px">Filtrera val</th>
                             <th align='left' width="60px">
@@ -707,7 +708,7 @@ export default function Tabletest() {
                             {/* Div containing 3 horizontal radio buttons */}
                             <RadioGroup aria-label="position" name="position" defaultValue="top">
                                 <FormControl component="fieldset">
-                                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} id="paramListContainer">
                                         <Grid item xs={6}>
                                             <FormControlLabel value="employment_type" control={<Radio size="small" />} label="Anställningsform" onChange={handleParams}
                                                 disabled={inputs.platsbanken.employment_type && inputs.linkedin.employment_type && inputs.ledigajobb.employment_type ? false : true} />
@@ -735,6 +736,7 @@ export default function Tabletest() {
                                 </FormControl>
                             </RadioGroup>
                         </div>}
+                        </div>
                     </div>
                     <button onClick={handleClick} className='forlistbutton'> Visa resultat</button>
                 </div>

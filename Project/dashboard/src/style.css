@@ -67,18 +67,19 @@ body {
 
 
 /* This is the id for the label over the table */
+
 #graphtitle {
     font-size: 30px;
     text-decoration: underline;
     color: var(--color-green);
     width: 100%;
     display: block;
-    text-align: center  ;
+    text-align: center;
     padding-bottom: 30px;
     /* margin-left: 80px; */
     font-family: var(--font);
-
 }
+
 
 /* --------------- */
 
@@ -204,41 +205,38 @@ nav>ul>li>a {
 
 /* ----------Front page---------------- */
 
-/* Mobile styles */
-@media only screen and (max-width: 600px) {
 
+/* Mobile styles */
+
+@media only screen and (max-width: 600px) {
     .home-front {
-      flex-direction: column;
-      padding: 2rem;
+        flex-direction: column;
+        padding: 2rem;
     }
-  
     .home-front>div {
-      padding: 0;
-      text-align: center;
-      margin-top: 2rem;
+        padding: 0;
+        text-align: center;
+        margin-top: 2rem;
     }
-  
     .home-front>div>p {
-      font-size: medium;
-      padding-right: 0;
+        font-size: medium;
+        padding-right: 0;
     }
-  
     .home-front>div>h1 {
-      padding-right: 0;
-      font-size: large;
+        padding-right: 0;
+        font-size: large;
     }
-  
     .home-front>img {
-      height: auto;
-      width: 80%;
-      margin-top: 2rem;
+        height: auto;
+        width: 80%;
+        margin-top: 2rem;
     }
-  
-  }
-  
-  /* Tablet and desktop styles */
-  @media only screen and (min-width: 601px) {
-  
+}
+
+
+/* Tablet and desktop styles */
+
+@media only screen and (min-width: 601px) {
     .home-front {
         display: flex;
         flex-direction: row;
@@ -247,42 +245,37 @@ nav>ul>li>a {
         padding-right: 4rem;
         margin-top: 5rem;
         color: var(--color-white);
-      }
-      
-      .home-front>img {
+    }
+    .home-front>img {
         height: auto;
         margin-left: 4rem;
-      }
-      
-      .home-front>div {
+    }
+    .home-front>div {
         padding: 0 4rem;
         width: 50rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
-      }
-      
+    }
     .home-front>div>p {
-      font-size: large;
-      padding-right: 2rem;
+        font-size: large;
+        padding-right: 2rem;
     }
-  
     .home-front>div>h1 {
-      padding-right: 2rem;
-      font-size: x-large;
+        padding-right: 2rem;
+        font-size: x-large;
     }
-  
     .home-content {
-      padding: 2rem 20vw;
-      background-color: var(--color-off-white);
-      height: calc(100% - 6rem);
+        padding: 2rem 20vw;
+        background-color: var(--color-off-white);
+        height: calc(100% - 6rem);
     }
-  
-  }
-  
-  /* General styles */
-  
-  .wrapper {
+}
+
+
+/* General styles */
+
+.wrapper {
     position: relative;
     min-height: 100vh;
     width: 100%;
@@ -291,63 +284,65 @@ nav>ul>li>a {
     background-image: url("sthlm.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-  }
-  
-  .front-wrap {
+}
+
+.front-wrap {
     min-height: 100vh;
-  }
-  
-  .home-front>img {
+}
+
+.home-front>img {
     height: auto;
-  }
-  
-  .home-front>div {
+}
+
+.home-front>div {
     top: 200px;
     left: 200px;
     width: 50rem;
-  }
-  
-  .home-front>div>p {
+}
+
+.home-front>div>p {
     font-size: x-large;
     padding-right: 9rem;
     color: var(--color-off-white);
-  }
-  
-  .home-front>div>h1 {
+}
+
+.home-front>div>h1 {
     padding-right: 10rem;
     font-size: xx-large;
     color: var(--color-off-white);
-  }
-  
-  /* nav for home */
-  
-  /* .front-wrap>nav {
+}
+
+
+/* nav for home */
+
+
+/* .front-wrap>nav {
     background-image: linear-gradient(rgba(0, 0, 0, 0.50), transparent);
   } */
-  
-  .front-wrap>nav>div,
-  .front-wrap>nav>ul>li>a {
+
+.front-wrap>nav>div,
+.front-wrap>nav>ul>li>a {
     color: var(--color-white);
-  }
-  
-  /* Quick fix for making the title on navbar white on default and green on hover while on the home page. */
-  
-  .front-wrap>nav>div>a {
+}
+
+
+/* Quick fix for making the title on navbar white on default and green on hover while on the home page. */
+
+.front-wrap>nav>div>a {
     color: var(--color-white);
-  }
-  
-  .front-wrap>nav>div>a:hover {
+}
+
+.front-wrap>nav>div>a:hover {
     color: var(--color-green);
-  }
-  
-  .front-wrap>.small>div>a:hover {
+}
+
+.front-wrap>.small>div>a:hover {
     color: var(--color-black);
-  }
-  
-  .front-wrap>.small>div>a {
+}
+
+.front-wrap>.small>div>a {
     color: var(--color-green)
-  }
-  
+}
 
 
 /* ---------------------------------------------------------- */
@@ -398,7 +393,10 @@ nav>ul>li>a {
     }
 }
 
+
 /* ------------------ */
+
+
 /* Source: https://www.w3schools.com/howto/howto_css_switch.asp */
 
 .toggleSwitch {
@@ -407,15 +405,15 @@ nav>ul>li>a {
     width: 45px;
     height: 26px;
     padding-top: 10px;
-  }
-  
-  .toggleSwitch input { 
+}
+
+.toggleSwitch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
+}
 
-  .slider {
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -426,9 +424,9 @@ nav>ul>li>a {
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
-  }
-  
-  .slider:before {
+}
+
+.slider:before {
     position: absolute;
     content: "";
     height: 20px;
@@ -439,23 +437,23 @@ nav>ul>li>a {
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 50%;
-  }
-  
-  input:checked + .slider {
+}
+
+input:checked+.slider {
     background-color: #2196F3;
-  }
-  
-  input:focus + .slider {
+}
+
+input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
-  }
-  
-  input:checked + .slider:before {
+}
+
+input:checked+.slider:before {
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
-  }
+}
 
-  .toggleTable {
+.toggleTable {
     height: 60px;
     width: 210px;
     text-align: center;
@@ -476,6 +474,7 @@ nav>ul>li>a {
 #sc input:checked+.slider {
     background-color: #f3aa21;
 }
+
 
 /* ------------------ */
 
@@ -610,7 +609,7 @@ footer a:hover {
 
 .fortable {
     /* relative is used to make the question mark be placed on the right place. */
-    position:relative;
+    position: relative;
     display: flex;
     flex-direction: row;
     /* justify-content: ; */
@@ -655,7 +654,7 @@ footer a:hover {
     gap: 0.5rem;
     flex-direction: column;
     /*align-items: center;*/
-    padding-left: 2rem; 
+    padding-left: 2rem;
     position: relative;
 }
 
@@ -674,8 +673,8 @@ footer a:hover {
     color: #000;
 }
 
-:disabled{
-    color: grey !important; 
+:disabled {
+    color: grey !important;
 }
 
 
@@ -684,57 +683,89 @@ footer a:hover {
 
 /* ----------Stats page---------------- */
 
+
 /* Mobile styles */
+
 @media only screen and (max-width: 600px) {
     /* .fortableandlist{
         display:flex;
         flex-direction: column;
         overflow-x: scroll;
     } */
-    .tableandtitle{
+    .tableandtitle {
         display: flex;
         flex-direction: column;
         overflow-x: scroll;
         overflow-y: hidden;
     }
-    
 }
 
 @media screen {
     @media(max-width: 1300px) {
-        .fortableandlist{
-            display:flex;
+        .fortableandlist {
+            display: flex;
             flex-direction: column;
             overflow-x: hidden;
-
         }
-        .tableandtitle{
+        .tableandtitle {
             width: 100%;
             display: flex;
             flex-direction: column;
             overflow-x: scroll;
             overflow-y: hidden;
-            
+        }
+        .forlist {
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top: 20px;
+            width: 80%;
+        }
+        #choicesDiv {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        #radioButtons {
+            width: 300px;
+        }
+        #chooseSourceContainer {
+            width: 100%;
+        }
+        #chooseSourceLabel {
+            width: 50%;
+        }
+        .questionmark-container {
+            right: 0px;
+        }
+        #paramListContainer {
+            flex-direction: column;
         }
     }
 }
 
+
 /* Tablet and desktop styles */
+
 @media only screen and (min-width: 1301px) {
-    .fortableandlist{
-          display:flex;
-          flex-direction: row;
-        
+    .fortableandlist {
+        display: flex;
+        flex-direction: row;
     }
-    /* .tableandtitle{
+    #chooseSourceLabel {
+        width: 100%;
+    }
+    .forlist {
+        width: 100%;
+    }
+    #chooseSourceContainer {
+        width: 100%;
+    }
+    .questionmark-container {
+        right: 10%;
+    }
+}
 
-    } */
-    
-  
-  }
-
-.flex-row{
+.flex-row {
     display: flex;
     flex-direction: column;
 }
-
