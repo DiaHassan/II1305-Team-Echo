@@ -25,16 +25,6 @@ export default function Home() {
             </a>
           </div>
         </div>
-        { /* Unecessary search bar
-        <div className="home-content">
-
-          <h1>Title</h1>
-          <p>Some text here?</p>
-          <div className="search">
-            <input type="text" placeholder="Search..." />
-            <button type="submit">Search</button>
-          </div>
-        </div> */}
         <Footer />
       </div>
 
