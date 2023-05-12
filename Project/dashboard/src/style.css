@@ -313,6 +313,13 @@ nav>ul>li>a {
     color: var(--color-off-white);
 }
 
+#stat {
+    color: var(--color-off-white);
+}
+
+#stat:hover {
+    color: var(--color-green);
+}
 
 /* nav for home */
 
@@ -491,7 +498,7 @@ input:checked+.slider:before {
     background-color: var(--color-off-white);
     font-weight: bold;
     border: 2px solid lightgray;
-    border-left: 2px solid var(--color-black);
+    border-left: 2px solid rgb(112, 112, 110);
     border-radius: 0 5px 5px 0;
     cursor: pointer;
 }
@@ -528,13 +535,13 @@ footer li {
 
 footer a {
     text-decoration: none;
-    color: var(--color-black);
+    color: var(--color-white);
     font-weight: bold;
     border-bottom: 2px solid transparent;
 }
 
 footer a:hover {
-    color: var(--color-white);
+    color: var(--color-black);
 }
 
 .vertical-line {
@@ -547,6 +554,7 @@ footer a:hover {
     display: flex;
     flex-direction: column;
 }
+
 
 @media screen {
     @media(max-width: 800px) {
