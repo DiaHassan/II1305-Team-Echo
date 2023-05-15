@@ -1,7 +1,8 @@
 # II1305 Project in Information and Communication Technology
 
-## Website
-[Expo website](https://teamechokth.wixsite.com/team-echo---expo-sit)
+## Websites
+- [Dashboard](https://stmecho-ad215.web.app/)
+- [Expo](https://teamechokth.wixsite.com/team-echo---expo-sit)
 
 ## About The Project
 Our project was made externaly for Future Place Leadership as a dashboard collecting data of job listings in Sweden. The data is collected from three websites which are LinkedIn, Platsbanken and LedigaJobb. Lastly, the information extracted from the ads is: employement type, duration, publication date, profession, county, job requirements, years of experience and seniority.
