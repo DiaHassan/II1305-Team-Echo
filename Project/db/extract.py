@@ -1,8 +1,16 @@
 from sqlite3 import connect
 
-db_path = 'echo.db'
+db_path = 'Project/db/echo.db'
 
 # ------------------------------------------- HELPERS -------------------------------------------------------
+
+# ['a', 'b', 'c'] -> 'a, b, c'
+def list_to_string(list:list) -> str:
+    result = []
+    for c in list:
+        result.append("'" + c + "'")
+    return ",".join(result)
+
 
 # [(a,b), (c,d)] --> [[a,b], [c,d]]
 def list_of_tuples_to_2d_list(list_of_tuples:list) -> list:
@@ -51,21 +59,15 @@ def send_query(query:str) -> list:
       cursor.close()
     conn.close()
     return result
-        
+      
 # ---------------------------------------------- PROFESSION QUERIES ----------------------------------------
 
 # X-axis: given counties
 # Y-axis: count of ads satisfy param for profession
 def get_counties_for_profession(sources:list, counties:list, profession:str, param:str, date:str) -> list:
     result = []
-    sources_str = []
-    counties_str = []
-    for c in sources:
-        sources_str.append("'" + c + "'")
-    for c in counties:
-        counties_str.append("'" + c + "'")
-    sources_str = ",".join(sources_str)
-    counties_str = ",".join(counties_str)
+    sources_str = list_to_string(sources)
+    counties_str = list_to_string(counties)
     if param == 'null':
         query = f'SELECT county, source, COUNT(*) \
                 FROM job_listing j \
@@ -106,14 +108,8 @@ def get_counties_for_profession(sources:list, counties:list, profession:str, par
 # Y-axis: count of ads satisfying param in county
 def get_professions_for_county(sources:list, county:str, professions:list, param:str, date:str) -> list: 
     result = []
-    sources_str = []
-    professions_str = []
-    for c in sources:
-        sources_str.append("'" + c + "'")
-    for c in professions:
-        professions_str.append("'" + c + "'")
-    sources_str = ",".join(sources_str)
-    professions_str = ",".join(professions_str)
+    sources_str = list_to_string(sources)
+    professions_str = list_to_string(professions)
     if param == 'null':
         query = f'SELECT profession, source, COUNT(jl.id) \
                 FROM job_listing jl INNER JOIN job ON job.id = jl.job_id \
@@ -163,10 +159,10 @@ def extract(source:list, county: (list), profession: (list), param:str, date:str
 if __name__ == '__main__':
 
     # Extract
-    print(extract(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-04'))
+    print(extract(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-05'))
     
     # One profession, many counties
-    #print(get_counties_for_profession(['linkedin', 'platsbanken', 'ledigajobb'], ['stockholms län', 'uppsala län'], 'ingenjör', 'employment_type', '2023-04'))
+    #print(get_counties_for_profession(['linkedin', 'platsbanken', 'ledigajobb'], ['stockholms län', 'uppsala län'], 'ingenjör', 'employment_type', '2023-05'))
 
     # One county many professions
-    #print(get_professions_for_county(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'requirement', '2023-04'))
+    #print(get_professions_for_county(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-05'))
