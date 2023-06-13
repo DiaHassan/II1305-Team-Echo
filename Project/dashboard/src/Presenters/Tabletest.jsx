@@ -239,6 +239,9 @@ export default function Tabletest() {
                                     case "0":
                                         key = `${category}-tillsvidare`;
                                         break;
+                                    case "1":
+                                        key = `${category}-1 månad`;
+                                        break;
                                     default:
                                         key = `${category}-${subcat} månader`;
                                         break;
