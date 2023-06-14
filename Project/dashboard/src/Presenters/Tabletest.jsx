@@ -354,7 +354,7 @@ export default function Tabletest() {
         queryTbs.push(optionRadio)
         queryTbs.push(date)
         console.log(queryTbs)
-        axios.post('https://stm-echo-xntr-main-kac7dkvqiq-lz.a.run.app/why', { job: queryTbs })
+        axios.post('http://127.0.0.1:8888/why', { job: queryTbs })
             .then(response => setResult(listToDict(response.data.number))) /* Returned extract info from fortabletest */
             .catch(error => console.log(error));
 
