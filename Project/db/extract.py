@@ -165,4 +165,4 @@ if __name__ == '__main__':
     #print(get_counties_for_profession(['linkedin', 'platsbanken', 'ledigajobb'], ['stockholms län', 'uppsala län'], 'ingenjör', 'employment_type', '2023-05'))
 
     # One county many professions
-    #print(get_professions_for_county(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-05'))
+    #print(get_professions_for_county(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'requirement', '2023-05'))

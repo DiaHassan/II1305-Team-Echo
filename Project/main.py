@@ -1,4 +1,4 @@
-import os
+from os import startfile
 from os.path import exists, dirname, join
 from sqlite3 import connect
 from subprocess import run as subprocess_run
@@ -22,6 +22,14 @@ def build_db():
     connection.close()
 
 
+# Creates endpoint and starts website on port 3000
+def init_dashboard():
+    data_handler_path = join(join('Project', 'db'), 'data_handler.py')
+    startfile(data_handler_path)
+    dashboard_path = join(dirname(__file__), 'dashboard')
+    subprocess_run("npm start", shell=True, cwd=dashboard_path)
+
+
 # Main function
 def run():
     # Builds db with tables if it does not already exists
@@ -35,10 +43,7 @@ def run():
     # --------------------------
 
     # Dashboard
-    table_path = join(join('Project', 'db'), 'data_handler.py')
-    os.startfile(table_path)
-    # path = join(dirname(__file__), 'dashboard')
-    # subprocess_run("npm start", shell=True, cwd=path)
+    init_dashboard()
 
 
 # Execute main function
