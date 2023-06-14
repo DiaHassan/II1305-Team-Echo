@@ -1,6 +1,6 @@
 from sqlite3 import connect
 
-db_path = 'Project\db\echo.db'
+db_path = 'Project/db/echo.db'
 
 # ------------------------------------------- HELPERS -------------------------------------------------------
 
@@ -163,10 +163,10 @@ def extract(source:list, county: (list), profession: (list), param:str, date:str
 if __name__ == '__main__':
 
     # Extract
-    print(extract(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-04'))
+    print(extract(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-05'))
     
     # One profession, many counties
-    #print(get_counties_for_profession(['linkedin', 'platsbanken', 'ledigajobb'], ['stockholms län', 'uppsala län'], 'ingenjör', 'employment_type', '2023-04'))
+    #print(get_counties_for_profession(['linkedin', 'platsbanken', 'ledigajobb'], ['stockholms län', 'uppsala län'], 'ingenjör', 'employment_type', '2023-05'))
 
     # One county many professions
-    #print(get_professions_for_county(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'requirement', '2023-04'))
+    #print(get_professions_for_county(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'requirement', '2023-05'))
