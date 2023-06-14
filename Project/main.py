@@ -22,6 +22,14 @@ def build_db():
     connection.close()
 
 
+# Creates endpoint and starts website on port 3000
+def init_dashboard():
+    table_path = join(join('Project', 'db'), 'data_handler.py')
+    os.startfile(table_path)
+    path = join(dirname(__file__), 'dashboard')
+    subprocess_run("npm start", shell=True, cwd=path)
+
+
 # Main function
 def run():
     # Builds db with tables if it does not already exists
@@ -35,10 +43,7 @@ def run():
     # --------------------------
 
     # Dashboard
-    table_path = join(join('Project', 'db'), 'data_handler.py')
-    os.startfile(table_path)
-    path = join(dirname(__file__), 'dashboard')
-    subprocess_run("npm start", shell=True, cwd=path)
+    init_dashboard()
 
 
 # Execute main function
