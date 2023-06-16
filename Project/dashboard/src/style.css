@@ -329,20 +329,67 @@ nav>ul>li>a {
 }
 
 .front-wrap>nav>div>a {
-    color: var(--color-white);
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #fff;
+    transition: color .3s ease-in-out;
+    pointer-events: auto;
 }
 
-.front-wrap>nav>div>a:hover {
+.front-wrap>nav>div>a:hover,
+.front-wrap>nav>div>a:hover .logo-tm {
     color: var(--color-green);
 }
 
-.front-wrap>.small>div>a:hover {
-    color: var(--color-black);
+.front-wrap>nav>div>a .logo-tm {
+    position: relative;
+    top: -1em;
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75rem;
+    color: #fff;
+    transition: color 0.3s ease-in-out;
+    pointer-events: auto;
 }
 
 .front-wrap>.small>div>a {
-    color: var(--color-green)
-}
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #039c88;
+    transition: color 0.3s ease-in-out;
+    pointer-events: auto;
+  }
+  
+  .front-wrap>.small>div>a:hover,
+  .front-wrap>.small>div>a:hover .logo-tm {
+    color: var(--color-black)
+  }
+  
+  .front-wrap>.small>div>a .logo-tm {
+    position: relative;
+    top: -1em;
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.75rem;
+    color: #039c88;
+    transition: color 0.3s ease-in-out;
+    pointer-events: auto;
+    visibility: visible;
+  }
 
 /* ---------------------------------------------------------- */
 
