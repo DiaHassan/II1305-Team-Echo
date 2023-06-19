@@ -31,8 +31,8 @@ export default function Navbar() {
     <>
       <nav className={`navbar ${isScrolled ? 'small' : ''}`}>
         <div className="navTitle">
-          <a href="https://futureplaceleadership.com/" rel="home" class="header__logo">
-            Future Place Leadership<span class="logo-tm">™</span>
+          <a href="/" rel="home" class="header_logo">
+            Swedish Talent Monitor
           </a>
         </div>
         <img src={"Project/dashboard/src/menuHamburger.png"} alt="<" className="burger" onClick={displayList}/>

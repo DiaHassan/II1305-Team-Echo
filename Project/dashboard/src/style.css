@@ -597,11 +597,23 @@ footer a:hover {
     height: 12rem;
 }
 
+.footer-logo {
+    display: inline-block;
+}
+
+.logo {
+    position: relative;
+    width: 150px;
+    height: auto;
+    top: 15px;
+    right: 2px;
+}
+
 .footer-contact {
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
 }
-
 
 @media screen {
     @media(max-width: 800px) {

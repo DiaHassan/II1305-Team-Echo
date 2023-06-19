@@ -24,9 +24,14 @@ export default function Footer() {
             <li><Link to="/about" className="">Om</Link></li>
           </ul>
         </div>
-        <div className="footer-contact">
-          <h3>Kontakt</h3>
-          <a href="mailto:sk@futureplaceleadership.com">sk@futureplaceleadership.com</a>
+        <div class="footer-column">
+          <a href="https://futureplaceleadership.com/" class="footer-logo">
+            <img src="https://cdn.discordapp.com/attachments/713525156160602214/1120408714176888832/logo_salmon.png" alt="logo" class="logo"/>
+          </a>
+          <div className="footer-contact">
+            <h3>Kontakt</h3>
+            <a href="mailto:sk@futureplaceleadership.com">sk@futureplaceleadership.com</a>
+          </div>
         </div>
       </footer>
     </>
