@@ -340,26 +340,23 @@ nav>ul>li>a {
     pointer-events: auto;
 }
 
-.front-wrap>nav>div>a:hover,
-.front-wrap>nav>div>a:hover .logo-tm {
-    color: var(--color-green);
-}
-
-.front-wrap>nav>div>a .logo-tm {
-    position: relative;
-    top: -1em;
+.header_logo {
     display: inline-block;
     max-width: 12.5rem;
     margin-top: 0.5625rem;
     font-weight: 500;
-    font-size: 0.875rem;
+    font-size: 1.875rem;
     line-height: 1.75rem;
-    color: #fff;
-    transition: color 0.3s ease-in-out;
+    color: #039c88;
+    transition: color .3s ease-in-out;
     pointer-events: auto;
 }
 
-.front-wrap>.small>div>a {
+.front-wrap>nav>div>a:hover {
+    color: var(--color-green);
+}
+
+.front-wrap>.small>.header_logo {
     display: inline-block;
     max-width: 12.5rem;
     margin-top: 0.5625rem;
@@ -371,8 +368,7 @@ nav>ul>li>a {
     pointer-events: auto;
   }
   
-  .front-wrap>.small>div>a:hover,
-  .front-wrap>.small>div>a:hover .logo-tm {
+  .front-wrap>.small>div>a:hover {
     color: var(--color-black)
   }
   
