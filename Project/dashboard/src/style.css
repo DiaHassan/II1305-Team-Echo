@@ -708,6 +708,49 @@ footer a:hover {
 
 /* ----------Stats page---------------- */
 
+.instruktioner {
+    position: relative;
+    border-radius: 10px;
+    background-color: #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    color: grey;
+    top: 80px;
+}
+
+.instruktioner h2 {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.instruktioner li {
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.tolkning {
+    position: relative;
+    border-radius: 10px;
+    background-color: #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    color: grey;
+    top: -100px;
+}
+
+.tolkning h2 {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.tolkning li {
+    margin-bottom: 10px;
+    text-align: left;
+}
 
 /* Mobile styles */
 
