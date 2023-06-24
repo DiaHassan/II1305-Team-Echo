@@ -558,7 +558,7 @@ export default function Tabletest() {
                                 <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga dataanalyser.</div>
                                 </div>
                                 </div>
-                        </FormLabel>
+                            </FormLabel>
                             <FormGroup>
                                 <FormControlLabel control={<Checkbox
                                     // checked={linkedinCB}
@@ -566,7 +566,8 @@ export default function Tabletest() {
                                     color='default'
                                     name="linkedin"
                                     value={JSON.stringify({
-                                        years_of_experience: false
+                                        years_of_experience: false,
+                                        duration: false
                                     })}
                                 />} label="Linkedin" />
                                 <FormControlLabel control={<Checkbox
