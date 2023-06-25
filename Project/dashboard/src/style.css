@@ -714,7 +714,8 @@ footer a:hover {
     background-color: #ccc;
     padding: 20px;
     margin-bottom: 20px;
-    max-width: 600px;
+    line-height: 1.0;
+    max-width: 700px;
     margin: 0 auto;
     color: grey;
     top: 80px;
@@ -726,8 +727,14 @@ footer a:hover {
 }
 
 .instruktioner li {
-    margin-bottom: 5px;
+    margin-bottom: 1px;
     text-align: left;
+}
+
+.closeInstruktioner {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
 }
 
 .tolkning {
@@ -736,10 +743,11 @@ footer a:hover {
     background-color: #ccc;
     padding: 20px;
     margin-bottom: 20px;
-    max-width: 600px;
+    line-height: 1.0;
+    max-width: 650px;
     margin: 0 auto;
     color: grey;
-    top: -100px;
+    top: -60px;
 }
 
 .tolkning h2 {
@@ -750,6 +758,12 @@ footer a:hover {
 .tolkning li {
     margin-bottom: 10px;
     text-align: left;
+}
+
+.closeTolkning {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
 }
 
 /* Mobile styles */
