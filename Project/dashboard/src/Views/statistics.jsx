@@ -3,6 +3,7 @@ import Navbar from "./navbar";
 import Footer from "./footer";
 import Tabletest from "../Presenters/Tabletest";
 import Toberem from "../Presenters/ToBeRem";
+import WarningMessage from "../Presenters/WarningMessage";
 
 export default function Stats() {
   const [instruktionerVisible, setInstruktionerVisible] = useState(true);
@@ -19,6 +20,7 @@ export default function Stats() {
   return(
     <>
       <Navbar/>
+      <WarningMessage />
       <div class="instruktioner">
         <h2>
           Instruktioner
