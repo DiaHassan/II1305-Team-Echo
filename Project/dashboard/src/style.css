@@ -559,12 +559,18 @@ footer li {
     padding-bottom: 1rem;
     align-self: left;
     margin: 0;
+    font-weight: bold;
+}
+
+footer p {
+    margin: 0px;
+    white-space:pre-wrap;
 }
 
 footer a {
     text-decoration: none;
     color: var(--color-white);
-    font-weight: bold;
+    /* font-weight: bold; */
     border-bottom: 2px solid transparent;
 }
 
@@ -575,7 +581,7 @@ footer a:hover {
 .vertical-line {
     border: 2px solid var(--color-white);
     border-radius: 25px;
-    height: 12rem;
+    height: 15rem;
 }
 
 .footer-logo {
