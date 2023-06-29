@@ -484,19 +484,16 @@ export default function Tabletest() {
         return job;
     }
 
-    /**
-     * Get all months from startDate to today
-     * @returns a list of html options
-     */
     function getMonths() {
         var totalMonths = {};
-        const startPoint = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        const today = new Date();
+        const startPoint = new Date(today.getFullYear(), today.getMonth() - 1, 1); // Start from the previous month
         const endPoint = new Date(startDate.replace(" ", " ,1 "));
-
+    
         while (endPoint <= startPoint) {
             let currentYear = startPoint.getFullYear();
             let months = [];
-
+    
             while (startPoint.getFullYear() === currentYear && endPoint <= startPoint) {
                 let currentMonth = startPoint.getMonth() + 1;
                 if (currentMonth < 10) {
@@ -511,9 +508,9 @@ export default function Tabletest() {
         for (var year_value in totalMonths) {
             returnList.push([year_value, totalMonths[year_value]])
         }
-
+    
         returnList.sort(function (a, b) { return b[0].localeCompare(a[0]); });
-
+    
         return returnList.map((item) => (
             <optgroup label={item[0]}>
                 {item[1].map((m =>
@@ -522,7 +519,7 @@ export default function Tabletest() {
                 }
             </optgroup>));
     }
-
+    
 
     return (
         <div>
