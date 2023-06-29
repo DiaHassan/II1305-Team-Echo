@@ -551,14 +551,7 @@ export default function Tabletest() {
                     <div id="choicesDiv">
                         {/* Div containing 3 checkboxes */}
                         <FormControl component="fieldset" defaultValue={"linkedin"} id="chooseSourceContainer">
-                            <FormLabel component="legend" id="chooseSourceLabel">Välj plattform:
-                                <div className="questionmark-container">
-                                <div className="hover-element">
-                                !
-                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga dataanalyser.</div>
-                                </div>
-                                </div>
-                            </FormLabel>
+                            <FormLabel component="legend" id="chooseSourceLabel">Välj plattform:</FormLabel>
                             <FormGroup>
                                 <FormControlLabel control={<Checkbox
                                     // checked={linkedinCB}

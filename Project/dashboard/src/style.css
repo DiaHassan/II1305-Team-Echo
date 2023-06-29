@@ -24,44 +24,6 @@ body {
 
 /* Alert message for user that the data is "unreliable" */
 
-.questionmark-container {
-    position: absolute;
-    top: 2px;
-    display: inline-block;
-    color: blue;
-    width: 20px;
-    height: 20px;
-    right: 30px;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid blue;
-    border-radius: 50%;
-}
-
-.warning-text {
-    display: none;
-    position: relative;
-    border-top-right-radius: 100%;
-    left: -100px;
-    background-color: #f9f9f9;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    z-index: 100;
-    color: var(--color-black);
-    width: 150px;
-}
-
-.questionmark-container:hover .warning-text {
-    display: block;
-}
-
-.hover-element{
-    font-size: 1rem;
-    margin-top: -2px;
-}
-
 #nodatalabel {
     position: absolute;
     left: 40%;
