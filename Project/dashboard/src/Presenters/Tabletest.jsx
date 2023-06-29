@@ -65,10 +65,13 @@ export default function Tabletest() {
         ]
     }
 
-    // Specifes the first month were data was gathered:
+    // Specifies the first month data was gathered:
     const startDate = 'May 2023';
-    const thisMonth = new Date().getMonth() + 1;
-    const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
+    const today = new Date();
+    const thisMonth = today.getMonth() + 1;
+    const previousMonth = thisMonth === 1 ? 12 : thisMonth - 1;
+    //checkToday returns the previous month
+    const checkToday = new Date().getFullYear() + '-' + (previousMonth < 10 ? '0' + previousMonth : previousMonth);
 
     // Setting variables and useStates
     const [result, setResult] = useState(data);
