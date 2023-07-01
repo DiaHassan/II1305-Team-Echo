@@ -359,8 +359,70 @@ nav>ul>li>a {
     color: var(--color-black);
 }
 
-.front-wrap>nav>.burger {
+/* nav for about */
+
+.about-nav-wrapper>nav>div,
+.about-nav-wrapper>nav>ul>li>a {
+    color: var(--color-white);
+}
+
+.about-nav-wrapper>nav>div>a {
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #fff;
+    transition: color .3s ease-in-out;
+    pointer-events: auto;
+}
+
+.about-nav-wrapper>nav>div>a:hover {
+    color: var(--color-green);
+}
+
+.about-nav-wrapper>.small>div>a {
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #039c88;
+    transition: color .3s ease-in-out;
+    pointer-events: auto;
+}
+  
+.about-nav-wrapper>.small>div>a:hover {
+    color: var(--color-black)
+}
+
+.about-nav-wrapper>nav>.burger {
     content: url("menuHamburgerWhite.png");
+}
+
+.about-nav-wrapper>nav>ul>li>a:hover {
+    color: var(--color-green);
+    border-bottom: 5px solid transparent;
+    border-radius: 2px;
+}
+
+.about-nav-wrapper>nav>ul>li:hover {
+    border-bottom: 5px solid transparent;
+    border-radius: 2px;
+}
+
+.about-nav-wrapper>.small>div {
+    color: var(--color-green);
+}
+
+.about-nav-wrapper>.small>ul>li>a {
+    color: var(--color-green);
+}
+
+.about-nav-wrapper>.small>ul>li>a:hover {
+    color: var(--color-black);
 }
 
 @media screen {
@@ -603,9 +665,12 @@ footer a:hover {
     min-height: 90vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    height: 100%;
     padding: 2rem;
+    color: #fff;
+    text-align: center;
 }
 
 .about-wrapper div {
@@ -617,6 +682,7 @@ footer a:hover {
     width: 20rem;
     border-width: 3px;
 }
+
 
 
 /* ------------------- */
