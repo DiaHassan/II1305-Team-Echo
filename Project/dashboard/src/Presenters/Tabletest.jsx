@@ -426,6 +426,13 @@ export default function Tabletest() {
         const name = event.target.name;
         // Due to the form only returning strings we need to parse it into correct format
         const value = splitKey(event.target.value);
+
+        const shouldClear = Object.keys(value).some(key=> key === optionRadio )
+        if (shouldClear ) {
+            setOptionRadio("null")
+
+        }
+        
         // Updates the values 
         setInputs(inputs => (
             {
@@ -715,7 +722,7 @@ export default function Tabletest() {
 
                         {selectRadio && <div className="radio">
                             {/* Div containing 3 horizontal radio buttons */}
-                            <RadioGroup aria-label="position" name="position" defaultValue="top">
+                            <RadioGroup aria-label="position" name="position" defaultValue="top" value={optionRadio}>
                                 <FormControl component="fieldset">
                                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} id="paramListContainer">
                                         <Grid item xs={6}>
