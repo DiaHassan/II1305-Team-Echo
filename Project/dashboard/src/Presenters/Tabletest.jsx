@@ -65,10 +65,13 @@ export default function Tabletest() {
         ]
     }
 
-    // Specifes the first month were data was gathered:
+    // Specifies the first month data was gathered:
     const startDate = 'May 2023';
-    const thisMonth = new Date().getMonth() + 1;
-    const checkToday = new Date().getFullYear() + '-' + (thisMonth < 10 ? '0' + thisMonth : thisMonth);
+    const today = new Date();
+    const thisMonth = today.getMonth() + 1;
+    const previousMonth = thisMonth === 1 ? 12 : thisMonth - 1;
+    //checkToday returns the previous month
+    const checkToday = new Date().getFullYear() + '-' + (previousMonth < 10 ? '0' + previousMonth : previousMonth);
 
     // Setting variables and useStates
     const [result, setResult] = useState(data);
@@ -423,6 +426,13 @@ export default function Tabletest() {
         const name = event.target.name;
         // Due to the form only returning strings we need to parse it into correct format
         const value = splitKey(event.target.value);
+
+        const shouldClear = Object.keys(value).some(key=> key === optionRadio )
+        if (shouldClear ) {
+            setOptionRadio("null")
+
+        }
+        
         // Updates the values 
         setInputs(inputs => (
             {
@@ -481,19 +491,16 @@ export default function Tabletest() {
         return job;
     }
 
-    /**
-     * Get all months from startDate to today
-     * @returns a list of html options
-     */
     function getMonths() {
         var totalMonths = {};
-        const startPoint = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+        const today = new Date();
+        const startPoint = new Date(today.getFullYear(), today.getMonth() - 1, 1); // Start from the previous month
         const endPoint = new Date(startDate.replace(" ", " ,1 "));
-
+    
         while (endPoint <= startPoint) {
             let currentYear = startPoint.getFullYear();
             let months = [];
-
+    
             while (startPoint.getFullYear() === currentYear && endPoint <= startPoint) {
                 let currentMonth = startPoint.getMonth() + 1;
                 if (currentMonth < 10) {
@@ -508,9 +515,9 @@ export default function Tabletest() {
         for (var year_value in totalMonths) {
             returnList.push([year_value, totalMonths[year_value]])
         }
-
+    
         returnList.sort(function (a, b) { return b[0].localeCompare(a[0]); });
-
+    
         return returnList.map((item) => (
             <optgroup label={item[0]}>
                 {item[1].map((m =>
@@ -519,7 +526,7 @@ export default function Tabletest() {
                 }
             </optgroup>));
     }
-
+    
 
     return (
         <div>
@@ -551,14 +558,7 @@ export default function Tabletest() {
                     <div id="choicesDiv">
                         {/* Div containing 3 checkboxes */}
                         <FormControl component="fieldset" defaultValue={"linkedin"} id="chooseSourceContainer">
-                            <FormLabel component="legend" id="chooseSourceLabel">Välj plattform:
-                                <div className="questionmark-container">
-                                <div className="hover-element">
-                                !
-                                <div class="warning-text">Hemsidan avstår från allt ansvar relaterat till felaktiga dataanalyser.</div>
-                                </div>
-                                </div>
-                        </FormLabel>
+                            <FormLabel component="legend" id="chooseSourceLabel">Välj plattform:</FormLabel>
                             <FormGroup>
                                 <FormControlLabel control={<Checkbox
                                     // checked={linkedinCB}
@@ -566,7 +566,8 @@ export default function Tabletest() {
                                     color='default'
                                     name="linkedin"
                                     value={JSON.stringify({
-                                        years_of_experience: false
+                                        years_of_experience: false,
+                                        duration: false
                                     })}
                                 />} label="Linkedin" />
                                 <FormControlLabel control={<Checkbox
@@ -721,7 +722,7 @@ export default function Tabletest() {
 
                         {selectRadio && <div className="radio">
                             {/* Div containing 3 horizontal radio buttons */}
-                            <RadioGroup aria-label="position" name="position" defaultValue="top">
+                            <RadioGroup aria-label="position" name="position" defaultValue="top" value={optionRadio}>
                                 <FormControl component="fieldset">
                                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} id="paramListContainer">
                                         <Grid item xs={6}>

@@ -24,44 +24,6 @@ body {
 
 /* Alert message for user that the data is "unreliable" */
 
-.questionmark-container {
-    position: absolute;
-    top: 2px;
-    display: inline-block;
-    color: blue;
-    width: 20px;
-    height: 20px;
-    right: 30px;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid blue;
-    border-radius: 50%;
-}
-
-.warning-text {
-    display: none;
-    position: relative;
-    border-top-right-radius: 100%;
-    left: -100px;
-    background-color: #f9f9f9;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    z-index: 100;
-    color: var(--color-black);
-    width: 150px;
-}
-
-.questionmark-container:hover .warning-text {
-    display: block;
-}
-
-.hover-element{
-    font-size: 1rem;
-    margin-top: -2px;
-}
-
 #nodatalabel {
     position: absolute;
     left: 40%;
@@ -329,20 +291,48 @@ nav>ul>li>a {
 }
 
 .front-wrap>nav>div>a {
-    color: var(--color-white);
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #fff;
+    transition: color .3s ease-in-out;
+    pointer-events: auto;
+}
+
+.header_logo {
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #039c88;
+    transition: color .3s ease-in-out;
+    pointer-events: auto;
 }
 
 .front-wrap>nav>div>a:hover {
     color: var(--color-green);
 }
 
-.front-wrap>.small>div>a:hover {
-    color: var(--color-black);
-}
-
 .front-wrap>.small>div>a {
-    color: var(--color-green)
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #039c88;
+    transition: color .3s ease-in-out;
+    pointer-events: auto;
 }
+  
+  .front-wrap>.small>div>a:hover {
+    color: var(--color-black)
+  }
 
 /* ---------------------------------------------------------- */
 
@@ -369,8 +359,70 @@ nav>ul>li>a {
     color: var(--color-black);
 }
 
-.front-wrap>nav>.burger {
+/* nav for about */
+
+.about-nav-wrapper>nav>div,
+.about-nav-wrapper>nav>ul>li>a {
+    color: var(--color-white);
+}
+
+.about-nav-wrapper>nav>div>a {
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #fff;
+    transition: color .3s ease-in-out;
+    pointer-events: auto;
+}
+
+.about-nav-wrapper>nav>div>a:hover {
+    color: var(--color-green);
+}
+
+.about-nav-wrapper>.small>div>a {
+    display: inline-block;
+    max-width: 12.5rem;
+    margin-top: 0.5625rem;
+    font-weight: 500;
+    font-size: 1.875rem;
+    line-height: 1.75rem;
+    color: #039c88;
+    transition: color .3s ease-in-out;
+    pointer-events: auto;
+}
+  
+.about-nav-wrapper>.small>div>a:hover {
+    color: var(--color-black)
+}
+
+.about-nav-wrapper>nav>.burger {
     content: url("menuHamburgerWhite.png");
+}
+
+.about-nav-wrapper>nav>ul>li>a:hover {
+    color: var(--color-green);
+    border-bottom: 5px solid transparent;
+    border-radius: 2px;
+}
+
+.about-nav-wrapper>nav>ul>li:hover {
+    border-bottom: 5px solid transparent;
+    border-radius: 2px;
+}
+
+.about-nav-wrapper>.small>div {
+    color: var(--color-green);
+}
+
+.about-nav-wrapper>.small>ul>li>a {
+    color: var(--color-green);
+}
+
+.about-nav-wrapper>.small>ul>li>a:hover {
+    color: var(--color-black);
 }
 
 @media screen {
@@ -472,37 +524,46 @@ input:checked+.slider:before {
 
 
 /* ------------------ */
-
-.search {
+.newsletter {
     position: relative;
-    display: flex;
-    min-width: 200px;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    text-align: center;
 }
 
-.search input {
-    border: 2px solid lightgray;
+.newsletter .elegant-button {
+    display: inline-block;
+    padding: 5% 35%;
+    border: 3px solid var(--color-white);
     border-radius: 5px;
-    height: 2rem;
-    width: 100%;
-    padding: 0.5rem 2rem 0.5rem 3rem;
-    outline: 0;
-    background-color: var(--color-white);
-}
-
-.search button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: auto;
-    height: 100%;
-    background-color: var(--color-off-white);
+    background-color: var(--color-green);
+    color: var(--color-white);
     font-weight: bold;
-    border: 2px solid lightgray;
-    border-left: 2px solid rgb(112, 112, 110);
-    border-radius: 0 5px 5px 0;
     cursor: pointer;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+  }
+
+.newsletter .elegant-button:hover {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border-color: var(--color-black);
 }
 
+.newsletter p {
+    font-size: smaller;
+    font-style: italic;
+}
+
+.newsletter a {
+    text-decoration: underline;
+}
+
+.newsletter a:hover {
+    color: var(--color-black);
+    text-decoration: none;
+}
 
 /* ------------------ */
 
@@ -531,12 +592,18 @@ footer li {
     padding-bottom: 1rem;
     align-self: left;
     margin: 0;
+    font-weight: bold;
+}
+
+footer p {
+    margin: 0px;
+    white-space:pre-wrap;
 }
 
 footer a {
     text-decoration: none;
     color: var(--color-white);
-    font-weight: bold;
+    text-decoration: underline;
     border-bottom: 2px solid transparent;
 }
 
@@ -546,15 +613,28 @@ footer a:hover {
 
 .vertical-line {
     border: 2px solid var(--color-white);
+    height: 15rem;
     border-radius: 25px;
-    height: 12rem;
+}
+
+.footer-logo {
+    position: relative;
+    display: inline-block;
+}
+
+.logo {
+
+    width: 150px;
+    height: auto;
+    top: 15px;
+    right: 2px;
 }
 
 .footer-contact {
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
 }
-
 
 @media screen {
     @media(max-width: 800px) {
@@ -585,9 +665,12 @@ footer a:hover {
     min-height: 90vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    height: 100%;
     padding: 2rem;
+    color: #fff;
+    text-align: center;
 }
 
 .about-wrapper div {
@@ -599,6 +682,7 @@ footer a:hover {
     width: 20rem;
     border-width: 3px;
 }
+
 
 
 /* ------------------- */
@@ -668,6 +752,63 @@ footer a:hover {
 
 /* ----------Stats page---------------- */
 
+.instruktioner {
+    position: relative;
+    border-radius: 10px;
+    background-color: #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    line-height: 1.0;
+    max-width: 700px;
+    margin: 0 auto;
+    color: grey;
+    top: 80px;
+}
+
+.instruktioner h2 {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.instruktioner li {
+    margin-bottom: 1px;
+    text-align: left;
+}
+
+.closeInstruktioner {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+}
+
+.tolkning {
+    position: relative;
+    border-radius: 10px;
+    background-color: #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    line-height: 1.0;
+    max-width: 650px;
+    margin: 0 auto;
+    color: grey;
+    top: -60px;
+}
+
+.tolkning h2 {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.tolkning li {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.closeTolkning {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+}
 
 /* Mobile styles */
 
