@@ -12,8 +12,8 @@ db_path = 'Project/db/echo.db'
 def run():
     print('Running all webscrapers...')
     run_platsbanken()
-    run_linkedin()
-    run_ledigajobb()
+    # run_linkedin()
+    # run_ledigajobb()
 
 # Platsbanken
 def run_platsbanken():
