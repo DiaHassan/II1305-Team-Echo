@@ -2,16 +2,16 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
+
 # Import extract
 try:
   from extract import extract
 except ImportError:
   from .extract import extract
 
-#try:
-#  from webscrape import run
-#except ImportError:
-#  from .webscrape import run
+
+from ..code import webscrape
+
 
 
 import commit
@@ -36,6 +36,7 @@ def endpoint():
 
 def runOAM():
     print(1)
+    webscrape.run()
     return jsonify({'number':(2)})
 
 # Main function
