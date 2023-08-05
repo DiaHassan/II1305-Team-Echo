@@ -8,11 +8,13 @@ try:
 except ImportError:
   from .extract import extract
 
-try:
-  from webscrape import run
-except ImportError:
-  from .webscrape import run
+#try:
+#  from webscrape import run
+#except ImportError:
+#  from .webscrape import run
 
+
+import commit
 
 # App
 app = Flask(__name__)
