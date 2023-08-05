@@ -8,12 +8,16 @@ try:
 except ImportError:
   from .extract import extract
 
+try:
+  from webscrape import run
+except ImportError:
+  from .webscrape import run
+
 
 # App
 app = Flask(__name__)
 CORS(app)
 @app.route('/why', methods=['GET','POST'])
-
 
 # Extracts data for json request
 def endpoint():
@@ -26,6 +30,11 @@ def endpoint():
     print(info)
     return jsonify({'number':(info)})
 
+@app.route('/test', methods=['GET','POST'])
+
+def runOAM():
+    print(1)
+    return jsonify({'number':(2)})
 
 # Main function
 def run():

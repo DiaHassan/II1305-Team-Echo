@@ -364,6 +364,12 @@ export default function Tabletest() {
         console.log((result));
     };
 
+    const handleTest = () => {
+        
+        axios.post('http://127.0.0.1:8888/test', {test: 1 })
+            .catch(error => console.log(error));
+    };
+
     useEffect(() => {
         handleClick()
     }, [select]);
@@ -752,6 +758,7 @@ export default function Tabletest() {
                         </div>
                     </div>
                     <button onClick={handleClick} className='forlistbutton'> Visa resultat</button>
+                    <button onClick={handleTest} className='forlistbutton'> Test </button>
                 </div>
             </div>
         </div>
