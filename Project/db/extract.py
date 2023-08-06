@@ -169,6 +169,23 @@ def delete_rows(date: str):
         connection.close()
         print(f'Row(s) gathered from {date} have been deleted')
 
+def fetch_all_job_listings():
+    connection = connect(db_path)
+    try:
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM job_listing;')
+        rows = cursor.fetchall()
+        all_entries = []
+
+        for row in rows:
+            all_entries.append(list(row))
+
+    finally:
+        cursor.close()
+        connection.close()
+
+        return all_entries
+
 # -------------------------------- EXTRACT -------------------------------------------
 
 # Callee
@@ -196,3 +213,6 @@ if __name__ == '__main__':
     # Delete rows gathered from specific date
     date = 'enter-date' # example: 2023-05-11
     delete_rows('date')
+
+    # Fetch all job_listings from database
+    job_listings = fetch_all_job_listings()
