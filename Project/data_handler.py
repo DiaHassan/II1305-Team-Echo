@@ -4,14 +4,15 @@ from flask_cors import CORS
 
 # Import extract
 try:
-  from extract import extract
+  from db.extract import extract
 except ImportError:
-  from .extract import extract
+  from .db.extract import extract
 
-try:
-  from webscrape import run
-except ImportError:
-  from .webscrape import run
+from code.webscrape import runWebscrape
+# try:
+#   from code.webscrape import runWebscrape
+# except ImportError:
+#   from .code.webscrape import runWebscrape
 
 
 # App
@@ -34,6 +35,7 @@ def endpoint():
 
 def runOAM():
     print(1)
+    runWebscrape()
     return jsonify({'number':(2)})
 
 # Main function

@@ -38,7 +38,7 @@ professions = file_to_list('professions.txt')
 index_dict = {index: value for index, value in enumerate(professions)}
 
 # Main function that retrieves all ads and outputs their data in a 2d list
-def run() -> list:
+def runPlatsbanken() -> list:
     # Retrieves the 10 requested occupations and their ids 
     occupation_ids = get_occupational_ids()
 
@@ -153,4 +153,4 @@ def extract_data_ad(ad: list, index: int) -> list:
 
 # Main script
 if __name__ == '__main__':
-    run()
+    runPlatsbanken()
