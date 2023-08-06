@@ -145,6 +145,30 @@ def get_professions_for_county(sources:list, county:str, professions:list, param
     result = outer_format(fetch)
     return result
 
+# Delete rows gathered on a specific date, e.g. on '2023-08-06'
+def delete_rows(date: str):
+    # Step 1: Connect to the database
+    connection = connect(db_path)
+
+    try:
+        # Step 2: Create a cursor
+        cursor = connection.cursor()
+
+        # Step 3: Execute the query
+        cursor.execute('DELETE FROM job_listing WHERE date_gathered=?;', (date,))
+
+        # Step 4: Commit the changes
+        connection.commit()
+
+    except Error as e:
+        print(f"Error occurred: {e}")
+
+    finally:
+        # Step 5: Close the cursor and connection
+        cursor.close()
+        connection.close()
+        print(f'Row(s) gathered from {date} have been deleted')
+
 # -------------------------------- EXTRACT -------------------------------------------
 
 # Callee
@@ -161,10 +185,14 @@ def extract(source:list, county: (list), profession: (list), param:str, date:str
 if __name__ == '__main__':
 
     # Extract
-    print(extract(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-05'))
+    # print(extract(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'null', '2023-05'))
     
     # One profession, many counties
     #print(get_counties_for_profession(['linkedin', 'platsbanken', 'ledigajobb'], ['stockholms län', 'uppsala län'], 'ingenjör', 'employment_type', '2023-05'))
 
     # One county many professions
     #print(get_professions_for_county(['linkedin', 'platsbanken', 'ledigajobb'], 'stockholms län', ['ingenjör', 'lärare'], 'requirement', '2023-05'))
+
+    # Delete rows gathered from specific date
+    date = 'enter-date' # example: 2023-05-11
+    delete_rows('date')
