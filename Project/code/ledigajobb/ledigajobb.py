@@ -183,7 +183,6 @@ def runLedigajobb():
             response = get_code(create_search_link(county_index, profession, 1))
             # Looping through and printing out each page
             while next_page:
-                print(5)
                 if(next_page == "Twees"): break
                 try:
                     job_links = get_job_links(get_jobs(response))

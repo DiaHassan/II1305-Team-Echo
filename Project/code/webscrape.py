@@ -9,11 +9,14 @@ from code.linkedIn import linkedIn
 db_path = 'Project/db/echo.db'
 
 # Webscrape all available websites
-def runWebscrape():
+def runWebscrape(inp):
     print('Running all webscrapers...')
-    run_platsbanken()
-    # run_linkedin()
-    # run_ledigajobb()
+    if(inp%2 == 0):
+        run_platsbanken()
+    if(inp%3 == 0):
+        run_linkedin()
+    if(inp%5 == 0):
+        run_ledigajobb()
 
 # Platsbanken
 def run_platsbanken():

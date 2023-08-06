@@ -34,8 +34,10 @@ def endpoint():
 @app.route('/test', methods=['GET','POST'])
 
 def runOAM():
-    print(1)
-    runWebscrape()
+    # print(1)
+    picker = request.get_json()
+    print(picker['test'])
+    runWebscrape(picker['test'])
     return jsonify({'number':(2)})
 
 # Main function

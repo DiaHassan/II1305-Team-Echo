@@ -366,7 +366,7 @@ export default function Tabletest() {
 
     const handleTest = () => {
         
-        axios.post('http://127.0.0.1:8888/test', {test: 1 })
+        axios.post('http://127.0.0.1:8888/test', {test: 10})
             .catch(error => console.log(error));
     };
 
