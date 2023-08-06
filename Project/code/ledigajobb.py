@@ -170,7 +170,7 @@ def scrape_ad(job_link, county, profession):
 
 
 # Get all info using all parameters
-def run():
+def runLedigajobb():
     i = 0
     all_jobs = []
     professions = file_to_list('professions.txt')
@@ -205,5 +205,5 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    runLedigajobb()
     print("\n")

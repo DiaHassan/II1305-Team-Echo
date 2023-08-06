@@ -1,3 +1,6 @@
+from os import path as os_path
+from sys import path as sys_path
+sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 # Import flask
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -5,16 +8,17 @@ from flask_cors import CORS
 
 # Import extract
 try:
-  from extract import extract
+  from db.extract import extract
 except ImportError:
-  from .extract import extract
+  from .db.extract import extract
+
+from code.webscrape import runWebscrape
 
 
-from ..code import webscrape
 
 
 
-import commit
+# import commit
 
 # App
 app = Flask(__name__)
@@ -35,8 +39,10 @@ def endpoint():
 @app.route('/test', methods=['GET','POST'])
 
 def runOAM():
+
     print(1)
-    webscrape.run()
+    
+    runWebscrape()
     return jsonify({'number':(2)})
 
 # Main function

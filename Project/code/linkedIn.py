@@ -235,7 +235,7 @@ def format(emp_type, ad_date, location, seniority):
     return emp_type, ad_publication_date, county, seniority
 
 
-def run():
+def runLinkedin():
     start_time = time()
     # Database
     db = []
@@ -293,4 +293,4 @@ def run():
 
 # Test    
 if __name__ == '__main__':
-    run()
+    runLinkedin()

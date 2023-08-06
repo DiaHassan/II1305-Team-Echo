@@ -8,14 +8,14 @@ from json import loads
 from sys import stdout, path
 from os.path import dirname
 path.append(dirname(dirname(__file__)))
-from reqfinder import find_req, find_seniority, find_req_ai
-from file_to_list import file_to_list
+from code.reqfinder import find_req, find_seniority, find_req_ai
+from code.file_to_list import file_to_list
 
 # Occupation ID
 try:
     from .get_occupation_id import get_occupational_ids
 except ImportError:
-    from get_occupation_id import get_occupational_ids
+    from code.get_occupation_id import get_occupational_ids
 
 # URL and format for settings
 BASE_URL = 'https://jobstream.api.jobtechdev.se'
@@ -38,7 +38,7 @@ professions = file_to_list('professions.txt')
 index_dict = {index: value for index, value in enumerate(professions)}
 
 # Main function that retrieves all ads and outputs their data in a 2d list
-def run() -> list:
+def runPlatsbanken() -> list:
     # Retrieves the 10 requested occupations and their ids 
     occupation_ids = get_occupational_ids()
 
@@ -153,4 +153,4 @@ def extract_data_ad(ad: list, index: int) -> list:
 
 # Main script
 if __name__ == '__main__':
-    run()
+    runPlatsbanken()

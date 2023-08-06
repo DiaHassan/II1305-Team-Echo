@@ -3,7 +3,7 @@ from json import loads
 from sys import path
 from os.path import dirname
 path.append(dirname(dirname(__file__)))
-from file_to_list import file_to_list
+from code.file_to_list import file_to_list
 
 def get_occupational_ids() -> list:
     url = "https://data.jobtechdev.se/taxonomy/yrkesben%C3%A4mningar.json"

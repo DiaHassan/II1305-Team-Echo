@@ -2,14 +2,15 @@ from os import path as os_path
 from sys import path as sys_path
 sys_path.append(os_path.dirname(os_path.dirname(__file__)))
 from db.insert import send_2d_list
-from ledigajobb import ledigajobb
-from platsbanken import platsbanken
-from linkedIn import linkedIn
+print(1)
+from code import ledigajobb
+from code import platsbanken
+# from linkedIn import runLinkedin
 
 db_path = 'Project/db/echo.db'
 
 # Webscrape all available websites
-def run():
+def runWebscrape():
     print('Running all webscrapers...')
     run_platsbanken()
     # run_linkedin()
@@ -18,16 +19,17 @@ def run():
 # Platsbanken
 def run_platsbanken():
     print('Webscraping platsbanken...')
-    platsbanken_list = platsbanken.run()
+    
+    platsbanken_list = platsbanken.runPlatsbanken()
     send_2d_list(platsbanken_list, db_path)
     print('Platsbanken done')
 
 # LedigaJobb
-def run_ledigajobb():
-    print('Webscraping ledigajobb...')
-    ledigajobb_list = ledigajobb.run()
-    send_2d_list(ledigajobb_list, db_path)
-    print('LedigaJobb done')
+# def run_ledigajobb():
+#     print('Webscraping ledigajobb...')
+#     ledigajobb_list = ledigajobb.run()
+#     send_2d_list(ledigajobb_list, db_path)
+#     print('LedigaJobb done')
 
 # LinkedIn
 def run_linkedin():
