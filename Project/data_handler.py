@@ -4,9 +4,9 @@ from flask_cors import CORS
 
 # Import extract
 try:
-  from db.extract import extract
+  from db.extract import extract, delete_rows
 except ImportError:
-  from .db.extract import extract
+  from .db.extract import extract, delete_rows
 
 from code.webscrape import runWebscrape
 # try:
@@ -47,6 +47,7 @@ def removeDate():
    print("removing date")
    date = request.get_json()
    print(date['test'])
+   delete_rows(date['test'])
    return jsonify({'number':(2)})
    # Function name
 
