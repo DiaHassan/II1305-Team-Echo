@@ -40,6 +40,24 @@ def runOAM():
     runWebscrape(picker['test'])
     return jsonify({'number':(2)})
 
+
+@app.route('/rd', methods=['GET','POST'])
+
+def removeDate():
+   print("removing date")
+   date = request.get_json()
+   print(date['test'])
+   return jsonify({'number':(2)})
+   # Function name
+
+@app.route('/sd', methods=['GET','POST'])
+
+def saveDb():
+   print("Save DB")
+   # Function name
+   return jsonify({'number':(2)})
+
+
 # Main function
 def run():
     app.run(host="0.0.0.0",debug=False, port=8888)
