@@ -3,7 +3,8 @@ import axios from 'axios';
 
 
 export default function Controlpanel() {
-    const [date,setDate] = useState("2023-08-06")
+    const [date,setDate] = useState("2023-08-07")
+    const [db,setDb] = useState("2023-08-06")
 
     const handleDate = () => {
         
@@ -19,14 +20,18 @@ export default function Controlpanel() {
     const handleDb = () => {
         
         axios.post('http://127.0.0.1:8888/sd', {test: 1})
+            .then(response => setDb(response.data.number))
             .catch(error => console.log(error));
     };
   return (
     <>
       <div>
+        
         <button onClick={handleTest} className='forlistbutton'> Test </button>
         <button onClick={handleDb} className='forlistbutton'> Get all </button>
         <button onClick={handleDate} className='forlistbutton'> Date Remover </button>
+
+        {console.log(db)}
       </div>
 
     </>

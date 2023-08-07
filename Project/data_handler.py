@@ -58,8 +58,8 @@ def saveDb():
    # Function name
    data = request.get_json()
    print(data['test'])
-   print(fetch_all_job_listings())
-   return jsonify({'number':(2)})
+  #  print(fetch_all_job_listings())
+   return jsonify({'number':fetch_all_job_listings()})
 
 
 # Main function
