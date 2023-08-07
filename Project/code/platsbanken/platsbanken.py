@@ -105,7 +105,7 @@ def extract_data_all_ads(all_ads: list, index: int) -> list:
 
 
 # Takes first duration found
-def extract_duration(duration: str) -> (str | int):
+def extract_duration(duration: str):
     duration = str(duration)
     if duration.lower() == 'tills vidare' or duration == 'tillsvidare':
         return '0'
