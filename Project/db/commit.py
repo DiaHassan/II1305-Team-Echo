@@ -5,11 +5,11 @@ from git import Repo
 
 def git_commit_and_push():
     repo_path = os.environ.get("REPO_PATH")
-    ssh_key_path = os.environ.get("SSH_KEY_PATH")
+    ssh_key = os.environ.get("SSH_KEY")
 
-    os.environ["GIT_SSH_COMMAND"] = f"ssh -i {ssh_key_path}"
+    os.environ["GIT_SSH_COMMAND"] = f"ssh -i <(echo '{ssh_key}')"
     repo = Repo(repo_path)
-    repo.git.checkout("to-be-published-2")  # Switch to the "to-be-published-2" branch
+    repo.git.checkout("main")  # Switch to the "main" branch
     repo.git.add('Project/db/echo.db')
     repo.git.commit("-m", "Automatic monthly database update")
     repo.git.push()
