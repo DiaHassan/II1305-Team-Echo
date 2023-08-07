@@ -183,15 +183,14 @@ def format(emp_type, ad_date, location, seniority):
 
     # Calculating the estimated publication date (unable to be exact)
     ad_date_list = ad_date.split(" ")
-    match ad_date_list[1]:
-        case 'days' | 'day':
-            ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0]))
-        case 'weeks' | 'week':
-            ad_publication_date = date.today() - timedelta(weeks=int(ad_date_list[0]))
-        case 'months' | 'month':
-            ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0])*31)
-        case _:
-            ad_publication_date = date.today()
+    if(ad_date_list[1] == 'days' or ad_date_list[1] == 'day'):
+        ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0]))
+    elif(ad_date_list[1] == 'weeks' or ad_date_list[1] == 'week'):
+        ad_publication_date = date.today() - timedelta(weeks=int(ad_date_list[0]))
+    elif(ad_date_list[1] == 'months' or ad_date_list[1] == 'month'):
+        ad_publication_date = date.today() - timedelta(days=int(ad_date_list[0])*31)
+    else:
+        ad_publication_date = date.today()
     ad_publication_date = str(ad_publication_date)
 
 
