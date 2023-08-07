@@ -6,7 +6,7 @@ from code.ledigajobb import ledigajobb
 from code.platsbanken import platsbanken
 from code.linkedIn import linkedIn
 
-db_path = 'Project/db/echo.db'
+db_path = 'db/echo.db'
 
 # Webscrape all available websites
 def runWebscrape(inp):
