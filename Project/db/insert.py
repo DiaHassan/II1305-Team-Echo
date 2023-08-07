@@ -115,7 +115,7 @@ def insert_data(argument_list, sql_connect, cursor):
         requirement_id = str(cursor.execute(get_requirement_id).fetchall()[0][0])
 
         #Creates row for many to many relation table requirement_relation
-        insert_requirement_relation = "INSERT INTO requirement_relation(job_listing_id, requirement_id) VALUES (" + job_listing_id + "," + requirement_id + ");"
+        insert_requirement_relation = "INSERT or IGNORE INTO requirement_relation(job_listing_id, requirement_id) VALUES (" + job_listing_id + "," + requirement_id + ");"
         cursor.execute(insert_requirement_relation)
         sql_connect.commit()
 

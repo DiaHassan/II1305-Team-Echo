@@ -366,7 +366,7 @@ export default function Tabletest() {
 
     const handleTest = () => {
         
-        axios.post('http://127.0.0.1:8888/test', {test: 1 })
+        axios.post('http://127.0.0.1:8888/test', {test: 10})
             .catch(error => console.log(error));
     };
 
@@ -500,7 +500,7 @@ export default function Tabletest() {
     function getMonths() {
         var totalMonths = {};
         const today = new Date();
-        const startPoint = new Date(today.getFullYear(), today.getMonth() - 1, 1); // Start from the previous month
+        const startPoint = new Date(today.getFullYear(), today.getMonth(), 1); // Start from the previous month
         const endPoint = new Date(startDate.replace(" ", " ,1 "));
     
         while (endPoint <= startPoint) {

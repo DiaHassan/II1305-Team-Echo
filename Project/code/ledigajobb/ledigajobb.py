@@ -170,17 +170,15 @@ def scrape_ad(job_link, county, profession):
 
 
 # Get all info using all parameters
-def run():
+def runLedigajobb():
     i = 0
     all_jobs = []
     professions = file_to_list('professions.txt')
     # Going through all jobs and locations
     for profession in professions:
-        for county_index in range(2,24):
-            if( county_index == 21):
-                continue
+        for county_index in counties:
             next_page = True
-            response = get_code(create_search_link(county_index, profession, 1))
+            response = get_code(create_search_link(county_index[0], profession, 1))
             # Looping through and printing out each page
             while next_page:
                 if(next_page == "Twees"): break
@@ -197,7 +195,9 @@ def run():
                 for half_link in job_links:
                     i += 1
                     print(i) 
-                    all_jobs.append(scrape_ad(base_url+half_link,county_index, profession))
+                    temp = scrape_ad(base_url+half_link,county_index[0], profession)
+                    print(temp)
+                    all_jobs.append(temp)
                 next_page = get_next_page(response)
                 if (next_page == False): next_page = "Twees"
                 response = get_code(next_page)
@@ -205,5 +205,5 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    runLedigajobb()
     print("\n")
