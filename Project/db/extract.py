@@ -1,8 +1,8 @@
 from sqlite3 import connect
 
 # Sometimes path error
-db_path = 'Project/db/echo.db'
-# db_path = 'db/echo.db'
+# db_path = 'Project/db/echo.db'
+db_path = 'db/echo.db'
 
 # ------------------------------------------- HELPERS -------------------------------------------------------
 

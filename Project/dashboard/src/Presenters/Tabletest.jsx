@@ -357,7 +357,7 @@ export default function Tabletest() {
         queryTbs.push(optionRadio)
         queryTbs.push(date)
         console.log(queryTbs)
-        axios.post('http://127.0.0.1:8888/why', { job: queryTbs })
+        axios.post('https://rusty-quince-umuv-main-csa3pvckba-lz.a.run.app/why', { job: queryTbs })
             .then(response => setResult(listToDict(response.data.number))) /* Returned extract info from fortabletest */
             .catch(error => console.log(error));
 
@@ -366,7 +366,7 @@ export default function Tabletest() {
 
     const handleTest = () => {
         
-        axios.post('http://127.0.0.1:8888/test', {test: 10})
+        axios.post('https://rusty-quince-umuv-main-csa3pvckba-lz.a.run.app/test', {test: 10})
             .catch(error => console.log(error));
     };
 

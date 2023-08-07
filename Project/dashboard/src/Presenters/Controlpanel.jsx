@@ -8,18 +8,18 @@ export default function Controlpanel() {
 
     const handleDate = () => {
         
-        axios.post('http://127.0.0.1:8888/rd', {test: date})
+        axios.post('https://rusty-quince-umuv-main-csa3pvckba-lz.a.run.app/rd', {test: date})
             .catch(error => console.log(error));
     };
 
     const handleTest = () => {
         
-        axios.post('http://127.0.0.1:8888/test', {test: 10})
+        axios.post('https://rusty-quince-umuv-main-csa3pvckba-lz.a.run.app/test', {test: 10})
             .catch(error => console.log(error));
     };
     const handleDb = () => {
         
-        axios.post('http://127.0.0.1:8888/sd', {test: 1})
+        axios.post('https://rusty-quince-umuv-main-csa3pvckba-lz.a.run.app/sd', {test: 1})
             .then(response => setDb(response.data.number))
             .catch(error => console.log(error));
     };
