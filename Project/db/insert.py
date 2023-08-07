@@ -6,19 +6,19 @@ from sys import platform
 
 def find_db_path():
         if(platform == "linux"):
-            return "Project/db/echo.db"
+            return "db/echo.db"
         elif(platform == "darwin"):
-            return "Project/db/echo.db"
+            return "db/echo.db"
         else:
-            return "Project\db\echo.db"
+            return "db\echo.db"
 
 def find_db_sqlite_path():
         if(platform == "linux"):
-            return "Project/db/db_sqlite.sql"
+            return "db/db_sqlite.sql"
         elif(platform == "darwin"):
-            return "Project/db/db_sqlite.sql"
+            return "db/db_sqlite.sql"
         else:
-            return "Project\db\db_sqlite.sql"
+            return "db\db_sqlite.sql"
 
 # Builds database
 def build_db():
