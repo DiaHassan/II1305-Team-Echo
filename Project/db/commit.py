@@ -10,7 +10,7 @@ def git_commit_and_push():
     os.environ["GIT_SSH_COMMAND"] = f"ssh -i <(echo '{ssh_key}')"
     repo = Repo(repo_path)
     repo.git.checkout("main")  # Switch to the "main" branch
-    repo.git.add('Project/db/echo.db')
+    repo.git.add('db/echo.db')
     repo.git.commit("-m", "Automatic monthly database update")
     repo.git.push()
 
