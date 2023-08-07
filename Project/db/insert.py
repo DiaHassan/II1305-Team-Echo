@@ -4,24 +4,21 @@ from sys import platform
 
 #Source: https://towardsdatascience.com/starting-with-sql-in-python-948e529586f2
 
-
 def find_db_path():
-        match platform:
-            case "linux":
-                return "Project/db/echo.db"
-            case "darwin":
-                return "Project/db/echo.db"
-            case _:
-                return "Project\db\echo.db"
+        if(platform == "linux"):
+            return "Project/db/echo.db"
+        elif(platform == "darwin"):
+            return "Project/db/echo.db"
+        else:
+            return "Project\db\echo.db"
 
 def find_db_sqlite_path():
-        match platform:
-            case "linux":
-                return "Project/db/db_sqlite.sql"
-            case "darwin":
-                return "Project/db/db_sqlite.sql"
-            case _:
-                return "Project\db\db_sqlite.sql"
+        if(platform == "linux"):
+            return "Project/db/db_sqlite.sql"
+        elif(platform == "darwin"):
+            return "Project/db/db_sqlite.sql"
+        else:
+            return "Project\db\db_sqlite.sql"
 
 # Builds database
 def build_db():
