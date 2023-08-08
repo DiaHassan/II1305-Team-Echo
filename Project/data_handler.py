@@ -8,10 +8,7 @@ try:
 except ImportError:
   from .db.extract import extract, delete_rows,fetch_all_job_listings
 
-try:
-  from db.commit import git_commit_and_push
-except ImportError:
-  from .db.commit import git_commit_and_push
+
 
 from code.webscrape import runWebscrape
 # try:

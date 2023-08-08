@@ -31,7 +31,7 @@ def run_ledigajobb():
     professions = file_to_list('professions.txt')
     # Going through all jobs and locations
     for profession in professions:
-        ledigajobb_list = ledigajobb.runLedigajobb(professions)
+        ledigajobb_list = ledigajobb.runLedigajobb(profession)
         send_2d_list(ledigajobb_list, db_path)
     print('LedigaJobb done')
 
