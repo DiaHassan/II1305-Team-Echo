@@ -23,13 +23,19 @@ search_url = 'https://ledigajobb.se/sok?'
 
 
 # Send a GET request to get the HTML response and parse it
-def get_code(url):
-    try:
-        response = get(url)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        return soup
-    except:
-        return "No data"
+def get_code(url, timeout):
+    retries = 0
+    max_retries = 5
+    while retries < max_retries:
+        try:
+            response = get(url, timeout=timeout)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.content, 'html.parser')
+            return soup
+        except:
+            retries += 1
+            print(f"Retrying: {retries}/5")
+    return None
 
 
 # Find all the job listings on the page
@@ -143,9 +149,8 @@ def find_county(county_nb):
 # Scrape all required details from the ad
 def scrape_ad(job_link, county, profession):
     # Init
-    job_code = get_code(job_link)
+    job_code = get_code(job_link, timeout=5)
     work_details = get_profession_details(job_code)
-
     # Data
     source = "ledigajobb"
     employment_type = work_details[0]
@@ -155,7 +160,6 @@ def scrape_ad(job_link, county, profession):
     county = find_county(county)
     prerequierment = get_prerequiered(job_code)
     #seniority = work_details[2]
-
     return [source, 
             employment_type, 
             duration, 
@@ -167,6 +171,8 @@ def scrape_ad(job_link, county, profession):
             "null",
             today
             ]
+
+
 
 
 # Get all info using all parameters
