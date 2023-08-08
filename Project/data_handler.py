@@ -43,7 +43,6 @@ def runOAM():
     picker = request.get_json()
     print(picker['test'])
     runWebscrape(picker['test'])
-    git_commit_and_push()
     return jsonify({'number':(2)})
 
 

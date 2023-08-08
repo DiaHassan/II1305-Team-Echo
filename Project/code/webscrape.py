@@ -5,7 +5,7 @@ from db.insert import send_2d_list
 from code.ledigajobb import ledigajobb
 from code.platsbanken import platsbanken
 from code.linkedIn import linkedIn
-
+from file_to_list import file_to_list
 db_path = 'db/echo.db'
 
 # Webscrape all available websites
@@ -28,8 +28,11 @@ def run_platsbanken():
 # LedigaJobb
 def run_ledigajobb():
     print('Webscraping ledigajobb...')
-    ledigajobb_list = ledigajobb.runLedigajobb()
-    send_2d_list(ledigajobb_list, db_path)
+    professions = file_to_list('professions.txt')
+    # Going through all jobs and locations
+    for profession in professions:
+        ledigajobb_list = ledigajobb.runLedigajobb(professions)
+        send_2d_list(ledigajobb_list, db_path)
     print('LedigaJobb done')
 
 # LinkedIn

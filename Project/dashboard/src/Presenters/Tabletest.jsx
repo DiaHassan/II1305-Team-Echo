@@ -16,6 +16,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { Grid } from '@mui/material';
+import Schedual from './Schedualed';
 
 
 export default function Tabletest() {
@@ -759,6 +760,7 @@ export default function Tabletest() {
                     </div>
                     <button onClick={handleClick} className='forlistbutton'> Visa resultat</button>
                     <button onClick={handleTest} className='forlistbutton'> Test </button>
+                    <Schedual/>
                 </div>
             </div>
         </div>

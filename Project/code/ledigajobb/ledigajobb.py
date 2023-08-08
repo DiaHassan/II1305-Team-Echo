@@ -170,37 +170,34 @@ def scrape_ad(job_link, county, profession):
 
 
 # Get all info using all parameters
-def runLedigajobb():
+def runLedigajobb(profession):
     i = 0
     all_jobs = []
-    professions = file_to_list('professions.txt')
-    # Going through all jobs and locations
-    for profession in professions:
-        for county_index in counties:
-            next_page = True
-            response = get_code(create_search_link(county_index[0], profession, 1))
-            # Looping through and printing out each page
-            while next_page:
-                if(next_page == "Twees"): break
+    for county_index in counties:
+        next_page = True
+        response = get_code(create_search_link(county_index[0], profession, 1))
+        # Looping through and printing out each page
+        while next_page:
+            if(next_page == "Twees"): break
+            try:
+                job_links = get_job_links(get_jobs(response))
+            except:
                 try:
-                    job_links = get_job_links(get_jobs(response))
-                except:
-                    try:
-                        next_page = get_next_page(response)
-                        if (next_page == False): next_page = "Twees"
-                        response = get_code(next_page)
-                        continue
-                    except: continue
-                # Gets all the sub links then to joing them with the base url and 
-                for half_link in job_links:
-                    i += 1
-                    print(i) 
-                    temp = scrape_ad(base_url+half_link,county_index[0], profession)
-                    print(temp)
-                    all_jobs.append(temp)
-                next_page = get_next_page(response)
-                if (next_page == False): next_page = "Twees"
-                response = get_code(next_page)
+                    next_page = get_next_page(response)
+                    if (next_page == False): next_page = "Twees"
+                    response = get_code(next_page)
+                    continue
+                except: continue
+            # Gets all the sub links then to joing them with the base url and 
+            for half_link in job_links:
+                i += 1
+                print(i) 
+                temp = scrape_ad(base_url+half_link,county_index[0], profession)
+                print(temp)
+                all_jobs.append(temp)
+            next_page = get_next_page(response)
+            if (next_page == False): next_page = "Twees"
+            response = get_code(next_page)
     return all_jobs      
 
 
