@@ -102,10 +102,21 @@ export default function Tabletest() {
         active: false
     };
 
+    const initialValue = {
+        employment_type: true,
+        seniority: true,
+        years_of_experience: true,
+        duration: true,
+        prerequirements: true,
+        active: true
+    };
 
     //insert all sources. Format 'sourcename' (lowercase): defaultValue
-    const [inputs, setInputs] = useState({ platsbanken: defaultValue, linkedin: defaultValue, ledigajobb: defaultValue });
+    const [inputs, setInputs] = useState({ platsbanken: initialValue, linkedin: initialValue, ledigajobb: initialValue });
 
+    const [checkboxLI, setCheckboxLI] = useState(true);
+    const [checkboxPB, setCheckboxPB] = useState(true);
+    const [checkboxLJ, setCheckboxLJ] = useState(true);
 
     const [job, setJob] = useState("Sjuksköterska")
     const [joblist, setJobList] = useState(initialJobList)
@@ -324,6 +335,10 @@ export default function Tabletest() {
         return list;
     }
 
+    function initialStats() {
+
+    }
+
     /**
      * Function for requesting data from the database, takes the selected paramaters and sets the result of the query.
      */
@@ -429,7 +444,7 @@ export default function Tabletest() {
      * Handles any changes to the source buttons
      * @param {*} event 
      */
-    const handleSource = (event) => {
+    const handleSource = (event, id) => {
         const name = event.target.name;
         // Due to the form only returning strings we need to parse it into correct format
         const value = splitKey(event.target.value);
@@ -439,7 +454,7 @@ export default function Tabletest() {
             setOptionRadio("null")
 
         }
-        
+
         // Updates the values 
         setInputs(inputs => (
             {
@@ -567,35 +582,45 @@ export default function Tabletest() {
                         <FormControl component="fieldset" defaultValue={"linkedin"} id="chooseSourceContainer">
                             <FormLabel component="legend" id="chooseSourceLabel">Välj plattform:</FormLabel>
                             <FormGroup>
-                                <FormControlLabel control={<Checkbox
+                                <FormControlLabel id="linkedinCB" control={<Checkbox
                                     // checked={linkedinCB}
-                                    onChange={handleSource}
+                                    onChange={(event) => handleSource(event, "linkedinCB")}
+                                    //onClick={toggleCheckbox("linkedinCB")}
+                                    onClick={() => setCheckboxLI((prev) => !prev)}
                                     color='default'
+                                    //checked={inputs.linkedin}
                                     name="linkedin"
                                     value={JSON.stringify({
                                         years_of_experience: false,
                                         duration: false
                                     })}
-                                    //checked={true}
+                                    checked={checkboxLI}
                                 />} label="Linkedin" />
-                                <FormControlLabel control={<Checkbox
-                                    onChange={handleSource}
+                                <FormControlLabel id="platsbankenCB" control={<Checkbox
+                                    onChange={(event) => handleSource(event, "platsbankenCB")}
+                                    //onClick={toggleCheckbox("platsbankenCB")}
+                                    onClick={() => setCheckboxPB((prev) => !prev)}
+                                    //checked={true}
                                     color='default'
+                                    //checked={inputs.platsbanken}
                                     name="platsbanken"
                                     value={JSON.stringify({
                                         seniority: false
                                     })}
-                                    //checked={true}
+                                    checked={checkboxPB}
                                 />} label="Platsbanken" />
-                                <FormControlLabel control={<Checkbox
-                                    onChange={handleSource}
+                                <FormControlLabel id="ledigajobbCB" control={<Checkbox
+                                    onChange={(event) => handleSource(event, "ledigajobbCB")}
+                                    //onClick={toggleCheckbox("ledigajobbCB")}
+                                    onClick={() => setCheckboxLJ((prev) => !prev)}
                                     color='default'
+                                    //checked={inputs.platsbanken}
                                     name="ledigajobb"
                                     value={JSON.stringify({
                                         seniority: false,
                                         years_of_experience: false
                                     })}
-                                    //checked={true}
+                                    checked={checkboxLJ}
                                 />} label="Lediga jobb" />
                             </FormGroup>
                         </FormControl>
