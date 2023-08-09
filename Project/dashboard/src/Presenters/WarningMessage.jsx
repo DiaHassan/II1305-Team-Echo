@@ -14,7 +14,7 @@ const WarningMessage = () => {
   return (
     <div style={styles.warningMessage}>
       <p style={styles.messageText}>
-        Statistikverktygen är fortfarande under utveckling, vilket kan leda till bugs. Var snäll och rapportera om det hittas.
+        Hemsidan är i Betaversion.
       </p>
       <span style={styles.close} onClick={closeMessage}>
         &times;
