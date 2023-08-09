@@ -17,7 +17,7 @@ function App() {
           <Route path="/finder" element={<Stats />} />
           <Route path="/about" element={<About />} />
           <Route path="/statistics" element={<Statistics/>} />
-          <Route path="/controlp" element={<Controlpanel/>} />
+          {/* <Route path="/controlp" element={<Controlpanel/>} /> */}
         </Routes>
       </BrowserRouter>
     </div>
