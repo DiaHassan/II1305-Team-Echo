@@ -113,7 +113,7 @@ export default function Tabletest() {
     const [countyList, setCountyList] = useState(allCounties)
     const [graphtitle, setGraphtitle] = useState("Blekinge Län")
     const [select, setSelect] = useState(true);
-    const [date, setDate] = useState(checkToday);
+    const [date, setDate] = useState("2023-05");
     const [optionRadio, setOptionRadio] = useState("null");
     const [selectRadio, setSelectRadio] = useState(false);
     const [foundData, setFoundData] = useState(true);
@@ -576,6 +576,7 @@ export default function Tabletest() {
                                         years_of_experience: false,
                                         duration: false
                                     })}
+                                    //checked={true}
                                 />} label="Linkedin" />
                                 <FormControlLabel control={<Checkbox
                                     onChange={handleSource}
@@ -584,7 +585,7 @@ export default function Tabletest() {
                                     value={JSON.stringify({
                                         seniority: false
                                     })}
-
+                                    //checked={true}
                                 />} label="Platsbanken" />
                                 <FormControlLabel control={<Checkbox
                                     onChange={handleSource}
@@ -594,6 +595,7 @@ export default function Tabletest() {
                                         seniority: false,
                                         years_of_experience: false
                                     })}
+                                    //checked={true}
                                 />} label="Lediga jobb" />
                             </FormGroup>
                         </FormControl>
@@ -700,11 +702,12 @@ export default function Tabletest() {
                                 </FormControl>
                             </div>}
 
-                            {<div className='Date'>
+                            {<div className='Date' value={date}>
                                 <FormControl sx={{ m: 1, width: 200 }}>
                                     <InputLabel htmlFor="grouped-date">Datum</InputLabel>
                                     <Select
-                                        native defaultValue={checkToday}
+                                        //value = 'May 2023'
+                                        native defaultValue='2023-05'
                                         id="grouped-date"
                                         label="Datum"
                                         onChange={handleDate}>
