@@ -1,5 +1,4 @@
 elektriker
-ingenjör
 logistiker
 läkare
 lärare
@@ -8,3 +7,4 @@ projektledare
 sjuksköterska
 tekniker
 utvecklare
+ingenjör
