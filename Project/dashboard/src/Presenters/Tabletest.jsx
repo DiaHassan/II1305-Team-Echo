@@ -380,11 +380,11 @@ export default function Tabletest() {
         console.log((result));
     };
 
-    const handleTest = () => {
+    // const handleTest = () => {
         
-        axios.post('https://rusty-quince-umuv-main-csa3pvckba-lz.a.run.app/test', {test: 10})
-            .catch(error => console.log(error));
-    };
+    //     axios.post('https://rusty-quince-umuv-main-csa3pvckba-lz.a.run.app/test', {test: 2})
+    //         .catch(error => console.log(error));
+    // };
 
     useEffect(() => {
         handleClick()
@@ -787,7 +787,7 @@ export default function Tabletest() {
                         </div>
                     </div>
                     <button onClick={handleClick} className='forlistbutton'> Visa resultat</button>
-                    <button onClick={handleTest} className='forlistbutton'> Test </button>
+                    {/* <button onClick={handleTest} className='forlistbutton'> Test </button> */}
                     <Schedual/>
                 </div>
             </div>
