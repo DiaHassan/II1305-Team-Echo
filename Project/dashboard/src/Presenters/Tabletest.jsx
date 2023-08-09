@@ -104,9 +104,9 @@ export default function Tabletest() {
 
     const initialValue = {
         employment_type: true,
-        seniority: true,
-        years_of_experience: true,
-        duration: true,
+        seniority: false,
+        years_of_experience: false,
+        duration: false,
         prerequirements: true,
         active: true
     };
