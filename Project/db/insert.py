@@ -143,6 +143,14 @@ def send_2d_list(list, path):
         cursor.close()
         #Close connection 
     sql_connect.close()
+
+# Manually insert data for linkedin into db
+def insert_linkedin(no_of_ads, occupation, county, date, path):
+    connection = connect(path)
+    query = f'INSERT INTO job_listing (source, employment_type, duration, publication_date, job_id, county, years_of_experience, seniority, date_gathered) VALUES ("linkedin", "null", "{no_of_ads}", "{date}", "{occupation}", "{county}", "null", "null", "{date}");'
+    connection.execute(query)
+    connection.commit()
+    connection.close()
     
 
 # Test if run
