@@ -103,11 +103,11 @@ export default function Tabletest() {
     };
 
     const initialValue = {
-        employment_type: true,
+        employment_type: false,
         seniority: false,
         years_of_experience: false,
         duration: false,
-        prerequirements: true,
+        prerequirements: false,
         active: true
     };
 
@@ -591,8 +591,11 @@ export default function Tabletest() {
                                     //checked={inputs.linkedin}
                                     name="linkedin"
                                     value={JSON.stringify({
+                                        employment_type: false,
+                                        seniority: false,
                                         years_of_experience: false,
-                                        duration: false
+                                        duration: false,
+                                        prerequirements: false,
                                     })}
                                     checked={checkboxLI}
                                 />} label="Linkedin" />
