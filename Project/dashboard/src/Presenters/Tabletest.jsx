@@ -102,7 +102,7 @@ export default function Tabletest() {
         active: false
     };
 
-    const initialValue = {
+    const initialValueLI = {
         employment_type: false,
         seniority: false,
         years_of_experience: false,
@@ -111,8 +111,26 @@ export default function Tabletest() {
         active: true
     };
 
+    const initialValuePB = {
+        employment_type: true,
+        seniority: false,
+        years_of_experience: true,
+        duration: true,
+        prerequirements: true,
+        active: true
+    }
+
+    const initialValueLJ = {
+        employment_type: true,
+        seniority: false,
+        years_of_experience: false,
+        duration: true,
+        prerequirements: true,
+        active: true
+    }   
+
     //insert all sources. Format 'sourcename' (lowercase): defaultValue
-    const [inputs, setInputs] = useState({ platsbanken: initialValue, linkedin: initialValue, ledigajobb: initialValue });
+    const [inputs, setInputs] = useState({ platsbanken: initialValuePB, linkedin: initialValueLI, ledigajobb: initialValueLJ });
 
     const [checkboxLI, setCheckboxLI] = useState(true);
     const [checkboxPB, setCheckboxPB] = useState(true);
