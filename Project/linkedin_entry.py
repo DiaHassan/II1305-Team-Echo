@@ -50,7 +50,8 @@ def submit_data():
 
     if cntrl:
         for i in range(21):
-            insert_linkedin(results[selected_item]['data'][i], selected_item.split()[0], lan[i], convert_date_format(date),find_db_path())
+            for n in range(int(results[selected_item]['data'][i])):
+                insert_linkedin(0, selected_item.split()[0], lan[i], convert_date_format(date),find_db_path())
 
 
 app = tk.Tk()
