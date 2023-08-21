@@ -6,7 +6,7 @@ from datetime import datetime
 from os.path import exists
 from sys import platform
 
-lan = ['Blekinge län', 'Dalarnas län', 'Gotlands län', 'Gävleborgs län', 'Hallands län', 'Jämtlands län', 'Jönköpings län', 'Kalmar län', 'Kronobergs län', 'Norrbottens län', 'Skåne län', 'Stockholms län', 'Södermanlands län', 'Uppsala län', 'Värmlands län', 'Västerbottens län', 'Västernorrlands län', 'Västmanlands län', 'Västra Götalands län', 'Örebro län', 'Östergötlands län']
+lan = ['blekinge län', 'dalarnas län', 'gotlands län', 'gävleborgs län', 'hallands län', 'jämtlands län', 'jönköpings län', 'kalmar län', 'kronobergs län', 'norrbottens län', 'skåne län', 'stockholms län', 'södermanlands län', 'uppsala län', 'värmlands län', 'västerbottens län', 'västernorrlands län', 'västmanlands län', 'västra Götalands län', 'örebro län', 'östergötlands län']
 
 def find_db_path():
         if(platform == "linux"):
